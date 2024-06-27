@@ -1,0 +1,51 @@
+# LNURL-Withdraw
+
+## Usage
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/lnurl_withdraw.rs:lnurl-withdraw}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/LnurlWithdraw.swift:lnurl-withdraw}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/LnurlWithdraw.kt:lnurl-withdraw}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/lnurl_withdraw.ts:lnurl-withdraw}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/lnurl_withdraw.dart:lnurl-withdraw}}
+```
+</section>
+</custom-tabs>
+
+## Supported Specs
+
+- [LUD-01](https://github.com/lnurl/luds/blob/luds/01.md) LNURL bech32 encoding
+- [LUD-03](https://github.com/lnurl/luds/blob/luds/03.md) `withdrawRequest` spec
+- [LUD-17](https://github.com/lnurl/luds/blob/luds/17.md) Support for lnurlw prefix with non-bech32-encoded LNURL URLs

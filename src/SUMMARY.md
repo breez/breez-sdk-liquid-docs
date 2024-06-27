@@ -1,0 +1,17 @@
+# Summary
+
+# API Overview
+
+- [Getting Started](guide/getting_started.md)
+- [Installing](guide/install.md)
+- [Paying in Lightning](guide/payments.md)
+  - [Receiving payments](guide/receive_payment.md)
+  - [Sending payments](guide/send_payment.md)
+  - [Listing payments](guide/list_payments.md)
+- [Receiving an On-Chain Transaction](guide/receive_onchain.md)
+- [Sending an On-Chain Transaction](guide/pay_onchain.md)
+- [Using LNURL & Lightning addresses](guide/lnurl.md)
+  - [Sending payments using LNURL-Pay/Lightning address](guide/lnurl_pay.md)
+  - [Receiving payments using LNURL-Withdraw](guide/lnurl_withdraw.md)
+  - [Authenticating using LNURL-Auth](guide/lnurl_auth.md)
+- [Supporting fiat currencies](guide/fiat_currencies.md)

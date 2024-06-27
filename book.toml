@@ -1,0 +1,17 @@
+[book]
+language = "en"
+multilingual = true
+src = "src"
+title = "Breez SDK Liquid Docs"
+
+[output.html]
+theme="theme"
+additional-js = ["tabs.js"]
+git-repository-url = "https://github.com/breez/breez-sdk-liquid-docs"
+edit-url-template = "https://github.com/breez/breez-sdk-liquid-docs/edit/main/{path}"
+
+[output.html.print]
+enable = false
+
+[preprocessor.snippets]
+after = ["links"]
