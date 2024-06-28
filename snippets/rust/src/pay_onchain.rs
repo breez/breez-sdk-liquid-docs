@@ -6,10 +6,10 @@ use log::info;
 
 async fn get_current_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: get-current-pay-onchain-limits
-    let current_limits = sdk.pay_onchain_limits().await?;
+    let current_limits = sdk.fetch_onchain_limits().await?;
 
-    info!("Minimum amount: {} sats", current_limits.min_payer_amount_sat);
-    info!("Maximum amount: {} sats", current_limits.max_payer_amount_sat);
+    info!("Minimum amount: {} sats", current_limits.send_min_payer_amount_sat);
+    info!("Maximum amount: {} sats", current_limits.send_max_payer_amount_sat);
     // ANCHOR_END: get-current-pay-onchain-limits
 
     Ok(())
