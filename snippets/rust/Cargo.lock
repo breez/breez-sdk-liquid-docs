@@ -504,7 +504,7 @@ dependencies = [
 [[package]]
 name = "breez-liquid-sdk"
 version = "0.0.1"
-source = "git+https://github.com/breez/breez-liquid-sdk?branch=ok300-sdk-prelude#5d86e8f77c87169a1907f3f50d0a92e559f341d2"
+source = "git+https://github.com/breez/breez-liquid-sdk?branch=ok300-pay-onchain-limits#aef3cd3598cf6918d37b46055fa8ab87dc105140"
 dependencies = [
  "anyhow",
  "async-trait",

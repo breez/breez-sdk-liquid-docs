@@ -5,12 +5,12 @@ use breez_liquid_sdk::prelude::*;
 use log::info;
 
 async fn get_current_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
-    // ANCHOR: get-current-reverse-swap-limits
-    let current_limits = sdk.onchain_payment_limits().await?;
+    // ANCHOR: get-current-pay-onchain-limits
+    let current_limits = sdk.pay_onchain_limits().await?;
 
-    info!("Minimum amount: {} sats", current_limits.min_sat);
-    info!("Maximum amount: {} sats", current_limits.max_sat);
-    // ANCHOR_END: get-current-reverse-swap-limits
+    info!("Minimum amount: {} sats", current_limits.min_payer_amount_sat);
+    info!("Maximum amount: {} sats", current_limits.max_payer_amount_sat);
+    // ANCHOR_END: get-current-pay-onchain-limits
 
     Ok(())
 }
