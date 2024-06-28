@@ -1,0 +1,241 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the "main" branch
+  push:
+    branches: [ main ]
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      sdk-ref:
+        description: 'sdk commit/tag/branch reference. Defaults to main.'
+        required: false
+        type: string
+        default: main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup:
+    name: setup
+    runs-on: ubuntu-latest
+    outputs:
+      sdk-ref: ${{ inputs.sdk-ref || 'ebb80bbedfc28f6f8db567a7915a5ad8a57e36d1' }}
+      package-version: '0.1.1'
+    steps:
+      - run: echo "set pre-setup output variables"
+
+  build-packages:
+    needs: setup
+    name: build packages
+    uses: breez/breez-sdk/.github/workflows/publish-all-platforms.yml@main
+    with:
+      repository: breez/breez-sdk
+      ref: ${{ needs.setup.outputs.sdk-ref }}
+      package-version: ${{ needs.setup.outputs.package-version }}
+      packages-to-publish: '["csharp", "flutter", "golang", "react-native", "python"]'
+      use-dummy-binaries: true
+
+  check-rust:
+    needs: setup
+    name: Check rust snippets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # Set up Rust environment and run checks
+      - name: Install rust
+        run: |
+          rustup set auto-self-update disable
+          rustup toolchain install stable --profile minimal
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v2
+        with:
+          version: "23.4"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: snippets/rust -> snippets/rust/target
+
+      - name: temporarily get sdk
+        uses: actions/checkout@v3
+        with:
+          repository: breez/breez-liquid-sdk
+          ref: ${{ needs.setup.outputs.sdk-ref }}
+          path: breez-liquid-sdk
+
+      - id: rev-parse
+        name: get proper rev
+        working-directory: breez-liquid-sdk
+        run: |
+          rev=$(git rev-parse HEAD)
+          echo "$rev"
+          echo "rev=$rev" >> $GITHUB_OUTPUT   
+
+      - name: set sdk version
+        working-directory: snippets/rust
+        run: |
+          cargo add --git https://github.com/breez/breez-liquid-sdk.git breez-liquid-sdk --rev "${{ steps.rev-parse.outputs.rev }}"
+          
+          # Add the secp256k1-zkp patch: https://github.com/BlockstreamResearch/rust-secp256k1-zkp/pull/48/commits
+          echo "[patch.crates-io]" >> Cargo.toml
+          echo "secp256k1-zkp = {git = 'https://github.com/sanket1729/rust-secp256k1-zkp.git', rev = '60e631c24588a0c9e271badd61959294848c665d'}" >> Cargo.toml
+          # Propagate the patch in Cargo.lock
+          rm Cargo.lock
+          cargo update --package secp256k1-zkp
+
+      - name: clippy
+        working-directory: snippets/rust
+        run: |
+          # Explicitly allow clippy::dead_code lint because the functions aren't called in the docs snippets
+          # Explicitly allow clippy::unused_variables because snippets might have to demonstrate how to get certain variables without using them afterward
+          cargo clippy -- --allow dead_code --allow unused_variables --deny warnings
+
+  check-dart:
+    needs: 
+      - setup
+      - build-packages
+    name: Check dart snippets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # Set up the flutter environment and run checks
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: breez-sdk-flutter-${{ needs.setup.outputs.package-version }}
+          path: snippets/dart_snippets/packages/breez-sdk-flutter
+
+      - name: pub-get
+        working-directory: snippets/dart_snippets
+        run: flutter pub get
+
+      - name: dart-analyze
+        working-directory: snippets/dart_snippets
+        run: dart analyze --fatal-infos
+
+  check-react-native:
+    needs: 
+      - setup
+      - build-packages
+    name: Check react native snippets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Download archived package
+        uses: actions/download-artifact@v3
+        with:
+          name: react-native-${{ needs.setup.outputs.package-version }}
+          path: snippets/react-native/packages
+
+      - name: Install dependencies
+        working-directory: snippets/react-native
+        run: yarn
+
+      - name: Check syntax
+        working-directory: snippets/react-native
+        run: tsc
+
+      - name: Check formatting
+        working-directory: snippets/react-native 
+        run: yarn run lint
+
+  check-swift:
+    
+    name: Check Swift snippets
+    runs-on: macos-13
+      
+    steps:
+    - uses: actions/checkout@v4
+      
+    - name: Set up Swift
+      uses: swift-actions/setup-swift@v1
+      with:
+        swift-version: "5"
+          
+    - name: Build
+      working-directory: snippets/swift/BreezSDKExamples
+      run: |
+            swift build
+
+  check-kotlin:
+    needs: setup
+    name: Check kotlin MPP snippets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: 17
+
+      - name: Compile Kotlin
+        working-directory: snippets/kotlin_mpp_lib
+        run: |
+          ./gradlew build
+
+      
+  build:
+    name: Build mdbook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install rust
+        run: |
+          rustup set auto-self-update disable
+          rustup toolchain install stable --profile minimal
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            snippets-processor -> snippets-processor/target
+
+      - name: Install dependencies
+        run: |
+          cargo install mdbook --vers "^0.4" --locked
+          cargo install --path ./snippets-processor
+      
+      - name: Build mdbook
+        run: mdbook build
+
+      - name: Archive book
+        uses: actions/upload-artifact@v3
+        with:
+          name: book
+          path: book
+
+      - name: Push book to main-generated branch
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} 
+        run: |
+          git config --global user.name "Generator"
+          git config --global user.email "no-reply@breez.technology"
+          git add -f book
+          git commit -m "Generate documentation"
+          git push origin --force main:main-generated
