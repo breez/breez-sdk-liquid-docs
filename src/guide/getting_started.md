@@ -1,10 +1,15 @@
 # Getting started
 
-TODO
+The Breez SDK enables mobile developers to integrate Lightning and bitcoin payments into their apps with a very shallow learning curve. The use cases are endless – from social apps that want to integrate tipping between users to content-creation apps interested in adding bitcoin monetization. Crucially, this SDK is an end-to-end, non-custodial, drop-in solution powered by Liquid, on-chain interoperability, third-party fiat on-ramps, and other services users and operators need.
 
+The Breez SDK provides the following services:
+
+* Sending payments (via various protocols such as: bolt11, keysend, lnurl-pay, lightning address, btc address, etc.)
+* Receiving payments (via various protocols such as: bolt11, lnurl-withdraw, btc address, etc.)
+  
 ## Pricing
 
-TODO
+The Breez SDK is free for developers. 
 
 ## Support
 
