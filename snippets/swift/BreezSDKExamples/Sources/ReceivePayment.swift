@@ -1,6 +1,6 @@
 import BreezLiquidSDK
 
-func receivePayment(sdk: BlockingBreezServices) -> ReceivePaymentResponse? {
+func receivePayment(sdk: BindingLiquidSdk) -> ReceivePaymentResponse? {
     // ANCHOR: receive-payment
     let receivePaymentResponse = try? sdk.receivePayment(
         req: ReceivePaymentRequest(

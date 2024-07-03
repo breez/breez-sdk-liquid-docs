@@ -1,7 +1,7 @@
 import BreezLiquidSDK
 import Foundation
 
-func generateReceiveOnchainAddress(sdk: BlockingBreezServices) -> String? {
+func generateReceiveOnchainAddress(sdk: BindingLiquidSdk) -> String? {
     // ANCHOR: generate-receive-onchain-address
     // Set the amount you wish the payer to send
     let prepareResponse = try? sdk
@@ -20,14 +20,14 @@ func generateReceiveOnchainAddress(sdk: BlockingBreezServices) -> String? {
     return address
 }
 
-func listRefundables(sdk: BlockingBreezServices) -> [SwapInfo]? {
+func listRefundables(sdk: BindingLiquidSdk) -> [SwapInfo]? {
     // ANCHOR: list-refundables
     let refundables = try? sdk.listRefundables()
     // ANCHOR_END: list-refundables
     return refundables
 }
 
-func executeRefund(sdk: BlockingBreezServices, refundables: SwapInfo, satPerVbyte: UInt32) -> RefundResponse? {
+func executeRefund(sdk: BindingLiquidSdk, refundables: SwapInfo, satPerVbyte: UInt32) -> RefundResponse? {
     // ANCHOR: execute-refund
     let destinationAddress = "..."
     let response = try? sdk.refund(req: RefundRequest(swapAddress: refundables.bitcoinAddress, toAddress: destinationAddress, satPerVbyte: satPerVbyte))
@@ -35,7 +35,7 @@ func executeRefund(sdk: BlockingBreezServices, refundables: SwapInfo, satPerVbyt
     return response
 }
 
-func rescanSwaps(sdk: BlockingBreezServices) -> Void {
+func rescanSwaps(sdk: BindingLiquidSdk) -> Void {
     // ANCHOR: rescan-swaps
     try? sdk.rescanSwaps()
     // ANCHOR_END: rescan-swaps    

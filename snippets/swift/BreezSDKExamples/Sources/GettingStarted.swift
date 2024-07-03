@@ -8,7 +8,7 @@ class SDKListener: EventListener {
     }
 }
 
-func gettingStarted() throws -> BlockingBreezServices? {
+func gettingStarted() throws -> BindingLiquidSdk? {
     // Create the default config
     let seed = try? mnemonicToSeed(phrase: "<mnemonic words>")
 
@@ -32,7 +32,7 @@ func gettingStarted() throws -> BlockingBreezServices? {
 }
 // ANCHOR_END: init-sdk
 
-func gettingStartedNodeInfo(sdk: BlockingBreezServices) {
+func gettingStartedNodeInfo(sdk: BindingLiquidSdk) {
     // ANCHOR: fetch-balance
     if let nodeInfo = try? sdk.nodeInfo() {
         let lnBalance = nodeInfo.channelsBalanceMsat

@@ -1,9 +1,9 @@
 import BreezLiquidSDK
 import Foundation
 
-func ListPayments(sdk: BlockingBreezServices) -> [Payment]? {
+func ListPayments(sdk: BindingLiquidSdk) -> [Payment]? {
     // ANCHOR: list-payments
-    let payments = try? sdk.listPayments(req: ListPaymentsRequest())
+    let payments = try? sdk.listPayments()
     // ANCHOR_END: list-payments
     return payments
 }
