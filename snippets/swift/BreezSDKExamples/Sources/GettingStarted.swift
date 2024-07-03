@@ -1,44 +1,34 @@
 import BreezLiquidSDK
 
-// ANCHOR: init-sdk
-// SDK events listener
-class SDKListener: EventListener {
-    func onEvent(e: BreezEvent) {
-        print("received event ", e)
-    }
-}
 
 func gettingStarted() throws -> BindingLiquidSdk? {
-    // Create the default config
-    let seed = try? mnemonicToSeed(phrase: "<mnemonic words>")
+    // ANCHOR: init-sdk
+    let mnemonic = "<mnemonic words>"
 
-    let inviteCode = "<invite code>"
-    let apiKey = "<api key>"
-    var config = defaultConfig(envType: EnvironmentType.production, apiKey: apiKey,
-                               nodeConfig: NodeConfig.greenlight(
-                                   config: GreenlightNodeConfig(partnerCredentials: nil, inviteCode: inviteCode)))
+    // Create the default config
+    var config = defaultConfig(network: LiquidNetwork.mainnet)
 
     // Customize the config object according to your needs
     config.workingDir = "path to an existing directory"
 
-    // Connect to the Breez SDK make it ready for use
-    guard seed != nil else {
-        return nil
-    }
-    let connectRequest = ConnectRequest(config: config, seed: seed!)
-    let sdk = try? connect(req: connectRequest, listener: SDKListener())
+    let connectRequest = ConnectRequest(config: config, mnemonic: mnemonic)
+    let sdk = try? connect(req: connectRequest)
+    // ANCHOR_END: init-sdk
 
     return sdk
 }
-// ANCHOR_END: init-sdk
+
 
 func gettingStartedNodeInfo(sdk: BindingLiquidSdk) {
     // ANCHOR: fetch-balance
-    if let nodeInfo = try? sdk.nodeInfo() {
-        let lnBalance = nodeInfo.channelsBalanceMsat
-        let onchainBalance = nodeInfo.onchainBalanceMsat
-        print(lnBalance);
-        print(onchainBalance);
+    if let nodeState = try? sdk.getInfo() {
+        let balanceSat = nodeState.balanceSat
+        let pendingSendSat = nodeState.pendingSendSat
+        let pendingReceiveSat = nodeState.pendingReceiveSat
+
+        print(balanceSat)
+        print(pendingSendSat)
+        print(pendingReceiveSat)
     }
     // ANCHOR_END: fetch-balance
 }

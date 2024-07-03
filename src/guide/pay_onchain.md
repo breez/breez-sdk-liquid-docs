@@ -18,7 +18,7 @@ First, fetch the current Send Onchain limits:
 <section>
 
 ```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendOnchain.swift:get-current-pay-onchain-limits}}
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/PayOnchain.swift:get-current-pay-onchain-limits}}
 ```
 </section>
 
@@ -122,7 +122,7 @@ Note that one of the arguments will be the result from the `prepare` call above.
 <section>
 
 ```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendOnchain.swift:start-reverse-swap}}
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/PayOnchain.swift:start-reverse-swap}}
 ```
 </section>
 

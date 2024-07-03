@@ -3,37 +3,35 @@ import Foundation
 
 func GetCurrentLimits(sdk: BindingLiquidSdk) -> OnchainPaymentLimitsResponse?? {
     //  ANCHOR: get-current-pay-onchain-limits
-    let currentLimits = try? sdk.onchainPaymentLimits()
+    let currentLimits = try? sdk.fetchOnchainLimits()
     if let limits = currentLimits {
-        print("Minimum amount, in sats: \(limits.minSat)")
-        print("Maximum amount, in sats: \(limits.maxSat)")
+        print("Minimum amount, in sats: \(limits.send.minSat)")
+        print("Maximum amount, in sats: \(limits.send.maxSat)")
     }
     // ANCHOR_END: get-current-pay-onchain-limits
     return currentLimits
 }
 
-func PreparePayOnchain(sdk: BindingLiquidSdk, currentLimits: OnchainPaymentLimitsResponse) -> PrepareOnchainPaymentResponse? {
+func PreparePayOnchain(sdk: BindingLiquidSdk, currentLimits: Limits) -> PreparePayOnchainResponse? {
     // ANCHOR: prepare-pay-onchain
-    let amountSat = currentLimits.minSat
-    let satPerVbyte: UInt32 = 5
-
-    let prepareRequest = PrepareOnchainPaymentRequest(amountSat: amountSat, amountType: .send, claimTxFeerate: satPerVbyte);
-    let prepareResponse = try? sdk.prepareOnchainPayment(req: prepareRequest)
+    let prepareRequest = PreparePayOnchainRequest(receiverAmountSat: 5_000)
+    let prepareResponse = try? sdk.preparePayOnchain(req: prepareRequest)
 
     if let response = prepareResponse {
-        print("Sender amount, in sats: \(response.senderAmountSat)")
-        print("Recipient amount, in sats: \(response.recipientAmountSat)")
-        print("Total fees, in sats: \(response.totalFees)")
+        // Check if the fees are acceptable before proceeding
+        print("Payer fees, in sats: \(response.feesSat)")
     }
     // ANCHOR_END: prepare-pay-onchain
     return prepareResponse
 }
 
-func StartReverseSwap(sdk: BindingLiquidSdk, prepareResponse: PrepareOnchainPaymentResponse) -> PayOnchainResponse? {
+func StartReverseSwap(sdk: BindingLiquidSdk, prepareResponse: PreparePayOnchainResponse) -> SendPaymentResponse? {
     // ANCHOR: start-reverse-swap
     let destinationAddress = "bc1.."
 
-    let response = try? sdk.payOnchain(req: PayOnchainRequest(recipientAddress: destinationAddress, prepareRes: prepareResponse))
+    let response = try? sdk.payOnchain(req: PayOnchainRequest(
+        address: destinationAddress,
+        prepareRes: prepareResponse))
     // ANCHOR_END: start-reverse-swap
     return response
 }
