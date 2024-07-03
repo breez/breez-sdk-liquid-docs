@@ -111,7 +111,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: breez-sdk-flutter-${{ needs.setup.outputs.package-version }}
-          path: snippets/dart_snippets/packages/breez-sdk-flutter
+          path: snippets/dart_snippets/packages/breez-liquid-sdk-flutter
 
       - name: pub-get
         working-directory: snippets/dart_snippets
