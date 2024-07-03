@@ -3,7 +3,7 @@
 You can send funds from the Breez SDK wallet to an on-chain address as follows.
 
 ## Checking the limits
-First, fetch the current Pay Onchain limits:
+First, fetch the current Send Onchain limits:
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
