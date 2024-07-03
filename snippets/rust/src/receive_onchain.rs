@@ -8,17 +8,19 @@ async fn generate_receive_onchain_address(sdk: Arc<LiquidSdk>) -> Result<()> {
     // Set the amount you wish the payer to send
     let prepare_response = sdk
         .prepare_receive_onchain(&PrepareReceiveOnchainRequest {
-            amount_sat: 50_000,
-        }).await?;
+            payer_amount_sat: 50_000,
+        })
+        .await?;
 
     // If the fees are acceptable, continue to create the Onchain Receive Payment
     let receive_fees_sat = prepare_response.fees_sat;
 
-    let receive_onchain_response = sdk.receive_onchain(
-        &ReceiveOnchainRequest {
-            prepare_res: prepare_response
-        }
-    ).await?;
+    let receive_onchain_response = sdk
+        .receive_onchain(&PrepareReceiveOnchainResponse {
+            payer_amount_sat: prepare_response.payer_amount_sat,
+            fees_sat: prepare_response.fees_sat,
+        })
+        .await?;
 
     // Send your funds to the below bitcoin address
     let address = receive_onchain_response.address;
@@ -57,9 +59,9 @@ async fn execute_refund(
 }
 
 async fn rescan_swaps(sdk: Arc<LiquidSdk>) -> Result<()> {
-  // ANCHOR: rescan-swaps
-  sdk.rescan_onchain_swaps().await?;
-  // ANCHOR_END: rescan-swaps
+    // ANCHOR: rescan-swaps
+    sdk.rescan_onchain_swaps().await?;
+    // ANCHOR_END: rescan-swaps
 
-  Ok(())
+    Ok(())
 }
