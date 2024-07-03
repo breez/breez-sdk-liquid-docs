@@ -34,7 +34,7 @@ Add the Breez SDK to your `Podfile` like so:
 ``` ruby
 target '<YourApp' do
   use_frameworks!
-  pod 'BreezSDK'
+  pod 'BreezLiquidSDK'
 end
 ```
 

@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "breez-liquid-sdk-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/breez/breez-liquid-sdk-swift",
+      "state" : {
+        "revision" : "755bc2894cf941c7194ec5fcaa869082b0120234",
+        "version" : "0.1.2-dev1"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "8f4d2753f0e4778c76d5f05ad16c74f707390531",
+        "version" : "1.2.3"
+      }
+    }
+  ],
+  "version" : 2
+}

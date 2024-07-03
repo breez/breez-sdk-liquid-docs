@@ -73,7 +73,7 @@ The next step is to find out the fees:
 <section>
 
 ```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendOnchain.swift:prepare-pay-onchain}}
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/PayOnchain.swift:prepare-pay-onchain}}
 ```
 </section>
 
