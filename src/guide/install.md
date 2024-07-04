@@ -63,11 +63,11 @@ See [the example](https://github.com/breez/breez-sdk-examples/tree/main/Android)
 We recommend using the official npm package:
 
 ```console
-npm install @breeztech/react-native-breez-sdk
+npm install @breeztech/react-native-breez-liquid-sdk
 ```
 or
 ```console
-yarn add @breeztech/react-native-breez-sdk
+yarn add @breeztech/react-native-breez-liquid-sdk
 ```
 
 ## rust
