@@ -1,5 +1,4 @@
-storage.sql
 sync/
-sync_storage.sql
 .swiftpm
 .build
+*.sql
