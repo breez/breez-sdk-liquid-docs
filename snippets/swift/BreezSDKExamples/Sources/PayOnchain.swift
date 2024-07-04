@@ -1,7 +1,7 @@
 import BreezLiquidSDK
 import Foundation
 
-func GetCurrentLimits(sdk: BindingLiquidSdk) -> OnchainPaymentLimitsResponse?? {
+func getCurrentLimits(sdk: BindingLiquidSdk) -> OnchainPaymentLimitsResponse?? {
     //  ANCHOR: get-current-pay-onchain-limits
     let currentLimits = try? sdk.fetchOnchainLimits()
     if let limits = currentLimits {
@@ -12,7 +12,7 @@ func GetCurrentLimits(sdk: BindingLiquidSdk) -> OnchainPaymentLimitsResponse?? {
     return currentLimits
 }
 
-func PreparePayOnchain(sdk: BindingLiquidSdk, currentLimits: Limits) -> PreparePayOnchainResponse? {
+func preparePayOnchain(sdk: BindingLiquidSdk, currentLimits: Limits) -> PreparePayOnchainResponse? {
     // ANCHOR: prepare-pay-onchain
     let prepareRequest = PreparePayOnchainRequest(receiverAmountSat: 5_000)
     let prepareResponse = try? sdk.preparePayOnchain(req: prepareRequest)
@@ -25,7 +25,7 @@ func PreparePayOnchain(sdk: BindingLiquidSdk, currentLimits: Limits) -> PrepareP
     return prepareResponse
 }
 
-func StartReverseSwap(sdk: BindingLiquidSdk, prepareResponse: PreparePayOnchainResponse) -> SendPaymentResponse? {
+func startReverseSwap(sdk: BindingLiquidSdk, prepareResponse: PreparePayOnchainResponse) -> SendPaymentResponse? {
     // ANCHOR: start-reverse-swap
     let destinationAddress = "bc1.."
 
