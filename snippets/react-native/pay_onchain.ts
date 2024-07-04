@@ -23,7 +23,7 @@ const examplePreparePayOnchain = async () => {
   // ANCHOR: prepare-pay-onchain
   try {
     const prepareRes = await preparePayOnchain({
-      receiverAmountSat: 5000
+      receiverAmountSat: 5_000
     })
 
     // Check if the fees are acceptable before proceeding
