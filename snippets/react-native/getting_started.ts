@@ -1,47 +1,31 @@
 import {
-  type BreezEvent,
-  connect,
   defaultConfig,
-  EnvironmentType,
-  mnemonicToSeed,
-  type NodeConfig,
-  NodeConfigVariant,
-  nodeInfo
+  connect,
+  LiquidNetwork,
+  getInfo
 } from '@breeztech/react-native-breez-liquid-sdk'
 
 const exampleGettingStarted = async () => {
   // ANCHOR: init-sdk
-  // SDK events listener
-  const onBreezEvent = (e: BreezEvent) => {
-    console.log(`Received event ${e.type}`)
-  }
+  const mnemonic = '<mnemonics words>'
 
   // Create the default config
-  const seed = await mnemonicToSeed('<mnemonics words>')
-  const inviteCode = '<invite code>'
-  const apiKey = '<api key>'
-  const nodeConfig: NodeConfig = {
-    type: NodeConfigVariant.GREENLIGHT,
-    config: {
-      inviteCode
-    }
-  }
-
   const config = await defaultConfig(
-    EnvironmentType.PRODUCTION,
-    apiKey,
-    nodeConfig
+    LiquidNetwork.MAINNET
   )
 
-  // Connect to the Breez SDK make it ready for use
-  await connect(config, seed, onBreezEvent)
+  // Customize the config object according to your needs
+  config.workingDir = 'path to an existing directory'
+
+  const sdk = await connect({ mnemonic, config })
   // ANCHOR_END: init-sdk
 }
 
 const exampleFetchNodeInfo = async () => {
   // ANCHOR: fetch-balance
-  const nodeState = await nodeInfo()
-  const balanceLn = nodeState.channelsBalanceMsat
-  const balanceOnchain = nodeState.onchainBalanceMsat
+  const nodeState = await getInfo()
+  const balanceSat = nodeState.balanceSat
+  const pendingSendSat = nodeState.pendingSendSat
+  const pendingReceiveSat = nodeState.pendingReceiveSat
   // ANCHOR_END: fetch-balance
 }

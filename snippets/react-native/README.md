@@ -6,6 +6,19 @@
 4. Run `yarn` to install the package.
 5. Happy coding
 
+The first few steps above can be done on the CLI with
+
+```shell
+mkdir packages
+cd packages
+
+wget $(npm view @breeztech/react-native-breez-liquid-sdk dist.tarball)
+tar xvfz *.tgz
+cp package/breez-liquid-sdk-react-native.tgz ../packages/
+rm -rf package
+cd ..
+```
+
 ## Nix
 
 ```

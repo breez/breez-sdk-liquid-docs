@@ -1,10 +1,9 @@
 import {
-  listPayments,
-  PaymentTypeFilter
+  listPayments
 } from '@breeztech/react-native-breez-liquid-sdk'
 
 const exampleListPayments = async () => {
   // ANCHOR: list-payments
-  const payments = listPayments({})
+  const payments = listPayments()
   // ANCHOR_END: list-payments
 }

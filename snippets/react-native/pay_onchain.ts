@@ -1,60 +1,50 @@
 import {
-  type ReverseSwapPairInfo,
-  fetchReverseSwapFees,
-  inProgressReverseSwaps,
-  sendOnchain,
-  maxReverseSwapAmount
+  type Limits,
+  type PreparePayOnchainResponse,
+  fetchOnchainLimits,
+  preparePayOnchain,
+  payOnchain
 } from '@breeztech/react-native-breez-liquid-sdk'
 
-const exampleFetchReverseSwapFees = async () => {
-  // ANCHOR: estimate-current-reverse-swap-total-fees
-  const currentFees = await fetchReverseSwapFees({ sendAmountSat: 50000 })
+const exampleGetCurrentLimits = async () => {
+  // ANCHOR: get-current-pay-onchain-limits
+  try {
+    const currentLimits = await fetchOnchainLimits()
 
-  console.log(
-    `Total estimated fees for reverse swap: ${currentFees.totalEstimatedFees}`
-  )
-  // ANCHOR_END: estimate-current-reverse-swap-total-fees
-}
-
-const exampleListCurrentFees = (currentFees: ReverseSwapPairInfo) => {
-  // ANCHOR: get-current-reverse-swap-min-max
-  console.log(`Minimum amount, in sats: ${currentFees.min}`)
-  console.log(`Maximum amount, in sats: ${currentFees.max}`)
-  // ANCHOR_END: get-current-reverse-swap-min-max
-}
-
-const maxAmount = async () => {
-  // ANCHOR: max-reverse-swap-amount
-  const maxAmount = await maxReverseSwapAmount()
-
-  console.log(
-    `Max reverse swap amount: ${maxAmount.totalSat}`
-  )
-  // ANCHOR_END: max-reverse-swap-amount
-}
-
-const exampleSendOnchain = async (currentFees: ReverseSwapPairInfo) => {
-  // ANCHOR: start-reverse-swap
-  const onchainRecipientAddress = 'bc1..'
-  const amountSat = currentFees.min
-  const satPerVbyte = 5
-
-  const reverseSwapInfo = await sendOnchain({
-    amountSat,
-    onchainRecipientAddress,
-    pairHash: currentFees.feesHash,
-    satPerVbyte
-  })
-  // ANCHOR_END: start-reverse-swap
-}
-
-const exampleInProgressReverseSwaps = async () => {
-  // ANCHOR: check-reverse-swaps-status
-  const swaps = await inProgressReverseSwaps()
-  for (const swap of swaps) {
-    console.log(
-      `Reverse swap ${swap.id} in progress, status is ${swap.status}`
-    )
+    console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`)
+    console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`)
+  } catch (err) {
+    console.error(err)
   }
-  // ANCHOR_END: check-reverse-swaps-status
+  // ANCHOR_END: get-current-pay-onchain-limits
+}
+
+const examplePreparePayOnchain = async () => {
+  // ANCHOR: prepare-pay-onchain
+  try {
+    const prepareRes = await preparePayOnchain({
+      receiverAmountSat: 5000
+    })
+
+    // Check if the fees are acceptable before proceeding
+    const feesSat = prepareRes.feesSat
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: prepare-pay-onchain
+}
+
+const examplePayOnchain = async (prepareRes: PreparePayOnchainResponse) => {
+  // ANCHOR: start-reverse-swap
+  try {
+    const destinationAddress = 'bc1..'
+
+    const payOnchainRes = await payOnchain({
+      address: destinationAddress,
+      prepareRes
+    })
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: start-reverse-swap
 }
