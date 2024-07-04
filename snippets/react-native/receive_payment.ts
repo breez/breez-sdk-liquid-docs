@@ -13,7 +13,7 @@ const exampleReceiveLightningPayment = async () => {
 
   // Set the amount you wish the payer to send, which should be within the above limits
   const prepareReceiveResponse = await prepareReceivePayment({
-    payerAmountSat: 5000
+    payerAmountSat: 5_000
   })
 
   // If the fees are acceptable, continue to create the Receive Payment

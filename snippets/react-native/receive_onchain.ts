@@ -16,7 +16,7 @@ const exampleReceiveOnchain = async () => {
 
   // Set the amount you wish the payer to send, which should be within the above limits
   const prepareResponse = await prepareReceiveOnchain({
-    payerAmountSat: 50000
+    payerAmountSat: 50_000
   })
 
   // If the fees are acceptable, continue to create the Onchain Receive Payment
