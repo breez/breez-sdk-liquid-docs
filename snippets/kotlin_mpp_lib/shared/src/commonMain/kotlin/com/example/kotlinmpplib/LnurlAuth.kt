@@ -8,7 +8,7 @@ class LnurlAuth {
         // keyauth://domain.com/auth?key=val
         val lnurlAuthUrl = "lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7..."
         try {
-            val inputType = parseInput(lnurlAuthUrl)
+            val inputType = parse(lnurlAuthUrl)
             if (inputType is InputType.LnUrlAuth) {
                 when (val result = sdk.lnurlAuth(inputType.data)) {
                     is LnUrlCallbackStatus.Ok -> {} // Log.v("Breez", "Successfully authenticated")

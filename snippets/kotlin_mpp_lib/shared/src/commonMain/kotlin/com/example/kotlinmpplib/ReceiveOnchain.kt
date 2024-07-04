@@ -5,25 +5,26 @@ class ReceiveOnchain {
     fun generateReceiveOnchainAddress(sdk: BindingLiquidSdk) {
         // ANCHOR: generate-receive-onchain-address
         try {
-            val swapInfo = sdk.receiveOnchain(ReceiveOnchainRequest())
+            // Fetch the Onchain Receive limits
+            val currentLimits = sdk.fetchOnchainLimits()
+            // Log.v("Breez", "Minimum amount allowed to deposit in sats: ${currentLimits.receive.minSat}")
+            // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${currentLimits.receive.maxSat}")
+
+            // Set the amount you wish the payer to send, which should be within the above limits
+            val prepareResponse = sdk.prepareReceiveOnchain(PrepareReceiveOnchainRequest(50_000.toULong()))
+
+            // If the fees are acceptable, continue to create the Onchain Receive Payment
+            val receiveFeesSat = prepareResponse.feesSat
+
+            val receiveOnchainResponse = sdk.receiveOnchain(prepareResponse)
+
             // Send your funds to the bellow bitcoin address
-            val address = swapInfo.bitcoinAddress
-            // Log.v("Breez", "Minimum amount allowed to deposit in sats: ${swapInfo.minAllowedDeposit}")
-            // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${swapInfo.maxAllowedDeposit}")            
+            val address = receiveOnchainResponse.address
+            val bip21 = receiveOnchainResponse.bip21
         } catch (e: Exception) {
             // handle error
         }
         // ANCHOR_END: generate-receive-onchain-address
-    }
-
-    fun inProgressSwap(sdk: BindingLiquidSdk) {
-        // ANCHOR: in-progress-swap
-        try {
-            val swapInfo = sdk.inProgressSwap()
-        } catch (e: Exception) {
-            // handle error
-        }
-        // ANCHOR_END: in-progress-swap
     }
 
     fun listRefundables(sdk: BindingLiquidSdk) {
@@ -36,34 +37,22 @@ class ReceiveOnchain {
         // ANCHOR_END: list-refundables
     }
 
-    fun executeRefund(sdk: BindingLiquidSdk) {
+    fun executeRefund(sdk: BindingLiquidSdk, refundTxFeeRate: UInt, refundable: RefundableSwap) {
         // ANCHOR: execute-refund
-        val swapAddress = "..."
-        val toAddress = "..."
-        val satPerVbyte = 1.toUInt()
+        val destinationAddress = "..."
+        val satPerVbyte = refundTxFeeRate
         try {
-            sdk.refund(RefundRequest(swapAddress, toAddress, satPerVbyte))
+            sdk.refund(RefundRequest(refundable.swapAddress, destinationAddress, satPerVbyte))
         } catch (e: Exception) {
             // handle error
         }
         // ANCHOR_END: execute-refund
     }
 
-    fun getChannelOpeningFees(sdk: BindingLiquidSdk) {
-        // ANCHOR: get-channel-opening-fees
-        try {
-            val amountMsat = 5_000.toULong();
-            val channelFees = sdk.openChannelFee(OpenChannelFeeRequest(amountMsat))
-        } catch (e: Exception) {
-            // handle error
-        }
-        // ANCHOR_END: get-channel-opening-fees
-    }
-
     fun rescanSwaps(sdk: BindingLiquidSdk) {
       // ANCHOR: rescan-swaps
       try {
-          sdk.rescanSwaps()
+          sdk.rescanOnchainSwaps()
       } catch (e: Exception) {
           // handle error
       }

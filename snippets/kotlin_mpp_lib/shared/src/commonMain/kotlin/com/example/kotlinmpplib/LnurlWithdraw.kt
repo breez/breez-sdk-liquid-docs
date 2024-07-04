@@ -8,12 +8,12 @@ class LnurlWithdraw {
         // lnurlw://domain.com/lnurl-withdraw?key=val
         val lnurlWithdrawUrl = "lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7..."
         try {
-            val inputType = parseInput(lnurlWithdrawUrl)
+            val inputType = parse(lnurlWithdrawUrl)
             if (inputType is InputType.LnUrlWithdraw) {
                 val requestData = inputType.data
                 val amountMsat = requestData.minWithdrawable
                 val comment = "Any comment"
-                sdk.withdrawLnurl(LnUrlWithdrawRequest(requestData, amountMsat, comment))
+                sdk.lnurlWithdraw(LnUrlWithdrawRequest(requestData, amountMsat, comment))
             }
         } catch (e: Exception) {
             // handle error
