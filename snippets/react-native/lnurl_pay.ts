@@ -17,7 +17,8 @@ const exampleLnurlPay = async () => {
     const lnUrlPayResult = await lnurlPay({
       data: input.data,
       amountMsat,
-      comment: 'comment'
+      comment: 'comment',
+      paymentLabel: 'label'
     })
   }
   // ANCHOR_END: lnurl-pay
