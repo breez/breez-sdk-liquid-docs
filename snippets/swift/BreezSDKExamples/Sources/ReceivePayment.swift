@@ -4,8 +4,8 @@ func receivePayment(sdk: BindingLiquidSdk) -> ReceivePaymentResponse? {
     // ANCHOR: receive-payment
     // Fetch the Receive limits
     let currentLimits = try? sdk.fetchLightningLimits()
-    print("Minimum amount: {} sats", currentLimits.receive.minSat);
-    print("Maximum amount: {} sats", currentLimits.receive.maxSat);
+    print("Minimum amount: {} sats", currentLimits?.receive.minSat);
+    print("Maximum amount: {} sats", currentLimits?.receive.maxSat);
 
     // Set the amount you wish the payer to send, which should be within the above limits
     let prepareReceiveResponse = try? sdk

@@ -5,8 +5,8 @@ func generateReceiveOnchainAddress(sdk: BindingLiquidSdk) -> String? {
     // ANCHOR: generate-receive-onchain-address
     // Fetch the Onchain Receive limits
     let currentLimits = try? sdk.fetchOnchainLimits()
-    print("Minimum amount allowed to deposit in sats: \(currentLimits.receive.minSat)")
-    print("Maximum amount allowed to deposit in sats: \(currentLimits.receive.maxSat)")
+    print("Minimum amount allowed to deposit in sats: \(currentLimits?.receive.minSat)")
+    print("Maximum amount allowed to deposit in sats: \(currentLimits?.receive.maxSat)")
 
     // Set the amount you wish the payer to send, which should be within the above limits
     let prepareResponse = try? sdk
