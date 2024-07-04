@@ -70,22 +70,6 @@ or
 yarn add @breeztech/react-native-breez-sdk
 ```
 
-## Go
-
-We recommend using our official Go package: [breez/breez-sdk-go](https://github.com/breez/breez-sdk-go).
-
-```console
-go get github.com/breez/breez-sdk-go
-```
-
-## C#
-
-We recommend using our official C# package: [Breez.Sdk](https://www.nuget.org/packages/Breez.Sdk).
-
-```console
-dotnet add package Breez.Sdk
-```
-
 ## rust
 
 We recommend to add breez sdk as a git dependency with a specific release tag.
@@ -108,11 +92,4 @@ dependencies:
   breez_sdk:
     git:
       url: https://github.com/breez/breez-sdk-flutter.git
-```
-## Python
-
-Use the latest package [here](https://pypi.org/project/breez-sdk/). 
-
-```console
-pip install breez_sdk
 ```
