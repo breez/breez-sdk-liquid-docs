@@ -3,6 +3,7 @@ import {
   prepareReceiveOnchain,
   listRefundables,
   receiveOnchain,
+  rescanOnchainSwaps,
   type RefundableSwap,
   refund
 } from '@breeztech/react-native-breez-liquid-sdk'
@@ -47,4 +48,14 @@ const exampleRefund = async (refundable: RefundableSwap, refundTxFeeRate: number
     satPerVbyte
   })
   // ANCHOR_END: execute-refund
+}
+
+const exampleRescanSwaps = async () => {
+  // ANCHOR: rescan-swaps
+  try {
+    await rescanOnchainSwaps()
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: rescan-swaps
 }
