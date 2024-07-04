@@ -8,17 +8,9 @@
 
 ## Nix
 
-Use
 ```
-npm view @breeztech/react-native-breez-liquid-sdk
-```
-to get the `dist.tarball`.
+yarn add @breeztech/react-native-breez-liquid-sdk
 
-Download the `dist.tarball` file to `snippets/react-native/packages/sdk-react-native.tgz`.
-
-Then
-
-```
 nix develop
 
 yarn
