@@ -2,23 +2,26 @@ use std::sync::Arc;
 
 use anyhow::Result;
 use breez_liquid_sdk::prelude::*;
+use log::info;
 
 async fn generate_receive_onchain_address(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: generate-receive-onchain-address
-    // Set the amount you wish the payer to send
+    // Fetch the Onchain Receive limits
+    let current_limits = sdk.fetch_onchain_limits().await?;
+    info!("Minimum amount: {} sats", current_limits.receive.min_sat);
+    info!("Maximum amount: {} sats", current_limits.receive.max_sat);
+
+    // Set the amount you wish the payer to send, which should be within the above limits
     let prepare_response = sdk
         .prepare_receive_onchain(&PrepareReceiveOnchainRequest {
-            amount_sat: 50_000,
-        }).await?;
+            payer_amount_sat: 50_000,
+        })
+        .await?;
 
     // If the fees are acceptable, continue to create the Onchain Receive Payment
     let receive_fees_sat = prepare_response.fees_sat;
 
-    let receive_onchain_response = sdk.receive_onchain(
-        &ReceiveOnchainRequest {
-            prepare_res: prepare_response
-        }
-    ).await?;
+    let receive_onchain_response = sdk.receive_onchain(&prepare_response).await?;
 
     // Send your funds to the below bitcoin address
     let address = receive_onchain_response.address;
@@ -57,9 +60,9 @@ async fn execute_refund(
 }
 
 async fn rescan_swaps(sdk: Arc<LiquidSdk>) -> Result<()> {
-  // ANCHOR: rescan-swaps
-  sdk.rescan_onchain_swaps().await?;
-  // ANCHOR_END: rescan-swaps
+    // ANCHOR: rescan-swaps
+    sdk.rescan_onchain_swaps().await?;
+    // ANCHOR_END: rescan-swaps
 
-  Ok(())
+    Ok(())
 }
