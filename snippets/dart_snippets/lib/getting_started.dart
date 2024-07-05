@@ -16,7 +16,8 @@ Future<void> initializeSDK() async {
   // Initializes SDK events & log streams.
   //
   // Call once on your Dart entrypoint file, e.g.; `lib/main.dart`.
-  breezSDK.initialize();
+  // Initialize library
+  await initialize();
 
   // Create the default config
   Uint8List seed = await breezSDK.mnemonicToSeed("<mnemonic words>");
