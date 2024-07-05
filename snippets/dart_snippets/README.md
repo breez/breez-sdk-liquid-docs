@@ -5,5 +5,7 @@
 2. Place the files in the folder `snippets/dart-snippets/packages/breez-liquid-sdk-flutter`
 3. Happy coding
 
+To use a local path to the flutter bindings, see the `dependency_overrides` section in `pubspec.yaml`.
+
 ## Nix
 Use the command `nix develop`
