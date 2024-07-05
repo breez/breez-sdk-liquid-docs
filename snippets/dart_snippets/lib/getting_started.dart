@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
@@ -19,24 +17,27 @@ Future<void> initializeSDK() async {
 
   // Create the default config
   Config config = defaultConfig(
-    network: LiquidNetwork.Mainnet
+    network: LiquidNetwork.mainnet,
   );
 
   // Customize the config object according to your needs
   config = config.copyWith(workingDir: "path to an existing directory");
 
   ConnectRequest connectRequest = ConnectRequest(mnemonic: mnemonic, config: config);
-  BindingLiquidSdk instance = await connect(req: connectRequest);
+
+  await breezLiquidSDK.connect(req: connectRequest);
+
   // ANCHOR_END: init-sdk
 }
 
 Future<void> fetchBalance(String lspId) async {
   // ANCHOR: fetch-balance
   GetInfoResponse? nodeState = await breezLiquidSDK.instance!.getInfo();
-  if (nodeState != null) {
-    BigInt balanceSat = nodeState.balanceSat;
-    BigInt pendingSendSat = nodeState.pendingSendSat;
-    BigInt pendingReceiveSat = nodeState.pendingReceiveSat;
-  }
+  BigInt balanceSat = nodeState.balanceSat;
+  BigInt pendingSendSat = nodeState.pendingSendSat;
+  BigInt pendingReceiveSat = nodeState.pendingReceiveSat;
   // ANCHOR_END: fetch-balance
+  print(balanceSat);
+  print(pendingSendSat);
+  print(pendingReceiveSat);
 }

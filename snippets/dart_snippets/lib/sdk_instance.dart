@@ -83,38 +83,48 @@ class BreezLiquidSDK {
     _breezEventsSubscription = _breezEventsStream?.listen(
       (event) async {
         if (event is liquid_sdk.LiquidSdkEvent_PaymentFailed) {
-          _logStreamController
-              .add(liquid_sdk.LogEntry(line: "Payment Failed. ${event.details.swapId}", level: "WARN"));
-          _paymentResultStream.addError(PaymentException(event.details));
+          _logStreamController.add(
+            liquid_sdk.LogEntry(line: "Payment Failed. ${event.details.swapId}", level: "WARN"),
+          );
+          _paymentResultStream.addError(
+            PaymentException(event.details),
+          );
         }
         if (event is liquid_sdk.LiquidSdkEvent_PaymentPending) {
-          _logStreamController
-              .add(liquid_sdk.LogEntry(line: "Payment Pending. ${event.details.swapId}", level: "INFO"));
+          _logStreamController.add(
+            liquid_sdk.LogEntry(line: "Payment Pending. ${event.details.swapId}", level: "INFO"),
+          );
           _paymentResultStream.add(event.details);
         }
         if (event is liquid_sdk.LiquidSdkEvent_PaymentRefunded) {
-          _logStreamController
-              .add(liquid_sdk.LogEntry(line: "Payment Refunded. ${event.details.swapId}", level: "INFO"));
+          _logStreamController.add(
+            liquid_sdk.LogEntry(line: "Payment Refunded. ${event.details.swapId}", level: "INFO"),
+          );
           _paymentResultStream.add(event.details);
         }
         if (event is liquid_sdk.LiquidSdkEvent_PaymentRefundPending) {
           _logStreamController.add(
-              liquid_sdk.LogEntry(line: "Pending Payment Refund. ${event.details.swapId}", level: "INFO"));
+            liquid_sdk.LogEntry(line: "Pending Payment Refund. ${event.details.swapId}", level: "INFO"),
+          );
           _paymentResultStream.add(event.details);
         }
         if (event is liquid_sdk.LiquidSdkEvent_PaymentSucceeded) {
-          _logStreamController
-              .add(liquid_sdk.LogEntry(line: "Payment Succeeded. ${event.details.swapId}", level: "INFO"));
+          _logStreamController.add(
+            liquid_sdk.LogEntry(line: "Payment Succeeded. ${event.details.swapId}", level: "INFO"),
+          );
           _paymentResultStream.add(event.details);
           await _fetchWalletData(sdk);
         }
         if (event is liquid_sdk.LiquidSdkEvent_PaymentWaitingConfirmation) {
-          _logStreamController.add(liquid_sdk.LogEntry(
-              line: "Payment Waiting Confirmation. ${event.details.swapId}", level: "INFO"));
+          _logStreamController.add(
+            liquid_sdk.LogEntry(line: "Payment Waiting Confirmation. ${event.details.swapId}", level: "INFO"),
+          );
           _paymentResultStream.add(event.details);
         }
         if (event is liquid_sdk.LiquidSdkEvent_Synced) {
-          _logStreamController.add(const liquid_sdk.LogEntry(line: "Received Synced event.", level: "INFO"));
+          _logStreamController.add(
+            const liquid_sdk.LogEntry(line: "Received Synced event.", level: "INFO"),
+          );
           await _fetchWalletData(sdk);
         }
       },
@@ -146,6 +156,26 @@ class PaymentException {
   final liquid_sdk.Payment details;
 
   const PaymentException(this.details);
+}
+
+extension ConfigCopyWith on liquid_sdk.Config {
+  liquid_sdk.Config copyWith({
+    String? liquidElectrumUrl,
+    String? bitcoinElectrumUrl,
+    String? workingDir,
+    liquid_sdk.LiquidNetwork? network,
+    BigInt? paymentTimeoutSec,
+    double? zeroConfMinFeeRate,
+  }) {
+    return liquid_sdk.Config(
+      liquidElectrumUrl: liquidElectrumUrl ?? this.liquidElectrumUrl,
+      bitcoinElectrumUrl: bitcoinElectrumUrl ?? this.bitcoinElectrumUrl,
+      workingDir: workingDir ?? this.workingDir,
+      network: network ?? this.network,
+      paymentTimeoutSec: paymentTimeoutSec ?? this.paymentTimeoutSec,
+      zeroConfMinFeeRate: zeroConfMinFeeRate ?? this.zeroConfMinFeeRate,
+    );
+  }
 }
 
 BreezLiquidSDK breezLiquidSDK = BreezLiquidSDK();

@@ -3,8 +3,7 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<List<FiatCurrency>> listFiatCurrencies() async {
   // ANCHOR: list-fiat-currencies
-  List<FiatCurrency> fiatCurrencyList = await breezLiquidSDK.instance!
-    .listFiatCurrencies();
+  List<FiatCurrency> fiatCurrencyList = await breezLiquidSDK.instance!.listFiatCurrencies();
   // ANCHOR_END: list-fiat-currencies
   return fiatCurrencyList;
 }
