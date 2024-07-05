@@ -1,5 +1,4 @@
-import 'package:flutter_breez_liquid/breez_liquid.dart';
-import 'package:flutter_breez_liquid/bridge_generated.dart';
+import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<OnchainPaymentLimitsResponse> getCurrentLimits() async {
   // ANCHOR: get-current-pay-onchain-limits

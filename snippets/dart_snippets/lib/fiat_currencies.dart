@@ -1,4 +1,5 @@
-import 'package:flutter_breez_liquid/bridge_generated.dart';
+import 'package:dart_snippets/sdk_instance.dart';
+import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<List<FiatCurrency>> listFiatCurrencies() async {
   // ANCHOR: list-fiat-currencies
