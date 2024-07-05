@@ -38,7 +38,7 @@ jobs:
       repository: breez/breez-liquid-sdk
       ref: ${{ needs.setup.outputs.sdk-ref }}
       package-version: ${{ needs.setup.outputs.package-version }}
-      packages-to-publish: '["csharp", "flutter", "golang", "react-native", "python", "swift"]'
+      packages-to-publish: '["csharp", "flutter", "golang", "react-native", "python"]'
       use-dummy-binaries: true
 
   check-rust:
