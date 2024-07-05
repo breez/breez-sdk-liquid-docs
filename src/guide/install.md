@@ -89,7 +89,11 @@ We recommend to add our official flutter package as a git dependency.
 
 ```yaml
 dependencies:
-  breez_sdk:
+  breez_liquid:
     git:
-      url: https://github.com/breez/breez-sdk-flutter.git
+      url: https://github.com/breez/breez-liquid-sdk-dart
+  flutter_breez_liquid:
+    git:
+      url: https://github.com/breez/breez-liquid-sdk-flutter
+  rxdart: ^0.28.0
 ```
