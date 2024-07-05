@@ -33,9 +33,9 @@ jobs:
   build-packages:
     needs: setup
     name: build packages
-    uses: breez/breez-sdk/.github/workflows/publish-all-platforms.yml@main
+    uses: breez/breez-liquid-sdk/.github/workflows/publish-all-platforms.yml@main
     with:
-      repository: breez/breez-sdk
+      repository: breez/breez-liquid-sdk
       ref: ${{ needs.setup.outputs.sdk-ref }}
       package-version: ${{ needs.setup.outputs.package-version }}
       packages-to-publish: '["csharp", "flutter", "golang", "react-native", "python"]'
@@ -110,7 +110,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: breez-sdk-flutter-${{ needs.setup.outputs.package-version }}
+          name: breez-liquid-sdk-flutter-${{ needs.setup.outputs.package-version }}
           path: snippets/dart_snippets/packages/breez-liquid-sdk-flutter
 
       - name: pub-get
