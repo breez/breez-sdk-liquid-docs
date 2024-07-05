@@ -11,10 +11,10 @@ on:
   workflow_dispatch:
     inputs:
       sdk-ref:
-        description: 'sdk commit/tag/branch reference. Defaults to main.'
+        description: 'sdk commit/tag/branch reference. Defaults to 0.1.2-dev4.'
         required: false
         type: string
-        default: main
+        default: 0.1.2-dev4
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -25,8 +25,10 @@ jobs:
     name: setup
     runs-on: ubuntu-latest
     outputs:
-      sdk-ref: ${{ inputs.sdk-ref || '08b2e5a6e2e095a8aaa1cdb7650b3b1b7348dc65' }}
-      package-version: '0.1.1'
+      # Used only for Rust snippets
+      sdk-ref: ${{ inputs.sdk-ref }}
+      # Used for RN and Flutter snippets
+      package-version: '0.1.2-dev4'
     steps:
       - run: echo "set pre-setup output variables"
 
@@ -111,7 +113,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: breez-sdk-flutter-${{ needs.setup.outputs.package-version }}
-          path: snippets/dart_snippets/packages/breez-sdk-flutter
+          path: snippets/dart_snippets/packages/breez-liquid-sdk-flutter
 
       - name: pub-get
         working-directory: snippets/dart_snippets
