@@ -14,8 +14,12 @@ const exampleGettingStarted = async () => {
     LiquidNetwork.MAINNET
   )
 
-  // Customize the config object according to your needs
-  config.workingDir = 'path to an existing directory'
+  // By default in React Native the workingDir is set to:
+  // `/<APPLICATION_SANDBOX_DIRECTORY>/breezLiquidSdk`
+  // You can change this to another writable directory or a
+  // subdirectory of the workingDir if managing multiple nodes.
+  console.log(`Working directory: ${config.workingDir}`)
+  // config.workingDir = "path to writable directory"
 
   const sdk = await connect({ mnemonic, config })
   // ANCHOR_END: init-sdk
