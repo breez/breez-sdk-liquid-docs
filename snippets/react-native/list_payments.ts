@@ -4,6 +4,6 @@ import {
 
 const exampleListPayments = async () => {
   // ANCHOR: list-payments
-  const payments = listPayments()
+  const payments = await listPayments()
   // ANCHOR_END: list-payments
 }
