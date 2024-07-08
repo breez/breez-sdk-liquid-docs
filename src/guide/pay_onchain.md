@@ -26,7 +26,7 @@ First, fetch the current Send Onchain limits:
 <section>
 
 ```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendOnchain.kt:get-current-pay-onchain-limits}}
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/payOnchain.kt:get-current-pay-onchain-limits}}
 ```
 </section>
 
@@ -81,7 +81,7 @@ The next step is to find out the fees:
 <section>
 
 ```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendOnchain.kt:prepare-pay-onchain}}
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/payOnchain.kt:prepare-pay-onchain}}
 ```
 </section>
 
@@ -130,7 +130,7 @@ Note that one of the arguments will be the result from the `prepare` call above.
 <section>
 
 ```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendOnchain.kt:start-reverse-swap}}
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/payOnchain.kt:start-reverse-swap}}
 ```
 </section>
 
