@@ -108,7 +108,7 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: breez-sdk-flutter-${{ needs.setup.outputs.package-version }}
           path: snippets/dart_snippets/packages/breez-sdk-flutter
@@ -137,7 +137,7 @@ jobs:
           node-version: 20.x
 
       - name: Download archived package
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: react-native-${{ needs.setup.outputs.package-version }}
           path: snippets/react-native/packages
