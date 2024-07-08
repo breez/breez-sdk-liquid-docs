@@ -17,7 +17,7 @@ Future<void> initializeSDK() async {
   // The Dart snippets included here rely on the example approach seen on sdk_instance.dart to manage wallet connection
   // and Liquid SDK streams. This approach also has essential helper methods to ensure wallet data is in sync.
   // Please see sdk_instance.dart for more details:
-  // https://github.com/breez/breez-sdk-liquid-docs/blob/main/snippets/dart_snippets/lib/sdk_instance.dart
+  // [sdk_instance.dart](https://github.com/breez/breez-sdk-liquid-docs/blob/main/snippets/dart_snippets/lib/sdk_instance.dart)
 
   // Create the default config
   String mnemonic = "<mnemonic words>";
