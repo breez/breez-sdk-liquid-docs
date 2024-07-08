@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # Used only for Rust snippets
-      sdk-ref: ${{ inputs.sdk-ref }}
+      sdk-ref: ${{ inputs.sdk-ref || '0.1.2-dev4' }}
       # Used for RN and Flutter snippets
       package-version: '0.1.2-dev4'
     steps:
@@ -112,7 +112,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: breez-sdk-flutter-${{ needs.setup.outputs.package-version }}
+          name: breez-liquid-sdk-flutter-${{ needs.setup.outputs.package-version }}
           path: snippets/dart_snippets/packages/breez-liquid-sdk-flutter
 
       - name: pub-get

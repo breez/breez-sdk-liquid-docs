@@ -1,0 +1,27 @@
+name: dart_snippets
+description: A sample command-line application.
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  breez_liquid:
+    git:
+      url: https://github.com/breez/breez-liquid-sdk-dart
+  flutter_breez_liquid:
+    git:
+      url: https://github.com/breez/breez-liquid-sdk-flutter
+  rxdart: ^0.28.0  
+
+dependency_overrides:
+  # Enable overrides below to work with Liquid SDK packages locally
+  #breez_liquid:
+  #  path: ../../../breez-liquid-sdk/packages/dart
+  #flutter_breez_liquid:
+  #  path: ../../../breez-liquid-sdk/packages/flutter
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.24.9
