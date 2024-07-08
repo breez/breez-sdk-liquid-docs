@@ -11,6 +11,9 @@ Future<void> initializeSDK() async {
   // BindingLiquidSdk instance = await connect(req: req);
   //
   // and is accessible throughout the app. There are various approaches on how to achieve this; creating a Singleton class using factory constructor, using state management libraries such as 'provider', 'GetX', 'Riverpod' and 'Redux' to name a few.
+  //
+  // Please see sdk_instance.dart for one approach of how to initialize the instance:
+  // https://github.com/breez/breez-sdk-liquid-docs/blob/main/snippets/dart_snippets/lib/sdk_instance.dart
 
   // Create the default config
   String mnemonic = "<mnemonic words>";
