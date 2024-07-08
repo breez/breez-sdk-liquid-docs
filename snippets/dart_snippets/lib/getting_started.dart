@@ -10,9 +10,13 @@ Future<void> initializeSDK() async {
   // ConnectRequest req = ConnectRequest(...);
   // BindingLiquidSdk instance = await connect(req: req);
   //
-  // and is accessible throughout the app. There are various approaches on how to achieve this; creating a Singleton class using factory constructor, using state management libraries such as 'provider', 'GetX', 'Riverpod' and 'Redux' to name a few.
+  // and is accessible throughout the app. There are various approaches on how to achieve this:
+  // creating a Singleton class using factory constructor, using state management libraries such as 'provider', 'GetX',
+  // 'Riverpod' and 'Redux' to name a few.
   //
-  // Please see sdk_instance.dart for one approach of how to initialize the instance:
+  // The Dart snippets included here rely on the example approach seen on sdk_instance.dart to manage wallet connection
+  // and Liquid SDK streams. This approach also has essential helper methods to ensure wallet data is in sync.
+  // Please see sdk_instance.dart for more details:
   // https://github.com/breez/breez-sdk-liquid-docs/blob/main/snippets/dart_snippets/lib/sdk_instance.dart
 
   // Create the default config
