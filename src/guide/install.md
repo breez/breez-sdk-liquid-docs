@@ -63,17 +63,17 @@ See [the example](https://github.com/breez/breez-sdk-examples/tree/main/Android)
 We recommend using the official npm package:
 
 ```console
-npm install @breeztech/react-native-breez-sdk
+npm install @breeztech/react-native-breez-liquid-sdk
 ```
 or
 ```console
-yarn add @breeztech/react-native-breez-sdk
+yarn add @breeztech/react-native-breez-liquid-sdk
 ```
 
 ## rust
 
 We recommend to add breez sdk as a git dependency with a specific release tag.
-Check https://github.com/breez/breez-sdk/releases for the latest version.
+Check https://github.com/breez/breez-liquid-sdk/releases for the latest version.
 
 ```toml
 [dependencies]

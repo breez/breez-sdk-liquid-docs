@@ -46,10 +46,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "6dfd0d06e5e955cb76d03726a8c843a67c11330b"
+      resolved-ref: "0f3bfcd2178939f99bb45ff894ed68245ed0cda7"
       url: "https://github.com/breez/breez-liquid-sdk-dart"
     source: git
-    version: "0.1.2-dev4"
+    version: "0.1.2-dev5"
   characters:
     dependency: transitive
     description:
@@ -132,10 +132,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "28a3d7da2271cb74c55f73afd6740ca61ad537b9"
+      resolved-ref: "ae79484d8098bf5f3f140b323ff44de9979e19ab"
       url: "https://github.com/breez/breez-liquid-sdk-flutter"
     source: git
-    version: "0.1.2-dev4"
+    version: "0.1.2-dev5"
   frontend_server_client:
     dependency: transitive
     description:
