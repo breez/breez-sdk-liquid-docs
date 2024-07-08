@@ -19,6 +19,11 @@ rm -rf package
 cd ..
 ```
 
+To use locally-generated bindings:
+- Replace `"@breeztech/react-native-breez-liquid-sdk": "^0.1.2-dev5"` in `package.json` with
+  - `"@breeztech/react-native-breez-liquid-sdk": "file:./packages/breez-liquid-sdk-react-native.tgz"`
+- run `yarn`
+
 ## Nix
 
 ```
