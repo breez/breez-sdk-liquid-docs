@@ -7,7 +7,6 @@ use breez_liquid_sdk::prelude::*;
 async fn getting_started() -> Result<Arc<LiquidSdk>> {
     // ANCHOR: init-sdk
     let mnemonic = Mnemonic::generate_in(Language::English, 12)?;
-    let seed = mnemonic.to_seed("");
 
     // Create the default config
     let mut config = LiquidSdk::default_config(LiquidNetwork::Mainnet);

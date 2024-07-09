@@ -1,0 +1,4 @@
+sync/
+.swiftpm
+.build
+*.sql
