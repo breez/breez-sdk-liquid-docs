@@ -10,7 +10,7 @@ Future<void> lnurlAuth() async {
 
   InputType inputType = await parse(input: lnurlAuthUrl);
   if (inputType is InputType_LnUrlAuth) {
-    LnUrlCallbackStatus result = await breezLiquidSDK.instance!.lnurlAuth(reqData: inputType.data);
+    LnUrlCallbackStatus result = await breezSDKLiquid.instance!.lnurlAuth(reqData: inputType.data);
     if (result is LnUrlCallbackStatus_Ok) {
       print("Successfully authenticated");
     } else {

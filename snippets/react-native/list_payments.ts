@@ -1,6 +1,6 @@
 import {
   listPayments
-} from '@breeztech/react-native-breez-liquid-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleListPayments = async () => {
   // ANCHOR: list-payments

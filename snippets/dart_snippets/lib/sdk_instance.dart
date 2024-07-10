@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart' as liquid_sdk;
 import 'package:rxdart/rxdart.dart';
 
-class BreezLiquidSDK {
+class BreezSDKLiquid {
   liquid_sdk.BindingLiquidSdk? instance;
 
   Future<liquid_sdk.BindingLiquidSdk> connect({
@@ -49,9 +49,9 @@ class BreezLiquidSDK {
     _breezLogStream ??= liquid_sdk.breezLogStream().asBroadcastStream();
   }
 
-  StreamSubscription<liquid_sdk.LiquidSdkEvent>? _breezEventsSubscription;
+  StreamSubscription<liquid_sdk.SdkEvent>? _breezEventsSubscription;
 
-  Stream<liquid_sdk.LiquidSdkEvent>? _breezEventsStream;
+  Stream<liquid_sdk.SdkEvent>? _breezEventsStream;
 
   void _initializeEventsStream(liquid_sdk.BindingLiquidSdk sdk) {
     _breezEventsStream ??= sdk.addEventListener().asBroadcastStream();
@@ -78,11 +78,11 @@ class BreezLiquidSDK {
   Stream<liquid_sdk.Payment> get paymentResultStream => _paymentResultStream.stream;
 
   /* TODO: Liquid - Log statements are added for debugging purposes, should be removed after early development stage is complete & events are behaving as expected.*/
-  /// Subscribes to LiquidSdkEvent's stream
+  /// Subscribes to SdkEvent's stream
   void _subscribeToEventsStream(liquid_sdk.BindingLiquidSdk sdk) {
     _breezEventsSubscription = _breezEventsStream?.listen(
       (event) async {
-        if (event is liquid_sdk.LiquidSdkEvent_PaymentFailed) {
+        if (event is liquid_sdk.SdkEvent_PaymentFailed) {
           _logStreamController.add(
             liquid_sdk.LogEntry(line: "Payment Failed. ${event.details.swapId}", level: "WARN"),
           );
@@ -90,38 +90,38 @@ class BreezLiquidSDK {
             PaymentException(event.details),
           );
         }
-        if (event is liquid_sdk.LiquidSdkEvent_PaymentPending) {
+        if (event is liquid_sdk.SdkEvent_PaymentPending) {
           _logStreamController.add(
             liquid_sdk.LogEntry(line: "Payment Pending. ${event.details.swapId}", level: "INFO"),
           );
           _paymentResultStream.add(event.details);
         }
-        if (event is liquid_sdk.LiquidSdkEvent_PaymentRefunded) {
+        if (event is liquid_sdk.SdkEvent_PaymentRefunded) {
           _logStreamController.add(
             liquid_sdk.LogEntry(line: "Payment Refunded. ${event.details.swapId}", level: "INFO"),
           );
           _paymentResultStream.add(event.details);
         }
-        if (event is liquid_sdk.LiquidSdkEvent_PaymentRefundPending) {
+        if (event is liquid_sdk.SdkEvent_PaymentRefundPending) {
           _logStreamController.add(
             liquid_sdk.LogEntry(line: "Pending Payment Refund. ${event.details.swapId}", level: "INFO"),
           );
           _paymentResultStream.add(event.details);
         }
-        if (event is liquid_sdk.LiquidSdkEvent_PaymentSucceeded) {
+        if (event is liquid_sdk.SdkEvent_PaymentSucceeded) {
           _logStreamController.add(
             liquid_sdk.LogEntry(line: "Payment Succeeded. ${event.details.swapId}", level: "INFO"),
           );
           _paymentResultStream.add(event.details);
           await _fetchWalletData(sdk);
         }
-        if (event is liquid_sdk.LiquidSdkEvent_PaymentWaitingConfirmation) {
+        if (event is liquid_sdk.SdkEvent_PaymentWaitingConfirmation) {
           _logStreamController.add(
             liquid_sdk.LogEntry(line: "Payment Waiting Confirmation. ${event.details.swapId}", level: "INFO"),
           );
           _paymentResultStream.add(event.details);
         }
-        if (event is liquid_sdk.LiquidSdkEvent_Synced) {
+        if (event is liquid_sdk.SdkEvent_Synced) {
           _logStreamController.add(
             const liquid_sdk.LogEntry(line: "Received Synced event.", level: "INFO"),
           );
@@ -165,7 +165,7 @@ extension ConfigCopyWith on liquid_sdk.Config {
     String? workingDir,
     liquid_sdk.LiquidNetwork? network,
     BigInt? paymentTimeoutSec,
-    double? zeroConfMinFeeRate,
+    int? zeroConfMinFeeRateMsat,
   }) {
     return liquid_sdk.Config(
       liquidElectrumUrl: liquidElectrumUrl ?? this.liquidElectrumUrl,
@@ -173,9 +173,9 @@ extension ConfigCopyWith on liquid_sdk.Config {
       workingDir: workingDir ?? this.workingDir,
       network: network ?? this.network,
       paymentTimeoutSec: paymentTimeoutSec ?? this.paymentTimeoutSec,
-      zeroConfMinFeeRate: zeroConfMinFeeRate ?? this.zeroConfMinFeeRate,
+      zeroConfMinFeeRateMsat: zeroConfMinFeeRateMsat ?? this.zeroConfMinFeeRateMsat,
     );
   }
 }
 
-BreezLiquidSDK breezLiquidSDK = BreezLiquidSDK();
+BreezSDKLiquid breezSDKLiquid = BreezSDKLiquid();

@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use anyhow::Result;
-use breez_liquid_sdk::prelude::*;
+use breez_sdk_liquid::prelude::*;
 use log::info;
 
 async fn get_current_limits(sdk: Arc<LiquidSdk>) -> Result<()> {

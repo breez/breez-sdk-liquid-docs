@@ -1,4 +1,4 @@
-import BreezLiquidSDK
+import BreezSDKLiquid
 
 
 func gettingStarted() throws -> BindingLiquidSdk? {

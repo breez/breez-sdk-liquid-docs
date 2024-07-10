@@ -1,4 +1,4 @@
-import BreezLiquidSDK
+import BreezSDKLiquid
 import Foundation
 
 func pay(sdk: BindingLiquidSdk) -> LnUrlPayResult? {

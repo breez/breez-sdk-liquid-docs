@@ -1,6 +1,6 @@
 package com.example.kotlinmpplib
 
-import breez_liquid_sdk.*
+import breez_sdk_liquid.*
 class GettingStarted {
     fun start() {
         // ANCHOR: init-sdk

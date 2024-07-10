@@ -19,7 +19,7 @@ Future<void> lnurlPay() async {
       comment: optionalComment,
       paymentLabel: optionalPaymentLabel,
     );
-    LnUrlPayResult result = await breezLiquidSDK.instance!.lnurlPay(req: req);
+    LnUrlPayResult result = await breezSDKLiquid.instance!.lnurlPay(req: req);
     print(result.data);
   }
   // ANCHOR_END: lnurl-pay

@@ -11,10 +11,10 @@ on:
   workflow_dispatch:
     inputs:
       sdk-ref:
-        description: 'sdk commit/tag/branch reference. Defaults to 0.1.2-dev5.'
+        description: 'sdk commit/tag/branch reference. Defaults to 0.1.2-dev6.'
         required: false
         type: string
-        default: 0.1.2-dev5
+        default: 0.1.2-dev6
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -26,18 +26,18 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # Used only for Rust snippets
-      sdk-ref: ${{ inputs.sdk-ref || '0.1.2-dev5' }}
+      sdk-ref: ${{ inputs.sdk-ref || '0.1.2-dev6' }}
       # Used for RN and Flutter snippets
-      package-version: '0.1.2-dev5'
+      package-version: '0.1.2-dev6'
     steps:
       - run: echo "set pre-setup output variables"
 
   build-packages:
     needs: setup
     name: build packages
-    uses: breez/breez-liquid-sdk/.github/workflows/publish-all-platforms.yml@main
+    uses: breez/breez-sdk-liquid/.github/workflows/publish-all-platforms.yml@main
     with:
-      repository: breez/breez-liquid-sdk
+      repository: breez/breez-sdk-liquid
       ref: ${{ needs.setup.outputs.sdk-ref }}
       package-version: ${{ needs.setup.outputs.package-version }}
       packages-to-publish: '["csharp", "flutter", "golang", "react-native", "python"]'
@@ -70,13 +70,13 @@ jobs:
       - name: temporarily get sdk
         uses: actions/checkout@v4
         with:
-          repository: breez/breez-liquid-sdk
+          repository: breez/breez-sdk-liquid
           ref: ${{ needs.setup.outputs.sdk-ref }}
-          path: breez-liquid-sdk
+          path: breez-sdk-liquid
 
       - id: rev-parse
         name: get proper rev
-        working-directory: breez-liquid-sdk
+        working-directory: breez-sdk-liquid
         run: |
           rev=$(git rev-parse HEAD)
           echo "$rev"
@@ -85,7 +85,7 @@ jobs:
       - name: set sdk version
         working-directory: snippets/rust
         run: |
-          cargo add --git https://github.com/breez/breez-liquid-sdk.git breez-liquid-sdk --rev "${{ steps.rev-parse.outputs.rev }}"
+          cargo add --git https://github.com/breez/breez-sdk-liquid.git breez-sdk-liquid --rev "${{ steps.rev-parse.outputs.rev }}"
 
       - name: clippy
         working-directory: snippets/rust
@@ -112,8 +112,8 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: breez-liquid-sdk-flutter-${{ needs.setup.outputs.package-version }}
-          path: snippets/dart_snippets/packages/breez-liquid-sdk-flutter
+          name: breez-sdk-liquid-flutter-${{ needs.setup.outputs.package-version }}
+          path: snippets/dart_snippets/packages/breez-sdk-liquid-flutter
 
       - name: pub-get
         working-directory: snippets/dart_snippets

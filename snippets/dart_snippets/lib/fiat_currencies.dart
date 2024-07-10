@@ -3,14 +3,14 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<List<FiatCurrency>> listFiatCurrencies() async {
   // ANCHOR: list-fiat-currencies
-  List<FiatCurrency> fiatCurrencyList = await breezLiquidSDK.instance!.listFiatCurrencies();
+  List<FiatCurrency> fiatCurrencyList = await breezSDKLiquid.instance!.listFiatCurrencies();
   // ANCHOR_END: list-fiat-currencies
   return fiatCurrencyList;
 }
 
 Future<Map<String, Rate>> fetchFiatRates() async {
   // ANCHOR: fetch-fiat-rates
-  final List<Rate> rates = await breezLiquidSDK.instance!.fetchFiatRates();
+  final List<Rate> rates = await breezSDKLiquid.instance!.fetchFiatRates();
   final fiatRatesMap = rates.fold<Map<String, Rate>>({}, (map, rate) {
     map[rate.coin] = rate;
     return map;

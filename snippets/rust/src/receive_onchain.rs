@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use anyhow::Result;
-use breez_liquid_sdk::prelude::*;
+use breez_sdk_liquid::prelude::*;
 use log::info;
 
 async fn generate_receive_onchain_address(sdk: Arc<LiquidSdk>) -> Result<()> {

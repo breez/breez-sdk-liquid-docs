@@ -1,4 +1,4 @@
-import BreezLiquidSDK
+import BreezSDKLiquid
 
 func receivePayment(sdk: BindingLiquidSdk) -> ReceivePaymentResponse? {
     // ANCHOR: receive-payment

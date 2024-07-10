@@ -1,6 +1,6 @@
 package com.example.kotlinmpplib
 
-import breez_liquid_sdk.*
+import breez_sdk_liquid.*
 class LnurlPay {
     fun lnurlPay(sdk: BindingLiquidSdk) {
         // ANCHOR: lnurl-pay

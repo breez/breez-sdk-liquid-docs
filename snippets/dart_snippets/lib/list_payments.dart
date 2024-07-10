@@ -3,7 +3,7 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<List<Payment>> listPayments() async {
   // ANCHOR: list-payments
-  List<Payment> paymentsList = await breezLiquidSDK.instance!.listPayments();
+  List<Payment> paymentsList = await breezSDKLiquid.instance!.listPayments();
   // ANCHOR_END: list-payments
   return paymentsList;
 }

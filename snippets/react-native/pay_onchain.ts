@@ -4,7 +4,7 @@ import {
   fetchOnchainLimits,
   preparePayOnchain,
   payOnchain
-} from '@breeztech/react-native-breez-liquid-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleGetCurrentLimits = async () => {
   // ANCHOR: get-current-pay-onchain-limits

@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use anyhow::Result;
 use bip39::{Language, Mnemonic};
-use breez_liquid_sdk::prelude::*;
+use breez_sdk_liquid::prelude::*;
 
 async fn getting_started() -> Result<Arc<LiquidSdk>> {
     // ANCHOR: init-sdk

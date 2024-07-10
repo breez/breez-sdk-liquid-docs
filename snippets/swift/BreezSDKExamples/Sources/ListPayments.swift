@@ -1,4 +1,4 @@
-import BreezLiquidSDK
+import BreezSDKLiquid
 import Foundation
 
 func listPayments(sdk: BindingLiquidSdk) -> [Payment]? {

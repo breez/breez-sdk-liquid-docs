@@ -6,7 +6,7 @@ import {
   rescanOnchainSwaps,
   type RefundableSwap,
   refund
-} from '@breeztech/react-native-breez-liquid-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleReceiveOnchain = async () => {
   // ANCHOR: generate-receive-onchain-address

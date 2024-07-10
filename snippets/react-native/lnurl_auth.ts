@@ -3,7 +3,7 @@ import {
   lnurlAuth,
   LnUrlCallbackStatusVariant,
   parse
-} from '@breeztech/react-native-breez-liquid-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleLnurlAuth = async () => {
   // ANCHOR: lnurl-auth

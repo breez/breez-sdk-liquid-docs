@@ -2,7 +2,7 @@ import {
   fetchLightningLimits,
   prepareReceivePayment,
   receivePayment
-} from '@breeztech/react-native-breez-liquid-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleReceiveLightningPayment = async () => {
   // ANCHOR: receive-payment

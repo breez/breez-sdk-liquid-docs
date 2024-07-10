@@ -2,7 +2,7 @@ import {
   InputTypeVariant,
   parse,
   lnurlWithdraw
-} from '@breeztech/react-native-breez-liquid-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleLnurlWithdraw = async () => {
   // ANCHOR: lnurl-withdraw

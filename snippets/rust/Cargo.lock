@@ -502,9 +502,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "breez-liquid-sdk"
+name = "breez-sdk-liquid"
 version = "0.0.1"
-source = "git+https://github.com/breez/breez-liquid-sdk?tag=0.1.2-dev2#16e09aff8a665d19d76576f005081c7b21e5cf2c"
+source = "git+https://github.com/breez/breez-sdk-liquid?tag=0.1.2-dev6#ce4e3199d5356697035976d1218481c53cf7f91d"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1597,7 +1597,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bip39",
- "breez-liquid-sdk",
+ "breez-sdk-liquid",
  "log",
  "tokio",
 ]

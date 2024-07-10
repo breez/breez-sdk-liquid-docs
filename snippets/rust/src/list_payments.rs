@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use anyhow::Result;
-use breez_liquid_sdk::prelude::*;
+use breez_sdk_liquid::prelude::*;
 
 async fn list_payments(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
     // ANCHOR: list-payments

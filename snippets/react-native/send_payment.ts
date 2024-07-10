@@ -1,7 +1,7 @@
 import {
   prepareSendPayment,
   sendPayment
-} from '@breeztech/react-native-breez-liquid-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleSendLightningPayment = async () => {
   // ANCHOR: send-payment

@@ -16,7 +16,7 @@ Future<void> lnurlWithdraw() async {
       amountMsat: amountMsat,
       description: "<description>",
     );
-    LnUrlWithdrawResult result = await breezLiquidSDK.instance!.lnurlWithdraw(req: req);
+    LnUrlWithdrawResult result = await breezSDKLiquid.instance!.lnurlWithdraw(req: req);
     print(result.data);
   }
   // ANCHOR_END: lnurl-withdraw

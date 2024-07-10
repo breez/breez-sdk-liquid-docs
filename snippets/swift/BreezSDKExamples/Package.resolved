@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "breez-liquid-sdk-swift",
+      "identity" : "breez-sdk-liquid-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/breez/breez-liquid-sdk-swift",
+      "location" : "https://github.com/breez/breez-sdk-liquid-swift",
       "state" : {
-        "revision" : "69b8bf0400c56ffb780eea03d3a6623dbe7a259d",
-        "version" : "0.1.2-dev5"
+        "revision" : "c090bb67e2946b5609a4909f2a6b5660e3d9cade",
+        "version" : "0.1.2-dev6"
       }
     },
     {
