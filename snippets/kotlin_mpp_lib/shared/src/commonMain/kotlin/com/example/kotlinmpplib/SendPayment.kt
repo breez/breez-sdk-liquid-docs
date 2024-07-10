@@ -1,6 +1,6 @@
 package com.example.kotlinmpplib
 
-import breez_liquid_sdk.*
+import breez_sdk_liquid.*
 class SendPayment {
     fun sendPayment(sdk: BindingLiquidSdk) {
         // ANCHOR: send-payment

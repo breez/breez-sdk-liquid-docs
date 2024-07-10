@@ -10,12 +10,12 @@ mod receive_payment;
 mod send_payment;
 
 use anyhow::Result;
-use breez_liquid_sdk::prelude::*;
+use breez_sdk_liquid::prelude::*;
 use log::info;
 
 struct AppEventListener {}
 impl EventListener for AppEventListener {
-    fn on_event(&self, e: LiquidSdkEvent) {
+    fn on_event(&self, e: SdkEvent) {
         info!("Received Breez event: {e:?}");
     }
 }

@@ -3,7 +3,7 @@ import {
   connect,
   LiquidNetwork,
   getInfo
-} from '@breeztech/react-native-breez-liquid-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleGettingStarted = async () => {
   // ANCHOR: init-sdk
@@ -15,7 +15,7 @@ const exampleGettingStarted = async () => {
   )
 
   // By default in React Native the workingDir is set to:
-  // `/<APPLICATION_SANDBOX_DIRECTORY>/breezLiquidSdk`
+  // `/<APPLICATION_SANDBOX_DIRECTORY>/breezSdkLiquid`
   // You can change this to another writable directory or a
   // subdirectory of the workingDir if managing multiple nodes.
   console.log(`Working directory: ${config.workingDir}`)

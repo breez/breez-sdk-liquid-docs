@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use anyhow::Result;
-use breez_liquid_sdk::prelude::*;
+use breez_sdk_liquid::prelude::*;
 
 async fn list_supported_fiat_currencies(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: list-fiat-currencies

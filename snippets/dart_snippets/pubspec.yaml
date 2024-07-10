@@ -9,18 +9,18 @@ environment:
 dependencies:
   breez_liquid:
     git:
-      url: https://github.com/breez/breez-liquid-sdk-dart
+      url: https://github.com/breez/breez-sdk-liquid-dart
   flutter_breez_liquid:
     git:
-      url: https://github.com/breez/breez-liquid-sdk-flutter
+      url: https://github.com/breez/breez-sdk-liquid-flutter
   rxdart: ^0.28.0  
 
 dependency_overrides:
   # Enable overrides below to work with Liquid SDK packages locally
   #breez_liquid:
-  #  path: ../../../breez-liquid-sdk/packages/dart
+  #  path: ../../../breez-sdk-liquid/packages/dart
   #flutter_breez_liquid:
-  #  path: ../../../breez-liquid-sdk/packages/flutter
+  #  path: ../../../breez-sdk-liquid/packages/flutter
 
 dev_dependencies:
   lints: ^3.0.0

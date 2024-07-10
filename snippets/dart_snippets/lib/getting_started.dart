@@ -32,14 +32,14 @@ Future<void> initializeSDK() async {
 
   ConnectRequest connectRequest = ConnectRequest(mnemonic: mnemonic, config: config);
 
-  await breezLiquidSDK.connect(req: connectRequest);
+  await breezSDKLiquid.connect(req: connectRequest);
 
   // ANCHOR_END: init-sdk
 }
 
 Future<void> fetchBalance(String lspId) async {
   // ANCHOR: fetch-balance
-  GetInfoResponse? nodeState = await breezLiquidSDK.instance!.getInfo();
+  GetInfoResponse? nodeState = await breezSDKLiquid.instance!.getInfo();
   BigInt balanceSat = nodeState.balanceSat;
   BigInt pendingSendSat = nodeState.pendingSendSat;
   BigInt pendingReceiveSat = nodeState.pendingReceiveSat;

@@ -4,12 +4,12 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 Future<ReceiveOnchainResponse> generateReceiveOnchainAddress() async {
   // ANCHOR: generate-receive-onchain-address
   // Fetch the Onchain Receive limits
-  OnchainPaymentLimitsResponse currentLimits = await breezLiquidSDK.instance!.fetchOnchainLimits();
+  OnchainPaymentLimitsResponse currentLimits = await breezSDKLiquid.instance!.fetchOnchainLimits();
   print("Minimum amount: ${currentLimits.receive.minSat} sats");
   print("Maximum amount: ${currentLimits.receive.maxSat} sats");
 
   // Set the amount you wish the payer to send, which should be within the above limits
-  PrepareReceiveOnchainResponse prepareResponse = await breezLiquidSDK.instance!.prepareReceiveOnchain(
+  PrepareReceiveOnchainResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceiveOnchain(
     req: PrepareReceiveOnchainRequest(
       payerAmountSat: 50000 as BigInt,
     ),
@@ -18,7 +18,7 @@ Future<ReceiveOnchainResponse> generateReceiveOnchainAddress() async {
   // If the fees are acceptable, continue to create the Onchain Receive Payment
   BigInt receiveFeesSat = prepareResponse.feesSat;
 
-  ReceiveOnchainResponse receiveOnchainResponse = await breezLiquidSDK.instance!.receiveOnchain(
+  ReceiveOnchainResponse receiveOnchainResponse = await breezSDKLiquid.instance!.receiveOnchain(
     req: prepareResponse,
   );
 
@@ -34,7 +34,7 @@ Future<ReceiveOnchainResponse> generateReceiveOnchainAddress() async {
 
 Future<List<RefundableSwap>> listRefundables() async {
   // ANCHOR: list-refundables
-  List<RefundableSwap> refundables = await breezLiquidSDK.instance!.listRefundables();
+  List<RefundableSwap> refundables = await breezSDKLiquid.instance!.listRefundables();
   // ANCHOR_END: list-refundables
   return refundables;
 }
@@ -52,7 +52,7 @@ Future<RefundResponse> executeRefund({
     refundAddress: destinationAddress,
     satPerVbyte: satPerVbyte,
   );
-  RefundResponse resp = await breezLiquidSDK.instance!.refund(req: req);
+  RefundResponse resp = await breezSDKLiquid.instance!.refund(req: req);
   print(resp.refundTxId);
   // ANCHOR_END: execute-refund
   return resp;
@@ -60,6 +60,6 @@ Future<RefundResponse> executeRefund({
 
 Future rescanSwaps() async {
   // ANCHOR: rescan-swaps
-  await breezLiquidSDK.instance!.rescanOnchainSwaps();
+  await breezSDKLiquid.instance!.rescanOnchainSwaps();
   // ANCHOR_END: rescan-swaps
 }
