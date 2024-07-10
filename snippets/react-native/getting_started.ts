@@ -21,7 +21,7 @@ const exampleGettingStarted = async () => {
   console.log(`Working directory: ${config.workingDir}`)
   // config.workingDir = "path to writable directory"
 
-  const sdk = await connect({ mnemonic, config })
+  await connect({ mnemonic, config })
   // ANCHOR_END: init-sdk
 }
 
