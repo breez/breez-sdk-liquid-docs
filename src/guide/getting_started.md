@@ -128,3 +128,4 @@ At any point we can fetch our balance:
 </custom-tabs>
 
 You are now ready to receive a Lightning [payment](guide/payments.md).
+
