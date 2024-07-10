@@ -17,7 +17,7 @@ Join this [telegram group](https://t.me/breezsdk) or email us at <contact@breez.
 
 ## Installing
 
-Breez Liquid SDK is available in several platforms. Follow the [Installing](guide/install.md) page for instructions on how to install on your platform.
+Breez Liquid SDK is available in several platforms. Follow the [Installing](./install.md) page for instructions on how to install on your platform.
 
 ## Connecting
 
@@ -127,4 +127,4 @@ At any point we can fetch our balance:
 </section>
 </custom-tabs>
 
-You are now ready to receive a Lightning [payment](guide/payments.md).
+You are now ready to receive a Lightning [payment](./payments.md).
