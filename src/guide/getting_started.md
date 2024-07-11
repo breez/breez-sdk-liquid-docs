@@ -1,11 +1,33 @@
-# Getting started
+# Getting Started
 
-The Breez SDK enables mobile developers to integrate Lightning and bitcoin payments into their apps with a very shallow learning curve. The use cases are endless – from social apps that want to integrate tipping between users to content-creation apps interested in adding bitcoin monetization. Crucially, this SDK is an end-to-end, non-custodial, drop-in solution powered by Liquid, on-chain interoperability, third-party fiat on-ramps, and other services users and operators need.
+## What is the Breez SDK?
 
-The Breez SDK provides the following services:
+The Breez SDK provides developers with a end-to-end solution for integrating self-custodial Lightning payments into their apps and services. It eliminates the need for third-parties, simplifies the complexities of Bitcoin and Lightning, and enables seamless onboarding for billions of users to the future of peer-to-peer payments.
 
-* Sending payments (via various protocols such as: bolt11, keysend, lnurl-pay, lightning address, btc address, etc.)
-* Receiving payments (via various protocols such as: bolt11, lnurl-withdraw, btc address, etc.)
+To provide the best experience for their end-users, developers can choose between the following implementations:
+
+* [Greenlight](https://sdk-doc.breez.technology/#getting-started) 
+* [Liquid](guide/getting_started.md#what-is-the-liquid-implementation)
+
+## What is the Liquid implementation?
+
+The Liquid implementation is a nodeless Lightning integration. It offers a self-custodial, end-to-end solution for developers, utilizing the Liquid Network with on-chain interoperability and third-party fiat on-ramps.
+
+The Liquid implementation provides the following services:
+
+* Sending payments
+  * Via various protocols such as: bolt11, lnurl-pay, lightning address, btc address, etc.
+
+* Receiving payments
+  * Via various protocols such as: bolt11, lnurl-withdraw, btc address, etc.
+
+### Features of the Liquid implementation
+
+- No channel management or LSP required
+- No setup fees for end-users 
+- Trust profile is with the Liquid side-chain
+- Minimum payment size of 1,000 sats
+- Low, static Liquid on-chain fees
   
 ## Pricing
 
