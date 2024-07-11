@@ -7,7 +7,7 @@ The Breez SDK provides developers with a end-to-end solution for integrating sel
 To provide the best experience for their end-users, developers can choose between the following implementations:
 
 * [Greenlight](https://sdk-doc.breez.technology/#getting-started) 
-* [Liquid](guide/getting_started.md#what-is-the-liquid-implementation)
+* [Liquid](https://sdk-doc-liquid.breez.technology/#what-is-the-liquid-implementation)
 
 ## What is the Liquid implementation?
 
