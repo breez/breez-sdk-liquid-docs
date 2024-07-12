@@ -103,7 +103,7 @@ By default, the config working directory is set to `./.data`. Some platforms may
 </div>
 
 
-## Getting the Wallet State
+## Fetching the Wallet State
 
 At any point we can fetch our balance:
 
