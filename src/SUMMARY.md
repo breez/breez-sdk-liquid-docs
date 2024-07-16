@@ -2,6 +2,7 @@
 
 # API Overview
 
+- [About the Breez SDK - Liquid](guide/about_breez_sdk_liquid.md)
 - [Getting Started](guide/getting_started.md)
 - [Installing](guide/install.md)
 - [Paying in Lightning](guide/payments.md)
