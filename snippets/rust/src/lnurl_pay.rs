@@ -14,12 +14,14 @@ async fn pay(sdk: Arc<LiquidSdk>) -> Result<()> {
         let amount_msat = pd.min_sendable;
         let optional_comment = Some("<comment>".to_string());
         let optional_payment_label = Some("<label>".to_string());
+        let optional_validate_success_action_url = Some(true);
 
         sdk.lnurl_pay(LnUrlPayRequest {
             data: pd,
             amount_msat,
             comment: optional_comment,
             payment_label: optional_payment_label,
+            validate_success_action_url: optional_validate_success_action_url,
         })
         .await?;
     }

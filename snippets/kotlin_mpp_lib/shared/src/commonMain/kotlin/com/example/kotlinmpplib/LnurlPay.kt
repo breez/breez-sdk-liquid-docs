@@ -15,7 +15,13 @@ class LnurlPay {
                 val amountMsat = requestData.minSendable
                 val optionalComment = "<comment>";
                 val optionalPaymentLabel = "<label>";
-                val req = LnUrlPayRequest(requestData, amountMsat, optionalComment, optionalPaymentLabel)
+                val optionalValidateSuccessActionUrl = true;
+                val req = LnUrlPayRequest(
+                    requestData, 
+                    amountMsat, 
+                    optionalComment, 
+                    optionalPaymentLabel, 
+                    optionalValidateSuccessActionUrl)
                 sdk.lnurlPay(req)
             }
         } catch (e: Exception) {
