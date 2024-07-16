@@ -59,6 +59,4 @@ The Breez SDK is free for developers.
 
 Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or email us at <contact@breez.technology>.
 
----
-
 ### Ready to take the plunge? [Get started.](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)
