@@ -1,4 +1,4 @@
-# About the Breez SDK - Liquid
+# About the Breez SDK - *Liquid*
 
 ## **What is the Breez SDK?**
 
@@ -6,8 +6,9 @@ The Breez SDK provides developers with a end-to-end solution for integrating sel
 
 To provide the best experience for their end-users, developers can choose between the following implementations:
 
-- [Breez SDK - Liquid](https://sdk-doc-liquid.breez.technology/)
-- [Breez SDK - Greenlight](https://sdk-doc.breez.technology/)
+- [Breez SDK - *Liquid*](https://sdk-doc-liquid.breez.technology/)
+- [Breez SDK - *Greenlight*](https://sdk-doc.breez.technology/)
+
 
 ## **What is the *Liquid* implementation?**
 
@@ -21,14 +22,15 @@ The *Liquid* implementation is a nodeless Lightning integration. It offers a sel
 
 **Key Features**
 
-- [x]  On-chain interoperability
-- [x]  LNURL functionality
-- [x]  Multi-app support
-- [x]  Multi-device support
-- [x]  Real-time state backup
-- [x]  Keys are only held by users
-- [x]  Fiat on-ramps
-- [x]  Open-source
+- [x] On-chain interoperability
+- [x] LNURL functionality
+- [x] Multi-app support
+- [x] Multi-device support
+- [x] Real-time state backup
+- [x] Keys are only held by users
+- [x] Fiat on-ramps
+- [x] Open-source
+
 
 ## How does the *Liquid* implementation work?
 
@@ -40,7 +42,8 @@ When sending a payment the SDK performs a submarine swap, converting L-BTC from 
 
 When receiving a payment, the SDK performs a reverse submarine swap, converting incoming sats into L-BTC, and then deposits them in the user’s Liquid wallet.
 
-## **Differences between the Liquid and Greenlight implementations**
+
+## **Differences between implementations**
 
 | *Liquid* Implementation | *Greenlight* Implementation |
 | --- | --- |
@@ -51,12 +54,16 @@ When receiving a payment, the SDK performs a reverse submarine swap, converting 
 | Static Liquid on-chain fees | Setup costs are correlated to Bitcoin mining fees |
 | Doesn’t require an API key | Requires an API key |
 
+
 ## Pricing
 
-The Breez SDK is free for developers. 
+The Breez SDK is **free** for developers. 
+
 
 ## Support
 
 Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or email us at <contact@breez.technology>.
 
-### Ready to take the plunge? [Get started.](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)
+
+
+### Ready to light up your app? [Get started.](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)
