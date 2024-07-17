@@ -27,9 +27,9 @@ const exampleGettingStarted = async () => {
 
 const exampleFetchNodeInfo = async () => {
   // ANCHOR: fetch-balance
-  const nodeState = await getInfo()
-  const balanceSat = nodeState.balanceSat
-  const pendingSendSat = nodeState.pendingSendSat
-  const pendingReceiveSat = nodeState.pendingReceiveSat
+  const walletInfo = await getInfo()
+  const balanceSat = walletInfo.balanceSat
+  const pendingSendSat = walletInfo.pendingSendSat
+  const pendingReceiveSat = walletInfo.pendingReceiveSat
   // ANCHOR_END: fetch-balance
 }
