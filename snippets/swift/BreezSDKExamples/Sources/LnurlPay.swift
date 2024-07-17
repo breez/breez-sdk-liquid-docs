@@ -10,7 +10,7 @@ func pay(sdk: BindingLiquidSdk) -> LnUrlPayResult? {
     let lnurlPayUrl = "lightning@address.com"
     if let inputType = try? parse(input: lnurlPayUrl) {
         if case.lnUrlPay(let `data`) = inputType {
-            let amountMSat = data.minSendable
+            let amountMsat = data.minSendable
             let optionalComment = "<comment>"
             let optionalPaymentLabel = "<label>"
             let optionalValidateSuccessActionUrl = true
@@ -21,7 +21,7 @@ func pay(sdk: BindingLiquidSdk) -> LnUrlPayResult? {
                 paymentLabel: optionalPaymentLabel, 
                 validateSuccessActionUrl: optionalValidateSuccessActionUrl
             )
-            response = try? sdk.payLnurl(req: req)
+            response = try? sdk.lnurlPay(req: req)
         }
     }
     // ANCHOR_END: lnurl-pay
