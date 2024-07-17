@@ -1,5 +1,4 @@
 import {
-  type Limits,
   type PreparePayOnchainResponse,
   fetchOnchainLimits,
   preparePayOnchain,

@@ -14,11 +14,15 @@ const exampleLnurlPay = async () => {
   const input = await parse(lnurlPayUrl)
   if (input.type === InputTypeVariant.LN_URL_PAY) {
     const amountMsat = input.data.minSendable
+    const optionalComment = '<comment>'
+    const optionalPaymentLabel = '<label>'
+    const optionalValidateSuccessActionUrl = true
     const lnUrlPayResult = await lnurlPay({
       data: input.data,
       amountMsat,
-      comment: 'comment',
-      paymentLabel: 'label'
+      comment: optionalComment,
+      paymentLabel: optionalPaymentLabel,
+      validateSuccessActionUrl: optionalValidateSuccessActionUrl
     })
   }
   // ANCHOR_END: lnurl-pay

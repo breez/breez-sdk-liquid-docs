@@ -8,7 +8,7 @@ let package = Package(
     platforms: [.macOS(.v14)],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.3"),
-        .package(url: "https://github.com/breez/breez-sdk-liquid-swift", from:"0.1.2-dev6")
+        .package(url: "https://github.com/breez/breez-sdk-liquid-swift", from:"0.1.3-rc2")
         // To use a local version of breez-sdk-liquid, comment-out the above and un-comment:
         // .package(name: "bindings-swift", path: "/local-path/breez-sdk-liquid/lib/bindings/langs/swift")
     ],

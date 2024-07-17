@@ -10,7 +10,7 @@
         "compile": "tsc"
     },
     "dependencies": {
-        "@breeztech/react-native-breez-sdk-liquid": "^0.1.2-dev6",
+        "@breeztech/react-native-breez-sdk-liquid": "^0.1.3-rc2",
         "react": "18.1.0",
         "react-native": "0.70.6"
     },

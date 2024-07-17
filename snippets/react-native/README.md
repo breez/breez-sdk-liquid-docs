@@ -20,7 +20,7 @@ cd ..
 ```
 
 To use locally-generated bindings:
-- Replace `"@breeztech/react-native-breez-sdk-liquid": "^0.1.2-dev6"` in `package.json` with
+- Replace `"@breeztech/react-native-breez-sdk-liquid": "^0.1.3-rc2"` in `package.json` with
   - `"@breeztech/react-native-breez-sdk-liquid": "file:./packages/breez-sdk-liquid-react-native.tgz"`
 - run `yarn`
 
