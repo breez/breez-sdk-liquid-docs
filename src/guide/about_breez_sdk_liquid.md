@@ -1,8 +1,8 @@
 # About the Breez SDK - *Liquid*
 
-## **What is the Breez SDK?**
+## **What Is the Breez SDK?**
 
-The Breez SDK provides developers with a end-to-end solution for integrating self-custodial Lightning payments into their apps and services. It eliminates the need for third-parties, simplifies the complexities of Bitcoin and Lightning, and enables seamless onboarding for billions of users to the future of peer-to-peer payments.
+The Breez SDK provides developers with an end-to-end solution for integrating self-custodial Lightning payments into their apps and services. It eliminates the need for third-parties, simplifies the complexities of Bitcoin and Lightning, and enables seamless onboarding for billions of users to the future of peer-to-peer payments.
 
 To provide the best experience for their end-users, developers can choose between the following implementations:
 
@@ -10,7 +10,7 @@ To provide the best experience for their end-users, developers can choose betwee
 - [Breez SDK - *Greenlight*](https://sdk-doc.breez.technology/)
 
 
-## **What is the *Liquid* implementation?**
+## **What Is the *Liquid* implementation?**
 
 The *Liquid* implementation is a nodeless Lightning integration. It offers a self-custodial, end-to-end solution for integrating Lightning payments, utilizing the Liquid Network with on-chain interoperability and third-party fiat on-ramps.
 
@@ -32,7 +32,7 @@ The *Liquid* implementation is a nodeless Lightning integration. It offers a sel
 - [x] Open-source
 
 
-## How does the *Liquid* implementation work?
+## How Does the *Liquid* Implementation Work?
 
 The *Liquid* implementation uses submarine swaps and reverse submarine swaps to send and receive payments, enabling funds to move frictionlessly between the Lightning Network and the Liquid sidechain.
 
@@ -43,7 +43,7 @@ When sending a payment the SDK performs a submarine swap, converting L-BTC from 
 When receiving a payment, the SDK performs a reverse submarine swap, converting incoming sats into L-BTC, and then deposits them in the user’s Liquid wallet.
 
 
-## **Differences between implementations**
+## **Differences Between Implementations**
 
 | *Liquid* Implementation | *Greenlight* Implementation |
 | --- | --- |
