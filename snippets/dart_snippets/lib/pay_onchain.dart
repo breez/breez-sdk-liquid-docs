@@ -20,9 +20,30 @@ Future<PreparePayOnchainResponse> preparePayOnchain() async {
   );
 
   // Check if the fees are acceptable before proceeding
-  BigInt feesSat = prepareRes.feesSat;
+  BigInt totalFeesSat = prepareRes.totalFeesSat;
   // ANCHOR_END: prepare-pay-onchain
-  print(feesSat);
+  print(totalFeesSat);
+  return prepareRes;
+}
+
+Future<PreparePayOnchainResponse> preparePayOnchainFeeRate() async {
+  // ANCHOR: prepare-pay-onchain-fee-rate
+  int optionalSatPerVbyte = 21;
+
+  PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
+    receiverAmountSat: 5000 as BigInt,
+    satPerVbyte: optionalSatPerVbyte,
+  );
+  PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
+    req: preparePayOnchainRequest,
+  );
+
+  // Check if the fees are acceptable before proceeding
+  BigInt claimFeesSat = prepareRes.claimFeesSat;
+  BigInt totalFeesSat = prepareRes.totalFeesSat;
+  // ANCHOR_END: prepare-pay-onchain-fee-rate
+  print(claimFeesSat);
+  print(totalFeesSat);
   return prepareRes;
 }
 

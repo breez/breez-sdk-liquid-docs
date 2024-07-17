@@ -26,11 +26,30 @@ const examplePreparePayOnchain = async () => {
     })
 
     // Check if the fees are acceptable before proceeding
-    const feesSat = prepareRes.feesSat
+    const totalFeesSat = prepareRes.totalFeesSat
   } catch (err) {
     console.error(err)
   }
   // ANCHOR_END: prepare-pay-onchain
+}
+
+const examplePreparePayOnchainFeeRate = async () => {
+  // ANCHOR: prepare-pay-onchain-fee-rate
+  try {
+    const optionalSatPerVbyte = 21
+
+    const prepareRes = await preparePayOnchain({
+      receiverAmountSat: 5_000,
+      satPerVbyte: optionalSatPerVbyte
+    })
+
+    // Check if the fees are acceptable before proceeding
+    const claimFeesSat = prepareRes.claimFeesSat
+    const totalFeesSat = prepareRes.totalFeesSat
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: prepare-pay-onchain-fee-rate
 }
 
 const examplePayOnchain = async (prepareRes: PreparePayOnchainResponse) => {
