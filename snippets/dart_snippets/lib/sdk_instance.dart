@@ -33,7 +33,8 @@ class BreezSDKLiquid {
   }
 
   Future<List<liquid_sdk.Payment>> _listPayments(liquid_sdk.BindingLiquidSdk sdk) async {
-    final paymentsList = await sdk.listPayments();
+    liquid_sdk.ListPaymentsRequest req = liquid_sdk.ListPaymentsRequest();
+    final paymentsList = await sdk.listPayments(req: req);
     _paymentsController.add(paymentsList);
     return paymentsList;
   }
