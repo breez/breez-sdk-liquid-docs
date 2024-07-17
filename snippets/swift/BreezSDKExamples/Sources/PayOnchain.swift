@@ -19,9 +19,25 @@ func preparePayOnchain(sdk: BindingLiquidSdk, currentLimits: Limits) -> PrepareP
 
     if let response = prepareResponse {
         // Check if the fees are acceptable before proceeding
-        print("Payer fees, in sats: \(response.feesSat)")
+        print("Payer fees, in sats: \(response.totalFeesSat)")
     }
     // ANCHOR_END: prepare-pay-onchain
+    return prepareResponse
+}
+
+func preparePayOnchainFeeRate(sdk: BindingLiquidSdk, currentLimits: Limits) -> PreparePayOnchainResponse? {
+    // ANCHOR: prepare-pay-onchain-fee-rate
+    let optionalSatPerVbyte = UInt32(21)
+
+    let prepareRequest = PreparePayOnchainRequest(receiverAmountSat: 5_000, satPerVbyte: optionalSatPerVbyte)
+    let prepareResponse = try? sdk.preparePayOnchain(req: prepareRequest)
+
+    if let response = prepareResponse {
+        // Check if the fees are acceptable before proceeding
+        print("Payer claim fees, in sats: \(response.claimFeesSat)")
+        print("Payer total fees, in sats: \(response.totalFeesSat)")
+    }
+    // ANCHOR_END: prepare-pay-onchain-fee-rate
     return prepareResponse
 }
 

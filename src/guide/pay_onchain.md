@@ -102,6 +102,49 @@ The next step is to find out the fees:
 </section>
 </custom-tabs>
 
+If you want to set a custom fee rate when the Bitcoin transaction is claimed:
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/pay_onchain.rs:prepare-pay-onchain-fee-rate}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/PayOnchain.swift:prepare-pay-onchain-fee-rate}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/payOnchain.kt:prepare-pay-onchain-fee-rate}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/pay_onchain.ts:prepare-pay-onchain-fee-rate}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/pay_onchain.dart:prepare-pay-onchain-fee-rate}}
+```
+</section>
+</custom-tabs>
 
 ## Executing the Swap
 
