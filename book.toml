@@ -5,7 +5,8 @@ src = "src"
 title = "Breez SDK - Liquid"
 
 [output.html]
-theme="theme"
+theme = "theme"
+additional-css = ["task-lists.css"]
 additional-js = ["tabs.js"]
 git-repository-url = "https://github.com/breez/breez-sdk-liquid-docs"
 edit-url-template = "https://github.com/breez/breez-sdk-liquid-docs/edit/main/{path}"
