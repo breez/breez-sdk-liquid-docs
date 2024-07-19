@@ -36,7 +36,7 @@ The *Liquid* implementation is a nodeless Lightning integration. It offers a sel
 
 The *Liquid* implementation uses submarine swaps and reverse submarine swaps to send and receive payments, enabling funds to move frictionlessly between the Lightning Network and the Liquid sidechain.
 
-![LiquidInfographic](../images/c600418f-9d0b-44c7-83c0-879681d51fa2.png)
+![Breez SDK - Liquid](../images/BreezSDK_Liquid.png)
 
 When sending a payment the SDK performs a submarine swap, converting L-BTC from a user’s Liquid wallet into sats on the Lightning Network, and sends them to the recipient. 
 
