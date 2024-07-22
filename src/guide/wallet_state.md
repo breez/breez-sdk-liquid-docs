@@ -1,6 +1,6 @@
 # Fetching the Wallet State
 
-At any point we can fetch our balance:
+Once connected, the balance can be retrieved at any time.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
