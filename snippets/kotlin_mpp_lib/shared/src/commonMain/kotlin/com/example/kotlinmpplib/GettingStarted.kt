@@ -74,7 +74,6 @@ class GettingStarted {
             sdk.removeEventListener(listenerId)
         } catch (e: Exception) {
             // handle error
-            return null
         }
     }
     // ANCHOR_END: remove-event-listener
