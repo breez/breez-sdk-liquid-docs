@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
@@ -47,4 +49,65 @@ Future<void> fetchBalance(String lspId) async {
   print(balanceSat);
   print(pendingSendSat);
   print(pendingReceiveSat);
+}
+
+class BreezSDKLiquid {
+  // ANCHOR: logging
+  StreamSubscription<LogEntry>? _breezLogSubscription;
+  Stream<LogEntry>? _breezLogStream;
+
+  // Initializes SDK log stream.
+  //
+  // Call once on your Dart entrypoint file, e.g.; `lib/main.dart`.
+  void initializeLogStream() {
+    _breezLogStream ??= breezLogStream().asBroadcastStream();
+  }
+
+  final _logStreamController = StreamController<LogEntry>.broadcast();
+  Stream<LogEntry> get logStream => _logStreamController.stream;
+
+  // Subscribe to the log stream
+  void subscribeToLogStream() {
+    _breezLogSubscription = _breezLogStream?.listen((logEntry) {
+      _logStreamController.add(logEntry);
+    }, onError: (e) {
+      _logStreamController.addError(e);
+    });
+  }
+
+  // Unsubscribe from the log stream
+  void unsubscribeFromLogStream() {
+    _breezLogSubscription?.cancel();
+  }
+  // ANCHOR_END: logging
+
+  // ANCHOR: add-event-listener
+  StreamSubscription<SdkEvent>? _breezEventSubscription;
+  Stream<SdkEvent>? _breezEventStream;
+
+  // Initializes SDK event stream.
+  //
+  // Call once on your Dart entrypoint file, e.g.; `lib/main.dart`.
+  void initializeEventsStream(BindingLiquidSdk sdk) {
+    _breezEventStream ??= sdk.addEventListener().asBroadcastStream();
+  }
+    
+  final _eventStreamController = StreamController<SdkEvent>.broadcast();
+  Stream<SdkEvent> get eventStream => _eventStreamController.stream;
+
+  // Subscribe to the event stream
+  void subscribeToEventStream() {
+    _breezEventSubscription = _breezEventStream?.listen((sdkEvent) {
+      _eventStreamController.add(sdkEvent);
+    }, onError: (e) {
+      _eventStreamController.addError(e);
+    });
+  }
+  // ANCHOR_END: add-event-listener
+
+  // ANCHOR: remove-event-listener
+  void unsubscribeFromEventStream() {
+    _breezEventSubscription?.cancel();
+  }
+  // ANCHOR_END: remove-event-listener
 }

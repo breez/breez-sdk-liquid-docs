@@ -1,8 +1,13 @@
 import {
+  addEventListener,
   defaultConfig,
   connect,
   LiquidNetwork,
-  getInfo
+  type LogEntry,
+  getInfo,
+  removeEventListener,
+  type SdkEvent,
+  setLogger
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleGettingStarted = async () => {
@@ -32,4 +37,30 @@ const exampleFetchNodeInfo = async () => {
   const pendingSendSat = walletInfo.pendingSendSat
   const pendingReceiveSat = walletInfo.pendingReceiveSat
   // ANCHOR_END: fetch-balance
+}
+
+const exampleLogging = async () => {
+  // ANCHOR: logging
+  const onLogEntry = (l: LogEntry) => {
+    console.log(`Received log [${l.level}]: ${l.line}`)
+  }
+
+  const subscription = await setLogger(onLogEntry)
+  // ANCHOR_END: logging
+}
+
+const exampleAddEventListener = async () => {
+  // ANCHOR: add-event-listener
+  const onEvent = (e: SdkEvent) => {
+    console.log(`Received event: ${e.type}`)
+  }
+
+  const listenerId = await addEventListener(onEvent)
+  // ANCHOR_END: add-event-listener
+}
+
+const exampleRemoveEventListener = async (listenerId: string) => {
+  // ANCHOR: remove-event-listener
+  await removeEventListener(listenerId)
+  // ANCHOR_END: remove-event-listener
 }

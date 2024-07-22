@@ -33,4 +33,48 @@ class GettingStarted {
         }
         // ANCHOR_END: fetch-balance
     }
+
+    // ANCHOR: logging
+    class SDKLogger : Logger {
+        override fun log(l: LogEntry) {
+            // Log.v("SDKListener", "Received log [${l.level}]: ${l.line}")
+        }
+    }
+
+    fun setLogger(logger: SDKLogger) {
+        try {
+            setLogger(logger)
+        } catch (e: Exception) {
+            // handle error
+        }
+    }
+    // ANCHOR_END: logging
+
+    // ANCHOR: add-event-listener
+    class SDKListener : EventListener {
+        override fun onEvent(e: SdkEvent) {
+            // Log.v("SDKListener", "Received event $e")
+        }
+    }
+
+    fun addEventListener(sdk: BindingLiquidSdk, listener: SDKListener): String? {
+        try {
+            val listenerId = sdk.addEventListener(listener)
+            return listenerId
+        } catch (e: Exception) {
+            // handle error
+            return null
+        }
+    }
+    // ANCHOR_END: add-event-listener
+
+    // ANCHOR: remove-event-listener
+    fun removeEventListener(sdk: BindingLiquidSdk, listenerId: String)  {
+        try {
+            sdk.removeEventListener(listenerId)
+        } catch (e: Exception) {
+            // handle error
+        }
+    }
+    // ANCHOR_END: remove-event-listener
 }
