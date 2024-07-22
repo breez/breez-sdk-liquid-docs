@@ -34,3 +34,43 @@ async fn getting_started_node_info(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     Ok(())
 }
+
+async fn getting_started_logging(data_dir: String) -> Result<()> {
+    // ANCHOR: logging
+    let data_dir_path = PathBuf::from(&data_dir);
+    fs::create_dir_all(data_dir_path)?;
+
+    BreezServices::init_logging(&data_dir, None)?;
+    // ANCHOR_END: logging
+
+    Ok(())
+}
+
+// ANCHOR: add-event-listener
+struct CliEventListener {}
+impl EventListener for CliEventListener {
+    fn on_event(&self, e: SdkEvent) {
+        info!("Received event: {:?}", e);
+    }
+}
+
+async fn add_event_listener(
+    sdk: Arc<LiquidSdk>,
+    listener: Box<CliEventListener>,
+) -> Result<String> {
+    let listener_id = sdk
+        .add_event_listener(listener)
+        .await?;
+    Ok(listener_id)
+}
+// ANCHOR_END: add-event-listener
+
+// ANCHOR: remove-event-listener
+async fn remove_event_listener(
+    sdk: Arc<LiquidSdk>,
+    listener_id: String,
+) -> Result<()> {
+    sdk.remove_event_listener(listener_id).await?;
+    Ok(())
+}
+// ANCHOR_END: remove-event-listener

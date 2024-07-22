@@ -48,3 +48,64 @@ Future<void> fetchBalance(String lspId) async {
   print(pendingSendSat);
   print(pendingReceiveSat);
 }
+
+class BreezSDKLiquid {
+  // ANCHOR: logging
+  StreamSubscription<liquid_sdk.LogEntry>? _breezLogSubscription;
+  Stream<liquid_sdk.LogEntry>? _breezLogStream;
+
+  // Initializes SDK log stream.
+  //
+  // Call once on your Dart entrypoint file, e.g.; `lib/main.dart`.
+  void initializeLogStream() {
+    _breezLogStream ??= liquid_sdk.breezLogStream().asBroadcastStream();
+  }
+
+  final _logStreamController = StreamController<liquid_sdk.LogEntry>.broadcast();
+  Stream<liquid_sdk.LogEntry> get logStream => _logStreamController.stream;
+
+  // Subscribe to the log stream
+  void _subscribeToLogStream() {
+    _breezLogSubscription = _breezLogStream?.listen((logEntry) {
+      _logStreamController.add(logEntry);
+    }, onError: (e) {
+      _logStreamController.addError(e);
+    });
+  }
+
+  // Unsubscribe from the log stream
+  void _unsubscribeFromLogStream() {
+    _breezLogSubscription?.cancel();
+  }
+  // ANCHOR_END: logging
+
+  // ANCHOR: add-event-listener
+  StreamSubscription<liquid_sdk.SdkEvent>? _breezEventSubscription;
+  Stream<liquid_sdk.SdkEvent>? _breezEventStream;
+
+  // Initializes SDK event stream.
+  //
+  // Call once on your Dart entrypoint file, e.g.; `lib/main.dart`.
+  void _initializeEventsStream(liquid_sdk.BindingLiquidSdk sdk) {
+    _breezEventStream ??= sdk.addEventListener().asBroadcastStream();
+  }
+    
+  final _eventStreamController = StreamController<liquid_sdk.SdkEvent>.broadcast();
+  Stream<liquid_sdk.SdkEvent> get eventStream => _eventStreamController.stream;
+
+  // Subscribe to the event stream
+  void _subscribeToEventStream() {
+    _breezEventSubscription = _breezEventStream?.listen((sdkEvent) {
+      _eventStreamController.add(sdkEvent);
+    }, onError: (e) {
+      _eventStreamController.addError(e);
+    });
+  }
+  // ANCHOR_END: add-event-listener
+
+  // ANCHOR: remove-event-listener
+  void _unsubscribeFromEventStream() {
+    _breezEventSubscription?.cancel();
+  }
+  // ANCHOR_END: remove-event-listener
+}
