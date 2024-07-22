@@ -16,3 +16,4 @@
   - [Receiving payments using LNURL-Withdraw](guide/lnurl_withdraw.md)
   - [Authenticating using LNURL-Auth](guide/lnurl_auth.md)
 - [Supporting fiat currencies](guide/fiat_currencies.md)
+- [Fees for End-Users](guide/end-user_fees.md)
