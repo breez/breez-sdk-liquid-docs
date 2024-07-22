@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
@@ -51,21 +53,21 @@ Future<void> fetchBalance(String lspId) async {
 
 class BreezSDKLiquid {
   // ANCHOR: logging
-  StreamSubscription<liquid_sdk.LogEntry>? _breezLogSubscription;
-  Stream<liquid_sdk.LogEntry>? _breezLogStream;
+  StreamSubscription<LogEntry>? _breezLogSubscription;
+  Stream<LogEntry>? _breezLogStream;
 
   // Initializes SDK log stream.
   //
   // Call once on your Dart entrypoint file, e.g.; `lib/main.dart`.
   void initializeLogStream() {
-    _breezLogStream ??= liquid_sdk.breezLogStream().asBroadcastStream();
+    _breezLogStream ??= breezLogStream().asBroadcastStream();
   }
 
-  final _logStreamController = StreamController<liquid_sdk.LogEntry>.broadcast();
-  Stream<liquid_sdk.LogEntry> get logStream => _logStreamController.stream;
+  final _logStreamController = StreamController<LogEntry>.broadcast();
+  Stream<LogEntry> get logStream => _logStreamController.stream;
 
   // Subscribe to the log stream
-  void _subscribeToLogStream() {
+  void subscribeToLogStream() {
     _breezLogSubscription = _breezLogStream?.listen((logEntry) {
       _logStreamController.add(logEntry);
     }, onError: (e) {
@@ -74,27 +76,27 @@ class BreezSDKLiquid {
   }
 
   // Unsubscribe from the log stream
-  void _unsubscribeFromLogStream() {
+  void unsubscribeFromLogStream() {
     _breezLogSubscription?.cancel();
   }
   // ANCHOR_END: logging
 
   // ANCHOR: add-event-listener
-  StreamSubscription<liquid_sdk.SdkEvent>? _breezEventSubscription;
-  Stream<liquid_sdk.SdkEvent>? _breezEventStream;
+  StreamSubscription<SdkEvent>? _breezEventSubscription;
+  Stream<SdkEvent>? _breezEventStream;
 
   // Initializes SDK event stream.
   //
   // Call once on your Dart entrypoint file, e.g.; `lib/main.dart`.
-  void _initializeEventsStream(liquid_sdk.BindingLiquidSdk sdk) {
+  void initializeEventsStream(BindingLiquidSdk sdk) {
     _breezEventStream ??= sdk.addEventListener().asBroadcastStream();
   }
     
-  final _eventStreamController = StreamController<liquid_sdk.SdkEvent>.broadcast();
-  Stream<liquid_sdk.SdkEvent> get eventStream => _eventStreamController.stream;
+  final _eventStreamController = StreamController<SdkEvent>.broadcast();
+  Stream<SdkEvent> get eventStream => _eventStreamController.stream;
 
   // Subscribe to the event stream
-  void _subscribeToEventStream() {
+  void subscribeToEventStream() {
     _breezEventSubscription = _breezEventStream?.listen((sdkEvent) {
       _eventStreamController.add(sdkEvent);
     }, onError: (e) {
@@ -104,7 +106,7 @@ class BreezSDKLiquid {
   // ANCHOR_END: add-event-listener
 
   // ANCHOR: remove-event-listener
-  void _unsubscribeFromEventStream() {
+  void unsubscribeFromEventStream() {
     _breezEventSubscription?.cancel();
   }
   // ANCHOR_END: remove-event-listener

@@ -1,12 +1,12 @@
 import {
-  addEventListner,
+  addEventListener,
   defaultConfig,
   connect,
   LiquidNetwork,
-  LogEntry,
+  type LogEntry,
   getInfo,
-  removeEventListner,
-  SdkEvent,
+  removeEventListener,
+  type SdkEvent,
   setLogger
 } from '@breeztech/react-native-breez-sdk-liquid'
 
@@ -52,15 +52,15 @@ const exampleLogging = async () => {
 const exampleAddEventListener = async () => {
   // ANCHOR: add-event-listener
   const onEvent = (e: SdkEvent) => {
-    console.log(`Received event: ${e}`)
+    console.log(`Received event: ${e.type}`)
   }
 
-  const listenerId = await addEventListner(onEvent)
+  const listenerId = await addEventListener(onEvent)
   // ANCHOR_END: add-event-listener
 }
 
 const exampleRemoveEventListener = async (listenerId: string) => {
   // ANCHOR: remove-event-listener
-  await removeEventListner(listenerId)
+  await removeEventListener(listenerId)
   // ANCHOR_END: remove-event-listener
 }
