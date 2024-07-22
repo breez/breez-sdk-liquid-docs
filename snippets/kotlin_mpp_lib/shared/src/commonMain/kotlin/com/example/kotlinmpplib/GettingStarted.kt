@@ -35,15 +35,20 @@ class GettingStarted {
     }
 
     // ANCHOR: logging
-    class SDKLogStream : LogStream {
+    class SDKLogger : Logger {
         override fun log(l: LogEntry) {
             // Log.v("SDKListener", "Received log [${l.level}]: ${l.line}")
         }
     }
 
-    fun logging() {
+    fun setLogger(logger: SDKLogger) {
+        try {
+            setLogger(logger)
+        } catch (e: Exception) {
+            // handle error
+        }
     }
-        // ANCHOR_END: logging
+    // ANCHOR_END: logging
 
     // ANCHOR: add-event-listener
     class SDKListener : EventListener {
@@ -58,6 +63,7 @@ class GettingStarted {
             return listenerId
         } catch (e: Exception) {
             // handle error
+            return null
         }
     }
     // ANCHOR_END: add-event-listener
@@ -68,6 +74,7 @@ class GettingStarted {
             sdk.removeEventListener(listenerId)
         } catch (e: Exception) {
             // handle error
+            return null
         }
     }
     // ANCHOR_END: remove-event-listener

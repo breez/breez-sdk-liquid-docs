@@ -1,8 +1,11 @@
 use std::sync::Arc;
+use std::path::PathBuf;
+use std::fs;
 
 use anyhow::Result;
 use bip39::{Language, Mnemonic};
 use breez_sdk_liquid::prelude::*;
+use log::{info};
 
 async fn getting_started() -> Result<Arc<LiquidSdk>> {
     // ANCHOR: init-sdk
@@ -40,7 +43,7 @@ async fn getting_started_logging(data_dir: String) -> Result<()> {
     let data_dir_path = PathBuf::from(&data_dir);
     fs::create_dir_all(data_dir_path)?;
 
-    BreezServices::init_logging(&data_dir, None)?;
+    LiquidSdk::init_logging(&data_dir, None)?;
     // ANCHOR_END: logging
 
     Ok(())

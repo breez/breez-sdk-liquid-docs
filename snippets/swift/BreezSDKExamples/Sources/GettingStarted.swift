@@ -34,14 +34,14 @@ func gettingStartedNodeInfo(sdk: BindingLiquidSdk) {
 }
 
 // ANCHOR: logging
-class SDKLogStream: LogStream {
+class SDKLogger: Logger {
     func log(l: LogEntry) {
         print("Received log [", l.level, "]: ", l.line)
     }
 }
 
 func logging() throws {
-    try? setLogStream(logStream: SDKLogStream())
+    try? setLogger(logger: SDKLogger())
 }
 // ANCHOR_END: logging
 
@@ -60,6 +60,6 @@ func addEventListener(sdk: BindingLiquidSdk, listener: SDKEventListener) throws 
 
 // ANCHOR: remove-event-listener
 func removeEventListener(sdk: BindingLiquidSdk, listenerId: String) throws {
-    try? sdk.removeEventListener(listenerId: listenerId)
+    try? sdk.removeEventListener(id: listenerId)
 }
 // ANCHOR_END: remove-event-listener

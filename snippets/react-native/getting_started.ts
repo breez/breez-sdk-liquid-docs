@@ -7,7 +7,7 @@ import {
   getInfo,
   removeEventListner,
   SdkEvent,
-  setLogStream
+  setLogger
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleGettingStarted = async () => {
@@ -45,7 +45,7 @@ const exampleLogging = async () => {
     console.log(`Received log [${l.level}]: ${l.line}`)
   }
 
-  const subscription = await setLogStream(onLogEntry)
+  const subscription = await setLogger(onLogEntry)
   // ANCHOR_END: logging
 }
 
