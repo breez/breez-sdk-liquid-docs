@@ -4,26 +4,45 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart' as liquid_sdk;
 import 'package:rxdart/rxdart.dart';
 
 class BreezSDKLiquid {
-  liquid_sdk.BindingLiquidSdk? instance;
+  static final BreezSDKLiquid _singleton = BreezSDKLiquid._internal();
 
-  Future<liquid_sdk.BindingLiquidSdk> connect({
+  factory BreezSDKLiquid() => _singleton;
+
+  BreezSDKLiquid._internal() {
+    initializeLogStream();
+  }
+
+  liquid_sdk.BindingLiquidSdk? _instance;
+
+  liquid_sdk.BindingLiquidSdk? get instance => _instance;
+
+  Future<void> connect({
     required liquid_sdk.ConnectRequest req,
   }) async {
-    instance = await liquid_sdk.connect(req: req);
-    _initializeEventsStream(instance!);
-    _subscribeToSdkStreams(instance!);
-    await _fetchWalletData(instance!);
-    return instance!;
+    try {
+      _instance = await liquid_sdk.connect(req: req);
+      _initializeEventsStream(_instance!);
+      _subscribeToSdkStreams(_instance!);
+      await _fetchWalletData(_instance!);
+    } catch (e) {
+      _instance = null;
+      rethrow;
+    }
   }
 
-  void disconnect(liquid_sdk.BindingLiquidSdk sdk) {
-    sdk.disconnect();
+  void disconnect() {
+    if (_instance == null) {
+      throw Exception();
+    }
+
+    _instance!.disconnect();
     _unsubscribeFromSdkStreams();
+    _instance = null;
   }
 
-  Future _fetchWalletData(liquid_sdk.BindingLiquidSdk sdk) async {
+  Future<void> _fetchWalletData(liquid_sdk.BindingLiquidSdk sdk) async {
     await _getInfo(sdk);
-    await _listPayments(sdk);
+    await _listPayments(sdk: sdk);
   }
 
   Future<liquid_sdk.GetInfoResponse> _getInfo(liquid_sdk.BindingLiquidSdk sdk) async {
@@ -32,8 +51,10 @@ class BreezSDKLiquid {
     return walletInfo;
   }
 
-  Future<List<liquid_sdk.Payment>> _listPayments(liquid_sdk.BindingLiquidSdk sdk) async {
-    liquid_sdk.ListPaymentsRequest req = liquid_sdk.ListPaymentsRequest();
+  Future<List<liquid_sdk.Payment>> _listPayments({
+    required liquid_sdk.BindingLiquidSdk sdk,
+  }) async {
+    const req = liquid_sdk.ListPaymentsRequest();
     final paymentsList = await sdk.listPayments(req: req);
     _paymentsController.add(paymentsList);
     return paymentsList;
@@ -87,9 +108,7 @@ class BreezSDKLiquid {
           _logStreamController.add(
             liquid_sdk.LogEntry(line: "Payment Failed. ${event.details.swapId}", level: "WARN"),
           );
-          _paymentResultStream.addError(
-            PaymentException(event.details),
-          );
+          _paymentResultStream.addError(PaymentException(event.details));
         }
         if (event is liquid_sdk.SdkEvent_PaymentPending) {
           _logStreamController.add(
@@ -114,7 +133,6 @@ class BreezSDKLiquid {
             liquid_sdk.LogEntry(line: "Payment Succeeded. ${event.details.swapId}", level: "INFO"),
           );
           _paymentResultStream.add(event.details);
-          await _fetchWalletData(sdk);
         }
         if (event is liquid_sdk.SdkEvent_PaymentWaitingConfirmation) {
           _logStreamController.add(
@@ -123,11 +141,9 @@ class BreezSDKLiquid {
           _paymentResultStream.add(event.details);
         }
         if (event is liquid_sdk.SdkEvent_Synced) {
-          _logStreamController.add(
-            const liquid_sdk.LogEntry(line: "Received Synced event.", level: "INFO"),
-          );
-          await _fetchWalletData(sdk);
+          _logStreamController.add(const liquid_sdk.LogEntry(line: "Received Synced event.", level: "INFO"));
         }
+        await _fetchWalletData(sdk);
       },
     );
   }
