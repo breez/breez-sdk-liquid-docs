@@ -52,11 +52,10 @@ repositories {
 }
 
 dependencies {
-  implementation("breez_sdk:bindings-android:<version>")
+  implementation("breez_sdk_liquid:bindings-android:<version>")
 }
 ```
 
-See [the example](https://github.com/breez/breez-sdk-examples/tree/main/Android) for more details
 
 ## React Native
 
