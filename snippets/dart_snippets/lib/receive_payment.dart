@@ -16,7 +16,7 @@ Future<ReceivePaymentResponse> receivePayment() async {
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
-  BigInt receiveFeesSat = prepareReceiveResponse.feesSat;
+  BigInt receiveFeesSat = prepareRes.feesSat;
 
   String optionalDescription = "<description>";
   ReceivePaymentResponse res = await breezSDKLiquid.instance!.receivePayment(
