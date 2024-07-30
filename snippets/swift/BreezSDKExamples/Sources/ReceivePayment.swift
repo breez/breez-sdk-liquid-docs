@@ -19,7 +19,7 @@ func receivePayment(sdk: BindingLiquidSdk) -> ReceivePaymentResponse? {
     let optionalDescription = "<description>"
     let res = try? sdk.receivePayment(req: ReceivePaymentRequest(
             prepareRes: prepareRes!,
-            description: optionalDescription,
+            description: optionalDescription
         ))
 
     let invoice : String = res!.invoice;
