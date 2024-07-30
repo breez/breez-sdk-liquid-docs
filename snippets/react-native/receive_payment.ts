@@ -12,15 +12,19 @@ const exampleReceiveLightningPayment = async () => {
   console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
 
   // Set the amount you wish the payer to send, which should be within the above limits
-  const prepareReceiveResponse = await prepareReceivePayment({
+  const prepareRes = await prepareReceivePayment({
     payerAmountSat: 5_000
   })
 
   // If the fees are acceptable, continue to create the Receive Payment
-  const receiveFeesSat = prepareReceiveResponse.feesSat
+  const receiveFeesSat = prepareRes.feesSat
 
-  const receivePaymentResponse = await receivePayment(prepareReceiveResponse)
+  const optionalDescription = '<description>'
+  const res = await receivePayment({
+    prepareRes,
+    description: optionalDescription
+  })
 
-  const invoice = receivePaymentResponse.invoice
+  const invoice = res.invoice
   // ANCHOR_END: receive-payment
 }

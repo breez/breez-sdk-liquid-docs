@@ -8,18 +8,22 @@ func receivePayment(sdk: BindingLiquidSdk) -> ReceivePaymentResponse? {
     print("Maximum amount: {} sats", currentLimits?.receive.maxSat);
 
     // Set the amount you wish the payer to send, which should be within the above limits
-    let prepareReceiveResponse = try? sdk
-        .prepareReceivePayment(req: PrepareReceiveRequest(
+    let prepareRes = try? sdk
+        .prepareReceivePayment(req: PrepareReceivePaymentRequest(
             payerAmountSat: 5_000
         ))
 
     // If the fees are acceptable, continue to create the Receive Payment
-    let receiveFeesSat = prepareReceiveResponse!.feesSat;
+    let receiveFeesSat = prepareRes!.feesSat;
 
-    let receivePaymentResponse = try? sdk.receivePayment(req: prepareReceiveResponse!)
+    let optionalDescription = "<description>"
+    let res = try? sdk.receivePayment(req: ReceivePaymentRequest(
+            prepareRes: prepareRes!,
+            description: optionalDescription
+        ))
 
-    let invoice : String = receivePaymentResponse!.invoice;
+    let invoice : String = res!.invoice;
     // ANCHOR_END: receive-payment
     print(invoice as Any)
-    return receivePaymentResponse
+    return res
 }

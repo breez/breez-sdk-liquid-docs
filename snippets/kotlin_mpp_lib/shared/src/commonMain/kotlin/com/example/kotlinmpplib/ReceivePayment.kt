@@ -11,14 +11,17 @@ class ReceivePayment {
             // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${currentLimits.receive.maxSat}")
 
             // Set the amount you wish the payer to send, which should be within the above limits
-            val prepareReceiveResponse = sdk.prepareReceivePayment(PrepareReceiveRequest(5_000.toULong()))
+            val prepareReq = PrepareReceivePaymentRequest(5_000.toULong())
+            val prepareRes = sdk.prepareReceivePayment(prepareReq)
 
             // If the fees are acceptable, continue to create the Receive Payment
-            val receiveFeesSat = prepareReceiveResponse.feesSat;
+            val receiveFeesSat = prepareRes.feesSat;
 
-            val receivePaymentResponse = sdk.receivePayment(prepareReceiveResponse)
+            val optionalDescription = "<description>";
+            val req = ReceivePaymentRequest(prepareRes, optionalDescription)
+            val res = sdk.receivePayment(req)
 
-            val invoice = receivePaymentResponse.invoice;
+            val invoice = res.invoice;
         } catch (e: Exception) {
             // handle error
         }

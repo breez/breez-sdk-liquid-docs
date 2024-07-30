@@ -9,22 +9,26 @@ Future<ReceivePaymentResponse> receivePayment() async {
   print("Maximum amount: ${currentLimits.receive.maxSat} sats");
 
   // Set the amount you wish the payer to send
-  PrepareReceiveResponse prepareReceiveResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
-    req: PrepareReceiveRequest(
+  PrepareReceivePaymentResponse prepareRes = await breezSDKLiquid.instance!.prepareReceivePayment(
+    req: PrepareReceivePaymentRequest(
       payerAmountSat: 5000 as BigInt,
     ),
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
-  BigInt receiveFeesSat = prepareReceiveResponse.feesSat;
+  BigInt receiveFeesSat = prepareRes.feesSat;
 
-  ReceivePaymentResponse receivePaymentResponse = await breezSDKLiquid.instance!.receivePayment(
-    req: prepareReceiveResponse,
+  String optionalDescription = "<description>";
+  ReceivePaymentResponse res = await breezSDKLiquid.instance!.receivePayment(
+    req: ReceivePaymentRequest(
+      prepareRes: prepareRes,
+      description: optionalDescription,
+    ),
   );
 
-  String invoice = receivePaymentResponse.invoice;
+  String invoice = res.invoice;
   // ANCHOR_END: receive-payment
   print(receiveFeesSat);
   print(invoice);
-  return receivePaymentResponse;
+  return res;
 }
