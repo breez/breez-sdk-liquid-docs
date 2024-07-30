@@ -18,7 +18,7 @@ class ReceivePayment {
             val receiveFeesSat = prepareRes.feesSat;
 
             val optionalDescription = "<description>";
-            val req = ReceivePaymentRequest(prepareRes, description)
+            val req = ReceivePaymentRequest(prepareRes, optionalDescription)
             val res = sdk.receivePayment(req)
 
             val invoice = res.invoice;
