@@ -125,4 +125,4 @@ class ExampleForegroundService : ForegroundService() {
 ```
 
 ## Reference implementation
-For a complete reference, see how we implemented it in misty-breez wallet: [BreezFcmService.kt](https://github.com/breez/misty-breez/blob/main/android/app/src/main/kotlin/com/cBreez/client/BreezFcmService.kt).
+For a complete reference, see how we implemented it in misty-breez wallet: [BreezFcmService.kt](https://github.com/breez/misty-breez/blob/main/android/app/src/main/kotlin/com/breez/liquid/l_breez/BreezFcmService.kt).
