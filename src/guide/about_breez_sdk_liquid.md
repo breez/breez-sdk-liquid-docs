@@ -1,4 +1,4 @@
-# About the Breez SDK - *Liquid*
+# About Breez SDK - *Liquid*
 
 ## **What Is the Breez SDK?**
 

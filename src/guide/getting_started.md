@@ -1,6 +1,6 @@
 # Getting Started
 
-Integrating the Breez SDK - *Liquid* into your application takes just a few minutes. Follow these steps to get started:
+Integrating Breez SDK - *Liquid* into your application takes just a few minutes. Follow these steps to get started:
 - **[Installing the SDK](/guide/install.md)**
 - **[Connecting](/guide/connecting.md)**
 - **[Fetching the Wallet State](/guide/wallet_state.md)**
