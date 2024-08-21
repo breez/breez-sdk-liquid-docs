@@ -2,7 +2,7 @@
 
 The first step is to construct the SDK configuration. Among others, it sets the network you want to use and the SDK working directory.
 
-The SDK uses the config `working_dir` to store the state of the SDK instance. When handling multiple instances of the SDK, one per node, each needs to have a different working directory defined.
+The SDK uses the config `working_dir` to store the state of the SDK instance. When handling multiple instances of the SDK each needs to have a different working directory defined.
 
 Now you are ready to interact with the SDK.
 

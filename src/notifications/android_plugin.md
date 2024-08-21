@@ -77,7 +77,7 @@ class ExampleFcmService : MessagingService, FirebaseMessagingService() {
 }
 ```
 
-Now lets add the foreground service implementation. This should implement the notification plugin `ForegroundService` class, which handles the incoming notification intent and processes the event. To properly implement this, your class needs to override the `onCreate`, `getConnectRequest` and `getServiceConfig` functions. The `getConnectRequest` function is called by the `ForegroundService` to get a BreezSDK `ConnectRequest` which contains the data necessary to connect to the SDK. This data includes the `Config` with it's `workingDir` and the mnemonic.
+Now lets add the foreground service implementation. This should implement the notification plugin `ForegroundService` class, which handles the incoming notification intent and processes the event. To properly implement this, your class needs to override the `onCreate`, `getConnectRequest` and `getServiceConfig` functions. The `getConnectRequest` function is called by the `ForegroundService` to get a `ConnectRequest` which contains the data necessary to connect to the SDK. This data includes the `Config` with it's `workingDir` and the mnemonic.
 
 <div class="warning">
 <h4>Developer note</h4>

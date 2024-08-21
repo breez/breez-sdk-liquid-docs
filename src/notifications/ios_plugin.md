@@ -4,7 +4,7 @@ Add the `BreezSDKLiquid` cocoapod to your iOS Podfile, with the target `Notifica
 
 ```podfile
 target 'NotificationService' do
-  pod 'BreezSDK'
+  pod 'BreezSDKLiquid'
   pod 'KeychainAccess'
 end
 ```
@@ -17,7 +17,7 @@ More installation methods, including with the Swift Package Manager, can be foun
 
 You're ready to add some Swift code to implement the Notification Plugin in your NotificationService target. In Xcode, in the `NotificationService` folder, open the Swift file named `NotificationService.swift`.
 
-This Swift file should implement the Notification Plugin's `SDKNotificationService` class. The `SDKNotificationService` class handles the incoming notification content and processes the event. To properly implement this class the NotificationService needs to override at least the `getConnectRequest` function. The `getConnectRequest` function is called by the `SDKNotificationService` to get a BreezSDK `ConnectRequest` which contains the data necessary to connect to the SDK. This data includes the `Config` with it's `workingDir` and the mnemonic.
+This Swift file should implement the Notification Plugin's `SDKNotificationService` class. The `SDKNotificationService` class handles the incoming notification content and processes the event. To properly implement this class the NotificationService needs to override at least the `getConnectRequest` function. The `getConnectRequest` function is called by the `SDKNotificationService` to get a `ConnectRequest` which contains the data necessary to connect to the SDK. This data includes the `Config` with it's `workingDir` and the mnemonic.
 
 <div class="warning">
 <h4>Developer note</h4>
@@ -51,7 +51,7 @@ class NotificationService: SDKNotificationService {
         config.workingDir = FileManager
             .default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)!
             .appendingPathComponent("breezSdkLiquid", isDirectory: true)
-            .absoluteString
+            .path
 
         // Get the mnemonic from the shared keychain using the same 
         // service name as the main application

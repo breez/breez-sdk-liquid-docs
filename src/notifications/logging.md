@@ -16,24 +16,23 @@ fileprivate let appGroup = "group.com.example.application"
 class NotificationService: SDKNotificationService {
     // Override the `init` function 
     override init() {
-        // Initialize XCGLogger
-        let logsDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)!.appendingPathComponent("logs")
+        let logsDir = FileManager
+            .default.containerURL(forSecurityApplicationGroupIdentifier: accessGroup)!.appendingPathComponent("logs")
         let extensionLogFile = logsDir.appendingPathComponent("\(Date().timeIntervalSince1970).ios-extension.log")
-        
-        xcgLogger = {
+        let xcgLogger: XCGLogger = {
             let log = XCGLogger.default
             log.setup(level: .info, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: extensionLogFile.path)
             return log
-            
         }()
         
         super.init()
-        // Set notification plugin logger that utilizes the XCGLogger library
-        let logger = CustomLogListener(logger: xcgLogger)
-        self.setLogger(logger: logger)
-        // Use the same logger to listen in on BreezSDK logs
+
+        // Set Notification Service Logger to SdkLogListener that utilizes XCGLogger library
+        let sdkLogger = SdkLogListener(logger: xcgLogger)
+        self.setLogger(logger: sdkLogger)
+        // Use the same SdkLogListener to listen in on BreezSDKLiquid logs
         do {
-            try setLogger(logger: logger)
+            try BreezSDKLiquid.setLogger(logger: sdkLogger)
         } catch let e {
             self.logger.log(tag: TAG, line:"Failed to set log stream: \(e)", level: "ERROR")
         }
@@ -121,7 +120,7 @@ class ExampleForegroundService : ForegroundService() {
         // Set notification plugin logger that utilizes the tinylog library
         val logger = CustomLogListener()
         this.setLogger(logger)
-        // Use the same logger to listen in on BreezSDK logs
+        // Use the same logger to listen in on the SDK logs
         try {
             setLogger(logger)
         } catch (e: Exception) {

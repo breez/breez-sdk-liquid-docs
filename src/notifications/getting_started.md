@@ -46,7 +46,7 @@ The `swap_updated` notification type will be received by the webhook in the foll
 
 Having the ability to process push notifications when the application is in the background or closed also opens up the ability to handle payment requests from a static LNURL or lightning address. To do this the application also needs to register a webhook with an [LNURL-pay service](/guide/lnurl_pay_service.md), then when the LNURL service receives a request on the static LNURL address, it will forward it via the NDS to the application. The Notification Plugin handles the two-step flow for fulfilling these requests.
 
-Firstly the LNURL service receives a request for LNURL-pay information to get the min/max amount that can be received. The LNURL service calls the registered webhook and when receiving this notification, the Notification Plugin will connect to the Breez SDK and send a response back to the LNURL service based on the node info. 
+Firstly the LNURL service receives a request for LNURL-pay information to get the min/max amount that can be received. The LNURL service calls the registered webhook and when receiving this notification, the Notification Plugin will connect to the Breez SDK and send a response back to the LNURL service based on the swap service limits. 
 
 The `lnurlpay_info` notification type will be received by the webhook in the following format:
 ```json
