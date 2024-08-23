@@ -6,10 +6,10 @@ LNURL-Pay requires a web service that serves LNURL-Pay requests. This service ne
 To interact with the SDK, the service uses a simple protocol over push notifications:
 * The service sends a push notification to the user's mobile app with the LNURL-Pay request and a reply URL.
 * The app responds to reply URL with the required data.
-* The data is forwarded from the service to the payer.
+* The service forwards the data to the payer.
 
 ## General workflow
-The following workflow is application specific and the steps detailed below refer to the c-breez wallet implementation which requires running <b>[breez-lnurl](https://github.com/breez/breez-lnurl) </b>service.
+The following workflow is application specific and the steps detailed below refer to the misty-breez wallet implementation which requires running <b>[breez-lnurl](https://github.com/breez/breez-lnurl) </b>service.
 
 ![pay](https://github.com/breez/breez-sdk-docs/assets/5394889/ef0a3111-3604-4789-89c6-23adbd7e5d52)
 
@@ -21,7 +21,7 @@ https://app.domain/lnurlpay/[pubkey]
 ```
 With the following payload:
 
-```
+```json
 {
  "time": "seconds since epoch",
  "webhook_url": "notification service webhook url",
@@ -30,10 +30,10 @@ With the following payload:
 ```
 
 to register the app for an LNURL-Pay service.
-The signature is refers to the following string: ```[time]-[webhook_url]``` where ```time``` and ```webhook_url``` are the payload fields.
+The ```signature``` refers to the result of a message signed by the private key of the ```pubkey```, where the message comprises of: ```[time]-[webhook_url]``` where ```time``` and ```webhook_url``` are the payload fields.
 
 The service responds with following payload: 
-```>
+```json
 {
  "lnurl": "https://app.domain.com/lnurlp/[pubkey]", 
 }
@@ -44,9 +44,9 @@ When an LNURL-Pay request is triggered a GET request to:
 ```
 https://app.domain.com/lnurlp/[pubkey]
 ```
-The service then sends a push notification to the app with the LNURL-Pay request and a callback URL. Such payload may look like the following:
+The service then sends a push notification to the app with the LNURL-Pay request and a callback URL. The payload may look like the following:
 
-```
+```json
 {
  "template": "lnurlpay_info",
  "data": {  
@@ -56,13 +56,13 @@ The service then sends a push notification to the app with the LNURL-Pay request
 }
 ```
 
-The <b>reply_url</b> is used by the app to respond to the lnurlpay request.
-The <b>callback_url</b> s the LNURL-Pay callback URL, used by the payer to fetch the invoice.
+The ```reply_url``` is used by the app to respond to the LNURL-Pay request.
+The ```callback_url``` is the LNURL-Pay callback URL, used by the payer to fetch the invoice.
 
 ### Step 3: Responding to the callback url
-When the app receives the push notification, it parses the payload and then uses the reply_url to respond with the required data, for example:
+When the app receives the push notification, it parses the payload and then uses the ```reply_url``` to respond with the required data, for example:
 
-```
+```json
 {
  "callback": "https://app.domain.com/lnurlpay/invoice",
  "maxSendable": 10000,
@@ -80,7 +80,7 @@ The sender fetches a bolt11 invoice by invoking a GET request to the callback_ur
 ```
 https://app.domain.com/lnurlpay/invoice?amount=1000
 ```
-An additional push notification is triggered to send the invoice request to the app. Then the app replied with the bolt11 invoice data.
+An additional push notification is triggered to send the invoice request to the app. Then the app responds with the bolt11 invoice data.
 
 ### Step 5: Paying the invoice
 In the last step, the payer pays the received bolt11 invoice. Follow the steps [here](/notifications/getting_started.md) to receive payments via push notifications.

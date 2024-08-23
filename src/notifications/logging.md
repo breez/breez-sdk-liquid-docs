@@ -1,11 +1,11 @@
 # Adding logging
 
-You can override the default logger used by the Notification Plugin to use your own logging implementation or dependency. Lets look at an example of a file logger.
+You can override the default logger used by the Notification Plugin to use your own logging implementation or dependency. Let's look at an example of a file logger.
 
 <custom-tabs category="lang">
 <div slot="title">Swift</div>
 <section>
-In iOS lets use the <code>XCGLogger</code> to handle logging to a separate log file in the app group's shared directory.
+On iOS, let's use the <code>XCGLogger</code> to handle logging to a separate log file in the app group's shared directory.
 
 ```swift,ignore
 import BreezSDKLiquid
@@ -43,7 +43,7 @@ class NotificationService: SDKNotificationService {
 </section>
 <div slot="title">Kotlin</div>
 <section>
-In Android lets use the <code>tinylog</code> to handle logging to a file. First create a utility class to configure tinylog.
+On Android, let's use the <code>tinylog</code> to handle logging to a file. First create a utility class to configure tinylog.
 
 ```kotlin,ignore
 package com.example.application
@@ -102,7 +102,7 @@ class ExampleFcmService : MessagingService, FirebaseMessagingService() {
 }
 ```
 
-When the foreground service is created, initialise the SDK logger and subscribe to log entries
+When the foreground service is created, initialise the SDK logger and subscribe to log entries.
 
 ```kotlin,ignore
 package com.example.application

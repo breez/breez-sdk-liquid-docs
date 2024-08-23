@@ -1,6 +1,6 @@
 # Setting up the Notification Service Extension
 
-## Add a Notfication Service Extension target
+## Add a Notification Service Extension target
 
 In Xcode add a new Target to your application:
 1. In the menu `File > New > Target...`
@@ -14,7 +14,7 @@ This should create a new target with a bundle identifier like `com.example.appli
 To share data between the main application and service extension targets, you need to add a common `app group` to the main application identifier and new service extension identifier.  Go the [Apple Developer](https://developer.apple.com/account/resources/identifiers/list/applicationGroup) portal, in the Identifiers section select the App Groups dropdown to the right, then:
 1. Click `+` to add an App Group
 2. Select `App Groups` from the list
-3. Give the App Group a description and identifier, like `group.com.example.application`
+3. Give the App Group a description and identifier, such as `group.com.example.application`
 
 ### Update Identifiers
 Now add the App Group to your existing main application release and debug Identifiers, in the Identifiers section select the App IDs dropdown to the right, then:
@@ -28,7 +28,7 @@ Create new release and debug Identifiers for the new service extension.
 2. Select `App IDs` from the list
 3. Give the Identifier a description and identifier the same as the service extension, like `com.example.application.NotificationService`
 4. Enable the `App Groups` app service
-5. Save the Identifier, then edit again it to add the created app group as above
+5. Save the Identifier, then edit it again to add the created app group as above
 
 ## Provisioning Profiles
 

@@ -9,7 +9,7 @@ The Notification Plugin by default handles a specific format of push notificatio
 }
 ```
 
-If you want to customise the structure or field names of the push notification message data handled by the Notification Plugin, you can follow the code example below for adding these to iOS and Android. In these examples we replace the `notification_type` and `notification_payload` fields with `custom_type` and `custom_payload`.
+To customize the push notification message data handled by the Notification Plugin, follow the code examples below for iOS and Android. In these examples, the `notification_type` and `notification_payload` fields are replaced with `custom_type` and `custom_payload`.
 
 <custom-tabs category="lang">
 <div slot="title">Swift</div>

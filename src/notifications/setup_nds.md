@@ -19,9 +19,9 @@ https://your-nds-service.com/notify?platform=<ios|android>&token=[PUSH_TOKEN]
   
 
 
-This is the same format used when [using webhooks](using_webhooks.md) in the SDK, replacing the `PUSH_TOKEN` with the mobile push token. Once the NDS has received such request it will send a push notification to the corresponding device.
+This is the same format used when [using webhooks](using_webhooks.md) in the SDK, replacing the `PUSH_TOKEN` with the mobile push token. Once the NDS receives such a request it will send a push notification to the corresponding device.
 
 ## Mobile push token
-Ensure that your mobile application is set up to receive push notifications and can generate a push token. This token uniquely identifies the device for push notifications.
+Ensure that your mobile application is set up to receive push notifications and can generate a push token, which uniquely identifies the device for push notifications.
 * For iOS, use [Apple Push Notification Service (APNs)](https://developer.apple.com/documentation/usernotifications/registering_your_app_with_apns) to get the token.
 * For Android, use [Firebase Cloud Messaging (FCM)](https://firebase.google.com/docs/cloud-messaging/manage-tokens) to obtain the token.

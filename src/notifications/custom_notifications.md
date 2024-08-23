@@ -1,6 +1,6 @@
 # Handling custom notifications
 
-You can customise the Notification Plugin even further by handling your own notification types sent to the application via push notification. Follow the code example below for adding these to iOS and Android.
+You can further customize the Notification Plugin by handling your own notification types sent to the application via push notifications. Follow the code example below to add these to iOS and Android.
 
 <custom-tabs category="lang">
 <div slot="title">Swift</div>

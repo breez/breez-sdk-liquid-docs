@@ -1,10 +1,10 @@
 # Changing default strings
 
-The Notification Plugin uses a set of identifiers and default strings to display messages when processing push notifications. These default strings can be customised by the application. For example, if you wanted to change the `lnurl_pay_metadata_plain_text`, which sets the LNURL-pay text/plain metadata.
+The Notification Plugin uses a set of identifiers and default strings to display messages when processing push notifications. These default strings can be customised by the application. For example, to change the `lnurl_pay_metadata_plain_text`, which sets the LNURL-pay text/plain metadata, you can modify it as follows:
 
 ## Android
 
-In the `string.xml` file of the application's `res/values` directory, add the key/value:
+In the `string.xml` file of the application's `res/values` directory, add the key/value pair:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -16,7 +16,7 @@ You can find the current identifiers and default strings [here](https://github.c
 
 ## iOS
 
-In the `Info.plist` file of the `NotificationService` target, add the key/value:
+In the `Info.plist` file of the `NotificationService` target, add the key/value pair:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

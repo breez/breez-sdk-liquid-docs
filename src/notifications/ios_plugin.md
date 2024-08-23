@@ -17,11 +17,11 @@ More installation methods, including with the Swift Package Manager, can be foun
 
 You're ready to add some Swift code to implement the Notification Plugin in your NotificationService target. In Xcode, in the `NotificationService` folder, open the Swift file named `NotificationService.swift`.
 
-This Swift file should implement the Notification Plugin's `SDKNotificationService` class. The `SDKNotificationService` class handles the incoming notification content and processes the event. To properly implement this class the NotificationService needs to override at least the `getConnectRequest` function. The `getConnectRequest` function is called by the `SDKNotificationService` to get a `ConnectRequest` which contains the data necessary to connect to the SDK. This data includes the `Config` with it's `workingDir` and the mnemonic.
+This Swift file should implement the Notification Plugin's `SDKNotificationService` class. The `SDKNotificationService` class handles the incoming notification content and processes the event. To properly implement this class, the NotificationService needs to override at least the `getConnectRequest` function. The `getConnectRequest` function is called by the `SDKNotificationService` to get a `ConnectRequest` which contains the data necessary to connect to the SDK. This data includes the `Config` with its `workingDir` and the mnemonic.
 
 <div class="warning">
 <h4>Developer note</h4>
-When using the Notification Plugin in iOS, it is important to note that the <code>Config</code> <code>workingDir</code> needs to be set to the app group's shared directory in both the <code>NotificationService</code> target and in the main application target, whether that is a Swift, Flutter or React Native based application.
+When using the Notification Plugin on iOS, it is important to note that the <code>Config</code> <code>workingDir</code> needs to be set to the app group's shared directory in both the <code>NotificationService</code> target and in the main application target, whether that is a Swift, Flutter or React Native based application.
 </div>
 <div class="warning">
 <h4>Developer note</h4>
@@ -67,4 +67,4 @@ class NotificationService: SDKNotificationService {
 ```
 
 ## Reference implementation
-For a complete reference, see how we implemented it in misty-breez wallet: [NotificationService.swift](https://github.com/breez/misty-breez/blob/main/ios/Breez%20Notification%20Service%20Extension/NotificationService.swift).
+For a complete reference, see how we implemented it in misty-breez wallet: [NotificationService.swift](https://github.com/breez/misty-breez/blob/main/ios/NotificationService/NotificationService.swift).
