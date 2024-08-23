@@ -10,7 +10,7 @@ The process involves using a Notification Delivery Service (NDS) acting as an in
 
 ### Push notification data
 
-When receiving POST request data on the webhook URL, the NDS should get the `token`, `platform` and optional `app_data` from the URL params. If necessary, convert the token to a token that can be sent to the push notification service. Then format the data to be sent to the push notification service, which includes converting any JSON data into a string format. 
+When receiving POST request data on the webhook URL, the NDS should get the `token`, `platform` and optional `app_data` from the URL params. If necessary, convert the token into a token compatible with the push notification service. For example, if the application uses a different token identifier in the webhook URL, it will perform an internal lookup to convert this token into a push notification service token upon receiving the POST request. Then format the data to be sent to the push notification service, which includes converting any JSON data into a string format. 
 
 By default, the Notification Plugin should receive the push notification data in the following format:
 
