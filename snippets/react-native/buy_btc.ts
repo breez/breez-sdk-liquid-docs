@@ -5,7 +5,7 @@ import {
   OnchainPaymentLimitsResponse,
   prepareBuyBitcoin,
   PrepareBuyBitcoinResponse
-} from '@breeztech/react-native-breez-sdk'
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleFetchOnchainLimits = async () => {
   // ANCHOR: onchain-limits
@@ -37,11 +37,11 @@ const examplePrepareBuyBtc = async (currentLimits: OnchainPaymentLimitsResponse)
   // ANCHOR_END: prepare-buy-btc
 }
 
-const exampleBuyBtc = async (prepareRes: PrepareBuyBitcoinResponse) => {
+const exampleBuyBtc = async (prepareResponse: PrepareBuyBitcoinResponse) => {
   // ANCHOR: buy-btc
   try {
     const url = await buyBitcoin({
-      prepareRes
+      prepareResponse
     })
   } catch (err) {
     console.error(err)

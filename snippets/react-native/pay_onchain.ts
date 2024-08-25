@@ -21,12 +21,12 @@ const exampleGetCurrentLimits = async () => {
 const examplePreparePayOnchain = async () => {
   // ANCHOR: prepare-pay-onchain
   try {
-    const prepareRes = await preparePayOnchain({
+    const prepareResponse = await preparePayOnchain({
       receiverAmountSat: 5_000
     })
 
     // Check if the fees are acceptable before proceeding
-    const totalFeesSat = prepareRes.totalFeesSat
+    const totalFeesSat = prepareResponse.totalFeesSat
   } catch (err) {
     console.error(err)
   }
@@ -38,28 +38,28 @@ const examplePreparePayOnchainFeeRate = async () => {
   try {
     const optionalSatPerVbyte = 21
 
-    const prepareRes = await preparePayOnchain({
+    const prepareResponse = await preparePayOnchain({
       receiverAmountSat: 5_000,
       satPerVbyte: optionalSatPerVbyte
     })
 
     // Check if the fees are acceptable before proceeding
-    const claimFeesSat = prepareRes.claimFeesSat
-    const totalFeesSat = prepareRes.totalFeesSat
+    const claimFeesSat = prepareResponse.claimFeesSat
+    const totalFeesSat = prepareResponse.totalFeesSat
   } catch (err) {
     console.error(err)
   }
   // ANCHOR_END: prepare-pay-onchain-fee-rate
 }
 
-const examplePayOnchain = async (prepareRes: PreparePayOnchainResponse) => {
+const examplePayOnchain = async (prepareResponse: PreparePayOnchainResponse) => {
   // ANCHOR: start-reverse-swap
   try {
     const destinationAddress = 'bc1..'
 
     const payOnchainRes = await payOnchain({
       address: destinationAddress,
-      prepareRes
+      prepareResponse
     })
   } catch (err) {
     console.error(err)
