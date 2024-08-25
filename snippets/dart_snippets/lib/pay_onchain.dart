@@ -3,7 +3,8 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<OnchainPaymentLimitsResponse> getCurrentLimits() async {
   // ANCHOR: get-current-pay-onchain-limits
-  OnchainPaymentLimitsResponse currentLimits = await breezSDKLiquid.instance!.fetchOnchainLimits();
+  OnchainPaymentLimitsResponse currentLimits =
+      await breezSDKLiquid.instance!.fetchOnchainLimits();
   print("Minimum amount: ${currentLimits.send.minSat} sats");
   print("Maximum amount: ${currentLimits.send.maxSat} sats");
   // ANCHOR_END: get-current-pay-onchain-limits
@@ -15,7 +16,8 @@ Future<PreparePayOnchainResponse> preparePayOnchain() async {
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
     receiverAmountSat: 5000 as BigInt,
   );
-  PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
+  PreparePayOnchainResponse prepareRes =
+      await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,
   );
 
@@ -34,7 +36,8 @@ Future<PreparePayOnchainResponse> preparePayOnchainFeeRate() async {
     receiverAmountSat: 5000 as BigInt,
     satPerVbyte: optionalSatPerVbyte,
   );
-  PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
+  PreparePayOnchainResponse prepareRes =
+      await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,
   );
 
@@ -55,7 +58,7 @@ Future<SendPaymentResponse> startReverseSwap({
 
   PayOnchainRequest req = PayOnchainRequest(
     address: destinationAddress,
-    prepareRes: prepareRes,
+    prepareResponse: prepareRes,
   );
   SendPaymentResponse res = await breezSDKLiquid.instance!.payOnchain(req: req);
   // ANCHOR_END: start-reverse-swap

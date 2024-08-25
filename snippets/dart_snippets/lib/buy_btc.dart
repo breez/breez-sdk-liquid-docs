@@ -3,7 +3,8 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<OnchainPaymentLimitsResponse> fetchOnchainLimits() async {
   // ANCHOR: onchain-limits
-  OnchainPaymentLimitsResponse currentLimits = await breezSDKLiquid.instance!.fetchOnchainLimits();
+  OnchainPaymentLimitsResponse currentLimits =
+      await breezSDKLiquid.instance!.fetchOnchainLimits();
   print("Minimum amount: ${currentLimits.receive.minSat} sats");
   print("Maximum amount: ${currentLimits.receive.maxSat} sats");
   // ANCHOR_END: onchain-limits
@@ -11,13 +12,14 @@ Future<OnchainPaymentLimitsResponse> fetchOnchainLimits() async {
   return currentLimits;
 }
 
-Future<PrepareBuyBitcoinResponse> prepareBuyBitcoin(currentLimits: OnchainPaymentLimitsResponse) async {
+Future<PrepareBuyBitcoinResponse> prepareBuyBitcoin(
+    OnchainPaymentLimitsResponse currentLimits) async {
   // ANCHOR: prepare-buy-btc
-  PrepareBuyBitcoinRequest req = const PrepareBuyBitcoinRequest(
-    provider: BuyBitcoinProvider.Moonpay,
-    amountSat: currentLimits.receive.minSat
-  );
-  PrepareBuyBitcoinResponse prepareRes = await breezSDKLiquid.instance!.prepareBuyBitcoin(req: req);
+  PrepareBuyBitcoinRequest req = PrepareBuyBitcoinRequest(
+      provider: BuyBitcoinProvider.moonpay,
+      amountSat: currentLimits.receive.minSat);
+  PrepareBuyBitcoinResponse prepareRes =
+      await breezSDKLiquid.instance!.prepareBuyBitcoin(req: req);
 
   // Check the fees are acceptable before proceeding
   BigInt receiveFeesSat = prepareRes.feesSat;
@@ -26,9 +28,9 @@ Future<PrepareBuyBitcoinResponse> prepareBuyBitcoin(currentLimits: OnchainPaymen
   return prepareRes;
 }
 
-Future<String> buyBitcoin(prepareRes: PrepareBuyBitcoinResponse) async {
+Future<String> buyBitcoin(PrepareBuyBitcoinResponse prepareResponse) async {
   // ANCHOR: buy-btc
-  BuyBitcoinRequest req = const BuyBitcoinRequest(prepareRes: prepareRes);
+  BuyBitcoinRequest req = BuyBitcoinRequest(prepareResponse: prepareResponse);
   String url = await breezSDKLiquid.instance!.buyBitcoin(req: req);
   // ANCHOR_END: buy-btc
   return url;
