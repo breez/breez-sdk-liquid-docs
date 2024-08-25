@@ -2,7 +2,12 @@
 
 With the Breez Liquid SDK you aren't required to open a channel and set up your inbound liquidity.
 
-Once the SDK is initialized, you can directly begin receiving payments.
+Once the SDK is initialized, you can directly begin receiving payments. 
+
+There are currently three methods for receiving:
+- `PaymentMethod::Lightning`: For Lightning to Liquid payments
+- `PaymentMethod::BitcoinAddress`: For Bitcoin to Liquid payments
+- `PaymentMethod::LiquidAddress`: For Liquid to Liquid payments
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
