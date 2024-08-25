@@ -47,7 +47,7 @@ func startReverseSwap(sdk: BindingLiquidSdk, prepareResponse: PreparePayOnchainR
 
     let response = try? sdk.payOnchain(req: PayOnchainRequest(
         address: destinationAddress,
-        prepareRes: prepareResponse))
+        prepareResponse: prepareResponse))
     // ANCHOR_END: start-reverse-swap
     return response
 }

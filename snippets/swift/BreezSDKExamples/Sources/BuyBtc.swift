@@ -16,17 +16,17 @@ func prepareBuyBitcoin(sdk: BindingLiquidSdk, currentLimits: OnchainPaymentLimit
         provider: .moonpay,
         amountSat: currentLimits.receive.minSat)
 
-    if let prepareRes = try? sdk.prepareBuyBitcoin(req: req) {
+    if let prepareResponse = try? sdk.prepareBuyBitcoin(req: req) {
         // Check the fees are acceptable before proceeding
-        let receiveFeesSat = prepareRes.feesSat;
+        let receiveFeesSat = prepareResponse.feesSat;
         print("Fees: \(receiveFeesSat) sats")
     }
     // ANCHOR_END: prepare-buy-btc
 }
 
-func buyBitcoin(sdk: BindingLiquidSdk, prepareRes: PrepareBuyBitcoinResponse) -> String? {
+func buyBitcoin(sdk: BindingLiquidSdk, prepareResponse: PrepareBuyBitcoinResponse) -> String? {
     // ANCHOR: buy-btc
-    let req = BuyBitcoinRequest(prepareRes: prepareRes)
+    let req = BuyBitcoinRequest(prepareResponse: prepareResponse)
     let url = try? sdk.buyBitcoin(req: req)
     // ANCHOR_END: buy-btc
     return url
