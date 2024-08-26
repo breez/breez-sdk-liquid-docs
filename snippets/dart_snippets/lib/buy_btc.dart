@@ -19,7 +19,7 @@ Future<PrepareBuyBitcoinResponse> prepareBuyBitcoin(OnchainPaymentLimitsResponse
 
   // Check the fees are acceptable before proceeding
   BigInt receiveFeesSat = prepareRes.feesSat;
-  print("Fees: ${receiveFeesSat} sats");
+  print("Fees: $receiveFeesSat sats");
   // ANCHOR_END: prepare-buy-btc
   return prepareRes;
 }

@@ -14,7 +14,7 @@ func sendPayment(sdk: BindingLiquidSdk) -> SendPaymentResponse? {
     print(sendFeesSat)
 
     let sendResponse = try? sdk.sendPayment(req: SendPaymentRequest (
-        prepareResponse: prepareResponse
+        prepareResponse: prepareResponse!
     ))
     let payment = sendResponse!.payment
     print(payment)

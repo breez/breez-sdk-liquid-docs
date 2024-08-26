@@ -1,7 +1,7 @@
 import {
   InputTypeVariant,
   PaymentMethod,
-  PrepareReceiveResponse,
+  type PrepareReceiveResponse,
   fetchLightningLimits,
   fetchOnchainLimits,
   parse,
@@ -26,7 +26,7 @@ const examplePrepareLightningPayment = async () => {
   const receiveFeesSat = prepareResponse.feesSat
   // ANCHOR_END: prepare-receive-payment-lightning
 
-  console.log(receiveFeesSat);
+  console.log(receiveFeesSat)
 }
 
 const examplePrepareOnchainPayment = async () => {
@@ -46,7 +46,7 @@ const examplePrepareOnchainPayment = async () => {
   const receiveFeesSat = prepareResponse.feesSat
   // ANCHOR_END: prepare-receive-payment-onchain
 
-  console.log(receiveFeesSat);
+  console.log(receiveFeesSat)
 }
 
 const examplePrepareLiquidPayment = async () => {
@@ -63,7 +63,7 @@ const examplePrepareLiquidPayment = async () => {
   const receiveFeesSat = prepareResponse.feesSat
   // ANCHOR_END: prepare-receive-payment-liquid
 
-  console.log(receiveFeesSat);
+  console.log(receiveFeesSat)
 }
 
 const exampleReceivePayment = async (prepareResponse: PrepareReceiveResponse) => {
@@ -75,17 +75,17 @@ const exampleReceivePayment = async (prepareResponse: PrepareReceiveResponse) =>
   })
 
   // Parse the resulting destination for confirmation
-  let output = await parse(res.destination);
+  const output = await parse(res.destination)
   switch (output.type) {
     case InputTypeVariant.BOLT11:
       console.log(output.invoice)
-      break;
+      break
     case InputTypeVariant.BITCOIN_ADDRESS:
       console.log(output.address)
-      break;
+      break
     case InputTypeVariant.LIQUID_ADDRESS:
       console.log(output.address)
-      break;
+      break
   }
   // ANCHOR_END: receive-payment
 }

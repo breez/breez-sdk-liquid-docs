@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 use breez_sdk_liquid::prelude::*;
 use log::info;
 

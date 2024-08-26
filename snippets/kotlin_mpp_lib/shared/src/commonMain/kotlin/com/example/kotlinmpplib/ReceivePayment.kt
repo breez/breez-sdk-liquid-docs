@@ -11,7 +11,7 @@ class ReceivePayment {
             // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${currentLimits.receive.maxSat}")
 
             // Set the invoice amount you wish the payer to send, which should be within the above limits
-            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.Lightning)
+            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.LIGHTNING)
             val prepareRes = sdk.prepareReceivePayment(prepareReq)
 
             // If the fees are acceptable, continue to create the Receive Payment
@@ -31,7 +31,7 @@ class ReceivePayment {
             // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${currentLimits.receive.maxSat}")
 
             // Set the onchain amount you wish the payer to send, which should be within the above limits
-            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.BitcoinAddress)
+            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.BITCOIN_ADDRESS)
             val prepareRes = sdk.prepareReceivePayment(prepareReq)
 
             // If the fees are acceptable, continue to create the Receive Payment
@@ -48,13 +48,11 @@ class ReceivePayment {
             // Create a Liquid BIP21 URI/address to receive a payment to.
             // There are no limits, but the payer amount should be greater than broadcast fees when specified
             // Note: Not setting the amount will generate a plain Liquid address
-            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.LiquidAddress)
+            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.LIQUID_ADDRESS)
             val prepareRes = sdk.prepareReceivePayment(prepareReq)
 
             // If the fees are acceptable, continue to create the Receive Payment
             val receiveFeesSat =  prepareRes.feesSat;
-
-            val optionalDescription = "<description>";
         } catch (e: Exception) {
             // handle error
         }
@@ -62,10 +60,9 @@ class ReceivePayment {
     }
 
     fun receivePayment(sdk: BindingLiquidSdk, prepareResponse: PrepareReceiveResponse) {
-
-
         // ANCHOR: receive-payment
         try {
+            val optionalDescription = "<description>";
             val req = ReceivePaymentRequest(prepareResponse, optionalDescription)
             val res = sdk.receivePayment(req)
             val destination = res.destination;

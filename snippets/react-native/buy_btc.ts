@@ -2,9 +2,9 @@ import {
   buyBitcoin,
   BuyBitcoinProvider,
   fetchOnchainLimits,
-  OnchainPaymentLimitsResponse,
-  prepareBuyBitcoin,
-  PrepareBuyBitcoinResponse
+  type OnchainPaymentLimitsResponse,
+  type PrepareBuyBitcoinResponse,
+  prepareBuyBitcoin
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleFetchOnchainLimits = async () => {
@@ -29,7 +29,7 @@ const examplePrepareBuyBtc = async (currentLimits: OnchainPaymentLimitsResponse)
     })
 
     // Check the fees are acceptable before proceeding
-    const receiveFeesSat = prepareRes.feesSat;
+    const receiveFeesSat = prepareRes.feesSat
     console.log(`Fees: ${receiveFeesSat} sats`)
   } catch (err) {
     console.error(err)

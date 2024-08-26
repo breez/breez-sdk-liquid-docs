@@ -1,6 +1,6 @@
 import BreezSDKLiquid
 
-func prepareReceiveLightning(sdk:BindingLiquidSdk) -> PrepareReceiveResponse? {
+func prepareReceiveLightning(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     // ANCHOR: prepare-receive-payment-lightning
     // Fetch the Receive lightning limits
     let currentLimits = try? sdk.fetchLightningLimits()
@@ -21,7 +21,7 @@ func prepareReceiveLightning(sdk:BindingLiquidSdk) -> PrepareReceiveResponse? {
     return prepareResponse
 }
 
-func prepareReceiveOnchain(sdk:BindingLiquidSdk) -> PrepareReceiveResponse? {
+func prepareReceiveOnchain(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     // ANCHOR: prepare-receive-payment-onchain
     // Fetch the Receive onchain limits
     let currentLimits = try? sdk.fetchOnchainLimits()
@@ -42,11 +42,11 @@ func prepareReceiveOnchain(sdk:BindingLiquidSdk) -> PrepareReceiveResponse? {
     return prepareResponse
 }
 
-func prepareReceiveLiquid(sdk:BindingLiquidSdk) -> PrepareReceiveResponse? {
+func prepareReceiveLiquid(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     // ANCHOR: prepare-receive-payment-liquid
     // Create a Liquid BIP21 URI/address to receive a payment to.
     // There are no limits, but the payer amount should be greater than broadcast fees when specified
-    let prepareLiquidResponse = try? sdk
+    let prepareResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
             payerAmountSat: 5_000, // Not specifying the amount will create a plain Liquid address instead
             paymentMethod: PaymentMethod.liquidAddress
