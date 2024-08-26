@@ -19,10 +19,10 @@ class BuyBtc {
         // ANCHOR: prepare-buy-btc
         try {
             val req = PrepareBuyBitcoinRequest(BuyBitcoinProvider.MOONPAY, currentLimits.receive.minSat)
-            val prepareRes = sdk.prepareBuyBitcoin(req)
+            val prepareResponse = sdk.prepareBuyBitcoin(req)
 
             // Check the fees are acceptable before proceeding
-            val receiveFeesSat = prepareRes.feesSat;
+            val receiveFeesSat = prepareResponse.feesSat;
             // Log.v("Breez", "Fees: ${receiveFeesSat} sats")
         } catch (e: Exception) {
             // Handle error
@@ -30,10 +30,10 @@ class BuyBtc {
         // ANCHOR_END: prepare-buy-btc
     }
 
-    fun buyBtc(sdk: BindingLiquidSdk, prepareRes: PrepareBuyBitcoinResponse) {
+    fun buyBtc(sdk: BindingLiquidSdk, prepareResponse: PrepareBuyBitcoinResponse) {
         // ANCHOR: buy-btc
         try {
-            val req = BuyBitcoinRequest(prepareRes)
+            val req = BuyBitcoinRequest(prepareResponse)
             val url = sdk.buyBitcoin(req)
         } catch (e: Exception) {
             // Handle error

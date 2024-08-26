@@ -18,10 +18,10 @@ class PayOnchain {
         // ANCHOR: prepare-pay-onchain
         try {
             val prepareRequest = PreparePayOnchainRequest(5_000.toULong())
-            val prepareRes = sdk.preparePayOnchain(prepareRequest)
+            val prepareResponse = sdk.preparePayOnchain(prepareRequest)
 
             // Check if the fees are acceptable before proceeding
-            val totalFeesSat = prepareRes.totalFeesSat;
+            val totalFeesSat = prepareResponse.totalFeesSat;
         } catch (e: Exception) {
             // handle error
         }
@@ -34,22 +34,22 @@ class PayOnchain {
             val optionalSatPerVbyte = 21
 
             val prepareRequest = PreparePayOnchainRequest(5_000.toULong(), optionalSatPerVbyte.toUInt())
-            val prepareRes = sdk.preparePayOnchain(prepareRequest)
+            val prepareResponse = sdk.preparePayOnchain(prepareRequest)
 
             // Check if the fees are acceptable before proceeding
-            val claimFeesSat = prepareRes.claimFeesSat;
-            val totalFeesSat = prepareRes.totalFeesSat;
+            val claimFeesSat = prepareResponse.claimFeesSat;
+            val totalFeesSat = prepareResponse.totalFeesSat;
         } catch (e: Exception) {
             // handle error
         }
         // ANCHOR_END: prepare-pay-onchain-fee-rate
     }
 
-    fun startReverseSwap(sdk: BindingLiquidSdk, prepareRes: PreparePayOnchainResponse) {
+    fun startReverseSwap(sdk: BindingLiquidSdk, prepareResponse: PreparePayOnchainResponse) {
         // ANCHOR: start-reverse-swap
         val address = "bc1.."
         try {
-            sdk.payOnchain(PayOnchainRequest(address, prepareRes))
+            sdk.payOnchain(PayOnchainRequest(address, prepareResponse))
         } catch (e: Exception) {
             // handle error
         }
