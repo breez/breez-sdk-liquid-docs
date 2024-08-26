@@ -91,7 +91,7 @@ class BreezSDKLiquid {
   void initializeEventsStream(BindingLiquidSdk sdk) {
     _breezEventStream ??= sdk.addEventListener().asBroadcastStream();
   }
-    
+
   final _eventStreamController = StreamController<SdkEvent>.broadcast();
   Stream<SdkEvent> get eventStream => _eventStreamController.stream;
 

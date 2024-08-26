@@ -1,32 +1,50 @@
 import BreezSDKLiquid
 
-func receivePayment(sdk: BindingLiquidSdk) -> ReceivePaymentResponse? {
-    // ANCHOR: receive-payment
+func prepareReceiveLightning(sdk:BindingLiquidSdk) -> PrepareReceiveResponse? {
+    // ANCHOR: prepare-receive-payment-lightning
     // Fetch the Receive lightning limits
-    let currentLightningLimits = try? sdk.fetchLightningLimits()
-    print("Minimum amount: {} sats", currentLightningLimits?.receive.minSat);
-    print("Maximum amount: {} sats", currentLightningLimits?.receive.maxSat);
+    let currentLimits = try? sdk.fetchLightningLimits()
+    print("Minimum amount: {} sats", currentLimits?.receive.minSat);
+    print("Maximum amount: {} sats", currentLimits?.receive.maxSat);
 
     // Set the invoice amount you wish the payer to send, which should be within the above limits
-    let prepareLightningResponse = try? sdk
+    let prepareResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
             payerAmountSat: 5_000,
             paymentMethod: PaymentMethod.lightning
-        ))
+        ));
 
+    // If the fees are acceptable, continue to create the Receive Payment
+    let receiveFeesSat = prepareResponse!.feesSat;
+    // ANCHOR_END: prepare-receive-payment-lightning
+
+    return prepareResponse
+}
+
+func prepareReceiveOnchain(sdk:BindingLiquidSdk) -> PrepareReceiveResponse? {
+    // ANCHOR: prepare-receive-payment-onchain
     // Fetch the Receive onchain limits
-    let currentOnchainLimits = try? sdk.fetchLightningLimits()
-    print("Minimum amount: {} sats", currentOnchainLimits?.receive.minSat);
-    print("Maximum amount: {} sats", currentOnchainLimits?.receive.maxSat);
+    let currentLimits = try? sdk.fetchOnchainLimits()
+    print("Minimum amount: {} sats", currentLimits?.receive.minSat);
+    print("Maximum amount: {} sats", currentLimits?.receive.maxSat);
 
     // Set the onchain amount you wish the payer to send, which should be within the above limits
-    let prepareOnchainResponse = try? sdk
+    let prepareResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
             payerAmountSat: 5_000,
             paymentMethod: PaymentMethod.bitcoinAddress
-        ))
+        ));
 
-    // Or simply create a Liquid BIP21 URI/address to receive a payment to.
+    // If the fees are acceptable, continue to create the Receive Payment
+    let receiveFeesSat = prepareResponse!.feesSat;
+    // ANCHOR_END: prepare-receive-payment-onchain
+
+    return prepareResponse
+}
+
+func prepareReceiveLiquid(sdk:BindingLiquidSdk) -> PrepareReceiveResponse? {
+    // ANCHOR: prepare-receive-payment-liquid
+    // Create a Liquid BIP21 URI/address to receive a payment to.
     // There are no limits, but the payer amount should be greater than broadcast fees when specified
     let prepareLiquidResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
@@ -35,11 +53,16 @@ func receivePayment(sdk: BindingLiquidSdk) -> ReceivePaymentResponse? {
         ))
 
     // If the fees are acceptable, continue to create the Receive Payment
-    let receiveFeesSat = prepareLiquidResponse!.feesSat;
+    let receiveFeesSat = prepareResponse!.feesSat;
+    // ANCHOR_END: prepare-receive-payment-liquid
 
+    return prepareResponse
+}
+
+func receivePayment(sdk: BindingLiquidSdk, prepareResponse: PrepareReceiveResponse) -> ReceivePaymentResponse? {
     let optionalDescription = "<description>"
     let res = try? sdk.receivePayment(req: ReceivePaymentRequest(
-            prepareResponse: prepareLiquidResponse!,
+            prepareResponse: prepareResponse,
             description: optionalDescription
         ))
 

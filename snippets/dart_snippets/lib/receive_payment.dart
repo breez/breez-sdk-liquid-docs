@@ -1,8 +1,8 @@
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
-Future<ReceivePaymentResponse> receivePayment() async {
-  // ANCHOR: receive-payment
+Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
+  // ANCHOR: prepare-receive-payment-lightning
   // Fetch the Receive lightning limits
   LightningPaymentLimitsResponse currentLightningLimits =
       await breezSDKLiquid.instance!.fetchLightningLimits();
@@ -10,7 +10,7 @@ Future<ReceivePaymentResponse> receivePayment() async {
   print("Maximum amount: ${currentLightningLimits.receive.maxSat} sats");
 
   // Create an invoice and set the amount you wish the payer to send
-  PrepareReceiveResponse prepareResLightning =
+  PrepareReceiveResponse prepareRes =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
       payerAmountSat: 5000 as BigInt,
@@ -18,6 +18,16 @@ Future<ReceivePaymentResponse> receivePayment() async {
     ),
   );
 
+  // If the fees are acceptable, continue to create the Receive Payment
+  BigInt receiveFeesSat = prepareRes.feesSat;
+  // ANCHOR_END: prepare-receive-payment-lightning
+
+  print(receiveFeesSat);
+  return prepareRes;
+}
+
+Future<PrepareReceiveResponse> prepareReceivePaymentOnchain() async {
+  // ANCHOR: prepare-receive-payment-onchain
   // Fetch the Receive onchain limits
   OnchainPaymentLimitsResponse currentOnchainLimits =
       await breezSDKLiquid.instance!.fetchOnchainLimits();
@@ -25,7 +35,7 @@ Future<ReceivePaymentResponse> receivePayment() async {
   print("Maximum amount: ${currentOnchainLimits.receive.maxSat} sats");
 
   // Or create a cross-chain transfer (Liquid to Bitcoin) via chain swap
-  PrepareReceiveResponse prepareResBitcoin =
+  PrepareReceiveResponse prepareRes =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
       payerAmountSat: 5000 as BigInt,
@@ -33,9 +43,19 @@ Future<ReceivePaymentResponse> receivePayment() async {
     ),
   );
 
-  // Or simply create a Liquid BIP21 URI/address to receive a payment to.
+  // If the fees are acceptable, continue to create the Receive Payment
+  BigInt receiveFeesSat = prepareRes.feesSat;
+  // ANCHOR_END: prepare-receive-payment-onchain
+
+  print(receiveFeesSat);
+  return prepareRes;
+}
+
+Future<PrepareReceiveResponse> prepareReceivePaymentLiquid() async {
+  // ANCHOR: prepare-receive-payment-liquid
+  // Create a Liquid BIP21 URI/address to receive a payment to.
   // There are no limits, but the payer amount should be greater than broadcast fees when specified
-  PrepareReceiveResponse prepareResLiquid =
+  PrepareReceiveResponse prepareRes =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
       payerAmountSat: 5000
@@ -45,27 +65,36 @@ Future<ReceivePaymentResponse> receivePayment() async {
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
-  BigInt receiveFeesSat = prepareResLightning.feesSat;
+  BigInt receiveFeesSat = prepareRes.feesSat;
+  // ANCHOR_END: prepare-receive-payment-liquid
 
+  print(receiveFeesSat);
+  return prepareRes;
+}
+
+Future<ReceivePaymentResponse> receivePayment(
+    PrepareReceiveResponse prepareResponse) async {
+  // ANCHOR: receive-payment
   String optionalDescription = "<description>";
   ReceivePaymentResponse res = await breezSDKLiquid.instance!.receivePayment(
     req: ReceivePaymentRequest(
       description: optionalDescription,
-      prepareResponse: prepareResLightning,
+      prepareResponse: prepareResponse,
     ),
   );
 
   // The output destination can then be parsed for confirmation
-  InputType inputType = await parse(input: res.destination);
-  if (inputType is InputType_LiquidAddress) {
-    LiquidAddressData addressData = inputType.address;
+  InputType output = await parse(input: res.destination);
+  if (output is InputType_LiquidAddress) {
+    LiquidAddressData addressData = output.address;
     print(addressData.address);
     print(addressData.amountSat);
+  } else if (output is InputType_Bolt11) {
+    // ...
+  } else if (output is InputType_BitcoinAddress) {
+    // ...
   }
   // ANCHOR_END: receive-payment
 
-  print(prepareResLiquid.feesSat);
-  print(prepareResBitcoin.feesSat);
-  print(receiveFeesSat);
   return res;
 }

@@ -4,8 +4,8 @@ use anyhow::{anyhow, Result};
 use breez_sdk_liquid::prelude::*;
 use log::info;
 
-async fn receive_payment(sdk: Arc<LiquidSdk>) -> Result<()> {
-    // ANCHOR: receive-payment
+async fn prepare_receive_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: prepare-receive-payment-lightning
     // Fetch the Receive lightning limits
     let current_limits = sdk.fetch_lightning_limits().await?;
     info!("Minimum amount: {} sats", current_limits.receive.min_sat);
@@ -19,6 +19,16 @@ async fn receive_payment(sdk: Arc<LiquidSdk>) -> Result<()> {
         })
         .await?;
 
+    // If the fees are acceptable, continue to create the Receive Payment
+    let receive_fees_sat = prepare_response.fees_sat;
+    // ANCHOR_END: prepare-receive-payment-lightning
+
+    dbg!(receive_fees_sat);
+    Ok(())
+}
+
+async fn prepare_receive_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: prepare-receive-payment-onchain
     // Fetch the Receive onchain limits
     let current_limits = sdk.fetch_onchain_limits().await?;
     info!("Minimum amount: {} sats", current_limits.receive.min_sat);
@@ -32,7 +42,17 @@ async fn receive_payment(sdk: Arc<LiquidSdk>) -> Result<()> {
         })
         .await?;
 
-    // Or simply create a Liquid BIP21 URI/address to receive a payment to.
+    // If the fees are acceptable, continue to create the Receive Payment
+    let receive_fees_sat = prepare_response.fees_sat;
+    // ANCHOR_END: prepare-receive-payment-onchain
+
+    dbg!(receive_fees_sat);
+    Ok(())
+}
+
+async fn prepare_receive_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: prepare-receive-payment-liquid
+    // Create a Liquid BIP21 URI/address to receive a payment to.
     // There are no limits, but the payer amount should be greater than broadcast fees when specified
     let prepare_response = sdk
         .prepare_receive_payment(&PrepareReceiveRequest {
@@ -42,8 +62,18 @@ async fn receive_payment(sdk: Arc<LiquidSdk>) -> Result<()> {
         .await?;
 
     // If the fees are acceptable, continue to create the Receive Payment
-    let _receive_fees_sat = prepare_response.fees_sat;
+    let receive_fees_sat = prepare_response.fees_sat;
+    // ANCHOR_END: prepare-receive-payment-liquid
 
+    dbg!(receive_fees_sat);
+    Ok(())
+}
+
+async fn receive_payment(
+    sdk: Arc<LiquidSdk>,
+    prepare_response: PrepareReceiveResponse,
+) -> Result<()> {
+    // ANCHOR: receive-payment
     let optional_description = Some("<description>".to_string());
     let res = sdk
         .receive_payment(&ReceivePaymentRequest {
@@ -57,7 +87,7 @@ async fn receive_payment(sdk: Arc<LiquidSdk>) -> Result<()> {
         Ok(InputType::BitcoinAddress { .. }) => {}
         Ok(InputType::LiquidAddress { .. }) => {}
         _ => {
-            anyhow!("Unexpected destination: {}", res.destination);
+            dbg!("Unexpected destination: {}", res.destination);
         }
     };
     // ANCHOR_END: receive-payment
