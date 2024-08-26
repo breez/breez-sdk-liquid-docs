@@ -9,7 +9,7 @@
   - [Fetching the Wallet State](guide/wallet_state.md)
   - [Listening to events](guide/events.md)
   - [Adding logging](guide/logging.md)
-- [Paying in Lightning](guide/payments.md)
+- [Payment Fundamentals](guide/payments.md)
   - [Receiving payments](guide/receive_payment.md)
   - [Sending payments](guide/send_payment.md)
   - [Listing payments](guide/list_payments.md)

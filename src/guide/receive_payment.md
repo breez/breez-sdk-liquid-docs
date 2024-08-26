@@ -1,10 +1,10 @@
-# Receiving Lightning payments
+# Receiving Payments
 
 With the Breez Liquid SDK you aren't required to open a channel and set up your inbound liquidity.
 
 Once the SDK is initialized, you can directly begin receiving payments. The receive process takes two steps:
 1. [Preparing the Payment](receive_payment.md#preparing-payments)
-1. [Receiving the Payment](receive_payment.md#receiving-payments)
+1. [Receiving the Payment](receive_payment.md#receiving-payments-1)
 
 ## Preparing Payments
 During the prepare step, the SDK ensures that the inputs are valid with respect to the specified payment method,
