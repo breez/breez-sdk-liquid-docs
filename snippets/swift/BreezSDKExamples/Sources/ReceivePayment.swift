@@ -60,6 +60,7 @@ func prepareReceiveLiquid(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
 }
 
 func receivePayment(sdk: BindingLiquidSdk, prepareResponse: PrepareReceiveResponse) -> ReceivePaymentResponse? {
+    // ANCHOR: receive-payment
     let optionalDescription = "<description>"
     let res = try? sdk.receivePayment(req: ReceivePaymentRequest(
             prepareResponse: prepareResponse,

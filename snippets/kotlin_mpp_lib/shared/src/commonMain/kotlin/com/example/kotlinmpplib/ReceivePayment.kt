@@ -11,11 +11,11 @@ class ReceivePayment {
             // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${currentLimits.receive.maxSat}")
 
             // Set the invoice amount you wish the payer to send, which should be within the above limits
-            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.LIGHTNING)
-            val prepareRes = sdk.prepareReceivePayment(prepareReq)
+            val prepareRequest = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.LIGHTNING)
+            val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
 
             // If the fees are acceptable, continue to create the Receive Payment
-            val receiveFeesSat =  prepareRes.feesSat;
+            val receiveFeesSat =  prepareResponse.feesSat;
         } catch (e: Exception) {
             // handle error
         }
@@ -31,11 +31,11 @@ class ReceivePayment {
             // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${currentLimits.receive.maxSat}")
 
             // Set the onchain amount you wish the payer to send, which should be within the above limits
-            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.BITCOIN_ADDRESS)
-            val prepareRes = sdk.prepareReceivePayment(prepareReq)
+            val prepareRequest = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.BITCOIN_ADDRESS)
+            val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
 
             // If the fees are acceptable, continue to create the Receive Payment
-            val receiveFeesSat =  prepareRes.feesSat;
+            val receiveFeesSat =  prepareResponse.feesSat;
         } catch (e: Exception) {
             // handle error
         }
@@ -48,11 +48,11 @@ class ReceivePayment {
             // Create a Liquid BIP21 URI/address to receive a payment to.
             // There are no limits, but the payer amount should be greater than broadcast fees when specified
             // Note: Not setting the amount will generate a plain Liquid address
-            val prepareReq = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.LIQUID_ADDRESS)
-            val prepareRes = sdk.prepareReceivePayment(prepareReq)
+            val prepareRequest = PrepareReceiveRequest(5_000.toULong(), PaymentMethod.LIQUID_ADDRESS)
+            val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
 
             // If the fees are acceptable, continue to create the Receive Payment
-            val receiveFeesSat =  prepareRes.feesSat;
+            val receiveFeesSat =  prepareResponse.feesSat;
         } catch (e: Exception) {
             // handle error
         }

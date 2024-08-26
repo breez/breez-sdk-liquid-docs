@@ -608,3 +608,8 @@ h2, h3 {
     padding: 0;
     margin: 1em 0;
 }
+
+.warning > h4 {
+    padding-top: 2em;
+    margin-bottom: 0em;
+}

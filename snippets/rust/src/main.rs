@@ -5,6 +5,7 @@ mod lnurl_auth;
 mod lnurl_pay;
 mod lnurl_withdraw;
 mod pay_onchain;
+mod receive_onchain;
 mod receive_payment;
 mod send_payment;
 

@@ -157,6 +157,13 @@ When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.
 </section>
 </custom-tabs>
 
+<div class="warning">
+<h4>Developer note</h4>
+
+The above checks include validating against maximum and minimum limits. Your application's users must be informed of these limits because if the amount transferred to the swap address falls outside this valid range, the funds will not be successfully received via the normal swap flow. In such cases, a manual refund will be necessary.
+
+</div>
+
 ## Receiving Payments
 Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the
 receive method, optionally specifying a description.
