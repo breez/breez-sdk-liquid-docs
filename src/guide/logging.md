@@ -42,4 +42,12 @@ The SDK implements detailed logging via a streaming interface you can manage wit
 {{#include ../../snippets/dart_snippets/lib/getting_started.dart:logging}}
 ```
 </section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/GettingStarted.cs:logging}}
+```
+</section>
 </custom-tabs>

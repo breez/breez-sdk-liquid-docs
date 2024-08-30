@@ -94,6 +94,42 @@ jobs:
           # Explicitly allow clippy::unused_variables because snippets might have to demonstrate how to get certain variables without using them afterward
           cargo clippy -- --allow dead_code --allow unused_variables --deny warnings
 
+  check-csharp:
+    needs: 
+      - setup
+      - build-packages
+    name: Check C# snippets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Download archived package
+        uses: actions/download-artifact@v4
+        with:
+          name: Breez.Sdk.Liquid.${{ needs.setup.outputs.package-version }}.nupkg
+          path: .
+
+      - name: Create nuget package source
+        working-directory: snippets/csharp
+        run: |
+          mkdir packages
+          nuget add ../../Breez.Sdk.Liquid.${{ needs.setup.outputs.package-version }}.nupkg -Source ./packages
+      
+      - name: Add nuget dependency
+        working-directory: snippets/csharp
+        run: |
+          dotnet add package Breez.Sdk.Liquid -s ./packages --prerelease
+
+      - name: Build the csharp project
+        working-directory: snippets/csharp
+        run: dotnet build
+
   check-dart:
     needs: 
       - setup

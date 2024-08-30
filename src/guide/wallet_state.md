@@ -42,6 +42,14 @@ Once connected, the balance can be retrieved at any time.
 {{#include ../../snippets/dart_snippets/lib/getting_started.dart:fetch-balance}}
 ```
 </section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/GettingStarted.cs:fetch-balance}}
+```
+</section>
 </custom-tabs>
 
 You are now ready to receive a Lightning [payment](guide/payments.md).

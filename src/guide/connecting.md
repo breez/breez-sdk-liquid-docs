@@ -50,6 +50,14 @@ Now you are ready to interact with the SDK.
 {{#include ../../snippets/dart_snippets/lib/getting_started.dart:init-sdk}}
 ```
 </section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/GettingStarted.cs:init-sdk}}
+```
+</section>
 </custom-tabs>
 
 <div class="warning">

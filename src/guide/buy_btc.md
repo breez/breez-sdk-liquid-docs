@@ -47,6 +47,14 @@ Fetch the current onchain limits to check the minimum and maximum allowed to pur
 {{#include ../../snippets/dart_snippets/lib/buy_btc.dart:onchain-limits}}
 ```
 </section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/BuyBtc.cs:onchain-limits}}
+```
+</section>
 </custom-tabs>
 
 ## Preparing to buy, checking fees
@@ -94,6 +102,14 @@ Using the current onchain limits, select a provider and amount to purchase.
 {{#include ../../snippets/dart_snippets/lib/buy_btc.dart:prepare-buy-btc}}
 ```
 </section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/BuyBtc.cs:prepare-buy-btc}}
+```
+</section>
 </custom-tabs>
 
 ## Generate the URL
@@ -139,6 +155,14 @@ Generate a URL to the provider with a Bitcoin address to receive the purchase to
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/buy_btc.dart:buy-btc}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/BuyBtc.cs:buy-btc}}
 ```
 </section>
 </custom-tabs>

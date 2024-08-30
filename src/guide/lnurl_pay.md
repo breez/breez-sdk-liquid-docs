@@ -42,6 +42,14 @@
 {{#include ../../snippets/dart_snippets/lib/lnurl_pay.dart:lnurl-pay}}
 ```
 </section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/LnurlPay.cs:lnurl-pay}}
+```
+</section>
 </custom-tabs>
 
 <div class="warning">
