@@ -1,6 +1,6 @@
 # Installing the SDK
 
-The Breez Liquid SDK is available in the following platforms:
+The Breez SDK is available in the following platforms:
 
 ## iOS/Swift
 

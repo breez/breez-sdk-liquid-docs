@@ -194,3 +194,7 @@ Note that one of the arguments will be the result from the `prepare` call above.
 </section>
 </custom-tabs>
 
+<div class="warning">
+<h4>Developer note</h4>
+Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
+</div>

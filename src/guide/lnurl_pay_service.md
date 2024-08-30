@@ -87,5 +87,5 @@ In the last step, the payer pays the received bolt11 invoice. Follow the steps [
 
 ## Reference implementation
 For a complete reference implementation, see:
-* [Breez's NotificationService](https://github.com/breez/misty-breez/blob/main/ios/Breez%20Notification%20Service%20Extension/NotificationService.swift)
+* [Breez's NotificationService](https://github.com/breez/misty-breez/blob/main/ios/NotificationService/NotificationService.swift)
 * [Breez's LNURL-Pay service](https://github.com/breez/breez-lnurl)

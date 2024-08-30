@@ -1,6 +1,6 @@
 # Receiving Payments
 
-With the Breez Liquid SDK you aren't required to open a channel and set up your inbound liquidity.
+With the Breez SDK you aren't required to open a channel and set up your inbound liquidity.
 
 Once the SDK is initialized, you can directly begin receiving payments. The receive process takes two steps:
 1. [Preparing the Payment](receive_payment.md#preparing-payments)
@@ -215,3 +215,7 @@ receive method, optionally specifying a description.
 ```
 </section>
 </custom-tabs>
+<div class="warning">
+<h4>Developer note</h4>
+Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
+</div>

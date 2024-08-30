@@ -46,7 +46,7 @@
 
 <div class="warning">
 <h4>Developer note</h4>
-By default when the LNURL-pay results in a success action with a URL, the URL is validated to check if there is a mismatch with the LNURL callback domain. You can disable this behaviour by setting the optional validation <code>LnUrlPayPrequest</code> param to false.
+By default when the LNURL-pay results in a success action with a URL, the URL is validated to check if there is a mismatch with the LNURL callback domain. You can disable this behaviour by setting the optional validation <code>LnUrlPayRequest</code> param to false.
 </div>
 
 ## Supported Specs
