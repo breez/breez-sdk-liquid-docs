@@ -609,7 +609,12 @@ h2, h3 {
     margin: 1em 0;
 }
 
+.warning {
+    margin-top: 0;
+}
+
 .warning > h4 {
     padding-top: 2em;
+    margin-top: 0em;
     margin-bottom: 0em;
 }
