@@ -85,7 +85,7 @@ public class GettingStartedSnippets
         catch (Exception)
         {
             // Handle error
-            return null
+            return null;
         }
     }
     // ANCHOR_END: add-event-listener

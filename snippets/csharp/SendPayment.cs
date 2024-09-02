@@ -15,7 +15,7 @@ public class SendPaymentSnippets
             // If the fees are acceptable, continue to create the Send Payment
             var sendFeesSat = prepareResponse.feesSat;
 
-            var sendResponse = sdk.sendPayment(new SendPaymentRequest(prepareResponse))
+            var sendResponse = sdk.sendPayment(new SendPaymentRequest(prepareResponse));
             var payment = sendResponse.payment;
         }
         catch (Exception)
