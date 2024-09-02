@@ -43,6 +43,14 @@ Once connected, the balance can be retrieved at any time.
 ```
 </section>
 
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/getting_started.go:fetch-balance}}
+```
+</section>
+
 <div slot="title">C#</div>
 <section>
 

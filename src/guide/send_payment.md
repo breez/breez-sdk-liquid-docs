@@ -53,6 +53,14 @@ There are cases in which both the destination and the user provide an amount to 
 ```
 </section>
 
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/send_payment.go:send-payment}}
+```
+</section>
+
 <div slot="title">C#</div>
 <section>
 

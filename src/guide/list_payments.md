@@ -43,6 +43,14 @@ To view your payment history you can list all the sent and received payments mad
 ```
 </section>
 
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/list_payments.go:list-payments}}
+```
+</section>
+
 <div slot="title">C#</div>
 <section>
 
@@ -92,6 +100,14 @@ You can optionally filter payments by timestamp and type.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/list_payments.dart:list-payments-filtered}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/list_payments.go:list-payments-filtered}}
 ```
 </section>
 

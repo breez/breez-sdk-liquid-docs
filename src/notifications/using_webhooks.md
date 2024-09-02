@@ -45,6 +45,14 @@ Once your vendor [NDS is set up](setup_nds.md) and can accept POST requests from
 ```
 </section>
 
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/webhook.go:register-webook}}
+```
+</section>
+
 <div slot="title">C#</div>
 <section>
 
@@ -98,6 +106,14 @@ When a webhook is no longer needed you can unregister the webhook as follows:
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/webhook.dart:unregister-webook}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/webhook.go:unregister-webook}}
 ```
 </section>
 

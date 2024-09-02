@@ -43,6 +43,14 @@
 ```
 </section>
 
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/lnurl_withdraw.go:lnurl-withdraw}}
+```
+</section>
+
 <div slot="title">C#</div>
 <section>
 

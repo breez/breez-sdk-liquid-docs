@@ -48,6 +48,14 @@ The SDK emits several events to provide the application with an up-to-date state
 ```
 </section>
 
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/getting_started.go:add-event-listener}}
+```
+</section>
+
 <div slot="title">C#</div>
 <section>
 
@@ -103,6 +111,14 @@ When you no longer need to listen to events, you can remove the listener.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/getting_started.dart:remove-event-listener}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/getting_started.go:remove-event-listener}}
 ```
 </section>
 

@@ -43,6 +43,14 @@ The SDK implements detailed logging via a streaming interface you can manage wit
 ```
 </section>
 
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/getting_started.go:logging}}
+```
+</section>
+
 <div slot="title">C#</div>
 <section>
 

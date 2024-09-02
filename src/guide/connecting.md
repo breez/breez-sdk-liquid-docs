@@ -51,6 +51,14 @@ Now you are ready to interact with the SDK.
 ```
 </section>
 
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/getting_started.go:init-sdk}}
+```
+</section>
+
 <div slot="title">C#</div>
 <section>
 
