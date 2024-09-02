@@ -3,9 +3,10 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<SendPaymentResponse> sendPayment({required String bolt11}) async {
   // ANCHOR: send-payment
-  // Set the BOLT11 invoice you wish to pay
+  // Set the Lightning invoice, Liquid BIP21 or Liquid address you wish to pay
+  BigInt optionalAmountSat = BigInt.from(2000);
   PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
-    req: PrepareSendRequest(destination: "Invoice, Liquid BIP21 or address", amountSat: 2000 as BigInt),
+    req: PrepareSendRequest(destination: "Invoice, Liquid BIP21 or address", amountSat: optionalAmountSat),
   );
 
   // If the fees are acceptable, continue to create the Send Payment

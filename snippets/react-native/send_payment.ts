@@ -5,9 +5,11 @@ import {
 
 const exampleSendLightningPayment = async () => {
   // ANCHOR: send-payment
-  // Set the BOLT11 invoice you wish to pay
+  // Set the Lightning invoice, Liquid BIP21 or Liquid address you wish to pay
+  const optionalAmountSat = 5_000
   const prepareResponse = await prepareSendPayment({
-    destination: 'Invoice, liquid address or BIP21 URI'
+    destination: 'Invoice, liquid address or BIP21 URI',
+    amountSat: optionalAmountSat
   })
 
   // If the fees are acceptable, continue to create the Send Payment

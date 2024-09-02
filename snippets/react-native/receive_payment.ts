@@ -74,18 +74,8 @@ const exampleReceivePayment = async (prepareResponse: PrepareReceiveResponse) =>
     description: optionalDescription
   })
 
-  // Parse the resulting destination for confirmation
-  const output = await parse(res.destination)
-  switch (output.type) {
-    case InputTypeVariant.BOLT11:
-      console.log(output.invoice)
-      break
-    case InputTypeVariant.BITCOIN_ADDRESS:
-      console.log(output.address)
-      break
-    case InputTypeVariant.LIQUID_ADDRESS:
-      console.log(output.address)
-      break
-  }
+  const destination = res.destination;
   // ANCHOR_END: receive-payment
+
+  console.log(destination);
 }

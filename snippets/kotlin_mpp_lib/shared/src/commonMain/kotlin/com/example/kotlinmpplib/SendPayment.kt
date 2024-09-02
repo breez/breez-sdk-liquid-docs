@@ -4,10 +4,11 @@ import breez_sdk_liquid.*
 class SendPayment {
     fun sendPayment(sdk: BindingLiquidSdk) {
         // ANCHOR: send-payment
-        // Set the BOLT11 invoice you wish to pay
+        // Set the Lightning invoice, Liquid BIP21 or Liquid address you wish to pay
         val destination = "Invoice, Liquid BIP21 or address"
         try {
-            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, 5_000.toULong()))
+            val optionalAmountSat = 5_000.toULong();
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmountSat))
 
             // If the fees are acceptable, continue to create the Send Payment
             val sendFeesSat = prepareResponse.feesSat;

@@ -82,15 +82,9 @@ async fn receive_payment(
         })
         .await?;
 
-    match parse(&res.destination).await {
-        Ok(InputType::Bolt11 { .. }) => {}
-        Ok(InputType::BitcoinAddress { .. }) => {}
-        Ok(InputType::LiquidAddress { .. }) => {}
-        _ => {
-            dbg!("Unexpected destination: {}", res.destination);
-        }
-    };
+    let destination = res.destination;
     // ANCHOR_END: receive-payment
 
+    dbg!(destination);
     Ok(())
 }

@@ -11,7 +11,7 @@ During the prepare step, the SDK ensures that the inputs are valid with respect 
 and also returns the relative fees related to the payment so they can be confirmed.
 
 
-The SDK currently supports three methods of receiving: Lightning, Liquid and Cross-chain (Bitcoin):
+The SDK currently supports three methods of receiving: Lightning, Bitcoin and Liquid:
 
 ### Lightning
 When receiving via Lightning, we generate an invoice to be paid.  Note that the payment may fallback to a direct Liquid payment (if the payer's client supports this).
@@ -61,55 +61,7 @@ When receiving via Lightning, we generate an invoice to be paid.  Note that the 
 </section>
 </custom-tabs>
 
-### Liquid
-When receiving via Liquid, we can either generate an address to receive to, or a BIP21 URI with information regarding the payment (currently only the amount and message).
-
-
-To generate a BIP21 address, all you have to do is specify a payer amount.
-
-<custom-tabs category="lang">
-<div slot="title">Rust</div>
-<section>
-
-```rust,ignore
-{{#include ../../snippets/rust/src/receive_payment.rs:prepare-receive-payment-liquid}}
-```
-</section>
-
-<div slot="title">Swift</div>
-<section>
-
-```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/ReceivePayment.swift:prepare-receive-payment-liquid}}
-```
-</section>
-
-<div slot="title">Kotlin</div>
-<section>
-
-```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ReceivePayment.kt:prepare-receive-payment-liquid}}
-```
-</section>
-
-<div slot="title">React Native</div>
-<section>
-
-```typescript
-{{#include ../../snippets/react-native/receive_payment.ts:prepare-receive-payment-liquid}}
-```
-</section>
-
-<div slot="title">Dart</div>
-<section>
-
-```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/receive_payment.dart:prepare-receive-payment-liquid}}
-```
-</section>
-</custom-tabs>
-
-### Cross-chain (Bitcoin)
+### Bitcoin
 When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.
 
 
@@ -163,6 +115,54 @@ When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.
 The above checks include validating against maximum and minimum limits. Your application's users must be informed of these limits because if the amount transferred to the swap address falls outside this valid range, the funds will not be successfully received via the normal swap flow. In such cases, a manual refund will be necessary.
 
 </div>
+
+### Liquid
+When receiving via Liquid, we can either generate an address to receive to, or a BIP21 URI with information regarding the payment (currently only the amount and message).
+
+
+To generate a BIP21 address, all you have to do is specify a payer amount.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/receive_payment.rs:prepare-receive-payment-liquid}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/ReceivePayment.swift:prepare-receive-payment-liquid}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ReceivePayment.kt:prepare-receive-payment-liquid}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/receive_payment.ts:prepare-receive-payment-liquid}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/receive_payment.dart:prepare-receive-payment-liquid}}
+```
+</section>
+</custom-tabs>
 
 ## Receiving Payments
 Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the

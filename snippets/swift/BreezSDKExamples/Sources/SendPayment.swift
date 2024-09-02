@@ -2,11 +2,12 @@ import BreezSDKLiquid
 
 func sendPayment(sdk: BindingLiquidSdk) -> SendPaymentResponse? {
     // ANCHOR: send-payment
-    // Set the BOLT11 invoice you wish to pay
+    // Set the Lightning invoice, Liquid BIP21 or Liquid address you wish to pay
+    let optionalAmountSat: UInt64? = Optional.some(5000)
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
             destination: "Invoice, Liquid BIP21 or address",
-            amountSat: 5000
+            amountSat: optionalAmountSat
         ))
 
     // If the fees are acceptable, continue to create the Send Payment
