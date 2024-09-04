@@ -22,7 +22,7 @@ const exampleGettingStarted = async () => {
   // By default in React Native the workingDir is set to:
   // `/<APPLICATION_SANDBOX_DIRECTORY>/breezSdkLiquid`
   // You can change this to another writable directory or a
-  // subdirectory of the workingDir if managing multiple nodes.
+  // subdirectory of the workingDir if managing multiple mnemonics.
   console.log(`Working directory: ${config.workingDir}`)
   // config.workingDir = "path to writable directory"
 
