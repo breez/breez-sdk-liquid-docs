@@ -5,10 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "BreezSDKDocs",
-    platforms: [.macOS(.v14)],
+    platforms: [.macOS(15.0)],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.3"),
-        .package(url: "https://github.com/breez/breez-sdk-liquid-swift", from:"0.2.2-dev10")
+        .package(url: "https://github.com/breez/breez-sdk-liquid-swift", from:"0.3.0")
         // To use a local version of breez-sdk-liquid, comment-out the above and un-comment:
         // .package(name: "bindings-swift", path: "/local-path/breez-sdk-liquid/lib/bindings/langs/swift")
     ],
