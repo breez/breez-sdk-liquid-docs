@@ -23,7 +23,7 @@ public class ListPaymentsSnippets
         {
             var payments = sdk.ListPayments(
                 new ListPaymentsRequest(
-                    new() { PaymentType.SEND },
+                    new() { PaymentType.Send },
                     fromTimestamp: 1696880000,
                     toTimestamp: 1696959200,
                     offset: 0,

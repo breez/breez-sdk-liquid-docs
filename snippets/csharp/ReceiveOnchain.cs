@@ -7,7 +7,7 @@ public class ReceiveOnchainSnippets
         // ANCHOR: list-refundables
         try
         {
-            valrrefundables = sdk.ListRefundables();
+            var refundables = sdk.ListRefundables();
         }
         catch (Exception)
         {

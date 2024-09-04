@@ -13,7 +13,7 @@ public class ReceivePaymentSnippets
             Console.WriteLine($"Maximum amount allowed to deposit in sats: {currentLimits.receive.maxSat}");
 
             // Set the invoice amount you wish the payer to send, which should be within the above limits
-            var prepareRequest = new PrepareReceiveRequest(5000, PaymentMethod.LIGHTNING);
+            var prepareRequest = new PrepareReceiveRequest(5000, PaymentMethod.Lightning);
             var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
 
             // If the fees are acceptable, continue to create the Receive Payment
@@ -37,7 +37,7 @@ public class ReceivePaymentSnippets
             Console.WriteLine($"Maximum amount allowed to deposit in sats: {currentLimits.receive.maxSat}");
 
             // Set the onchain amount you wish the payer to send, which should be within the above limits
-            var prepareRequest = new PrepareReceiveRequest(5000, PaymentMethod.BITCOIN_ADDRESS);
+            var prepareRequest = new PrepareReceiveRequest(5000, PaymentMethod.BitcoinAddress);
             var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
 
             // If the fees are acceptable, continue to create the Receive Payment
@@ -58,7 +58,7 @@ public class ReceivePaymentSnippets
             // Create a Liquid BIP21 URI/address to receive a payment to.
             // There are no limits, but the payer amount should be greater than broadcast fees when specified
             // Note: Not setting the amount will generate a plain Liquid address
-            var prepareRequest = new PrepareReceiveRequest(5000, PaymentMethod.LIQUID_ADDRESS);
+            var prepareRequest = new PrepareReceiveRequest(5000, PaymentMethod.LiquidAddress);
             var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
 
             // If the fees are acceptable, continue to create the Receive Payment

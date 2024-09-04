@@ -12,7 +12,7 @@ public class LnurlPaySnippets
 
         try
         {
-            var input = BreezSdkMethods.Parse(lnurlPayUrl);
+            var input = BreezSdkLiquidMethods.Parse(lnurlPayUrl);
             if (input is InputType.LnUrlPay lnurlp)
             {
                 var amountMsat = lnurlp.data.minSendable;
@@ -25,7 +25,7 @@ public class LnurlPaySnippets
                     optionalComment, 
                     optionalPaymentLabel, 
                     optionalValidateSuccessActionUrl);
-                var result = sdk.PayLnurl(req);
+                var result = sdk.LnurlPay(req);
             }
         }
         catch (Exception)

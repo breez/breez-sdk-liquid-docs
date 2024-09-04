@@ -1,4 +1,4 @@
-﻿using Breez.Sdk;
+﻿using Breez.Sdk.Liquid;
 
 public class BuyBtcSnippets
 {
@@ -23,7 +23,7 @@ public class BuyBtcSnippets
         // ANCHOR: prepare-buy-btc
         try
         {
-            var req = new PrepareBuyBitcoinRequest(BuyBitcoinProvider.MOONPAY, currentLimits.receive.minSat);
+            var req = new PrepareBuyBitcoinRequest(BuyBitcoinProvider.Moonpay, currentLimits.receive.minSat);
             var prepareResponse = sdk.PrepareBuyBitcoin(req);
 
             // Check the fees are acceptable before proceeding

@@ -27,7 +27,7 @@ public class SendOnchainSnippets
             var prepareResponse = sdk.PreparePayOnchain(prepareRequest);
 
             // Check if the fees are acceptable before proceeding
-            vatrtotalFeesSat = prepareResponse.totalFeesSat;
+            var totalFeesSat = prepareResponse.totalFeesSat;
         }
         catch (Exception)
         {

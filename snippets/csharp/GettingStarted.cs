@@ -9,7 +9,7 @@ public class GettingStartedSnippets
 
         // Create the default config
         var config = BreezSdkLiquidMethods.DefaultConfig(
-            LiquidNetwork.MAINNET
+            LiquidNetwork.Mainnet
         ) with
         {
             // Customize the config object according to your needs
@@ -46,7 +46,7 @@ public class GettingStartedSnippets
     }
     
     // ANCHOR: logging
-    class SdkLogger : Logger
+    public class SdkLogger : Logger
     {
         public void Log(LogEntry l)
         {
@@ -67,7 +67,7 @@ public class GettingStartedSnippets
     // ANCHOR_END: logging
 
     // ANCHOR: add-event-listener
-    class SdkListener : EventListener
+    public class SdkListener : EventListener
     {
         public void OnEvent(SdkEvent e) 
         {

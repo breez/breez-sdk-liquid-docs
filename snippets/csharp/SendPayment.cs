@@ -9,13 +9,13 @@ public class SendPaymentSnippets
         var destination = "Invoice, Liquid BIP21 or address";
         try
         {
-            var optionalAmountSat = 5000;
+            ulong optionalAmountSat = 5000;
             var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmountSat));
 
             // If the fees are acceptable, continue to create the Send Payment
             var sendFeesSat = prepareResponse.feesSat;
 
-            var sendResponse = sdk.sendPayment(new SendPaymentRequest(prepareResponse));
+            var sendResponse = sdk.SendPayment(new SendPaymentRequest(prepareResponse));
             var payment = sendResponse.payment;
         }
         catch (Exception)
