@@ -74,8 +74,8 @@ const exampleReceivePayment = async (prepareResponse: PrepareReceiveResponse) =>
     description: optionalDescription
   })
 
-  const destination = res.destination;
+  const destination = res.destination
   // ANCHOR_END: receive-payment
 
-  console.log(destination);
+  console.log(destination)
 }

@@ -1,5 +1,4 @@
 import 'package:dart_snippets/sdk_instance.dart';
-import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<void> registerWebhook() async {
   // ANCHOR: register-webook

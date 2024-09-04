@@ -159,15 +159,14 @@ jobs:
   check-swift:
     
     name: Check Swift snippets
-    runs-on: macos-13
+    runs-on: macos-14
       
     steps:
     - uses: actions/checkout@v4
-      
-    - name: Set up Swift
-      uses: swift-actions/setup-swift@v1
+
+    - uses: maxim-lobanov/setup-xcode@v1
       with:
-        swift-version: "5"
+        xcode-version: "16.1-beta"
           
     - name: Build
       working-directory: snippets/swift/BreezSDKExamples

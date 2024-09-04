@@ -79,6 +79,7 @@ async fn receive_payment(
         .receive_payment(&ReceivePaymentRequest {
             prepare_response,
             description: optional_description,
+            use_description_hash: None,
         })
         .await?;
 
