@@ -1,6 +1,16 @@
-# Sending Lightning Payments
+# Sending Lightning/Liquid Payments
 
 Once the SDK is set up, you can start sending payments too.
+
+
+The `destination` field of the payment request now supports Liquid BIP21, Liquid addresses and Lightning invoices. For onchain (Bitcoin) payments, see [Sending an on-chain transaction](pay_onchain.md).
+
+## Amount validation
+
+There are cases in which both the destination and the user provide an amount to be paid. Here are the possible scenarios and their outcomes:
+- **Liquid BIP21 URI amount and request amount field are set** - the SDK will make sure the two values match, else an error will be thrown.
+- **Invoice amount and request amount field are set** - the SDK will make sure the two values match, else an error will be thrown.
+- **Liquid address is used** - the SDK will make sure the request amount is set. Else, the "Amount Missing" error will be thrown.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>

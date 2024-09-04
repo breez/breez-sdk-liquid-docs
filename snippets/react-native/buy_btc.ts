@@ -2,10 +2,10 @@ import {
   buyBitcoin,
   BuyBitcoinProvider,
   fetchOnchainLimits,
-  OnchainPaymentLimitsResponse,
-  prepareBuyBitcoin,
-  PrepareBuyBitcoinResponse
-} from '@breeztech/react-native-breez-sdk'
+  type OnchainPaymentLimitsResponse,
+  type PrepareBuyBitcoinResponse,
+  prepareBuyBitcoin
+} from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleFetchOnchainLimits = async () => {
   // ANCHOR: onchain-limits
@@ -29,7 +29,7 @@ const examplePrepareBuyBtc = async (currentLimits: OnchainPaymentLimitsResponse)
     })
 
     // Check the fees are acceptable before proceeding
-    const receiveFeesSat = prepareRes.feesSat;
+    const receiveFeesSat = prepareRes.feesSat
     console.log(`Fees: ${receiveFeesSat} sats`)
   } catch (err) {
     console.error(err)
@@ -37,11 +37,11 @@ const examplePrepareBuyBtc = async (currentLimits: OnchainPaymentLimitsResponse)
   // ANCHOR_END: prepare-buy-btc
 }
 
-const exampleBuyBtc = async (prepareRes: PrepareBuyBitcoinResponse) => {
+const exampleBuyBtc = async (prepareResponse: PrepareBuyBitcoinResponse) => {
   // ANCHOR: buy-btc
   try {
     const url = await buyBitcoin({
-      prepareRes
+      prepareResponse
     })
   } catch (err) {
     console.error(err)

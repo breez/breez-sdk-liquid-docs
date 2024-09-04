@@ -55,7 +55,7 @@ Future<SendPaymentResponse> startReverseSwap({
 
   PayOnchainRequest req = PayOnchainRequest(
     address: destinationAddress,
-    prepareRes: prepareRes,
+    prepareResponse: prepareRes,
   );
   SendPaymentResponse res = await breezSDKLiquid.instance!.payOnchain(req: req);
   // ANCHOR_END: start-reverse-swap

@@ -18,7 +18,7 @@ async fn prepare_buy_bitcoin(
     current_limits: OnchainPaymentLimitsResponse,
 ) -> Result<PrepareBuyBitcoinResponse> {
     // ANCHOR: prepare-buy-btc
-    let prepare_res = sdk
+    let prepare_response = sdk
         .prepare_buy_bitcoin(PrepareBuyBitcoinRequest {
             provider: BuyBitcoinProvider::Moonpay,
             amount_sat: current_limits.receive.min_sat,
@@ -26,19 +26,20 @@ async fn prepare_buy_bitcoin(
         .await?;
 
     // Check the fees are acceptable before proceeding
-    let receive_fees_sat = prepare_res.fees_sat;
+    let receive_fees_sat = prepare_response.fees_sat;
     info!("Fees: {} sats", receive_fees_sat);
     // ANCHOR_END: prepare-buy-btc
-    Ok(prepare_res)
+    Ok(prepare_response)
 }
 
 async fn buy_bitcoin(
     sdk: Arc<LiquidSdk>,
-    prepare_res: PrepareBuyBitcoinResponse,
+    prepare_response: PrepareBuyBitcoinResponse,
 ) -> Result<String> {
     // ANCHOR: buy-btc
     let url = sdk.buy_bitcoin(BuyBitcoinRequest {
-        prepare_res,
+        prepare_response,
+        redirect_url: None,
     })
     .await?;
     // ANCHOR_END: buy-btc

@@ -52,14 +52,14 @@ async fn prepare_pay_onchain_fee_rate(sdk: Arc<LiquidSdk>) -> Result<()> {
 
 async fn start_reverse_swap(
     sdk: Arc<LiquidSdk>,
-    prepare_res: PreparePayOnchainResponse,
+    prepare_response: PreparePayOnchainResponse,
 ) -> Result<()> {
     // ANCHOR: start-reverse-swap
     let destination_address = String::from("bc1..");
 
     sdk.pay_onchain(&PayOnchainRequest {
         address: destination_address,
-        prepare_res,
+        prepare_response,
     })
     .await?;
     // ANCHOR_END: start-reverse-swap
