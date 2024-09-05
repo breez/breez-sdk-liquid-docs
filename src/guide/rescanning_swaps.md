@@ -44,5 +44,21 @@ However, if users inadvertently send additional funds to a swap address that was
 {{#include ../../snippets/dart_snippets/lib/receive_onchain.dart:rescan-swaps}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_onchain.go:rescan-swaps}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceiveOnchain.cs:rescan-swaps}}
+```
+</section>
 </custom-tabs>
 

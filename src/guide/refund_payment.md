@@ -46,6 +46,22 @@ In order to manually execute a Bitcoin refund, you need to supply an on-chain BT
 {{#include ../../snippets/dart_snippets/lib/receive_onchain.dart:list-refundables}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_onchain.go:list-refundables}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceiveOnchain.cs:list-refundables}}
+```
+</section>
 </custom-tabs>
 
 Once you have a refundable swap in hand, use the following code to execute a refund:
@@ -88,6 +104,22 @@ Once you have a refundable swap in hand, use the following code to execute a ref
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/receive_onchain.dart:execute-refund}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_onchain.go:execute-refund}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceiveOnchain.cs:execute-refund}}
 ```
 </section>
 </custom-tabs>
