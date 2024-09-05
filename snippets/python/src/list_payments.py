@@ -5,7 +5,7 @@ import logging
 def list_payments(sdk: BindingLiquidSdk):
     try:
         # ANCHOR: list-payments
-        sdk.list_payments(ListPaymentsRequest([PaymentType.SEND]))
+        sdk.list_payments(ListPaymentsRequest())
         # ANCHOR_END: list-payments
     except Exception as error:
         logging.error(error)
