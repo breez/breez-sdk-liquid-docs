@@ -60,6 +60,14 @@ When receiving via Lightning, we generate an invoice to be paid.  Note that the 
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_payment.py:prepare-receive-payment-lightning}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -121,6 +129,14 @@ When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/receive_payment.dart:prepare-receive-payment-onchain}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_payment.py:prepare-receive-payment-onchain}}
 ```
 </section>
 
@@ -196,6 +212,14 @@ To generate a BIP21 address, all you have to do is specify a payer amount.
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_payment.py:prepare-receive-payment-liquid}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -260,6 +284,14 @@ receive method, optionally specifying a description.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/receive_payment.dart:receive-payment}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_payment.py:receive-payment}}
 ```
 </section>
 

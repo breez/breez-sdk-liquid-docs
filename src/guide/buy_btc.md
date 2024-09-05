@@ -48,6 +48,14 @@ Fetch the current onchain limits to check the minimum and maximum allowed to pur
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/buy_btc.py:onchain-limits}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -111,6 +119,14 @@ Using the current onchain limits, select a provider and amount to purchase.
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/buy_btc.py:prepare-buy-btc}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -171,6 +187,14 @@ Generate a URL to the provider with a Bitcoin address to receive the purchase to
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/buy_btc.dart:buy-btc}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/buy_btc.py:buy-btc}}
 ```
 </section>
 

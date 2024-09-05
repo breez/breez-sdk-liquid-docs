@@ -46,6 +46,14 @@ First, fetch the current Send Onchain limits:
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/pay_onchain.py:get-current-pay-onchain-limits}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -117,6 +125,14 @@ The next step is to find out the fees:
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/pay_onchain.py:prepare-pay-onchain}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -174,6 +190,14 @@ If you want to set a custom fee rate when the Bitcoin transaction is claimed:
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/pay_onchain.dart:prepare-pay-onchain-fee-rate}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/pay_onchain.py:prepare-pay-onchain-fee-rate}}
 ```
 </section>
 
@@ -238,6 +262,14 @@ Note that one of the arguments will be the result from the `prepare` call above.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/pay_onchain.dart:start-reverse-swap}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/pay_onchain.py:start-reverse-swap}}
 ```
 </section>
 

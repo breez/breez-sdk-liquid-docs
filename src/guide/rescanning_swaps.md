@@ -45,6 +45,14 @@ However, if users inadvertently send additional funds to a swap address that was
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_onchain.py:rescan-swaps}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 

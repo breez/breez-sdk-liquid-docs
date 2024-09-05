@@ -43,6 +43,14 @@
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/lnurl_auth.py:lnurl-auth}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 

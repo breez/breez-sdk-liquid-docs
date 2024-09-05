@@ -51,6 +51,14 @@ Now you are ready to interact with the SDK.
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/getting_started.py:init-sdk}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 

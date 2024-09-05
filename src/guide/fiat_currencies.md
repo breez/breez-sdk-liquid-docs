@@ -43,6 +43,14 @@ You can get the full details of supported fiat currencies, such as symbols and l
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/fiat_currencies.py:list-fiat-currencies}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -100,6 +108,14 @@ To get the current BTC rate in the various supported fiat currencies:
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/fiat_currencies.dart:fetch-fiat-rates}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/fiat_currencies.py:fetch-fiat-rates}}
 ```
 </section>
 
