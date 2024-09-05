@@ -1,16 +1,173 @@
-# Sending Lightning/Liquid Payments
+# Sending Payments
 
-Once the SDK is set up, you can start sending payments too.
+Once the SDK is initialized, you can directly begin sending payments. The send process takes two steps:
+1. [Preparing the Payment](send_payment.md#preparing-payments)
+1. [Sending the Payment](send_payment.md#sending-payments-1)
 
+<div class="warning">
+<h4>Developer note</h4>
+Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
+</div>
 
-The `destination` field of the payment request now supports Liquid BIP21, Liquid addresses and Lightning invoices. For onchain (Bitcoin) payments, see [Sending an on-chain transaction](pay_onchain.md).
+## Preparing Payments 
+During the prepare step, the SDK ensures that the inputs are valid with respect to the destination,
+and also returns the relative fees related to the payment so they can be confirmed. 
 
-## Amount validation
+The `destination` field of the payment request supports Liquid BIP21, Liquid addresses and Lightning invoices
 
-There are cases in which both the destination and the user provide an amount to be paid. Here are the possible scenarios and their outcomes:
-- **Liquid BIP21 URI amount and request amount field are set** - the SDK will make sure the two values match, else an error will be thrown.
-- **Invoice amount and request amount field are set** - the SDK will make sure the two values match, else an error will be thrown.
-- **Liquid address is used** - the SDK will make sure the request amount is set. Else, the "Amount Missing" error will be thrown.
+### Lightning
+When sending via Lightning, the bolt11 invoice amount **must** be set. If the optional prepare request amount is also set, the SDK will make sure the two values match, else an error will be thrown. 
+
+The SDK will also validate that the amount is within the send lightning limits of the swap service.
+
+**Note:** The payment may fallback to a direct Liquid payment (if the payer's client supports this).
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/send_payment.rs:prepare-send-payment-lightning}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendPayment.swift:prepare-send-payment-lightning}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:prepare-send-payment-lightning}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/send_payment.ts:prepare-send-payment-lightning}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/send_payment.dart:prepare-send-payment-lightning}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/send_payment.py:prepare-send-payment-lightning}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/send_payment.go:prepare-send-payment-lightning}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/SendPayment.cs:prepare-send-payment-lightning}}
+```
+</section>
+</custom-tabs>
+
+### Bitcoin
+
+For onchain (Bitcoin) payments, see [Sending an on-chain transaction](pay_onchain.md).
+
+### Liquid
+When sending via Liquid, a BIP21 URI or Liquid address can be used as the destination. 
+
+If a Liquid address is used, the optional prepare request amount **must** be set. 
+
+If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request amount **must** be set. When both amounts are set, the SDK will make sure the two values match, else an error will be thrown.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/send_payment.rs:prepare-send-payment-liquid}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendPayment.swift:prepare-send-payment-liquid}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:prepare-send-payment-liquid}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/send_payment.ts:prepare-send-payment-liquid}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/send_payment.dart:prepare-send-payment-liquid}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/send_payment.py:prepare-send-payment-liquid}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/send_payment.go:prepare-send-payment-liquid}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/SendPayment.cs:prepare-send-payment-liquid}}
+```
+</section>
+</custom-tabs>
+
+## Sending Payments
+Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the
+send method.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -77,7 +234,3 @@ There are cases in which both the destination and the user provide an amount to 
 ```
 </section>
 </custom-tabs>
-<div class="warning">
-<h4>Developer note</h4>
-Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
-</div>
