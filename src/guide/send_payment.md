@@ -52,6 +52,22 @@ There are cases in which both the destination and the user provide an amount to 
 {{#include ../../snippets/dart_snippets/lib/send_payment.dart:send-payment}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/send_payment.go:send-payment}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/SendPayment.cs:send-payment}}
+```
+</section>
 </custom-tabs>
 <div class="warning">
 <h4>Developer note</h4>

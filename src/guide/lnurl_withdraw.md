@@ -42,6 +42,22 @@
 {{#include ../../snippets/dart_snippets/lib/lnurl_withdraw.dart:lnurl-withdraw}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/lnurl_withdraw.go:lnurl-withdraw}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/LnurlWithdraw.cs:lnurl-withdraw}}
+```
+</section>
 </custom-tabs>
 
 ## Supported Specs

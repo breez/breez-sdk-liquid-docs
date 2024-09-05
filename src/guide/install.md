@@ -56,7 +56,6 @@ dependencies {
 }
 ```
 
-
 ## React Native
 
 We recommend using the official npm package:
@@ -69,14 +68,30 @@ or
 yarn add @breeztech/react-native-breez-sdk-liquid
 ```
 
-## rust
+## Go
+
+We recommend using our official Go package: [breez/breez-sdk-liquid-go](https://github.com/breez/breez-sdk-liquid-go).
+
+```console
+go get github.com/breez/breez-sdk-liquid-go
+```
+
+## C#
+
+We recommend using our official C# package: [Breez.Sdk.Liquid](https://www.nuget.org/packages/Breez.Sdk.Liquid).
+
+```console
+dotnet add package Breez.Sdk.Liquid
+```
+
+## Rust
 
 We recommend to add breez sdk as a git dependency with a specific release tag.
 Check https://github.com/breez/breez-sdk-liquid/releases for the latest version.
 
 ```toml
 [dependencies]
-breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.1.1" }
+breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.3.0" }
 
 [patch.crates-io]
 secp256k1-zkp = {git = "https://github.com/sanket1729/rust-secp256k1-zkp.git", rev = "60e631c24588a0c9e271badd61959294848c665d"}

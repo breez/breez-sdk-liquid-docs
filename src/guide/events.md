@@ -47,6 +47,22 @@ The SDK emits several events to provide the application with an up-to-date state
 {{#include ../../snippets/dart_snippets/lib/getting_started.dart:add-event-listener}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/getting_started.go:add-event-listener}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/GettingStarted.cs:add-event-listener}}
+```
+</section>
 </custom-tabs>
 
 ## Remove event listener
@@ -95,6 +111,22 @@ When you no longer need to listen to events, you can remove the listener.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/getting_started.dart:remove-event-listener}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/getting_started.go:remove-event-listener}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/GettingStarted.cs:remove-event-listener}}
 ```
 </section>
 </custom-tabs>

@@ -42,6 +42,22 @@
 {{#include ../../snippets/dart_snippets/lib/lnurl_auth.dart:lnurl-auth}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/lnurl_auth.go:lnurl-auth}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/LnurlAuth.cs:lnurl-auth}}
+```
+</section>
 </custom-tabs>
 
 ## Supported Specs

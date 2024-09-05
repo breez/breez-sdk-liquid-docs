@@ -44,6 +44,22 @@ Once your vendor [NDS is set up](setup_nds.md) and can accept POST requests from
 {{#include ../../snippets/dart_snippets/lib/webhook.dart:register-webook}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/webhook.go:register-webook}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/Webhook.cs:register-webook}}
+```
+</section>
 </custom-tabs>
 
 When the NDS receives a POST request for the registered webhook URL, it will forward the request data via push notification to the applications Service Extension (iOS) or Foreground Service (Android) to be handled by the [Notification Plugin](setup_plugin.md).
@@ -90,6 +106,22 @@ When a webhook is no longer needed you can unregister the webhook as follows:
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/webhook.dart:unregister-webook}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/webhook.go:unregister-webook}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/Webhook.cs:unregister-webook}}
 ```
 </section>
 </custom-tabs>

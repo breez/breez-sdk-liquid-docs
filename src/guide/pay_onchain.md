@@ -45,6 +45,22 @@ First, fetch the current Send Onchain limits:
 {{#include ../../snippets/dart_snippets/lib/pay_onchain.dart:get-current-pay-onchain-limits}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/pay_onchain.go:get-current-pay-onchain-limits}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/PayOnchain.cs:get-current-pay-onchain-limits}}
+```
+</section>
 </custom-tabs>
 
 This represents the range of valid amounts that can be sent at this point in time. The range may change depending on the swap service parameters or mempool feerate fluctuations.
@@ -100,6 +116,22 @@ The next step is to find out the fees:
 {{#include ../../snippets/dart_snippets/lib/pay_onchain.dart:prepare-pay-onchain}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/pay_onchain.go:prepare-pay-onchain}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/PayOnchain.cs:prepare-pay-onchain}}
+```
+</section>
 </custom-tabs>
 
 If you want to set a custom fee rate when the Bitcoin transaction is claimed:
@@ -142,6 +174,22 @@ If you want to set a custom fee rate when the Bitcoin transaction is claimed:
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/pay_onchain.dart:prepare-pay-onchain-fee-rate}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/pay_onchain.go:prepare-pay-onchain-fee-rate}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/PayOnchain.cs:prepare-pay-onchain-fee-rate}}
 ```
 </section>
 </custom-tabs>
@@ -190,6 +238,22 @@ Note that one of the arguments will be the result from the `prepare` call above.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/pay_onchain.dart:start-reverse-swap}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/pay_onchain.go:start-reverse-swap}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/PayOnchain.cs:start-reverse-swap}}
 ```
 </section>
 </custom-tabs>

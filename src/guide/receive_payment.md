@@ -59,6 +59,22 @@ When receiving via Lightning, we generate an invoice to be paid.  Note that the 
 {{#include ../../snippets/dart_snippets/lib/receive_payment.dart:prepare-receive-payment-lightning}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_payment.go:prepare-receive-payment-lightning}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceivePayment.cs:prepare-receive-payment-lightning}}
+```
+</section>
 </custom-tabs>
 
 ### Bitcoin
@@ -105,6 +121,22 @@ When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/receive_payment.dart:prepare-receive-payment-onchain}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_payment.go:prepare-receive-payment-onchain}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceivePayment.cs:prepare-receive-payment-onchain}}
 ```
 </section>
 </custom-tabs>
@@ -163,6 +195,22 @@ To generate a BIP21 address, all you have to do is specify a payer amount.
 {{#include ../../snippets/dart_snippets/lib/receive_payment.dart:prepare-receive-payment-liquid}}
 ```
 </section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_payment.go:prepare-receive-payment-liquid}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceivePayment.cs:prepare-receive-payment-liquid}}
+```
+</section>
 </custom-tabs>
 
 ## Receiving Payments
@@ -212,6 +260,22 @@ receive method, optionally specifying a description.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/receive_payment.dart:receive-payment}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_payment.go:receive-payment}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceivePayment.cs:receive-payment}}
 ```
 </section>
 </custom-tabs>
