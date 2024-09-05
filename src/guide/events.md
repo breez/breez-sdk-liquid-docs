@@ -48,6 +48,14 @@ The SDK emits several events to provide the application with an up-to-date state
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/getting_started.py:add-event-listener}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -111,6 +119,14 @@ When you no longer need to listen to events, you can remove the listener.
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/getting_started.dart:remove-event-listener}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/getting_started.py:remove-event-listener}}
 ```
 </section>
 

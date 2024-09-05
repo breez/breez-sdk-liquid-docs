@@ -111,3 +111,11 @@ dependencies:
       url: https://github.com/breez/breez-sdk-liquid-flutter
   rxdart: ^0.28.0
 ```
+
+## Python
+
+Use the latest package [here](https://pypi.org/project/breez-sdk-liquid/). 
+
+```console
+pip install breez_sdk_liquid
+```

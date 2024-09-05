@@ -53,6 +53,14 @@ There are cases in which both the destination and the user provide an amount to 
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/send_payment.py:send-payment}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 

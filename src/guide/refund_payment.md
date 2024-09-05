@@ -47,6 +47,14 @@ In order to manually execute a Bitcoin refund, you need to supply an on-chain BT
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_onchain.py:list-refundables}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
@@ -104,6 +112,14 @@ Once you have a refundable swap in hand, use the following code to execute a ref
 
 ```dart,ignore
 {{#include ../../snippets/dart_snippets/lib/receive_onchain.dart:execute-refund}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_onchain.py:execute-refund}}
 ```
 </section>
 

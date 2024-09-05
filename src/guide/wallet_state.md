@@ -43,6 +43,14 @@ Once connected, the balance can be retrieved at any time.
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/getting_started.py:fetch-balance}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 

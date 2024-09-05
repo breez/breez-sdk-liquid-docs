@@ -43,6 +43,14 @@ The SDK implements detailed logging via a streaming interface you can manage wit
 ```
 </section>
 
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/getting_started.py:logging}}
+```
+</section>
+
 <div slot="title">Go</div>
 <section>
 
