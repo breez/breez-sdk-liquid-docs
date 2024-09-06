@@ -16,6 +16,7 @@ def prepare_receive_lightning(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Receive Payment
         receive_fees_sat = prepare_response.fees_sat
+        logging.debug("Fees: ", receive_fees_sat, " sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -36,6 +37,7 @@ def prepare_receive_onchain(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Receive Payment
         receive_fees_sat = prepare_response.fees_sat
+        logging.debug("Fees: ", receive_fees_sat, " sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -53,6 +55,7 @@ def prepare_receive_liquid(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Receive Payment
         receive_fees_sat = prepare_response.fees_sat
+        logging.debug("Fees: ", receive_fees_sat, " sats")
         return prepare_response
     except Exception as error:
         logging.error(error)

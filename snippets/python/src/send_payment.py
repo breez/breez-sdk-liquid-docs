@@ -11,6 +11,7 @@ def prepare_send_payment_lightning(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
+        logging.debug("Fees: ", send_fees_sat, " sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -27,6 +28,7 @@ def prepare_send_payment_liquid(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
+        logging.debug("Fees: ", send_fees_sat, " sats")
         return prepare_response
     except Exception as error:
         logging.error(error)

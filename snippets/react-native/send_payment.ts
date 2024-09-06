@@ -1,7 +1,7 @@
 import {
   prepareSendPayment,
   sendPayment,
-  PrepareSendResponse
+  type PrepareSendResponse
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const examplePrepareSendPaymentLightning = async () => {
@@ -12,7 +12,8 @@ const examplePrepareSendPaymentLightning = async () => {
   })
 
   // If the fees are acceptable, continue to create the Send Payment
-  const receiveFeesSat = prepareResponse.feesSat
+  const sendFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${sendFeesSat} sats`)
   // ANCHOR_END: prepare-send-payment-lightning
 }
 
@@ -26,7 +27,8 @@ const examplePrepareSendPaymentLiquid = async () => {
   })
 
   // If the fees are acceptable, continue to create the Send Payment
-  const receiveFeesSat = prepareResponse.feesSat
+  const sendFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${sendFeesSat} sats`)
   // ANCHOR_END: prepare-send-payment-liquid
 }
 
@@ -37,4 +39,5 @@ const exampleSendPayment = async (prepareResponse: PrepareSendResponse) => {
   })
   const payment = sendResponse.payment
   // ANCHOR_END: send-payment
+  console.log(payment)
 }

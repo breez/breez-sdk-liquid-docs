@@ -24,9 +24,8 @@ const examplePrepareLightningPayment = async () => {
 
   // If the fees are acceptable, continue to create the Receive Payment
   const receiveFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${receiveFeesSat} sats`)
   // ANCHOR_END: prepare-receive-payment-lightning
-
-  console.log(receiveFeesSat)
 }
 
 const examplePrepareOnchainPayment = async () => {
@@ -44,9 +43,8 @@ const examplePrepareOnchainPayment = async () => {
 
   // If the fees are acceptable, continue to create the Receive Payment
   const receiveFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${receiveFeesSat} sats`)
   // ANCHOR_END: prepare-receive-payment-onchain
-
-  console.log(receiveFeesSat)
 }
 
 const examplePrepareLiquidPayment = async () => {
@@ -61,9 +59,8 @@ const examplePrepareLiquidPayment = async () => {
 
   // If the fees are acceptable, continue to create the Receive Payment
   const receiveFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${receiveFeesSat} sats`)
   // ANCHOR_END: prepare-receive-payment-liquid
-
-  console.log(receiveFeesSat)
 }
 
 const exampleReceivePayment = async (prepareResponse: PrepareReceiveResponse) => {
@@ -76,6 +73,5 @@ const exampleReceivePayment = async (prepareResponse: PrepareReceiveResponse) =>
 
   const destination = res.destination
   // ANCHOR_END: receive-payment
-
   console.log(destination)
 }

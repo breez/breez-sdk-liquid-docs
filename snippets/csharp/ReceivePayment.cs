@@ -18,6 +18,7 @@ public class ReceivePaymentSnippets
 
             // If the fees are acceptable, continue to create the Receive Payment
             var receiveFeesSat = prepareResponse.feesSat;
+            Console.WriteLine($"Fees: {receiveFeesSat} sats");
         }
         catch (Exception)
         {
@@ -42,6 +43,7 @@ public class ReceivePaymentSnippets
 
             // If the fees are acceptable, continue to create the Receive Payment
             var receiveFeesSat = prepareResponse.feesSat;
+            Console.WriteLine($"Fees: {receiveFeesSat} sats");
         }
         catch (Exception)
         {
@@ -63,6 +65,7 @@ public class ReceivePaymentSnippets
 
             // If the fees are acceptable, continue to create the Receive Payment
             var receiveFeesSat = prepareResponse.feesSat;
+            Console.WriteLine($"Fees: {receiveFeesSat} sats");
         }
         catch (Exception)
         {

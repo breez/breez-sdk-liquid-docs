@@ -12,6 +12,7 @@ class SendPayment {
 
             // If the fees are acceptable, continue to create the Send Payment
             val sendFeesSat = prepareResponse.feesSat;
+            // Log.v("Breez", "Fees: ${sendFeesSat} sats")
         } catch (e: Exception) {
             // handle error
         }
@@ -28,6 +29,7 @@ class SendPayment {
 
             // If the fees are acceptable, continue to create the Send Payment
             val sendFeesSat = prepareResponse.feesSat;
+            // Log.v("Breez", "Fees: ${sendFeesSat} sats")
         } catch (e: Exception) {
             // handle error
         }

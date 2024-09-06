@@ -97,7 +97,7 @@ When sending via Liquid, a BIP21 URI or Liquid address can be used as the destin
 
 If a Liquid address is used, the optional prepare request amount **must** be set. 
 
-If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request amount **must** be set. When both amounts are set, the SDK will make sure the two values match, else an error will be thrown.
+If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request amount **must** be set. When both amounts are set, the SDK will prioritize the **request amount** over the BIP21 amount.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>

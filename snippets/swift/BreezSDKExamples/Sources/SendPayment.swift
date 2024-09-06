@@ -10,7 +10,7 @@ func prepareSendPaymentLightning(sdk: BindingLiquidSdk) -> PrepareSendResponse? 
 
     // If the fees are acceptable, continue to create the Send Payment
     let sendFeesSat = prepareResponse!.feesSat
-    print(sendFeesSat)
+    print("Fees: {} sats", sendFeesSat);
     // ANCHOR_END: prepare-send-payment-lightning
     return prepareResponse
 }
@@ -27,7 +27,7 @@ func prepareSendPaymentLiquid(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
 
     // If the fees are acceptable, continue to create the Send Payment
     let sendFeesSat = prepareResponse!.feesSat
-    print(sendFeesSat)
+    print("Fees: {} sats", sendFeesSat);
     // ANCHOR_END: prepare-send-payment-liquid
     return prepareResponse
 }
@@ -38,7 +38,7 @@ func sendPayment(sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) ->
         prepareResponse: prepareResponse
     ))
     let payment = sendResponse!.payment
-    print(payment)
     // ANCHOR_END: send-payment
+    print(payment)
     return sendResponse
 }

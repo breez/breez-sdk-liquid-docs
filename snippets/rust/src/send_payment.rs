@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use anyhow::Result;
 use breez_sdk_liquid::prelude::*;
+use log::info;
 
 async fn prepare_send_payment_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-send-payment-lightning
@@ -15,8 +16,8 @@ async fn prepare_send_payment_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
+    info!("Fees: {} sats", send_fees_sat);
     // ANCHOR_END: prepare-send-payment-lightning
-    dbg!(send_fees_sat);
     Ok(())
 }
 
@@ -33,8 +34,8 @@ async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
+    info!("Fees: {} sats", send_fees_sat);
     // ANCHOR_END: prepare-send-payment-liquid
-    dbg!(send_fees_sat);
     Ok(())
 }
 
