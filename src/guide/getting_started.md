@@ -9,4 +9,4 @@ Integrating Breez SDK - *Liquid* into your application takes just a few minutes.
 
 ## Support
 
-Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or email us at [contact@breez.technology](mailto:contact@breez.technology).
+Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or email us at [contact@breez.technology](mailto:contact@breez.technology).
