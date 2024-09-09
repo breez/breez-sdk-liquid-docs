@@ -6,6 +6,11 @@ Once the SDK is initialized, you can directly begin receiving payments. The rece
 1. [Preparing the Payment](receive_payment.md#preparing-payments)
 1. [Receiving the Payment](receive_payment.md#receiving-payments-1)
 
+<div class="warning">
+<h4>Developer note</h4>
+Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
+</div>
+
 ## Preparing Payments
 During the prepare step, the SDK ensures that the inputs are valid with respect to the specified payment method,
 and also returns the relative fees related to the payment so they can be confirmed.
@@ -311,7 +316,3 @@ receive method, optionally specifying a description.
 ```
 </section>
 </custom-tabs>
-<div class="warning">
-<h4>Developer note</h4>
-Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
-</div>

@@ -15,7 +15,8 @@ class ReceivePayment {
             val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
 
             // If the fees are acceptable, continue to create the Receive Payment
-            val receiveFeesSat =  prepareResponse.feesSat;
+            val receiveFeesSat = prepareResponse.feesSat;
+            // Log.v("Breez", "Fees: ${receiveFeesSat} sats")
         } catch (e: Exception) {
             // handle error
         }
@@ -35,7 +36,8 @@ class ReceivePayment {
             val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
 
             // If the fees are acceptable, continue to create the Receive Payment
-            val receiveFeesSat =  prepareResponse.feesSat;
+            val receiveFeesSat = prepareResponse.feesSat;
+            // Log.v("Breez", "Fees: ${receiveFeesSat} sats")
         } catch (e: Exception) {
             // handle error
         }
@@ -52,7 +54,8 @@ class ReceivePayment {
             val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
 
             // If the fees are acceptable, continue to create the Receive Payment
-            val receiveFeesSat =  prepareResponse.feesSat;
+            val receiveFeesSat = prepareResponse.feesSat;
+            // Log.v("Breez", "Fees: ${receiveFeesSat} sats")
         } catch (e: Exception) {
             // handle error
         }

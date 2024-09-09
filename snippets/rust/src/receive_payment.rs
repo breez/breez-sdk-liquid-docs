@@ -21,9 +21,8 @@ async fn prepare_receive_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Receive Payment
     let receive_fees_sat = prepare_response.fees_sat;
+    info!("Fees: {} sats", receive_fees_sat);
     // ANCHOR_END: prepare-receive-payment-lightning
-
-    dbg!(receive_fees_sat);
     Ok(())
 }
 
@@ -44,9 +43,8 @@ async fn prepare_receive_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Receive Payment
     let receive_fees_sat = prepare_response.fees_sat;
+    info!("Fees: {} sats", receive_fees_sat);
     // ANCHOR_END: prepare-receive-payment-onchain
-
-    dbg!(receive_fees_sat);
     Ok(())
 }
 
@@ -63,9 +61,8 @@ async fn prepare_receive_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Receive Payment
     let receive_fees_sat = prepare_response.fees_sat;
+    info!("Fees: {} sats", receive_fees_sat);
     // ANCHOR_END: prepare-receive-payment-liquid
-
-    dbg!(receive_fees_sat);
     Ok(())
 }
 
@@ -85,7 +82,6 @@ async fn receive_payment(
 
     let destination = res.destination;
     // ANCHOR_END: receive-payment
-
     dbg!(destination);
     Ok(())
 }

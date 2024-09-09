@@ -6,10 +6,28 @@ import (
 	"github.com/breez/breez-sdk-liquid-go/breez_sdk_liquid"
 )
 
-func SendPayment(sdk *breez_sdk_liquid.BindingLiquidSdk) {
-	// ANCHOR: send-payment
-	// Set the Lightning invoice, Liquid BIP21 or Liquid address you wish to pay
-	destination := "Invoice, Liquid BIP21 or address"
+func PrepareSendPaymentLightning(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: prepare-send-payment-lightning
+	// Set the bolt11 invoice you wish to pay
+	destination := "<bolt11 invoice>"
+	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
+		Destination: destination,
+	}
+	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+
+	sendFeesSat := prepareResponse.FeesSat
+	log.Printf("Fees: %v sats", sendFeesSat)
+	// ANCHOR_END: prepare-send-payment-lightning
+}
+
+func PrepareSendPaymentLiquid(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: prepare-send-payment-liquid
+	// Set the Liquid BIP21 or Liquid address you wish to pay
+	destination := "<Liquid BIP21 or address>"
 	optionalAmountSat := uint64(5_000)
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
 		Destination: destination,
@@ -23,7 +41,11 @@ func SendPayment(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 
 	sendFeesSat := prepareResponse.FeesSat
 	log.Printf("Fees: %v sats", sendFeesSat)
+	// ANCHOR_END: prepare-send-payment-liquid
+}
 
+func SendPayment(sdk *breez_sdk_liquid.BindingLiquidSdk, prepareResponse breez_sdk_liquid.PrepareSendResponse) {
+	// ANCHOR: send-payment
 	req := breez_sdk_liquid.SendPaymentRequest{
 		PrepareResponse: prepareResponse,
 	}
