@@ -2,10 +2,10 @@
 
 **The Breez SDK is free for developers. There are fees for *end-users* to send and receive payments.**
 
-- [Sending Lightning Payments](https://github.com/breez/breez-sdk-liquid-docs/new/main/src/guide#sending-lightning-payments)
-- [Receiving Lightning Payments](https://github.com/breez/breez-sdk-liquid-docs/new/main/src/guide#receiving-lightning-payments)
-- [Sending to a BTC Address](https://github.com/breez/breez-sdk-liquid-docs/new/main/src/guide#sending-to-a-btc-address)
-- [Receiving from a BTC Address](https://github.com/breez/breez-sdk-liquid-docs/new/main/src/guide#receiving-from-a-btc-address)
+- [Sending Lightning Payments](#sending-lightning-payments)
+- [Receiving Lightning Payments](#receiving-lightning-payments)
+- [Sending to a BTC Address](#sending-to-a-btc-address)
+- [Receiving from a BTC Address](#receiving-from-a-btc-address)
 
 ## **Sending Lightning Payments**
 
