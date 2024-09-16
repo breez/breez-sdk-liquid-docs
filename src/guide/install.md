@@ -58,7 +58,7 @@ dependencies {
 
 ## React Native
 
-We recommend using the official npm package:
+We recommend using the official npm package: [@breeztech/react-native-breez-sdk-liquid](https://www.npmjs.com/package/@breeztech/react-native-breez-sdk-liquid).
 
 ```console
 npm install @breeztech/react-native-breez-sdk-liquid
@@ -114,8 +114,10 @@ dependencies:
 
 ## Python
 
-Use the latest package [here](https://pypi.org/project/breez-sdk-liquid/). 
+We recommend using our official Python package: [breez_sdk_liquid](https://pypi.org/project/breez-sdk-liquid).
 
 ```console
 pip install breez_sdk_liquid
 ```
+
+You can also check out some [examples](https://github.com/breez/breez-sdk-liquid-docs/tree/main/examples/python) using the Python Breez SDK package.
