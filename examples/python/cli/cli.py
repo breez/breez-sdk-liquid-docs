@@ -1,6 +1,8 @@
+from typing import Optional
 from colorama import init as colorama_init, Style
 from mnemonic import Mnemonic
 from os.path import exists
+from breez_sdk_liquid import LiquidNetwork
 import argparse
 import breez_sdk_liquid
 import qrcode
@@ -21,9 +23,9 @@ class Sdk:
         listener: An instance of SdkListener to handle SDK events.
     """
 
-    def __init__(self):
+    def __init__(self, network: Optional[LiquidNetwork] = None):
         mnemonic = self.read_mnemonic()
-        config = breez_sdk_liquid.default_config(breez_sdk_liquid.LiquidNetwork.MAINNET)
+        config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET)
         connect_request = breez_sdk_liquid.ConnectRequest(config=config, mnemonic=mnemonic)
         self.instance = breez_sdk_liquid.connect(connect_request)
         self.listener = SdkListener()
@@ -76,6 +78,13 @@ class SdkListener(breez_sdk_liquid.EventListener):
     def is_paid(self, destination: str):
         return destination in self.paid
 
+def parse_network(network_str: str) -> LiquidNetwork:
+    if network_str == 'TESTNET':
+        return LiquidNetwork.TESTNET
+    elif network_str == 'MAINNET':
+        return LiquidNetwork.MAINNET
+
+    raise Exception("Invalid network specified")
 
 def receive_payment(params):
     """
@@ -97,7 +106,7 @@ def receive_payment(params):
     Raises:
         Exception: If any error occurs during the payment receiving process
     """
-    sdk = Sdk()
+    sdk = Sdk(params.network)
     try:
         # Prepare the receive request to get fees
         prepare_req = breez_sdk_liquid.PrepareReceiveRequest(params.amount, getattr(breez_sdk_liquid.PaymentMethod, params.method))
@@ -134,7 +143,7 @@ def send_payment(params):
     Raises:
         Exception: If any error occurs during the payment sending process
     """
-    sdk = Sdk()
+    sdk = Sdk(params.network)
     try:
         # Prepare the send request to get fees
         prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, params.amount)
@@ -178,6 +187,9 @@ def main():
         sys.argv.append('--help')
 
     parser = argparse.ArgumentParser('Pythod SDK Example', description='Simple CLI to receive/send payments')
+    parser.add_argument('-n', '--network',
+                        help='The network the SDK runs on, either "MAINNET" or "TESTNET"',
+                        type=parse_network)
     subparser = parser.add_subparsers(title='subcommands')
     # receive
     receive_parser = subparser.add_parser('receive', help='Receive a payment')
