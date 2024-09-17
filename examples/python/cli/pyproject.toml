@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "cli"
+version = "0.1.0"
+description = "Simple CLI to receive/send payments"
+authors = ["Breez <contact@breez.technology>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+breez-sdk-liquid = "^0.3.0"
+argparse = "^1.4.0"
+qrcode = "^7.4.2"
+colorama = "^0.4.6"
+mnemonic = "^0.21"
+
+[tool.poetry.scripts]
+cli = 'cli:main'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
