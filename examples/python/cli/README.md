@@ -34,6 +34,6 @@ For more information run: `poetry run cli receive -h`
 
 #### Send a payment
 You can send a payment via Lightning or Liquid by running: 
-`poetry run cli send -a <DESTINATION> -a <AMOUNT>`. 
+`poetry run cli send -d <DESTINATION> -a <AMOUNT>`. 
 
 For more information run: `poetry run cli send -h`
