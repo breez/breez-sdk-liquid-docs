@@ -1,4 +1,4 @@
-# About Breez SDK - *Liquid*
+# About Breez SDK - Nodeless *(Liquid Implementation)*
 
 ## **What Is the Breez SDK?**
 
@@ -6,13 +6,13 @@ The Breez SDK provides developers with an end-to-end solution for integrating se
 
 To provide the best experience for their end-users, developers can choose between the following implementations:
 
-- [Breez SDK - *Liquid*](https://sdk-doc-liquid.breez.technology/)
-- [Breez SDK - *Greenlight*](https://sdk-doc.breez.technology/)
+- [Breez SDK - Nodeless *(Liquid Implementation)*](https://sdk-doc-liquid.breez.technology/)
+- [Breez SDK - Native *(Greenlight Implementation)*](https://sdk-doc.breez.technology/)
 
 
-## **What Is the *Liquid* implementation?**
+## **What Is the Breez SDK - Nodeless *(Liquid Implementation)*?**
 
-The *Liquid* implementation is a nodeless Lightning integration. It offers a self-custodial, end-to-end solution for integrating Lightning payments, utilizing the Liquid Network with on-chain interoperability and third-party fiat on-ramps.
+It’s a nodeless Lightning integration that offers a self-custodial, end-to-end solution for integrating Lightning payments, utilizing the Liquid Network with on-chain interoperability and third-party fiat on-ramps.
 
 **Core Functions**
 
@@ -32,9 +32,9 @@ The *Liquid* implementation is a nodeless Lightning integration. It offers a sel
 - [x] Open-source
 
 
-## How Does the *Liquid* Implementation Work?
+## How Does Nodeless *(Liquid Implementation)* Work?
 
-The *Liquid* implementation uses submarine swaps and reverse submarine swaps to send and receive payments, enabling funds to move frictionlessly between the Lightning Network and the Liquid sidechain.
+The Breez SDK - Nodeless *(Liquid implementation)* uses submarine swaps and reverse submarine swaps to send and receive payments, enabling funds to move frictionlessly between the Lightning Network and the Liquid sidechain.
 
 ![Breez SDK - Liquid](../images/BreezSDK_Liquid.png)
 
@@ -45,7 +45,7 @@ When receiving a payment, the SDK performs a reverse submarine swap, converting 
 
 ## **Differences Between Implementations**
 
-| *Liquid* Implementation | *Greenlight* Implementation |
+| Nodeless *(Liquid Implementation)* | Native *(Greenlight Implementation)* |
 | --- | --- |
 | Trust profile is with the Liquid sidechain | Pure Lightning Network implementation |
 | No channel management or LSP required | Uses Lightning Service Providers (LSPs) for liquidity |
@@ -66,7 +66,7 @@ Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or em
 
 ## Repository
 
-Head over to the [Breez SDK - *Liquid* repo](https://github.com/breez/breez-sdk-liquid).
+Head over to the [Breez SDK - Nodeless *(Liquid Implementation)* repo](https://github.com/breez/breez-sdk-liquid).
 
 
 
