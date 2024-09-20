@@ -108,7 +108,7 @@ If a Liquid address is used, the optional prepare request amount **must** be set
 
 If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request amount **must** be set. When both amounts are set, the SDK will prioritize the **request amount** over the BIP21 amount.
 
-**Note:** If a valid Breez API key is not provided, the method will throw an error requiring you to specify one
+**Note:** If a valid Breez API key is not provided, the method will throw an error requiring you to specify one.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
