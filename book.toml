@@ -6,7 +6,7 @@ title = "Breez SDK - Liquid"
 
 [output.html]
 theme = "theme"
-additional-css = ["task-lists.css"]
+additional-css = ["task-lists.css", "src/style/custom.css"]
 additional-js = ["tabs.js"]
 git-repository-url = "https://github.com/breez/breez-sdk-liquid-docs"
 edit-url-template = "https://github.com/breez/breez-sdk-liquid-docs/edit/main/{path}"
@@ -16,3 +16,6 @@ enable = false
 
 [preprocessor.snippets]
 after = ["links"]
+
+[preprocessor.variables.variables]
+api_key_form_uri = "https://breez.technology/request-api-key/#contact-us-form-sdk"
