@@ -16,3 +16,6 @@ enable = false
 
 [preprocessor.snippets]
 after = ["links"]
+
+[preprocessor.variables.variables]
+api_key_form_uri = "https://breez.technology/request-api-key/#contact-us-form-sdk"
