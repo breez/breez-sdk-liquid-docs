@@ -86,6 +86,34 @@ def parse_network(network_str: str) -> LiquidNetwork:
 
     raise Exception("Invalid network specified")
 
+def list_payments(params):
+    """
+    List payments using the Breez SDK.
+
+    This function initializes the Breez SDK and retrieves a list of payments
+    based on the provided parameters. It then prints the results.
+
+    Args:
+        params (argparse.Namespace): Command-line arguments containing:
+            - from_timestamp (int, optional): The start timestamp for filtering payments.
+            - to_timestamp (int, optional): The end timestamp for filtering payments.
+            - offset (int, optional): The number of payments to skip before starting to return results.
+            - limit (int, optional): The maximum number of payments to return.
+
+    Raises:
+        Exception: If any error occurs during the process of listing payments.
+    """
+    sdk = Sdk()
+    try:
+        req = breez_sdk_liquid.ListPaymentsRequest(from_timestamp=params.from_timestamp, 
+                                                   to_timestamp=params.to_timestamp, 
+                                                   offset=params.offset, 
+                                                   limit=params.limit)
+        res = sdk.instance.list_payments(req)
+        print(*res, sep='\n\n')
+    except Exception as error:
+        print(error)
+
 def receive_payment(params):
     """
     Handles the process of receiving a payment using the Breez SDK.
@@ -191,6 +219,21 @@ def main():
                         help='The network the SDK runs on, either "MAINNET" or "TESTNET"',
                         type=parse_network)
     subparser = parser.add_subparsers(title='subcommands')
+    # list
+    list_parser = subparser.add_parser('list', help='List payments')
+    list_parser.add_argument('-f', '--from_timestamp', 
+                                type=int, 
+                                help='The optional from unix timestamp')
+    list_parser.add_argument('-t', '--to_timestamp', 
+                                type=int, 
+                                help='The optional to unix timestamp')
+    list_parser.add_argument('-o', '--offset', 
+                                type=int, 
+                                help='The optional offset of payments')
+    list_parser.add_argument('-l', '--limit', 
+                                type=int, 
+                                help='The optional limit of listed payments')
+    list_parser.set_defaults(run=list_payments)
     # receive
     receive_parser = subparser.add_parser('receive', help='Receive a payment')
     receive_parser.add_argument('-m', '--method', 
