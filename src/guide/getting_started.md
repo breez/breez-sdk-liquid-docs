@@ -7,6 +7,9 @@ Integrating Breez SDK - *Liquid* into your application takes just a few minutes.
 - **[Listening to events](/guide/events.md)**
 - **[Adding logging](/guide/logging.md)**
 
+## API Key
+Some methods require the Breez API key to be set in order to work. You can request one for free by filling our form [here](https://breez.technology/request-api-key/#contact-us-form-sdk).
+
 ## Support
 
 Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or email us at [contact@breez.technology](mailto:contact@breez.technology).
