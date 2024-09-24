@@ -20,7 +20,7 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
 
   // If the fees are acceptable, continue to create the Receive Payment
   BigInt receiveFeesSat = prepareResponse.feesSat;
-  print("Fees: ${receiveFeesSat} sats");
+  print("Fees: $receiveFeesSat sats");
   // ANCHOR_END: prepare-receive-payment-lightning
   return prepareResponse;
 }
@@ -44,7 +44,7 @@ Future<PrepareReceiveResponse> prepareReceivePaymentOnchain() async {
 
   // If the fees are acceptable, continue to create the Receive Payment
   BigInt receiveFeesSat = prepareResponse.feesSat;
-  print("Fees: ${receiveFeesSat} sats");
+  print("Fees: $receiveFeesSat sats");
   // ANCHOR_END: prepare-receive-payment-onchain
   return prepareResponse;
 }
@@ -64,7 +64,7 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLiquid() async {
 
   // If the fees are acceptable, continue to create the Receive Payment
   BigInt receiveFeesSat = prepareResponse.feesSat;
-  print("Fees: ${receiveFeesSat} sats");
+  print("Fees: $receiveFeesSat sats");
   // ANCHOR_END: prepare-receive-payment-liquid
   return prepareResponse;
 }
