@@ -13,8 +13,8 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
   PrepareReceiveResponse prepareResponse =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
-      payerAmountSat: 5000 as BigInt,
       paymentMethod: PaymentMethod.lightning,
+      payerAmountSat: 5000 as BigInt,
     ),
   );
 
@@ -37,8 +37,8 @@ Future<PrepareReceiveResponse> prepareReceivePaymentOnchain() async {
   PrepareReceiveResponse prepareResponse =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
-      payerAmountSat: 5000 as BigInt,
       paymentMethod: PaymentMethod.bitcoinAddress,
+      payerAmountSat: 5000 as BigInt,
     ),
   );
 
@@ -56,9 +56,9 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLiquid() async {
   PrepareReceiveResponse prepareResponse =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
+      paymentMethod: PaymentMethod.liquidAddress,
       payerAmountSat: 5000
           as BigInt, // Not specifying the amount will create a plain Liquid address instead
-      paymentMethod: PaymentMethod.liquidAddress,
     ),
   );
 

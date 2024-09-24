@@ -137,7 +137,7 @@ def receive_payment(params):
     sdk = Sdk(params.network)
     try:
         # Prepare the receive request to get fees
-        prepare_req = breez_sdk_liquid.PrepareReceiveRequest(params.amount, getattr(breez_sdk_liquid.PaymentMethod, params.method))
+        prepare_req = breez_sdk_liquid.PrepareReceiveRequest(getattr(breez_sdk_liquid.PaymentMethod, params.method), params.amount)
         prepare_res = sdk.instance.prepare_receive_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")

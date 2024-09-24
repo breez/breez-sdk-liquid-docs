@@ -18,8 +18,8 @@ const examplePrepareLightningPayment = async () => {
 
   // Set the amount you wish the payer to send via lightning, which should be within the above limits
   const prepareResponse = await prepareReceivePayment({
-    payerAmountSat: 5_000,
-    paymentMethod: PaymentMethod.LIGHTNING
+    paymentMethod: PaymentMethod.LIGHTNING,
+    payerAmountSat: 5_000
   })
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -37,8 +37,8 @@ const examplePrepareOnchainPayment = async () => {
 
   // Set the onchain amount you wish the payer to send, which should be within the above limits
   const prepareResponse = await prepareReceivePayment({
-    payerAmountSat: 5_000,
-    paymentMethod: PaymentMethod.BITCOIN_ADDRESS
+    paymentMethod: PaymentMethod.BITCOIN_ADDRESS,
+    payerAmountSat: 5_000
   })
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -53,8 +53,8 @@ const examplePrepareLiquidPayment = async () => {
   // Create a Liquid BIP21 URI/address to receive a payment to.
   // There are no limits, but the payer amount should be greater than broadcast fees when specified
   const prepareResponse = await prepareReceivePayment({
-    payerAmountSat: 5_000, // Not specifying the amount will create a plain Liquid address instead
-    paymentMethod: PaymentMethod.LIQUID_ADDRESS
+    paymentMethod: PaymentMethod.LIQUID_ADDRESS,
+    payerAmountSat: 5_000 // Not specifying the amount will create a plain Liquid address instead
   })
 
   // If the fees are acceptable, continue to create the Receive Payment

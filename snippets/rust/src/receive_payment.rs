@@ -14,8 +14,8 @@ async fn prepare_receive_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
     // Set the invoice amount you wish the payer to send, which should be within the above limits
     let prepare_response = sdk
         .prepare_receive_payment(&PrepareReceiveRequest {
-            payer_amount_sat: Some(5_000),
             payment_method: PaymentMethod::Lightning,
+            payer_amount_sat: Some(5_000),
         })
         .await?;
 
@@ -36,8 +36,8 @@ async fn prepare_receive_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
     // Set the onchain amount you wish the payer to send, which should be within the above limits
     let prepare_response = sdk
         .prepare_receive_payment(&PrepareReceiveRequest {
-            payer_amount_sat: Some(5_000),
             payment_method: PaymentMethod::BitcoinAddress,
+            payer_amount_sat: Some(5_000),
         })
         .await?;
 
@@ -54,8 +54,8 @@ async fn prepare_receive_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
     // There are no limits, but the payer amount should be greater than broadcast fees when specified
     let prepare_response = sdk
         .prepare_receive_payment(&PrepareReceiveRequest {
-            payer_amount_sat: Some(5_000), // Not specifying the amount will create a plain Liquid address instead
             payment_method: PaymentMethod::LiquidAddress,
+            payer_amount_sat: Some(5_000), // Not specifying the amount will create a plain Liquid address instead
         })
         .await?;
 
