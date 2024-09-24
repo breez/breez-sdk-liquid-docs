@@ -7,8 +7,8 @@ You can send funds from the Breez SDK wallet to an on-chain address as follows.
 Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
 </div>
 
-## Checking the limits
-First, fetch the current Send Onchain limits:
+## Preparing Payments
+When sending an onchain payment, the swap limits for sending onchain need to be first checked.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -86,8 +86,8 @@ It is best to fetch these limits just before your app shows the Pay Onchain (rev
 
 </div>
 
-## Preparing to send, checking fees
-The next step is to find out the fees:
+### Setting the receiver amount
+When you want to payment receipient to receive a specific amount.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -223,7 +223,76 @@ If you want to set a custom fee rate when the Bitcoin transaction is claimed:
 </section>
 </custom-tabs>
 
-## Executing the Swap
+### Draining all funds
+When you want send all funds from your wallet to another address.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/pay_onchain.rs:prepare-pay-onchain-drain}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/PayOnchain.swift:prepare-pay-onchain-drain}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/PayOnchain.kt:prepare-pay-onchain-drain}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/pay_onchain.ts:prepare-pay-onchain-drain}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/pay_onchain.dart:prepare-pay-onchain-drain}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/pay_onchain.py:prepare-pay-onchain-drain}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/pay_onchain.go:prepare-pay-onchain-drain}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/PayOnchain.cs:prepare-pay-onchain-drain}}
+```
+</section>
+</custom-tabs>
+
+## Sending Payments
 
 Once you checked the amounts and the fees are acceptable, you can continue with sending the payment.
 

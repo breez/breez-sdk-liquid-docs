@@ -19,7 +19,9 @@ async fn prepare_pay_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-pay-onchain
     let prepare_res = sdk
         .prepare_pay_onchain(&PreparePayOnchainRequest {
-            receiver_amount_sat: 5_000,
+            amount: PayOnchainAmount.Receiver {
+                amount_sat: 5_000,
+            },
             sat_per_vbyte: None,
         })
         .await?;
@@ -31,13 +33,31 @@ async fn prepare_pay_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
     Ok(())
 }
 
+async fn prepare_pay_onchain_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: prepare-pay-onchain-drain
+    let prepare_res = sdk
+        .prepare_pay_onchain(&PreparePayOnchainRequest {
+            amount: PayOnchainAmount.Drain,
+            sat_per_vbyte: None,
+        })
+        .await?;
+
+    // Check if the fees are acceptable before proceeding
+    let total_fees_sat = prepare_res.total_fees_sat;
+    // ANCHOR_END: prepare-pay-onchain-drain
+
+    Ok(())
+}
+
 async fn prepare_pay_onchain_fee_rate(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-pay-onchain-fee-rate
     let optional_sat_per_vbyte = Some(21);
 
     let prepare_res = sdk
         .prepare_pay_onchain(&PreparePayOnchainRequest {
-            receiver_amount_sat: 5_000,
+            amount: PayOnchainAmount.Receiver {
+                amount_sat: 5_000,
+            },
             sat_per_vbyte: optional_sat_per_vbyte,
         })
         .await?;
