@@ -9,6 +9,11 @@ Install poetry using [your preferred method](https://python-poetry.org/docs/#ins
 
 If you have a pre-existing mnemonic phrase you want to use, save the phrase into a `phrase` file. If no `phrase` file exists when the CLI is run a new mnemonic phrase will be generated.
 
+### Environment Variables
+
+The example supports the following environment variables:
+- `BREEZ_API_KEY`: The API key used for executing direct payments. You can request one [here](https://breez.technology/request-api-key/#contact-us-form-sdk).
+
 ### Using the CLI
 
 You can list a set of basic commands using: `poetry run cli -h`
