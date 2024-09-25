@@ -14,12 +14,12 @@ Future<RefundResponse> executeRefund({
 }) async {
   // ANCHOR: execute-refund
   String destinationAddress = "...";
-  int satPerVbyte = refundTxFeeRate;
+  int feeRateSatPerVbyte = refundTxFeeRate;
 
   RefundRequest req = RefundRequest(
     swapAddress: refundable.swapAddress,
     refundAddress: destinationAddress,
-    satPerVbyte: satPerVbyte,
+    feeRateSatPerVbyte: feeRateSatPerVbyte,
   );
   RefundResponse resp = await breezSDKLiquid.instance!.refund(req: req);
   print(resp.refundTxId);

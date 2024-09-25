@@ -45,7 +45,7 @@ func preparePayOnchainFeeRate(sdk: BindingLiquidSdk, currentLimits: Limits) -> P
     let amount = PayOnchainAmount.receiver(amountSat: 5_000)
     let optionalSatPerVbyte = UInt32(21)
 
-    let prepareRequest = PreparePayOnchainRequest(amount: amount, satPerVbyte: optionalSatPerVbyte)
+    let prepareRequest = PreparePayOnchainRequest(amount: amount, feeRateSatPerVbyte: optionalSatPerVbyte)
     let prepareResponse = try? sdk.preparePayOnchain(req: prepareRequest)
 
     if let response = prepareResponse {

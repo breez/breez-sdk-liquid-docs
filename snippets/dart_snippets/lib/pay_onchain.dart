@@ -48,7 +48,7 @@ Future<PreparePayOnchainResponse> preparePayOnchainFeeRate() async {
 
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
     amount: PayOnchainAmount_Receiver(amountSat: 5000 as BigInt),
-    satPerVbyte: optionalSatPerVbyte,
+    feeRateSatPerVbyte: optionalSatPerVbyte,
   );
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,

@@ -18,12 +18,12 @@ async fn execute_refund(
 ) -> Result<()> {
     // ANCHOR: execute-refund
     let destination_address = "...".into();
-    let sat_per_vbyte = refund_tx_fee_rate;
+    let fee_rate_sat_per_vbyte = refund_tx_fee_rate;
 
     sdk.refund(&RefundRequest {
         swap_address: refundable.swap_address,
         refund_address: destination_address,
-        sat_per_vbyte,
+        fee_rate_sat_per_vbyte,
     })
     .await?;
     // ANCHOR_END: execute-refund

@@ -65,7 +65,7 @@ const examplePreparePayOnchainFeeRate = async () => {
         type: PayOnchainAmountVariant.RECEIVER,
         amountSat: 5_000
       },
-      satPerVbyte: optionalSatPerVbyte
+      feeRateSatPerVbyte: optionalSatPerVbyte
     })
 
     // Check if the fees are acceptable before proceeding

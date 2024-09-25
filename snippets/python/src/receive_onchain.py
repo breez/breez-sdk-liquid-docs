@@ -12,12 +12,12 @@ def list_refundables(sdk: BindingLiquidSdk):
         raise
     # ANCHOR_END: list-refundables
 
-def execute_refund(sdk: BindingLiquidSdk, refund_txfee_rate: int, refundable: RefundableSwap):
+def execute_refund(sdk: BindingLiquidSdk, refund_tx_fee_rate: int, refundable: RefundableSwap):
     # ANCHOR: execute-refund
     destination_address = "..."
-    sat_per_vbyte = refund_txfee_rate
+    fee_rate_sat_per_vbyte = refund_tx_fee_rate
     try:
-        sdk.refund(RefundRequest(refundable.swap_address, destination_address, sat_per_vbyte))
+        sdk.refund(RefundRequest(refundable.swap_address, destination_address, fee_rate_sat_per_vbyte))
     except Exception as error:
         logging.error(error)
         raise

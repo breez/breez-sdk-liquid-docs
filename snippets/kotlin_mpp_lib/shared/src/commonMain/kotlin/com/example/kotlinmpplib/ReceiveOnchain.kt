@@ -15,9 +15,9 @@ class ReceiveOnchain {
     fun executeRefund(sdk: BindingLiquidSdk, refundTxFeeRate: UInt, refundable: RefundableSwap) {
         // ANCHOR: execute-refund
         val destinationAddress = "..."
-        val satPerVbyte = refundTxFeeRate
+        val feeRateSatPerVbyte = refundTxFeeRate
         try {
-            sdk.refund(RefundRequest(refundable.swapAddress, destinationAddress, satPerVbyte))
+            sdk.refund(RefundRequest(refundable.swapAddress, destinationAddress, feeRateSatPerVbyte))
         } catch (e: Exception) {
             // handle error
         }

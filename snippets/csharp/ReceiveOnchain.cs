@@ -20,14 +20,14 @@ public class ReceiveOnchainSnippets
     {
         // ANCHOR: execute-refund
         var destinationAddress = "...";
-        var satPerVbyte = refundTxFeeRate;
+        var feeRateSatPerVbyte = refundTxFeeRate;
         try
         {
             sdk.Refund(
                 new RefundRequest(
                     refundable.swapAddress, 
                     destinationAddress, 
-                    satPerVbyte));
+                    feeRateSatPerVbyte));
         }
         catch (Exception)
         {

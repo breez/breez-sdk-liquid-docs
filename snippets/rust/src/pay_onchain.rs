@@ -22,7 +22,7 @@ async fn prepare_pay_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
             amount: PayOnchainAmount.Receiver {
                 amount_sat: 5_000,
             },
-            sat_per_vbyte: None,
+            fee_rate_sat_per_vbyte: None,
         })
         .await?;
 
@@ -38,7 +38,7 @@ async fn prepare_pay_onchain_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
     let prepare_res = sdk
         .prepare_pay_onchain(&PreparePayOnchainRequest {
             amount: PayOnchainAmount.Drain,
-            sat_per_vbyte: None,
+            fee_rate_sat_per_vbyte: None,
         })
         .await?;
 
@@ -58,7 +58,7 @@ async fn prepare_pay_onchain_fee_rate(sdk: Arc<LiquidSdk>) -> Result<()> {
             amount: PayOnchainAmount.Receiver {
                 amount_sat: 5_000,
             },
-            sat_per_vbyte: optional_sat_per_vbyte,
+            fee_rate_sat_per_vbyte: optional_sat_per_vbyte,
         })
         .await?;
 

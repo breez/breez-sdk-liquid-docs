@@ -14,12 +14,12 @@ const exampleListRefundables = async () => {
 const exampleRefund = async (refundable: RefundableSwap, refundTxFeeRate: number) => {
   // ANCHOR: execute-refund
   const destinationAddress = '...'
-  const satPerVbyte = refundTxFeeRate
+  const feeRateSatPerVbyte = refundTxFeeRate
 
   const refundResponse = await refund({
     swapAddress: refundable.swapAddress,
     refundAddress: destinationAddress,
-    satPerVbyte
+    feeRateSatPerVbyte
   })
   // ANCHOR_END: execute-refund
 }
