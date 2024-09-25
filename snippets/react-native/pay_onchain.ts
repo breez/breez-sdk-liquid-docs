@@ -1,8 +1,10 @@
 import {
   type PreparePayOnchainResponse,
+  type PayOnchainAmount,
   fetchOnchainLimits,
   preparePayOnchain,
-  payOnchain
+  payOnchain,
+  PayOnchainAmountVariant
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleGetCurrentLimits = async () => {
@@ -22,7 +24,10 @@ const examplePreparePayOnchain = async () => {
   // ANCHOR: prepare-pay-onchain
   try {
     const prepareResponse = await preparePayOnchain({
-      receiverAmountSat: 5_000
+      amount: {
+        type: PayOnchainAmountVariant.RECEIVER,
+        amountSat: 5_000
+      }
     })
 
     // Check if the fees are acceptable before proceeding
@@ -33,14 +38,34 @@ const examplePreparePayOnchain = async () => {
   // ANCHOR_END: prepare-pay-onchain
 }
 
+const examplePreparePayOnchainDrain = async () => {
+  // ANCHOR: prepare-pay-onchain-drain
+  try {
+    const prepareResponse = await preparePayOnchain({
+      amount: {
+        type: PayOnchainAmountVariant.DRAIN
+      }
+    })
+
+    // Check if the fees are acceptable before proceeding
+    const totalFeesSat = prepareResponse.totalFeesSat
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: prepare-pay-onchain-drain
+}
+
 const examplePreparePayOnchainFeeRate = async () => {
   // ANCHOR: prepare-pay-onchain-fee-rate
   try {
     const optionalSatPerVbyte = 21
 
     const prepareResponse = await preparePayOnchain({
-      receiverAmountSat: 5_000,
-      satPerVbyte: optionalSatPerVbyte
+      amount: {
+        type: PayOnchainAmountVariant.RECEIVER,
+        amountSat: 5_000
+      },
+      feeRateSatPerVbyte: optionalSatPerVbyte
     })
 
     // Check if the fees are acceptable before proceeding

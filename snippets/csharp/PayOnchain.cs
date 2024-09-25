@@ -23,7 +23,8 @@ public class SendOnchainSnippets
         // ANCHOR: prepare-pay-onchain
         try
         {
-            var prepareRequest = new PreparePayOnchainRequest(5000);
+            var amount = new PayOnchainAmount.Receiver(5000);
+            var prepareRequest = new PreparePayOnchainRequest(amount);
             var prepareResponse = sdk.PreparePayOnchain(prepareRequest);
 
             // Check if the fees are acceptable before proceeding
@@ -36,14 +37,34 @@ public class SendOnchainSnippets
         // ANCHOR_END: prepare-pay-onchain
     }
 
+    public void PreparePayOnchainDrain(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: prepare-pay-onchain-drain
+        try
+        {
+            var amount = new PayOnchainAmount.Drain();
+            var prepareRequest = new PreparePayOnchainRequest(amount);
+            var prepareResponse = sdk.PreparePayOnchain(prepareRequest);
+
+            // Check if the fees are acceptable before proceeding
+            var totalFeesSat = prepareResponse.totalFeesSat;
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: prepare-pay-onchain-drain
+    }
+
     public void PreparePayOnchainFeeRate(BindingLiquidSdk sdk)
     {
         // ANCHOR: prepare-pay-onchain-fee-rate
         try
         {
+            var amount = new PayOnchainAmount.Receiver(5000);
             uint optionalSatPerVbyte = 21;
 
-            var prepareRequest = new PreparePayOnchainRequest(5000, optionalSatPerVbyte);
+            var prepareRequest = new PreparePayOnchainRequest(amount, optionalSatPerVbyte);
             var prepareResponse = sdk.PreparePayOnchain(prepareRequest);
 
             // Check if the fees are acceptable before proceeding

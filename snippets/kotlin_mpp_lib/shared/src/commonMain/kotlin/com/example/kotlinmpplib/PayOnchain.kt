@@ -17,7 +17,8 @@ class PayOnchain {
     fun preparePayOnchain(sdk: BindingLiquidSdk) {
         // ANCHOR: prepare-pay-onchain
         try {
-            val prepareRequest = PreparePayOnchainRequest(5_000.toULong())
+            val amount = PayOnchainAmount.Receiver(5_000.toULong())
+            val prepareRequest = PreparePayOnchainRequest(amount)
             val prepareResponse = sdk.preparePayOnchain(prepareRequest)
 
             // Check if the fees are acceptable before proceeding
@@ -28,12 +29,28 @@ class PayOnchain {
         // ANCHOR_END: prepare-pay-onchain
     }
 
+    fun preparePayOnchainDrain(sdk: BindingLiquidSdk) {
+        // ANCHOR: prepare-pay-onchain-drain
+        try {
+            val amount = PayOnchainAmount.Drain
+            val prepareRequest = PreparePayOnchainRequest(amount)
+            val prepareResponse = sdk.preparePayOnchain(prepareRequest)
+
+            // Check if the fees are acceptable before proceeding
+            val totalFeesSat = prepareResponse.totalFeesSat;
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: prepare-pay-onchain-drain
+    }
+
     fun preparePayOnchainFeeRate(sdk: BindingLiquidSdk) {
         // ANCHOR: prepare-pay-onchain-fee-rate
         try {
+            val amount = PayOnchainAmount.Receiver(5_000.toULong())
             val optionalSatPerVbyte = 21
 
-            val prepareRequest = PreparePayOnchainRequest(5_000.toULong(), optionalSatPerVbyte.toUInt())
+            val prepareRequest = PreparePayOnchainRequest(amount, optionalSatPerVbyte.toUInt())
             val prepareResponse = sdk.preparePayOnchain(prepareRequest)
 
             // Check if the fees are acceptable before proceeding

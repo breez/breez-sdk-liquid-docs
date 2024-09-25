@@ -17,11 +17,11 @@ func ListRefundables(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 func ExecuteRefund(sdk *breez_sdk_liquid.BindingLiquidSdk, refundTxFeeRate uint32, refundable breez_sdk_liquid.RefundableSwap) {
 	// ANCHOR: execute-refund
 	destinationAddress := "..."
-	satPerVbyte := refundTxFeeRate
+	feeRateSatPerVbyte := refundTxFeeRate
 	refundRequest := breez_sdk_liquid.RefundRequest{
-		SwapAddress:   refundable.SwapAddress,
-		RefundAddress: destinationAddress,
-		SatPerVbyte:   satPerVbyte,
+		SwapAddress:        refundable.SwapAddress,
+		RefundAddress:      destinationAddress,
+		FeeRateSatPerVbyte: feeRateSatPerVbyte,
 	}
 
 	if result, err := sdk.Refund(refundRequest); err == nil {

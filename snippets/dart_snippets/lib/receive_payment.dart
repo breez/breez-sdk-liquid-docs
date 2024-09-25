@@ -13,14 +13,14 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
   PrepareReceiveResponse prepareResponse =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
-      payerAmountSat: 5000 as BigInt,
       paymentMethod: PaymentMethod.lightning,
+      payerAmountSat: 5000 as BigInt,
     ),
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
   BigInt receiveFeesSat = prepareResponse.feesSat;
-  print("Fees: ${receiveFeesSat} sats");
+  print("Fees: $receiveFeesSat sats");
   // ANCHOR_END: prepare-receive-payment-lightning
   return prepareResponse;
 }
@@ -37,14 +37,14 @@ Future<PrepareReceiveResponse> prepareReceivePaymentOnchain() async {
   PrepareReceiveResponse prepareResponse =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
-      payerAmountSat: 5000 as BigInt,
       paymentMethod: PaymentMethod.bitcoinAddress,
+      payerAmountSat: 5000 as BigInt,
     ),
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
   BigInt receiveFeesSat = prepareResponse.feesSat;
-  print("Fees: ${receiveFeesSat} sats");
+  print("Fees: $receiveFeesSat sats");
   // ANCHOR_END: prepare-receive-payment-onchain
   return prepareResponse;
 }
@@ -56,15 +56,15 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLiquid() async {
   PrepareReceiveResponse prepareResponse =
       await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
+      paymentMethod: PaymentMethod.liquidAddress,
       payerAmountSat: 5000
           as BigInt, // Not specifying the amount will create a plain Liquid address instead
-      paymentMethod: PaymentMethod.liquidAddress,
     ),
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
   BigInt receiveFeesSat = prepareResponse.feesSat;
-  print("Fees: ${receiveFeesSat} sats");
+  print("Fees: $receiveFeesSat sats");
   // ANCHOR_END: prepare-receive-payment-liquid
   return prepareResponse;
 }

@@ -17,8 +17,8 @@ func PrepareReceiveLightning(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// Set the invoice amount you wish the payer to send, which should be within the above limits
 	optionalPayerAmountSat := uint64(5_000)
 	prepareRequest := breez_sdk_liquid.PrepareReceiveRequest{
-		PayerAmountSat: &optionalPayerAmountSat,
 		PaymentMethod:  breez_sdk_liquid.PaymentMethodLightning,
+		PayerAmountSat: &optionalPayerAmountSat,
 	}
 	if prepareResponse, err := sdk.PrepareReceivePayment(prepareRequest); err == nil {
 		// If the fees are acceptable, continue to create the Receive Payment
@@ -39,8 +39,8 @@ func PrepareReceiveOnchain(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// Set the onchain amount you wish the payer to send, which should be within the above limits
 	optionalPayerAmountSat := uint64(5_000)
 	prepareRequest := breez_sdk_liquid.PrepareReceiveRequest{
-		PayerAmountSat: &optionalPayerAmountSat,
 		PaymentMethod:  breez_sdk_liquid.PaymentMethodBitcoinAddress,
+		PayerAmountSat: &optionalPayerAmountSat,
 	}
 	if prepareResponse, err := sdk.PrepareReceivePayment(prepareRequest); err == nil {
 		// If the fees are acceptable, continue to create the Receive Payment
@@ -57,8 +57,8 @@ func PrepareReceiveLiquid(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// Note: Not setting the amount will generate a plain Liquid address
 	optionalPayerAmountSat := uint64(5_000)
 	prepareRequest := breez_sdk_liquid.PrepareReceiveRequest{
-		PayerAmountSat: &optionalPayerAmountSat,
 		PaymentMethod:  breez_sdk_liquid.PaymentMethodLiquidAddress,
+		PayerAmountSat: &optionalPayerAmountSat,
 	}
 	if prepareResponse, err := sdk.PrepareReceivePayment(prepareRequest); err == nil {
 		// If the fees are acceptable, continue to create the Receive Payment
