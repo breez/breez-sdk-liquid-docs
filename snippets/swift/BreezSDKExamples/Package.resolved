@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/breez/breez-sdk-liquid-swift",
       "state" : {
-        "revision" : "20c5ad8bcca4985119d1d40f7f4ee3697968478e",
-        "version" : "0.3.2"
+        "revision" : "d1b44db8bd99516d42006f07d7fa4a078acb2623",
+        "version" : "0.3.4"
       }
     },
     {

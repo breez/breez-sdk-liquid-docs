@@ -8,7 +8,7 @@ func listRefundables(sdk: BindingLiquidSdk) -> [RefundableSwap]? {
     return refundables
 }
 
-func executeRefund(sdk: BindingLiquidSdk, refundable: RefundableSwap, feeRateSatPerVbyte: UInt32) -> RefundResponse? {
+func executeRefund(sdk: BindingLiquidSdk, refundable: RefundableSwap, refundTxFeeRate: UInt32) -> RefundResponse? {
     // ANCHOR: execute-refund
     let destinationAddress = "..."
     let feeRateSatPerVbyte = refundTxFeeRate

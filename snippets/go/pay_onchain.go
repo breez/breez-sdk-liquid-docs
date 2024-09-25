@@ -50,8 +50,8 @@ func PreparePayOnchainFeeRate(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	amount := breez_sdk_liquid.PayOnchainAmountReceiver{AmountSat: 5_000}
 	optionalSatPerVbyte := uint32(21)
 	prepareRequest := breez_sdk_liquid.PreparePayOnchainRequest{
-		Amount:      amount,
-		SatPerVbyte: &optionalSatPerVbyte,
+		Amount:             amount,
+		FeeRateSatPerVbyte: &optionalSatPerVbyte,
 	}
 
 	if prepareResponse, err := sdk.PreparePayOnchain(prepareRequest); err == nil {
