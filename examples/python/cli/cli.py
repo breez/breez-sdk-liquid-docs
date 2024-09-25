@@ -2,6 +2,7 @@ from typing import Optional
 from colorama import init as colorama_init, Style
 from mnemonic import Mnemonic
 from os.path import exists
+from os import environ
 from breez_sdk_liquid import LiquidNetwork
 import argparse
 import breez_sdk_liquid
@@ -26,6 +27,7 @@ class Sdk:
     def __init__(self, network: Optional[LiquidNetwork] = None):
         mnemonic = self.read_mnemonic()
         config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET)
+        config.breez_api_key = environ.get("BREEZ_API_KEY")
         connect_request = breez_sdk_liquid.ConnectRequest(config=config, mnemonic=mnemonic)
         self.instance = breez_sdk_liquid.connect(connect_request)
         self.listener = SdkListener()
@@ -137,7 +139,7 @@ def receive_payment(params):
     sdk = Sdk(params.network)
     try:
         # Prepare the receive request to get fees
-        prepare_req = breez_sdk_liquid.PrepareReceiveRequest(params.amount, getattr(breez_sdk_liquid.PaymentMethod, params.method))
+        prepare_req = breez_sdk_liquid.PrepareReceiveRequest(payer_amount_sat=params.amount, payment_method=getattr(breez_sdk_liquid.PaymentMethod, params.method))
         prepare_res = sdk.instance.prepare_receive_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
@@ -174,7 +176,7 @@ def send_payment(params):
     sdk = Sdk(params.network)
     try:
         # Prepare the send request to get fees
-        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, params.amount)
+        prepare_req = breez_sdk_liquid.PrepareSendRequest(destination=params.destination, amount_sat=params.amount)
         prepare_res = sdk.instance.prepare_send_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
