@@ -87,7 +87,7 @@ It is best to fetch these limits just before your app shows the Pay Onchain (rev
 </div>
 
 ### Setting the receiver amount
-When you want to payment receipient to receive a specific amount.
+When you want the payment receipient to receive a specific amount.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
