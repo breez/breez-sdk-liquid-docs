@@ -11,6 +11,9 @@ func gettingStarted() throws -> BindingLiquidSdk? {
     // Customize the config object according to your needs
     config.workingDir = "path to an existing directory"
 
+	// Add your Breez API key
+	config.breezApiKey = "<your Breez API key>"
+
     let connectRequest = ConnectRequest(config: config, mnemonic: mnemonic)
     let sdk = try? connect(req: connectRequest)
     // ANCHOR_END: init-sdk

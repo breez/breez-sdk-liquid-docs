@@ -12,6 +12,9 @@ def start():
     # Customize the config object according to your needs
     config.working_dir = "path to an existing directory"
 
+	# Add your Breez API key
+	config.breez_api_key = "<your Breez API key>"
+
     try:
         connect_request = ConnectRequest(config, mnemonic)
         sdk = connect(connect_request)

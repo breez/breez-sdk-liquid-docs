@@ -26,6 +26,9 @@ const exampleGettingStarted = async () => {
   console.log(`Working directory: ${config.workingDir}`)
   // config.workingDir = "path to writable directory"
 
+  // Add your Breez API key
+  config.breezApiKey = "<your Breez API key>"
+
   await connect({ mnemonic, config })
   // ANCHOR_END: init-sdk
 }

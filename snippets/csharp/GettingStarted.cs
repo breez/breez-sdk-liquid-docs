@@ -14,6 +14,9 @@ public class GettingStartedSnippets
         {
             // Customize the config object according to your needs
             workingDir = "path to an existing directory"
+ 
+	        // Add your Breez API key
+	        breezApiKey = "<your Breez API key>"
         };
 
         try

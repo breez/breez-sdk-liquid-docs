@@ -8,7 +8,9 @@ Integrating Breez SDK - *Liquid* into your application takes just a few minutes.
 - **[Adding logging](/guide/logging.md)**
 
 ## API Key
-Some methods require the Breez API key to be set in order to work. You can request one for free by filling our form <a target="_blank" href="{{api_key_form_uri}}">here</a>.
+Some methods require the _Liquid_ Breez API key to be set in order to work. You can request one for free by filling our form <a target="_blank" href="{{api_key_form_uri}}">here</a>.
+
+**Note:** This is not the same as the Greenlight Breez API key, so it cannot be reused.
 
 ## Support
 
