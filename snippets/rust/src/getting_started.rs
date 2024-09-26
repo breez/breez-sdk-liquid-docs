@@ -17,6 +17,9 @@ async fn getting_started() -> Result<Arc<LiquidSdk>> {
     // Customize the config object according to your needs
     config.working_dir = "path to an existing directory".into();
 
+	// Add your Breez API key
+	config.breez_api_key = "<your Breez API key>";
+
     let connect_request = ConnectRequest {
         mnemonic: mnemonic.to_string(),
         config,

@@ -32,6 +32,9 @@ Future<void> initializeSDK() async {
   // Customize the config object according to your needs
   config = config.copyWith(workingDir: "path to an existing directory");
 
+  // Add your Breez API key
+  config = config.copyWith(breezApiKey: "<your Breez API key>");
+
   ConnectRequest connectRequest = ConnectRequest(mnemonic: mnemonic, config: config);
 
   await breezSDKLiquid.connect(req: connectRequest);

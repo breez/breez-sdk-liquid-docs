@@ -12,6 +12,9 @@ class GettingStarted {
         // Customize the config object according to your needs
         config.workingDir = "path to an existing directory"
 
+	    // Add your Breez API key
+	    config.breezApiKey = "<your Breez API key>"
+
         try {
             val connectRequest = ConnectRequest(config, mnemonic)
             val sdk = connect(connectRequest)

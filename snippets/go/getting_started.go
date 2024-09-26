@@ -16,6 +16,9 @@ func Start() (*breez_sdk_liquid.BindingLiquidSdk, error) {
 	// Customize the config object according to your needs
 	config.WorkingDir = "path to an existing directory"
 
+	// Add your Breez API key
+	config.breezApiKey = "<your Breez API key>"
+
 	connectRequest := breez_sdk_liquid.ConnectRequest{
 		Config:   config,
 		Mnemonic: mnemonic,
