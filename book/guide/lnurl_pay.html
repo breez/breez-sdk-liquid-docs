@@ -1,0 +1,453 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sending payments using LNURL-Pay/Lightning address - Breez SDK - Liquid</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../task-lists.css">
+        <link rel="stylesheet" href="../src/style/custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">API Overview</li><li class="chapter-item expanded "><a href="../guide/about_breez_sdk_liquid.html"><strong aria-hidden="true">1.</strong> About Breez SDK - Liquid</a></li><li class="chapter-item expanded "><a href="../guide/getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../guide/install.html"><strong aria-hidden="true">2.1.</strong> Installing the SDK</a></li><li class="chapter-item expanded "><a href="../guide/connecting.html"><strong aria-hidden="true">2.2.</strong> Connecting and Disconnecting</a></li><li class="chapter-item expanded "><a href="../guide/wallet_state.html"><strong aria-hidden="true">2.3.</strong> Fetching the Wallet State</a></li><li class="chapter-item expanded "><a href="../guide/events.html"><strong aria-hidden="true">2.4.</strong> Listening to events</a></li><li class="chapter-item expanded "><a href="../guide/logging.html"><strong aria-hidden="true">2.5.</strong> Adding logging</a></li></ol></li><li class="chapter-item expanded "><a href="../guide/payments.html"><strong aria-hidden="true">3.</strong> Payment Fundamentals</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../guide/receive_payment.html"><strong aria-hidden="true">3.1.</strong> Receiving payments</a></li><li class="chapter-item expanded "><a href="../guide/send_payment.html"><strong aria-hidden="true">3.2.</strong> Sending payments</a></li><li class="chapter-item expanded "><a href="../guide/list_payments.html"><strong aria-hidden="true">3.3.</strong> Listing payments</a></li><li class="chapter-item expanded "><a href="../guide/refund_payment.html"><strong aria-hidden="true">3.4.</strong> Refunding payments</a></li><li class="chapter-item expanded "><a href="../guide/rescanning_swaps.html"><strong aria-hidden="true">3.5.</strong> Rescanning swaps</a></li></ol></li><li class="chapter-item expanded "><a href="../guide/pay_onchain.html"><strong aria-hidden="true">4.</strong> Sending an On-Chain Transaction</a></li><li class="chapter-item expanded "><a href="../guide/lnurl.html"><strong aria-hidden="true">5.</strong> Using LNURL & Lightning addresses</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../guide/lnurl_pay.html" class="active"><strong aria-hidden="true">5.1.</strong> Sending payments using LNURL-Pay/Lightning address</a></li><li class="chapter-item expanded "><a href="../guide/lnurl_pay_service.html"><strong aria-hidden="true">5.2.</strong> Receiving payments using LNURL-Pay/Lightning address</a></li><li class="chapter-item expanded "><a href="../guide/lnurl_withdraw.html"><strong aria-hidden="true">5.3.</strong> Receiving payments using LNURL-Withdraw</a></li><li class="chapter-item expanded "><a href="../guide/lnurl_auth.html"><strong aria-hidden="true">5.4.</strong> Authenticating using LNURL-Auth</a></li></ol></li><li class="chapter-item expanded "><a href="../guide/fiat_currencies.html"><strong aria-hidden="true">6.</strong> Supporting fiat currencies</a></li><li class="chapter-item expanded "><a href="../guide/buy_btc.html"><strong aria-hidden="true">7.</strong> Buying Bitcoin</a></li><li class="chapter-item expanded "><a href="../guide/end-user_fees.html"><strong aria-hidden="true">8.</strong> Fees for End-Users</a></li><li class="chapter-item expanded "><a href="../guide/production.html"><strong aria-hidden="true">9.</strong> Moving to production</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Notifications</li><li class="chapter-item expanded "><a href="../notifications/getting_started.html"><strong aria-hidden="true">10.</strong> Implementing mobile notifications</a></li><li class="chapter-item expanded "><a href="../notifications/setup_nds.html"><strong aria-hidden="true">11.</strong> Setting up an NDS</a></li><li class="chapter-item expanded "><a href="../notifications/using_webhooks.html"><strong aria-hidden="true">12.</strong> Using webhooks</a></li><li class="chapter-item expanded "><a href="../notifications/setup_plugin.html"><strong aria-hidden="true">13.</strong> Integrating the plugin</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../notifications/android_setup.html"><strong aria-hidden="true">13.1.</strong> Android</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../notifications/android_service.html"><strong aria-hidden="true">13.1.1.</strong> Setting up the Foreground Service</a></li><li class="chapter-item expanded "><a href="../notifications/android_plugin.html"><strong aria-hidden="true">13.1.2.</strong> Adding the Notification Plugin</a></li></ol></li><li class="chapter-item expanded "><a href="../notifications/ios_setup.html"><strong aria-hidden="true">13.2.</strong> iOS</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../notifications/ios_service.html"><strong aria-hidden="true">13.2.1.</strong> Setting up the Notification Service Extension</a></li><li class="chapter-item expanded "><a href="../notifications/ios_plugin.html"><strong aria-hidden="true">13.2.2.</strong> Adding the Notification Plugin</a></li></ol></li></ol></li><li class="chapter-item expanded "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Advanced</li><li class="chapter-item expanded "><a href="../notifications/logging.html"><strong aria-hidden="true">14.</strong> Adding logging</a></li><li class="chapter-item expanded "><a href="../notifications/changing_strings.html"><strong aria-hidden="true">15.</strong> Changing default strings</a></li><li class="chapter-item expanded "><a href="../notifications/custom_messages.html"><strong aria-hidden="true">16.</strong> Customising push messages</a></li><li class="chapter-item expanded "><a href="../notifications/custom_notifications.html"><strong aria-hidden="true">17.</strong> Handling custom notifications</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Breez SDK - Liquid</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs/edit/main/src/guide/lnurl_pay.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="lnurl-pay"><a class="header" href="#lnurl-pay">LNURL-Pay</a></h1>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">// Endpoint can also be of the form:
+// lnurlp://domain.com/lnurl-pay?key=val
+// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+let lnurl_pay_url = "lightning@address.com";
+
+if let Ok(InputType::LnUrlPay { data: pd }) = parse(lnurl_pay_url).await {
+    let amount_msat = pd.min_sendable;
+    let optional_comment = Some("&lt;comment&gt;".to_string());
+    let optional_payment_label = Some("&lt;label&gt;".to_string());
+    let optional_validate_success_action_url = Some(true);
+
+    sdk.lnurl_pay(LnUrlPayRequest {
+        data: pd,
+        amount_msat,
+        comment: optional_comment,
+        payment_label: optional_payment_label,
+        validate_success_action_url: optional_validate_success_action_url,
+    })
+    .await?;
+}</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">// Endpoint can also be of the form:
+// lnurlp://domain.com/lnurl-pay?key=val
+// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+var response: LnUrlPayResult?
+let lnurlPayUrl = "lightning@address.com"
+if let inputType = try? parse(input: lnurlPayUrl) {
+    if case.lnUrlPay(let `data`) = inputType {
+        let amountMsat = data.minSendable
+        let optionalComment = "&lt;comment&gt;"
+        let optionalPaymentLabel = "&lt;label&gt;"
+        let optionalValidateSuccessActionUrl = true
+        let req = LnUrlPayRequest(
+            data: data, 
+            amountMsat: amountMsat, 
+            comment: optionalComment, 
+            paymentLabel: optionalPaymentLabel, 
+            validateSuccessActionUrl: optionalValidateSuccessActionUrl
+        )
+        response = try? sdk.lnurlPay(req: req)
+    }
+}
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">// Endpoint can also be of the form:
+// lnurlp://domain.com/lnurl-pay?key=val
+// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+val lnurlPayUrl = "lightning@address.com";
+try {
+    val inputType = parse(lnurlPayUrl)
+    if (inputType is InputType.LnUrlPay) {
+        val requestData = inputType.data
+        val amountMsat = requestData.minSendable
+        val optionalComment = "&lt;comment&gt;";
+        val optionalPaymentLabel = "&lt;label&gt;";
+        val optionalValidateSuccessActionUrl = true;
+        val req = LnUrlPayRequest(
+            requestData, 
+            amountMsat, 
+            optionalComment, 
+            optionalPaymentLabel, 
+            optionalValidateSuccessActionUrl)
+        sdk.lnurlPay(req)
+    }
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">// Endpoint can also be of the
+// lnurlp://domain.com/lnurl-pay?key=val
+// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+const lnurlPayUrl = 'lightning@address.com'
+
+const input = await parse(lnurlPayUrl)
+if (input.type === InputTypeVariant.LN_URL_PAY) {
+  const amountMsat = input.data.minSendable
+  const optionalComment = '&lt;comment&gt;'
+  const optionalPaymentLabel = '&lt;label&gt;'
+  const optionalValidateSuccessActionUrl = true
+  const lnUrlPayResult = await lnurlPay({
+    data: input.data,
+    amountMsat,
+    comment: optionalComment,
+    paymentLabel: optionalPaymentLabel,
+    validateSuccessActionUrl: optionalValidateSuccessActionUrl
+  })
+}
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">/// Endpoint can also be of the form:
+/// lnurlp://domain.com/lnurl-pay?key=val
+/// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+String lnurlPayUrl = "lightning@address.com";
+
+InputType inputType = await parse(input: lnurlPayUrl);
+if (inputType is InputType_LnUrlPay) {
+  BigInt amountMsat = inputType.data.minSendable;
+  String optionalComment = "&lt;comment&gt;";
+  String optionalPaymentLabel = "&lt;label&gt;";
+  bool optionalValidateSuccessActionUrl = true;
+  LnUrlPayRequest req = LnUrlPayRequest(
+    data: inputType.data,
+    amountMsat: amountMsat,
+    comment: optionalComment,
+    paymentLabel: optionalPaymentLabel,
+    validateSuccessActionUrl: optionalValidateSuccessActionUrl,
+  );
+  LnUrlPayResult result = await breezSDKLiquid.instance!.lnurlPay(req: req);
+  print(result.data);
+}
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore"># Endpoint can also be of the form:
+# lnurlp://domain.com/lnurl-pay?key=val
+# lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+lnurl_pay_url = "lightning@address.com"
+try: 
+    parsed_input = breez_sdk_liquid.parse(lnurl_pay_url)
+    if isinstance(parsed_input, InputType.LN_URL_PAY):
+        amount_msat = parsed_input.data.min_sendable
+        optional_comment = "&lt;comment&gt;"
+        optional_payment_label = "&lt;label&gt;"
+        req = LnUrlPayRequest(parsed_input.data, amount_msat, optional_comment, optional_payment_label)
+        result = sdk.lnurl_pay(req)
+        return result
+except Exception as error:
+    logging.error(error)
+    raise 
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">// Endpoint can also be of the form:
+// lnurlp://domain.com/lnurl-pay?key=val
+// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+lnurlPayUrl := "lightning@address.com"
+
+if input, err := breez_sdk_liquid.Parse(lnurlPayUrl); err != nil {
+    switch inputType := input.(type) {
+    case breez_sdk_liquid.InputTypeLnUrlPay:
+        amountMsat := inputType.Data.MinSendable
+        optionalComment := "&lt;comment&gt;"
+        optionalPaymentLabel := "&lt;label&gt;"
+        lnUrlPayRequest := breez_sdk_liquid.LnUrlPayRequest{
+            Data:         inputType.Data,
+            AmountMsat:   amountMsat,
+            Comment:      &amp;optionalComment,
+            PaymentLabel: &amp;optionalPaymentLabel,
+        }
+        if result, err := sdk.LnurlPay(lnUrlPayRequest); err != nil {
+            switch result.(type) {
+            case breez_sdk_liquid.LnUrlPayResultEndpointSuccess:
+                log.Printf("Successfully paid")
+            default:
+                log.Printf("Failed to pay")
+            }
+        }
+    }
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">// Endpoint can also be of the form:
+// lnurlp://domain.com/lnurl-pay?key=val
+// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+var lnurlPayUrl = "lightning@address.com";
+
+try
+{
+    var input = BreezSdkLiquidMethods.Parse(lnurlPayUrl);
+    if (input is InputType.LnUrlPay lnurlp)
+    {
+        var amountMsat = lnurlp.data.minSendable;
+        var optionalComment = "&lt;comment&gt;";
+        var optionalPaymentLabel = "&lt;label&gt;";
+        var optionalValidateSuccessActionUrl = true;
+        var req = new LnUrlPayRequest(
+            lnurlp.data, 
+            amountMsat, 
+            optionalComment, 
+            optionalPaymentLabel, 
+            optionalValidateSuccessActionUrl);
+        var result = sdk.LnurlPay(req);
+    }
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<div class="warning">
+<h4 id="developer-note"><a class="header" href="#developer-note">Developer note</a></h4>
+By default when the LNURL-pay results in a success action with a URL, the URL is validated to check if there is a mismatch with the LNURL callback domain. You can disable this behaviour by setting the optional validation <code>LnUrlPayRequest</code> param to false.
+</div>
+<h2 id="supported-specs"><a class="header" href="#supported-specs">Supported Specs</a></h2>
+<ul>
+<li><a href="https://github.com/lnurl/luds/blob/luds/01.md">LUD-01</a> LNURL bech32 encoding</li>
+<li><a href="https://github.com/lnurl/luds/blob/luds/06.md">LUD-06</a> <code>payRequest</code> spec</li>
+<li><a href="https://github.com/lnurl/luds/blob/luds/09.md">LUD-09</a> <code>successAction</code> field for <code>payRequest</code></li>
+<li><a href="https://github.com/lnurl/luds/blob/luds/16.md">LUD-16</a> LN Address</li>
+<li><a href="https://github.com/lnurl/luds/blob/luds/17.md">LUD-17</a> Support for lnurlp prefix with non-bech32-encoded LNURL URLs</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../guide/lnurl.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../guide/lnurl_pay_service.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../guide/lnurl.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../guide/lnurl_pay_service.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../tabs.js"></script>
+
+
+    </div>
+    </body>
+</html>
