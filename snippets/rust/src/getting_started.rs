@@ -77,3 +77,12 @@ async fn remove_event_listener(
     Ok(())
 }
 // ANCHOR_END: remove-event-listener
+
+// ANCHOR: disconnect
+async fn disconnect(
+    sdk: Arc<LiquidSdk>,
+) -> Result<()> {
+    sdk.disconnect().await?;
+    Ok(())
+}
+// ANCHOR_END: disconnect
