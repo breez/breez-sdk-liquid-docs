@@ -79,6 +79,83 @@ Now you are ready to interact with the SDK.
 <div class="warning">
 <h4>Developer note</h4>
 
-By default, the config working directory is set to `./.data`. Some platforms may require that you use an application specific directory that is writable within the application sandbox. For example applications running on Android or iOS.
+By default, the config working directory is set to the directory where the SDK is running. Some platforms may require that you use an application specific directory that is writable within the application sandbox. For example applications running on Android or iOS.
 
 </div>
+
+# Disconnecting
+
+Once you are done using the SDK, you can call the `disconnect` method to free up the resources which are currently in use.
+
+This is especially useful in cases where the SDK has to be re-instantiated, for example when you need to change the mnemonic and/or configuration.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/getting_started.rs:disconnect}}
+```
+
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/GettingStarted.swift:disconnect}}
+```
+
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/GettingStarted.kt:disconnect}}
+```
+
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/getting_started.ts:disconnect}}
+```
+
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/getting_started.dart:disconnect}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/getting_started.py:disconnect}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/getting_started.go:disconnect}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/GettingStarted.cs:disconnect}}
+```
+</section>
+</custom-tabs>
+

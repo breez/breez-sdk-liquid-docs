@@ -68,3 +68,12 @@ def remove_event_listener(sdk: BindingLiquidSdk, listener_id: str):
         logging.error(error)
         raise
 # ANCHOR_END: remove-event-listener
+
+# ANCHOR: disconnect
+def disconnect(sdk: BindingLiquidSdk):
+    try:
+        sdk.disconnect()
+    except Exception as error:
+        logging.error(error)
+        raise
+# ANCHOR_END: disconnect
