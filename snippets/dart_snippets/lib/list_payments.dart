@@ -1,6 +1,15 @@
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
+Future<Payment?> getPayment() async {
+  // ANCHOR: get-payment
+  String paymentHash = "<payment hash>";
+  GetPaymentRequest req = GetPaymentRequest.lightning(paymentHash: paymentHash);
+  Payment? payment = await breezSDKLiquid.instance!.getPayment(req: req);
+  // ANCHOR_END: get-payment
+  return payment;
+}
+
 Future<List<Payment>> listPayments() async {
   // ANCHOR: list-payments
   ListPaymentsRequest req = ListPaymentsRequest();
