@@ -1,6 +1,79 @@
 # LNURL-Pay
 
-## Usage
+## Preparing LNURL Payments
+During the prepare step, the SDK ensures that the inputs are valid with respect to the LNURL-pay request,
+and also returns the relative fees related to the payment so they can be confirmed. If the LNURL-pay invoice
+includes a <a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">Magic Routing Hint</a> for a direct Liquid payment, the fees will reflect this.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/lnurl_pay.rs:prepare-lnurl-pay}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/LnurlPay.swift:prepare-lnurl-pay}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/LnurlPay.kt:prepare-lnurl-pay}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/lnurl_pay.ts:prepare-lnurl-pay}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/lnurl_pay.dart:prepare-lnurl-pay}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/lnurl_pay.py:prepare-lnurl-pay}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/lnurl_pay.go:prepare-lnurl-pay}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/LnurlPay.cs:prepare-lnurl-pay}}
+```
+</section>
+</custom-tabs>
+
+## LNURL Payments
+Once the payment has been prepared and the fees are accepted, all you have to do is pass the prepare response as an argument to the
+LNURL pay method.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -70,7 +143,7 @@
 
 <div class="warning">
 <h4>Developer note</h4>
-By default when the LNURL-pay results in a success action with a URL, the URL is validated to check if there is a mismatch with the LNURL callback domain. You can disable this behaviour by setting the optional validation <code>LnUrlPayRequest</code> param to false.
+By default when the LNURL-pay results in a success action with a URL, the URL is validated to check if there is a mismatch with the LNURL callback domain. You can disable this behaviour by setting the optional validation <code>PrepareLnUrlPayRequest</code> param to false.
 </div>
 
 ## Supported Specs
