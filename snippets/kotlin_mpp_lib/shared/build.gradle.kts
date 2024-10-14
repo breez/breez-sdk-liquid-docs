@@ -29,7 +29,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation("technology.breez.liquid:breez-sdk-liquid-kmp:0.3.4")
+                implementation("technology.breez.liquid:breez-sdk-liquid-kmp:0.4.0-rc3")
             }
         }
     }

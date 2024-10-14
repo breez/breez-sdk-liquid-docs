@@ -2,6 +2,17 @@ package com.example.kotlinmpplib
 
 import breez_sdk_liquid.*
 class ListPayments {
+    fun getPayment(sdk: BindingLiquidSdk) {
+        // ANCHOR: get-payment
+        try {
+            val paymentHash = "<payment hash>";
+            val payment = sdk.getPayment(GetPaymentRequest.Lightning(paymentHash))
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: get-payment
+    }
+
     fun listPayments(sdk: BindingLiquidSdk) {
         // ANCHOR: list-payments
         try {

@@ -1,7 +1,19 @@
 import {
+  getPayment,
+  GetPaymentRequestVariant,
   listPayments,
   PaymentType
 } from '@breeztech/react-native-breez-sdk-liquid'
+
+const exampleGetPayment = async () => {
+  // ANCHOR: get-payment
+  const paymentHash = '<payment hash>'
+  const payment = await getPayment({
+    type: GetPaymentRequestVariant.LIGHTNING,
+    paymentHash
+  })
+  // ANCHOR_END: get-payment
+}
 
 const exampleListPayments = async () => {
   // ANCHOR: list-payments
