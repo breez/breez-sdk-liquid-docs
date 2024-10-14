@@ -2,6 +2,23 @@ using Breez.Sdk.Liquid;
 
 public class ListPaymentsSnippets
 {
+    public void GetPayment(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: get-payment
+        try
+        {
+            var paymentHash = "<payment hash>";
+            var payment = sdk.GetPayment(
+                new GetPaymentRequest.Lightning(paymentHash)
+            );
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: get-payment
+    }
+    
     public void ListPayments(BindingLiquidSdk sdk)
     {
         // ANCHOR: list-payments

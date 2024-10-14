@@ -6,6 +6,18 @@ import (
 	"github.com/breez/breez-sdk-liquid-go/breez_sdk_liquid"
 )
 
+func GetPayment(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: get-payment
+	paymentHash := "<payment hash>"
+	req := breez_sdk.GetPaymentRequestLightning{
+		PaymentHash: paymentHash,
+	}
+	if payment, err := sdk.GetPayment(req); err == nil {
+		log.Printf("%#v", payment)
+	}
+	// ANCHOR_END: get-payment
+}
+
 func ListPayments(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: list-payments
 	if payments, err := sdk.ListPayments(breez_sdk_liquid.ListPaymentsRequest{}); err == nil {
