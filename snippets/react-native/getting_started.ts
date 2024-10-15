@@ -15,9 +15,10 @@ const exampleGettingStarted = async () => {
   // ANCHOR: init-sdk
   const mnemonic = '<mnemonics words>'
 
-  // Create the default config
+  // Create the default config, providing your Breez API key
   const config = await defaultConfig(
-    LiquidNetwork.MAINNET
+    LiquidNetwork.MAINNET,
+    "<your-Breez-API-key>"
   )
 
   // By default in React Native the workingDir is set to:
@@ -26,9 +27,6 @@ const exampleGettingStarted = async () => {
   // subdirectory of the workingDir if managing multiple mnemonics.
   console.log(`Working directory: ${config.workingDir}`)
   // config.workingDir = "path to writable directory"
-
-  // Add your Breez API key
-  config.breezApiKey = "<your Breez API key>"
 
   await connect({ mnemonic, config })
   // ANCHOR_END: init-sdk

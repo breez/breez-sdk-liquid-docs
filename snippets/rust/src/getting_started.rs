@@ -11,14 +11,11 @@ async fn getting_started() -> Result<Arc<LiquidSdk>> {
     // ANCHOR: init-sdk
     let mnemonic = Mnemonic::generate_in(Language::English, 12)?;
 
-    // Create the default config
-    let mut config = LiquidSdk::default_config(LiquidNetwork::Mainnet);
+    // Create the default config, providing your Breez API key
+    let mut config = LiquidSdk::default_config(LiquidNetwork::Mainnet, "<your-Breez-API-key>");
 
     // Customize the config object according to your needs
     config.working_dir = "path to an existing directory".into();
-
-	// Add your Breez API key
-	config.breez_api_key = Some("<your Breez API key>".into());
 
     let connect_request = ConnectRequest {
         mnemonic: mnemonic.to_string(),

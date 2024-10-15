@@ -7,16 +7,14 @@ public class GettingStartedSnippets
         // ANCHOR: init-sdk
         var mnemonic = "<mnemonic words>";
 
-        // Create the default config
+        // Create the default config, providing your Breez API key
         var config = BreezSdkLiquidMethods.DefaultConfig(
-            LiquidNetwork.Mainnet
+            LiquidNetwork.Mainnet,
+            "<your-Breez-API-key>"
         ) with
         {
             // Customize the config object according to your needs
             workingDir = "path to an existing directory"
- 
-	        // Add your Breez API key
-	        breezApiKey = "<your Breez API key>"
         };
 
         try
