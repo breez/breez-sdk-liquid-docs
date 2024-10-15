@@ -25,12 +25,22 @@ class ReceiveOnchain {
     }
 
     fun rescanSwaps(sdk: BindingLiquidSdk) {
-      // ANCHOR: rescan-swaps
-      try {
-          sdk.rescanOnchainSwaps()
-      } catch (e: Exception) {
-          // handle error
-      }
-      // ANCHOR_END: rescan-swaps
-  }
+        // ANCHOR: rescan-swaps
+        try {
+            sdk.rescanOnchainSwaps()
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: rescan-swaps
+    }
+
+    fun recommendedFees(sdk: BindingLiquidSdk) {
+        // ANCHOR: recommended-fees
+        try {
+            val fees = sdk.recommendedFees()
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: recommended-fees
+    }
 }

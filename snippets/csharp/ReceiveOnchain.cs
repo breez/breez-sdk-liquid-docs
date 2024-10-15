@@ -49,4 +49,18 @@ public class ReceiveOnchainSnippets
         }
         // ANCHOR_END: rescan-swaps
     }
+
+    public void RecommendedFees(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: recommended-fees
+        try
+        {
+            var fees = sdk.RecommendedFees();
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: recommended-fees
+    }
 }
