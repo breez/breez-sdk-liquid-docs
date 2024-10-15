@@ -98,10 +98,7 @@ To learn more about this process and how it works in detail, see the Boltz docum
 
 For onchain (Bitcoin) payments, see [Sending an on-chain transaction](pay_onchain.md).
 
-<div class="tagged-title">
-  <h3>Liquid</h3>
-  {{#include ../components/api_key.md}}
-</div>
+<h3>Liquid</h3>
 When sending via Liquid, a BIP21 URI or Liquid address can be used as the destination. 
 
 If a Liquid address is used, the optional prepare request amount **must** be set. 

@@ -24,8 +24,12 @@ class Sdk:
     """
 
     def __init__(self, network: Optional[LiquidNetwork] = None):
+        api_key = os.getenv('BREEZ_API_KEY')
+        if api_key is None:
+            raise Exception("Cannot start Breez SDK Liquid without a Breez API key. You can request one here: https://breez.technology/request-api-key/#contact-us-form-sdk")
+
         mnemonic = self.read_mnemonic()
-        config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET)
+        config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET, api_key)
         connect_request = breez_sdk_liquid.ConnectRequest(config=config, mnemonic=mnemonic)
         self.instance = breez_sdk_liquid.connect(connect_request)
         self.listener = SdkListener()

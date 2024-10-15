@@ -6,8 +6,8 @@ class GettingStarted {
         // ANCHOR: init-sdk
         val mnemonic = "<mnemonic words>"
 
-        // Create the default config
-        val config : Config = defaultConfig(LiquidNetwork.MAINNET)
+        // Create the default config, providing your Breez API key
+        val config : Config = defaultConfig(LiquidNetwork.MAINNET, "<your Breez API key>")
 
         // Customize the config object according to your needs
         config.workingDir = "path to an existing directory"
