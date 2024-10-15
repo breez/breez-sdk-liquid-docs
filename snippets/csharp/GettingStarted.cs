@@ -106,4 +106,18 @@ public class GettingStartedSnippets
         }
     }
     // ANCHOR_END: remove-event-listener
+    
+    // ANCHOR: disconnect
+    public void Disconnect(BindingLiquidSdk sdk)
+    {
+        try
+        {
+            sdk.Disconnect();
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+    }
+    // ANCHOR_END: disconnect
 }

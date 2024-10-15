@@ -74,3 +74,9 @@ func RemoveEventListener(sdk *breez_sdk_liquid.BindingLiquidSdk, listenerId stri
 }
 
 // ANCHOR_END: remove-event-listener
+
+// ANCHOR: disconnect
+func Disconnect(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	sdk.Disconnect()
+}
+// ANCHOR_END: disconnect

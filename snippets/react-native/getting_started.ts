@@ -6,6 +6,7 @@ import {
   type LogEntry,
   getInfo,
   removeEventListener,
+  disconnect,
   type SdkEvent,
   setLogger
 } from '@breeztech/react-native-breez-sdk-liquid'
@@ -66,4 +67,10 @@ const exampleRemoveEventListener = async (listenerId: string) => {
   // ANCHOR: remove-event-listener
   await removeEventListener(listenerId)
   // ANCHOR_END: remove-event-listener
+}
+
+const exampleDisconnect = async () => {
+  // ANCHOR: disconnect
+  await disconnect()
+  // ANCHOR_END: disconnect
 }

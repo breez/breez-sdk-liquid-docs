@@ -113,4 +113,10 @@ class BreezSDKLiquid {
     _breezEventSubscription?.cancel();
   }
   // ANCHOR_END: remove-event-listener
+
+  // ANCHOR: disconnect
+  void disconnect() {
+    await breezSDKLiquid.disconnect();
+  }
+  // ANCHOR_END: disconnect
 }

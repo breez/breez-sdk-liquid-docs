@@ -80,4 +80,14 @@ class GettingStarted {
         }
     }
     // ANCHOR_END: remove-event-listener
+
+    // ANCHOR: disconnect
+    fun disconnect(sdk: BindingLiquidSdk)  {
+        try {
+            sdk.disconnect()
+        } catch (e: Exception) {
+            // handle error
+        }
+    }
+    // ANCHOR_END: disconnect
 }

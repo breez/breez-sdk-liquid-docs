@@ -66,3 +66,9 @@ func removeEventListener(sdk: BindingLiquidSdk, listenerId: String) throws {
     try? sdk.removeEventListener(id: listenerId)
 }
 // ANCHOR_END: remove-event-listener
+
+// ANCHOR: disconnect
+func disconnect(sdk: BindingLiquidSdk) throws {
+    try? sdk.disconnect()
+}
+// ANCHOR_END: disconnect
