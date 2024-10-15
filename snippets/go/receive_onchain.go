@@ -37,3 +37,11 @@ func RescanSwaps(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	}
 	// ANCHOR_END: rescan-swaps
 }
+
+func RecommendedFees(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: recommended-fees
+	if fees, err := sdk.RecommendedFees(); err == nil {
+		log.Printf("%v", fees)
+	}
+	// ANCHOR_END: recommended-fees
+}
