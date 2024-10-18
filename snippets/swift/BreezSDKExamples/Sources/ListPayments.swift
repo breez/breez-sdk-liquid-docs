@@ -1,6 +1,16 @@
 import BreezSDKLiquid
 import Foundation
 
+func getPayment(sdk: BindingLiquidSdk) -> Payment? {
+    // ANCHOR: get-payment
+    let paymentHash = "<payment hash>"
+    let payment = try? sdk.getPayment(
+        req: GetPaymentRequest.lightning(paymentHash: paymentHash)
+    )
+    // ANCHOR_END: get-payment
+    return payment
+}
+
 func listPayments(sdk: BindingLiquidSdk) -> [Payment]? {
     // ANCHOR: list-payments
     let payments = try? sdk.listPayments(req: ListPaymentsRequest())

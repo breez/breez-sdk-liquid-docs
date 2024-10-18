@@ -1,6 +1,16 @@
-from breez_sdk_liquid import BindingLiquidSdk, ListPaymentsRequest, PaymentType
+from breez_sdk_liquid import BindingLiquidSdk, GetPaymentRequest, ListPaymentsRequest, PaymentType
 import logging
 
+
+def get_payment(sdk: BindingLiquidSdk):
+    try:
+        # ANCHOR: get-payment
+        payment_hash = "<payment hash>"
+        sdk.get_payment(GetPaymentRequest.LIGHTNING(payment_hash))
+        # ANCHOR_END: get-payment
+    except Exception as error:
+        logging.error(error)
+        raise
 
 def list_payments(sdk: BindingLiquidSdk):
     try:
