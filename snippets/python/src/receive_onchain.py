@@ -31,3 +31,12 @@ def rescan_swaps(sdk: BindingLiquidSdk):
         logging.error(error)
         raise
     # ANCHOR_END: rescan-swaps
+
+def recommended_fees(sdk: BindingLiquidSdk):
+    # ANCHOR: recommended-fees
+    try:
+        fees = sdk.recommended_fees()
+    except Exception as error:
+        logging.error(error)
+        raise
+    # ANCHOR_END: recommended-fees

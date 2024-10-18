@@ -25,3 +25,10 @@ func rescanSwaps(sdk: BindingLiquidSdk) -> Void {
     try? sdk.rescanOnchainSwaps()
     // ANCHOR_END: rescan-swaps    
 }
+
+func recommendedFees(sdk: BindingLiquidSdk) -> RecommendedFees? {
+    // ANCHOR: recommended-fees
+    let fees = try? sdk.recommendedFees()
+    // ANCHOR_END: recommended-fees   
+    return fees 
+}

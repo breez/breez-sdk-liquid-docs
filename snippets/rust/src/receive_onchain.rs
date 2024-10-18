@@ -38,3 +38,11 @@ async fn rescan_swaps(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     Ok(())
 }
+
+async fn recommended_fees(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: recommended-fees
+    let fees = sdk.recommended_fees().await?;
+    // ANCHOR_END: recommended-fees
+    dbg!(fees);
+    Ok(())
+}
