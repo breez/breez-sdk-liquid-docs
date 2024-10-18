@@ -11,7 +11,8 @@ func Start() (*breez_sdk_liquid.BindingLiquidSdk, error) {
 	mnemonic := "<mnemonic words>"
 
   // Create the default config, providing your Breez API key
-	config := breez_sdk_liquid.DefaultConfig(breez_sdk_liquid.LiquidNetworkMainnet, "<your-Breez-API-key>")
+    breezApiKey := "<your-Breez-API-key>"
+	config := breez_sdk_liquid.DefaultConfig(breez_sdk_liquid.LiquidNetworkMainnet, &breezApiKey)
 
 	// Customize the config object according to your needs
 	config.WorkingDir = "path to an existing directory"
