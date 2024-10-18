@@ -16,12 +16,15 @@ async fn pay(sdk: Arc<LiquidSdk>) -> Result<()> {
         let optional_payment_label = Some("<label>".to_string());
         let optional_validate_success_action_url = Some(true);
 
-        sdk.lnurl_pay(LnUrlPayRequest {
+        let prepare_response = sdk.prepare_lnurl_pay(PrepareLnUrlPayRequest {
             data: pd,
             amount_msat,
             comment: optional_comment,
-            payment_label: optional_payment_label,
             validate_success_action_url: optional_validate_success_action_url,
+        }).await?;
+
+        sdk.lnurl_pay(model::LnUrlPayRequest {
+            prepare_response
         })
         .await?;
     }
