@@ -5,8 +5,8 @@ func gettingStarted() throws -> BindingLiquidSdk? {
     // ANCHOR: init-sdk
     let mnemonic = "<mnemonic words>"
 
-    // Create the default config
-    var config = defaultConfig(network: LiquidNetwork.mainnet)
+    // Create the default config, providing your Breez API key
+    var config = try defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>")
 
     // Customize the config object according to your needs
     config.workingDir = "path to an existing directory"

@@ -24,9 +24,10 @@ Future<void> initializeSDK() async {
   // Create the default config
   String mnemonic = "<mnemonic words>";
 
-  // Create the default config
+  // Create the default config, providing your Breez API key
   Config config = defaultConfig(
     network: LiquidNetwork.mainnet,
+    breezApiKey: "<your-Breez-API-key>"
   );
 
   // Customize the config object according to your needs
