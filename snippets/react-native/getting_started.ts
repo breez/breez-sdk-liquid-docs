@@ -18,7 +18,7 @@ const exampleGettingStarted = async () => {
   // Create the default config, providing your Breez API key
   const config = await defaultConfig(
     LiquidNetwork.MAINNET,
-    "<your-Breez-API-key>"
+    '<your-Breez-API-key>'
   )
 
   // By default in React Native the workingDir is set to:

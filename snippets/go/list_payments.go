@@ -9,7 +9,7 @@ import (
 func GetPayment(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: get-payment
 	paymentHash := "<payment hash>"
-	req := breez_sdk.GetPaymentRequestLightning{
+	req := breez_sdk_liquid.GetPaymentRequestLightning{
 		PaymentHash: paymentHash,
 	}
 	if payment, err := sdk.GetPayment(req); err == nil {
