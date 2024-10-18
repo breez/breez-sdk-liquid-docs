@@ -37,4 +37,5 @@ Future recommendedFees() async {
   // ANCHOR: recommended-fees
   RecommendedFees fees = await breezSDKLiquid.instance!.recommendedFees();
   // ANCHOR_END: recommended-fees
+  print(fees);
 }
