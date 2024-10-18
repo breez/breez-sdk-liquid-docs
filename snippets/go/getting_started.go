@@ -10,9 +10,12 @@ func Start() (*breez_sdk_liquid.BindingLiquidSdk, error) {
 	// ANCHOR: init-sdk
 	mnemonic := "<mnemonic words>"
 
-  // Create the default config, providing your Breez API key
-    breezApiKey := "<your-Breez-API-key>"
-	config := breez_sdk_liquid.DefaultConfig(breez_sdk_liquid.LiquidNetworkMainnet, &breezApiKey)
+	// Create the default config, providing your Breez API key
+	breezApiKey := "<your-Breez-API-key>"
+	config, err := breez_sdk_liquid.DefaultConfig(breez_sdk_liquid.LiquidNetworkMainnet, &breezApiKey)
+	if err != nil {
+		return nil, err
+	}
 
 	// Customize the config object according to your needs
 	config.WorkingDir = "path to an existing directory"
@@ -77,4 +80,5 @@ func RemoveEventListener(sdk *breez_sdk_liquid.BindingLiquidSdk, listenerId stri
 func Disconnect(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	sdk.Disconnect()
 }
+
 // ANCHOR_END: disconnect

@@ -114,7 +114,7 @@ class BreezSDKLiquid {
 
   // ANCHOR: disconnect
   void disconnect() {
-    await breezSDKLiquid.disconnect();
+    breezSDKLiquid.disconnect();
   }
   // ANCHOR_END: disconnect
 }
