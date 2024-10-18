@@ -1,10 +1,10 @@
 # Refunding Payments
 
-The SDK handles refunding of payments that have failed automatically, though sometimes it is necessary for the user to intervene in order to recover their funds.
+The SDK handles refunding of failed payments automatically except when receiving Bitcoin payments where the refund of a failed swap has to be managed manually.
 
 ## Bitcoin
 
-In order to manually execute a Bitcoin refund, you need to supply an on-chain BTC address to which the refunded amount will be sent. The following code will retrieve the refundable swaps:
+In order to manually execute a Bitcoin refund, you need to supply an on-chain Bitcoin address to which the refunded amount will be sent. The following code will retrieve the refundable swaps:
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
