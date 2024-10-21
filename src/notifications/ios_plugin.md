@@ -17,7 +17,7 @@ More installation methods, including with the Swift Package Manager, can be foun
 
 You're ready to add some Swift code to implement the Notification Plugin in your NotificationService target. In Xcode, in the `NotificationService` folder, open the Swift file named `NotificationService.swift`.
 
-This Swift file should implement the Notification Plugin's `SDKNotificationService` class. The `SDKNotificationService` class handles the incoming notification content and processes the event. To properly implement this class, the NotificationService needs to override at least the `getConnectRequest` function. The `getConnectRequest` function is called by the `SDKNotificationService` to get a `ConnectRequest` which contains the data necessary to connect to the SDK. This data includes the `Config` with its `workingDir` and the mnemonic.
+This Swift file should implement the Notification Plugin's `SDKNotificationService` class. The `SDKNotificationService` class handles the incoming notification content and processes the event. To properly implement this class, the NotificationService needs to override at least the `getConnectRequest` function. The `getConnectRequest` function is called by the `SDKNotificationService` to get a `ConnectRequest` which contains the data necessary to connect to the SDK. This data includes the Breez API key, the `Config` with its `workingDir` and the mnemonic.
 
 <div class="warning">
 <h4>Developer note</h4>
@@ -41,11 +41,17 @@ fileprivate let logger = OSLog(
 fileprivate let appGroup = "group.com.example.application"
 fileprivate let keychainGroup = "A352BFE4OR.com.example.SharedKeychain"
 fileprivate let accountMnemonic: String = "BREEZ_SDK_LIQUID_SEED_MNEMONIC"
+fileprivate let accountApiKey: String = "BREEZ_SDK_API_KEY"
 
 class NotificationService: SDKNotificationService {
     // Override the `getConnectRequest` function
     override func getConnectRequest() -> ConnectRequest? {
-        var config = defaultConfig(network: LiquidNetwork.mainnet)
+        // Get the Breez API key from the target bundle's Info.plist
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: accountApiKey) as? String else {
+            os_log(.error, "API key not found")
+            return nil
+        }
+        var config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: apiKey)
         // Set the workingDir as the app group's shared directory,
         // this should be the same directory as the main application uses
         config.workingDir = FileManager
