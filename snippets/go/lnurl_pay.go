@@ -18,7 +18,6 @@ func PrepareLnurlPay(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		case breez_sdk_liquid.InputTypeLnUrlPay:
 			amountMsat := inputType.Data.MinSendable
 			optionalComment := "<comment>"
-			optionalPaymentLabel := "<label>"
 			optionalValidateSuccessActionUrl := true
 
 			req := breez_sdk_liquid.PrepareLnUrlPayRequest{
@@ -32,7 +31,7 @@ func PrepareLnurlPay(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 				log.Printf("Error: %#v", err)
 				return
 			}
-		
+
 			// If the fees are acceptable, continue to create the LNURL Pay
 			feesSat := prepareResponse.FeesSat
 			log.Printf("Fees: %v sats", feesSat)
@@ -46,6 +45,8 @@ func LnurlPay(sdk *breez_sdk_liquid.BindingLiquidSdk, prepareResponse breez_sdk_
 	req := breez_sdk_liquid.LnUrlPayRequest{
 		PrepareResponse: prepareResponse,
 	}
-	result, err := sdk.LnurlPay(req)
+	if result, err := sdk.LnurlPay(req); err != nil {
+		log.Printf("Result: %#v", result)
+	}
 	// ANCHOR_END: lnurl-pay
 }

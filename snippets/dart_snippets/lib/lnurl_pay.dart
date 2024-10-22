@@ -14,7 +14,7 @@ Future<void> prepareLnurlPay() async {
     String optionalComment = "<comment>";
     bool optionalValidateSuccessActionUrl = true;
     
-    LnUrlPayRequest req = PrepareLnUrlPayRequest(
+    PrepareLnUrlPayRequest req = PrepareLnUrlPayRequest(
       data: inputType.data,
       amountMsat: amountMsat,
       comment: optionalComment,
@@ -35,4 +35,5 @@ Future<void> lnurlPay({required PrepareLnUrlPayResponse prepareResponse}) async 
     req: LnUrlPayRequest(prepareResponse: prepareResponse),
   );
   // ANCHOR_END: lnurl-pay
+  print(result);
 }

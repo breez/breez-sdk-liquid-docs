@@ -33,7 +33,7 @@ class LnurlPay {
         // ANCHOR_END: prepare-lnurl-pay
     }
     
-    fun lnurlPay(sdk: BindingLiquidSdk, prepareResponse PrepareLnUrlPayResponse) {
+    fun lnurlPay(sdk: BindingLiquidSdk, prepareResponse: PrepareLnUrlPayResponse) {
         // ANCHOR: lnurl-pay
         try {
             val result = sdk.lnurlPay(LnUrlPayRequest(prepareResponse))

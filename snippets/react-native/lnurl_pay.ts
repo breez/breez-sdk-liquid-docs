@@ -18,7 +18,7 @@ const examplePrepareLnurlPay = async () => {
     const amountMsat = input.data.minSendable
     const optionalComment = '<comment>'
     const optionalValidateSuccessActionUrl = true
-    
+
     const prepareResponse = await prepareLnurlPay({
       data: input.data,
       amountMsat,

@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use anyhow::Result;
-use breez_sdk_liquid::prelude::*;
+use breez_sdk_liquid::{model::LnUrlPayRequest, prelude::*};
 use log::info;
 
 async fn prepare_pay(sdk: Arc<LiquidSdk>) -> Result<()> {
@@ -35,9 +35,8 @@ async fn prepare_pay(sdk: Arc<LiquidSdk>) -> Result<()> {
 async fn pay(sdk: Arc<LiquidSdk>, prepare_response: PrepareLnUrlPayResponse) -> Result<()> {
     // ANCHOR: lnurl-pay
     let result = sdk
-        .lnurl_pay(&LnUrlPayRequest { prepare_response })
+        .lnurl_pay(LnUrlPayRequest { prepare_response })
         .await?;
     // ANCHOR_END: lnurl-pay
-    dbg!(result);
     Ok(())
 }

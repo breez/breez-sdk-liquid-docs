@@ -38,12 +38,12 @@ public class LnurlPaySnippets
         // ANCHOR_END: prepare-lnurl-pay
     }
 
-    public void LnurlPay(BindingLiquidSdk sdk, PrepareLnurlPayResponse prepareResponse)
+    public void LnurlPay(BindingLiquidSdk sdk, PrepareLnUrlPayResponse prepareResponse)
     {
         // ANCHOR: lnurl-pay
         try
         {
-            var result = sdk.LnurlPay(new LnurlPayRequest(prepareResponse));
+            var result = sdk.LnurlPay(new LnUrlPayRequest(prepareResponse));
         }
         catch (Exception)
         {
