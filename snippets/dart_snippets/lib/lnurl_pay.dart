@@ -1,8 +1,8 @@
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
-Future<void> lnurlPay() async {
-  // ANCHOR: lnurl-pay
+Future<void> prepareLnurlPay() async {
+  // ANCHOR: prepare-lnurl-pay
   /// Endpoint can also be of the form:
   /// lnurlp://domain.com/lnurl-pay?key=val
   /// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
@@ -12,17 +12,28 @@ Future<void> lnurlPay() async {
   if (inputType is InputType_LnUrlPay) {
     BigInt amountMsat = inputType.data.minSendable;
     String optionalComment = "<comment>";
-    String optionalPaymentLabel = "<label>";
     bool optionalValidateSuccessActionUrl = true;
-    LnUrlPayRequest req = LnUrlPayRequest(
+    
+    PrepareLnUrlPayRequest req = PrepareLnUrlPayRequest(
       data: inputType.data,
       amountMsat: amountMsat,
       comment: optionalComment,
-      paymentLabel: optionalPaymentLabel,
       validateSuccessActionUrl: optionalValidateSuccessActionUrl,
     );
-    LnUrlPayResult result = await breezSDKLiquid.instance!.lnurlPay(req: req);
-    print(result.data);
+    PrepareLnUrlPayResponse prepareResponse = await breezSDKLiquid.instance!.prepareLnurlPay(req: req);
+    
+    // If the fees are acceptable, continue to create the LNURL Pay
+    BigInt feesSat = prepareResponse.feesSat;
+    print("Fees: $feesSat sats");
   }
+  // ANCHOR_END: prepare-lnurl-pay
+}
+
+Future<void> lnurlPay({required PrepareLnUrlPayResponse prepareResponse}) async {
+  // ANCHOR: lnurl-pay
+  LnUrlPayResult result = await breezSDKLiquid.instance!.lnurlPay(
+    req: LnUrlPayRequest(prepareResponse: prepareResponse),
+  );
   // ANCHOR_END: lnurl-pay
+  print(result);
 }
