@@ -1,6 +1,6 @@
 import logging
 import breez_sdk_liquid
-from breez_sdk_liquid import connect, default_config, BindingLiquidSdk, ConnectRequest, EventListener, LiquidNetwork, LogEntry, Logger, SdkEvent
+from breez_sdk_liquid import connect, connect_with_signer, default_config, BindingLiquidSdk, ConnectRequest, EventListener, LiquidNetwork, LogEntry, Logger, SdkEvent, Signer
  
  # ANCHOR: self-signer
 def connect_with_self_signer(signer: Signer):
@@ -13,7 +13,7 @@ def connect_with_self_signer(signer: Signer):
 
     try:
         connect_request = ConnectWithSignerRequest(config)
-        sdk = connectWithSigner(connect_request, signer)
+        sdk = connect_with_signer(connect_request, signer)
         return sdk
     except Exception as error:
         logging.error(error)
