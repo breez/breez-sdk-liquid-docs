@@ -1,5 +1,45 @@
 # Adding the Notification Plugin
 
+## Preserve Flutter and JNA classes
+
+In the `proguard-rules.pro` file make sure that the Flutter and JNA classes are preserved to avoid any exceptions with missing plugins or classes.
+
+```
+# Preserve Flutter Wrapper code
+-keep class io.flutter.app.** { *; }
+-keep class io.flutter.plugin.**  { *; }
+-keep class io.flutter.util.**  { *; }
+-keep class io.flutter.view.**  { *; }
+-keep class io.flutter.**  { *; }
+-keep class io.flutter.plugins.**  { *; }
+-keep class io.flutter.plugin.editing.** { *; }
+
+# JNA
+-keep class com.sun.jna.** { *; }
+-keep class * implements com.sun.jna.** { *; }
+
+# To ignore minifyEnabled: true error
+# https://github.com/flutter/flutter/issues/19250
+# https://github.com/flutter/flutter/issues/37441
+-dontwarn io.flutter.embedding.**
+-ignorewarnings
+-keep class * {
+    public private *;
+}
+```
+
+## Adding the SDK dependency
+
+Add the maven `jitpack` repository to your project `build.gradle` file.
+
+```gradle
+allprojects {
+    repositories {
+        maven { url 'https://www.jitpack.io' }
+    }
+}
+```
+
 Add the `breez-sdk-liquid` dependency to your application's `build.gradle` file in the `app` directory.
 
 ```gradle
@@ -21,7 +61,7 @@ android {
 }
 
 dependencies {
-    // Add the breez-sdk dependency
+    // Add the breez-sdk-liquid dependency
     implementation "com.github.breez:breez-sdk-liquid"
 }
 ```
