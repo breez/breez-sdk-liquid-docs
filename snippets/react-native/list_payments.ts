@@ -1,6 +1,7 @@
 import {
   getPayment,
   GetPaymentRequestVariant,
+  ListPaymentDetailsVariant,
   listPayments,
   PaymentType
 } from '@breeztech/react-native-breez-sdk-liquid'
@@ -35,4 +36,34 @@ const exampleListPaymentsFiltered = async () => {
     console.error(err)
   }
   // ANCHOR_END: list-payments-filtered
+}
+
+const exampleListPaymentsDetailsAddress = async () => {
+  // ANCHOR: list-payments-details-address
+  try {
+    const payments = await listPayments({
+      details: {
+        type: ListPaymentDetailsVariant.BITCOIN,
+        address: "<Bitcoin address>"
+      }
+    })
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: list-payments-details-address
+}
+
+const exampleListPaymentsDetailsDestination = async () => {
+  // ANCHOR: list-payments-details-destination
+  try {
+    const payments = await listPayments({
+      details: {
+        type: ListPaymentDetailsVariant.LIQUID,
+        destination: "<Liquid BIP21 or address>"
+      }
+    })
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: list-payments-details-destination
 }

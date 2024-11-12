@@ -45,3 +45,29 @@ func ListPaymentsFiltered(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	}
 	// ANCHOR_END: list-payments-filtered
 }
+
+func ListPaymentsDetailsAddress(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: list-payments-details-address
+	address := "<Bitcoin address>"
+	details := breez_sdk_liquid.ListPaymentDetailsBitcoin{Address: address}
+	listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
+		Details: &details,
+	}
+	if payments, err := sdk.ListPayments(listPaymentsRequest); err == nil {
+		log.Printf("%#v", payments)
+	}
+	// ANCHOR_END: list-payments-details-address
+}
+
+func ListPaymentsDetailsDestination(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: list-payments-details-destination
+	destination := "<Liquid BIP21 or address>"
+	details := breez_sdk_liquid.ListPaymentDetailsLiquid{Destination: destination}
+	listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
+		Details: &details,
+	}
+	if payments, err := sdk.ListPayments(listPaymentsRequest); err == nil {
+		log.Printf("%#v", payments)
+	}
+	// ANCHOR_END: list-payments-details-destination
+}

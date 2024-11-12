@@ -31,3 +31,25 @@ func ListPaymentsFiltered(sdk: BindingLiquidSdk) -> [Payment]? {
     // ANCHOR_END: list-payments-filtered
     return payments
 }
+
+func ListPaymentsDetailsAddress(sdk: BindingLiquidSdk) -> [Payment]? {
+    // ANCHOR: list-payments-details-address
+    let address = "<Bitcoin address>"
+    let payments = try? sdk.listPayments(
+        req: ListPaymentsRequest(
+            details: ListPaymentDetails.Bitcoin(address: address)
+        ))
+    // ANCHOR_END: list-payments-details-address
+    return payments
+}
+
+func ListPaymentsDetailsDestination(sdk: BindingLiquidSdk) -> [Payment]? {
+    // ANCHOR: list-payments-details-destination
+    let destination = "<Liquid BIP21 or address>"
+    let payments = try? sdk.listPayments(
+        req: ListPaymentsRequest(
+            details: ListPaymentDetails.Bitcoin(destination: destination)
+        ))
+    // ANCHOR_END: list-payments-details-destination
+    return payments
+}

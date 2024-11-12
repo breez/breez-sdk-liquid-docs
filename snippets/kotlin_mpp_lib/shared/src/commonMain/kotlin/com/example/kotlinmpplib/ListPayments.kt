@@ -39,4 +39,32 @@ class ListPayments {
         }
         // ANCHOR_END: list-payments-filtered
     }
+
+    fun listPaymentsDetailsAddress(sdk: BindingLiquidSdk) {
+        // ANCHOR: list-payments-details-address
+        try {
+            val address = "<Bitcoin address>"
+            val payments = sdk.listPayments(
+                ListPaymentsRequest(
+                    details = ListPaymentDetails.Bitcoin(address)
+                ))
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: list-payments-details-address
+    }
+
+    fun listPaymentsDetailsDestination(sdk: BindingLiquidSdk) {
+        // ANCHOR: list-payments-details-destination
+        try {
+            val destination = "<Liquid BIP21 or address>"
+            val payments = sdk.listPayments(
+                ListPaymentsRequest(
+                    details = ListPaymentDetails.Liquid(destination)
+                ))
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: list-payments-details-destination
+    }
 }
