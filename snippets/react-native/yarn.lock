@@ -703,10 +703,10 @@
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
 
-"@breeztech/react-native-breez-sdk-liquid@^0.5.0-rc1":
-  version "0.5.0-rc1"
-  resolved "https://registry.yarnpkg.com/@breeztech/react-native-breez-sdk-liquid/-/react-native-breez-sdk-liquid-0.5.0-rc1.tgz#4fd6c374920da4d90546dcea5ce017e54e21d121"
-  integrity sha512-WGdgtwSQ8SJUJCbg4u20fa8qeBMV0dATiwj1f+j5MHGN5aYZzq4z27Xc/i0iVitoxLjvIS/zCGpohmCKefcR4g==
+"@breeztech/react-native-breez-sdk-liquid@^0.5.0-rc4":
+  version "0.5.0-rc4"
+  resolved "https://registry.yarnpkg.com/@breeztech/react-native-breez-sdk-liquid/-/react-native-breez-sdk-liquid-0.5.0-rc4.tgz#01151c7260f0d8c855f9f131ae449dee016f7afb"
+  integrity sha512-QUdmNODXU4jhhsV5LIv//4El2c8QJyVpIrZ+CmQuHmBjRaPvMblOSajoMFx2fgm/TzHHNIS705h1YA4KHHte5Q==
 
 "@esbuild/android-arm64@0.18.20":
   version "0.18.20"
