@@ -24,11 +24,13 @@ async fn prepare_send_payment_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
 async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-send-payment-liquid
     // Set the Liquid BIP21 or Liquid address you wish to pay
-    let optional_amount_sat = Some(5_000);
+    let optional_amount = Some(PayAmount::Receiver {
+        amount_sat: 5_000,
+    });
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
-            amount_sat: optional_amount_sat,
+            amount: optional_amount,
         })
         .await?;
 
@@ -36,6 +38,24 @@ async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
     let send_fees_sat = prepare_response.fees_sat;
     info!("Fees: {} sats", send_fees_sat);
     // ANCHOR_END: prepare-send-payment-liquid
+    Ok(())
+}
+
+async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: prepare-send-payment-liquid-drain
+    // Set the Liquid BIP21 or Liquid address you wish to pay
+    let optional_amount = Some(PayAmount::Drain);
+    let prepare_response = sdk
+        .prepare_send_payment(&PrepareSendRequest {
+            destination: "<Liquid BIP21 or address>".to_string(),
+            amount: optional_amount,
+        })
+        .await?;
+
+    // If the fees are acceptable, continue to create the Send Payment
+    let send_fees_sat = prepare_response.fees_sat;
+    info!("Fees: {} sats", send_fees_sat);
+    // ANCHOR_END: prepare-send-payment-liquid-drain
     Ok(())
 }
 

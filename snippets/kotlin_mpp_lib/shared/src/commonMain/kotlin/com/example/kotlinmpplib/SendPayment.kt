@@ -24,8 +24,8 @@ class SendPayment {
         // Set the Liquid BIP21 or Liquid address you wish to pay
         val destination = "<Liquid BIP21 or address>"
         try {
-            val optionalAmountSat = 5_000.toULong();
-            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmountSat))
+            val optionalAmount = PayAmount.Receiver(5_000.toULong())
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
 
             // If the fees are acceptable, continue to create the Send Payment
             val sendFeesSat = prepareResponse.feesSat;
@@ -34,6 +34,23 @@ class SendPayment {
             // handle error
         }
         // ANCHOR_END: prepare-send-payment-liquid
+    }
+
+    fun prepareSendPaymentLiquidDrain(sdk: BindingLiquidSdk) {
+        // ANCHOR: prepare-send-payment-liquid-drain
+        // Set the Liquid BIP21 or Liquid address you wish to pay
+        val destination = "<Liquid BIP21 or address>"
+        try {
+            val optionalAmount = PayAmount.Drain
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
+
+            // If the fees are acceptable, continue to create the Send Payment
+            val sendFeesSat = prepareResponse.feesSat;
+            // Log.v("Breez", "Fees: ${sendFeesSat} sats")
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: prepare-send-payment-liquid-drain
     }
 
     fun sendPayment(sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) {

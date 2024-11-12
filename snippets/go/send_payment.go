@@ -28,10 +28,11 @@ func PrepareSendPaymentLiquid(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: prepare-send-payment-liquid
 	// Set the Liquid BIP21 or Liquid address you wish to pay
 	destination := "<Liquid BIP21 or address>"
-	optionalAmountSat := uint64(5_000)
+	optionalAmount := breez_sdk_liquid.PayAmountReceiver{AmountSat: uint64(5_000)}
+
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
 		Destination: destination,
-		AmountSat:   &optionalAmountSat,
+		Amount:      &optionalAmount,
 	}
 	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
 	if err != nil {
@@ -42,6 +43,27 @@ func PrepareSendPaymentLiquid(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	sendFeesSat := prepareResponse.FeesSat
 	log.Printf("Fees: %v sats", sendFeesSat)
 	// ANCHOR_END: prepare-send-payment-liquid
+}
+
+func PrepareSendPaymentLiquidDrain(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: prepare-send-payment-liquid-drain
+	// Set the Liquid BIP21 or Liquid address you wish to pay
+	destination := "<Liquid BIP21 or address>"
+	optionalAmount := breez_sdk_liquid.PayAmountDrain{}
+
+	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
+		Destination: destination,
+		Amount:      &optionalAmount,
+	}
+	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+
+	sendFeesSat := prepareResponse.FeesSat
+	log.Printf("Fees: %v sats", sendFeesSat)
+	// ANCHOR_END: prepare-send-payment-liquid-drain
 }
 
 func SendPayment(sdk *breez_sdk_liquid.BindingLiquidSdk, prepareResponse breez_sdk_liquid.PrepareSendResponse) {

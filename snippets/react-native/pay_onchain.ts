@@ -1,10 +1,9 @@
 import {
   type PreparePayOnchainResponse,
-  type PayOnchainAmount,
   fetchOnchainLimits,
   preparePayOnchain,
   payOnchain,
-  PayOnchainAmountVariant
+  PayAmountVariant
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleGetCurrentLimits = async () => {
@@ -25,7 +24,7 @@ const examplePreparePayOnchain = async () => {
   try {
     const prepareResponse = await preparePayOnchain({
       amount: {
-        type: PayOnchainAmountVariant.RECEIVER,
+        type: PayAmountVariant.RECEIVER,
         amountSat: 5_000
       }
     })
@@ -43,7 +42,7 @@ const examplePreparePayOnchainDrain = async () => {
   try {
     const prepareResponse = await preparePayOnchain({
       amount: {
-        type: PayOnchainAmountVariant.DRAIN
+        type: PayAmountVariant.DRAIN
       }
     })
 
@@ -62,7 +61,7 @@ const examplePreparePayOnchainFeeRate = async () => {
 
     const prepareResponse = await preparePayOnchain({
       amount: {
-        type: PayOnchainAmountVariant.RECEIVER,
+        type: PayAmountVariant.RECEIVER,
         amountSat: 5_000
       },
       feeRateSatPerVbyte: optionalSatPerVbyte

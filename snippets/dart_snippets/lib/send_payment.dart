@@ -18,16 +18,40 @@ Future<PrepareSendResponse> prepareSendPaymentLightning() async {
 Future<PrepareSendResponse> prepareSendPaymentLiquid() async {
   // ANCHOR: prepare-send-payment-liquid
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  BigInt optionalAmountSat = BigInt.from(5000);
+  BigInt optionalAmount = PayAmount_Receiver(amountSat: 5000 as BigInt);
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(
+    destination: "<Liquid BIP21 or address>",
+    amount: optionalAmount,
+  );
 
   PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
-    req: PrepareSendRequest(destination: "<Liquid BIP21 or address>", amountSat: optionalAmountSat),
+    req: prepareSendRequest,
   );
 
   // If the fees are acceptable, continue to create the Send Payment
   BigInt sendFeesSat = prepareSendResponse.feesSat;
   print("Fees: $sendFeesSat sats");
   // ANCHOR_END: prepare-send-payment-liquid
+  return prepareSendResponse;
+}
+
+Future<PrepareSendResponse> prepareSendPaymentLiquidDrain() async {
+  // ANCHOR: prepare-send-payment-liquid-drain
+  // Set the Liquid BIP21 or Liquid address you wish to pay
+  BigInt optionalAmount = PayAmount_Drain(),
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(
+    destination: "<Liquid BIP21 or address>",
+    amount: optionalAmount,
+  );
+
+  PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
+    req: prepareSendRequest,
+  );
+
+  // If the fees are acceptable, continue to create the Send Payment
+  BigInt sendFeesSat = prepareSendResponse.feesSat;
+  print("Fees: $sendFeesSat sats");
+  // ANCHOR_END: prepare-send-payment-liquid-drain
   return prepareSendResponse;
 }
 

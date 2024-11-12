@@ -98,7 +98,7 @@ To learn more about this process and how it works in detail, see the Boltz docum
 
 For onchain (Bitcoin) payments, see [Sending an on-chain transaction](pay_onchain.md).
 
-<h3>Liquid</h3>
+### Liquid
 When sending via Liquid, a BIP21 URI or Liquid address can be used as the destination. 
 
 If a Liquid address is used, the optional prepare request amount **must** be set. 
@@ -106,6 +106,9 @@ If a Liquid address is used, the optional prepare request amount **must** be set
 If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request amount **must** be set. When both amounts are set, the SDK will prioritize the **request amount** over the BIP21 amount.
 
 **Note:** If a valid Breez API key is not provided, the method will throw an error requiring you to specify one.
+
+#### Setting the receiver amount
+When you want the payment receipient to receive a specific amount.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -172,6 +175,76 @@ If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request 
 ```
 </section>
 </custom-tabs>
+
+#### Draining all funds
+When you want send all funds from your wallet to another address.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/send_payment.rs:prepare-send-payment-liquid-drain}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendPayment.swift:prepare-send-payment-liquid-drain}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:prepare-send-payment-liquid-drain}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/send_payment.ts:prepare-send-payment-liquid-drain}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/send_payment.dart:prepare-send-payment-liquid-drain}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/send_payment.py:prepare-send-payment-liquid-drain}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/send_payment.go:prepare-send-payment-liquid-drain}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/SendPayment.cs:prepare-send-payment-liquid-drain}}
+```
+</section>
+</custom-tabs>
+
 
 ## Sending Payments
 Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the

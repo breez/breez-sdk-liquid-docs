@@ -18,17 +18,36 @@ func prepareSendPaymentLightning(sdk: BindingLiquidSdk) -> PrepareSendResponse? 
 func prepareSendPaymentLiquid(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
     // ANCHOR: prepare-send-payment-liquid
     // Set the Liquid BIP21 or Liquid address you wish to pay
-    let optionalAmountSat: UInt64? = Optional.some(5000)
+    let optionalAmount = PayAmount.receiver(amountSat: 5_000)
+
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
             destination: "<Liquid BIP21 or address>",
-            amountSat: optionalAmountSat
+            amount: optionalAmount
         ))
 
     // If the fees are acceptable, continue to create the Send Payment
     let sendFeesSat = prepareResponse!.feesSat
     print("Fees: {} sats", sendFeesSat);
     // ANCHOR_END: prepare-send-payment-liquid
+    return prepareResponse
+}
+
+func prepareSendPaymentLiquidDrain(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
+    // ANCHOR: prepare-send-payment-liquid-drain
+    // Set the Liquid BIP21 or Liquid address you wish to pay
+    let optionalAmount = PayAmount.drain
+
+    let prepareResponse = try? sdk
+        .prepareSendPayment(req: PrepareSendRequest (
+            destination: "<Liquid BIP21 or address>",
+            amount: optionalAmount
+        ))
+
+    // If the fees are acceptable, continue to create the Send Payment
+    let sendFeesSat = prepareResponse!.feesSat
+    print("Fees: {} sats", sendFeesSat);
+    // ANCHOR_END: prepare-send-payment-liquid-drain
     return prepareResponse
 }
 

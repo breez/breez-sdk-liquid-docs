@@ -1,5 +1,5 @@
 import logging
-from breez_sdk_liquid import BindingLiquidSdk, PreparePayOnchainRequest, PreparePayOnchainResponse, PayOnchainAmount, PayOnchainRequest
+from breez_sdk_liquid import BindingLiquidSdk, PreparePayOnchainRequest, PreparePayOnchainResponse, PayAmount, PayOnchainRequest
 
 
 def fetch_pay_onchain_limits(sdk: BindingLiquidSdk):
@@ -17,7 +17,7 @@ def fetch_pay_onchain_limits(sdk: BindingLiquidSdk):
 def prepare_pay_onchain(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-pay-onchain
     try:
-        amount = PayOnchainAmount.RECEIVER(5_000)
+        amount = PayAmount.RECEIVER(5_000)
         prepare_request = PreparePayOnchainRequest(amount)
         prepare_response = sdk.prepare_pay_onchain(prepare_request)
 
@@ -31,7 +31,7 @@ def prepare_pay_onchain(sdk: BindingLiquidSdk):
 def prepare_pay_onchain_drain(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-pay-onchain-drain
     try:
-        amount = PayOnchainAmount.DRAIN
+        amount = PayAmount.DRAIN
         prepare_request = PreparePayOnchainRequest(amount)
         prepare_response = sdk.prepare_pay_onchain(prepare_request)
 
@@ -45,7 +45,7 @@ def prepare_pay_onchain_drain(sdk: BindingLiquidSdk):
 def prepare_pay_onchain_fee_rate(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-pay-onchain-fee-rate
     try:
-        amount = PayOnchainAmount.RECEIVER(5_000)
+        amount = PayAmount.RECEIVER(5_000)
         optional_sat_per_vbyte = 21
 
         prepare_request = PreparePayOnchainRequest(amount, optional_sat_per_vbyte)
