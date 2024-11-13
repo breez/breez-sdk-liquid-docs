@@ -24,6 +24,7 @@
 - [Supporting fiat currencies](guide/fiat_currencies.md)
 - [Buying Bitcoin](guide/buy_btc.md)
 - [Fees for End-Users](guide/end-user_fees.md)
+- [Using a self implemented signer](guide/self_signer.md)
 - [Moving to production](guide/production.md)
 
 ---
