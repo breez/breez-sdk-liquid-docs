@@ -1,8 +1,8 @@
-# Using a Self Implemented Signer
+# Connecting an External Signer
 
-By default, the SDK uses mnemonics to generate keys and sign transactions. However, you can also provide your own signer implementation if you want more control over key management and signing.
+By default, the SDK uses mnemonics to generate keys and sign transactions. However, in some cases, developers would prefer not to pass the seer key to the SDK. In these cases, you can provide an external signer that provides more control over key management and signing.
 
-To use a custom signer, you'll need to:
+To use an external signer, you'll need to:
 
 1. Implement the `Signer` trait/interface
 2. Use `connect_with_signer` instead of `connect` when initializing the SDK
@@ -63,6 +63,6 @@ Here's how to implement this:
 </custom-tabs>
 
 <h4>Developer note</h4>
-A reference implementation of a signer is available in the SDK repository that you can use as a starting point for implementing your own signer : <a href="https://github.com/breez/breez-sdk-liquid/blob/main/lib/core/src/signer.rs#L198">SdkSigner</a>.<br>
-This same reference implementation is also used internally by the SDK when connecting with a mnemonic via the standard `Connect` method.
+A reference implementation of such signer is available in the SDK repository. You can use it as-is or customize it to meet your requirements: <a href="https://github.com/breez/breez-sdk-liquid/blob/main/lib/core/src/signer.rs#L198">SdkSigner</a>.<br>
+Note that this same implementation is used internally by the SDK when connecting with a mnemonics via the standard `Connect` method.
 
