@@ -1,4 +1,4 @@
-# Receiving Payments
+# Receiving payments
 
 With the Breez SDK you aren't required to open a channel and set up your inbound liquidity.
 
