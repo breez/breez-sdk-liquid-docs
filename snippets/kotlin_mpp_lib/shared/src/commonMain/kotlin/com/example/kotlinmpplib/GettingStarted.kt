@@ -24,10 +24,10 @@ class GettingStarted {
     fun fetchBalance(sdk: BindingLiquidSdk) {
         // ANCHOR: fetch-balance
         try {
-            val walletInfo = sdk.getInfo()
-            val balanceSat = walletInfo?.balanceSat
-            val pendingSendSat = walletInfo?.pendingSendSat
-            val pendingReceiveSat = walletInfo?.pendingReceiveSat
+            val info = sdk.getInfo()
+            val balanceSat = info?.balanceSat
+            val pendingSendSat = info?.pendingSendSat
+            val pendingReceiveSat = info?.pendingReceiveSat
         } catch (e: Exception) {
             // handle error
         }
