@@ -1,4 +1,4 @@
-# **End-User Fees**
+# **End-User fees**
 
 **The Breez SDK is free for developers. There are fees for *end-users* to send and receive payments.**
 
