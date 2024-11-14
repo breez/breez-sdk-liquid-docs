@@ -42,10 +42,10 @@ Future<void> initializeSDK() async {
 
 Future<void> fetchBalance(String lspId) async {
   // ANCHOR: fetch-balance
-  GetInfoResponse? walletInfo = await breezSDKLiquid.instance!.getInfo();
-  BigInt balanceSat = walletInfo.balanceSat;
-  BigInt pendingSendSat = walletInfo.pendingSendSat;
-  BigInt pendingReceiveSat = walletInfo.pendingReceiveSat;
+  GetInfoResponse? info = await breezSDKLiquid.instance!.getInfo();
+  BigInt balanceSat = info.balanceSat;
+  BigInt pendingSendSat = info.pendingSendSat;
+  BigInt pendingReceiveSat = info.pendingReceiveSat;
   // ANCHOR_END: fetch-balance
   print(balanceSat);
   print(pendingSendSat);
