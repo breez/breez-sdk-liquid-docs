@@ -1,4 +1,4 @@
-# Getting Started
+# Getting started
 
 Integrating Breez SDK - *Liquid* into your application takes just a few minutes. Follow these steps to get started:
 - **[Installing the SDK](/guide/install.md)**
