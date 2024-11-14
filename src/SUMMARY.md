@@ -5,7 +5,7 @@
 - [About Breez SDK - Liquid](guide/about_breez_sdk_liquid.md)
 - [Getting Started](guide/getting_started.md)
   - [Installing the SDK](guide/install.md)
-  - [Connecting and Disconnecting](guide/connecting.md)
+  - [Connecting and disconnecting](guide/connecting.md)
   - [Fetching the balance](guide/wallet_state.md)
   - [Listening to events](guide/events.md)
   - [Adding logging](guide/logging.md)
