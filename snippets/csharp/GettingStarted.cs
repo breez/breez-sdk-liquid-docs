@@ -34,10 +34,10 @@ public class GettingStartedSnippets
         // ANCHOR: fetch-balance
         try
         {
-            var walletInfo = sdk.GetInfo();
-            var balanceSat = walletInfo?.balanceSat;
-            var pendingSendSat = walletInfo?.pendingSendSat;
-            var pendingReceiveSat = walletInfo?.pendingReceiveSat;
+            var info = sdk.GetInfo();
+            var balanceSat = info?.balanceSat;
+            var pendingSendSat = info?.pendingSendSat;
+            var pendingReceiveSat = info?.pendingReceiveSat;
         }
         catch (Exception)
         {
