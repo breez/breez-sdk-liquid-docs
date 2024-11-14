@@ -24,10 +24,10 @@ def start():
 def fetch_balance(sdk: BindingLiquidSdk):
     # ANCHOR: fetch-balance
     try:
-        wallet_info = sdk.get_info()
-        balance_sat = wallet_info.balance_sat
-        pending_send_sat = wallet_info.pending_send_sat
-        pending_receive_sat = wallet_info.pending_receive_sat
+        info = sdk.get_info()
+        balance_sat = info.balance_sat
+        pending_send_sat = info.pending_send_sat
+        pending_receive_sat = info.pending_receive_sat
     except Exception as error:
         logging.error(error)
         raise
