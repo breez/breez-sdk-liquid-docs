@@ -1,4 +1,4 @@
-# Refunding Payments
+# Refunding payments
 
 The SDK handles refunding of failed payments automatically except when receiving Bitcoin payments where the refund of a failed swap has to be managed manually.
 
