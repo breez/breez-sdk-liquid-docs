@@ -29,10 +29,10 @@ async fn getting_started() -> Result<Arc<LiquidSdk>> {
 
 async fn getting_started_node_info(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: fetch-balance
-    let wallet_info = sdk.get_info().await?;
-    let balance_sat = wallet_info.balance_sat;
-    let pending_send_sat = wallet_info.pending_send_sat;
-    let pending_receive_sat = wallet_info.pending_receive_sat;
+    let info = sdk.get_info().await?;
+    let balance_sat = info.balance_sat;
+    let pending_send_sat = info.pending_send_sat;
+    let pending_receive_sat = info.pending_receive_sat;
     // ANCHOR_END: fetch-balance
 
     Ok(())
