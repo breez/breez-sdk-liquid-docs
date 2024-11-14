@@ -1,4 +1,4 @@
-# Fetching the Wallet State
+# Fetching the balance
 
 Once connected, the balance can be retrieved at any time.
 
