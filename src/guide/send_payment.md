@@ -1,4 +1,4 @@
-# Sending Payments
+# Sending payments
 
 Once the SDK is initialized, you can directly begin sending payments. The send process takes two steps:
 1. [Preparing the Payment](send_payment.md#preparing-payments)
