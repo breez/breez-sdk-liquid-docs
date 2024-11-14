@@ -1,4 +1,4 @@
-# Payment Fundamentals
+# Payment fundamentals
 
 This section details sending and receiving payments:
 - **[Receiving payments]** via a bolt11 invoice, Liquid/Bitcoin BIP21 or plain Liquid address
