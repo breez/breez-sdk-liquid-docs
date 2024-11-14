@@ -33,10 +33,10 @@ func Start() (*breez_sdk_liquid.BindingLiquidSdk, error) {
 
 func FetchBalance(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: fetch-balance
-	if walletInfo, err := sdk.GetInfo(); err == nil {
-		balanceSat := walletInfo.BalanceSat
-		pendingSendSat := walletInfo.PendingSendSat
-		pendingReceiveSat := walletInfo.PendingReceiveSat
+	if info, err := sdk.GetInfo(); err == nil {
+		balanceSat := info.BalanceSat
+		pendingSendSat := info.PendingSendSat
+		pendingReceiveSat := info.PendingReceiveSat
 		log.Printf("Balance: %v sats", balanceSat)
 		log.Printf("Pending: send %v sats, receive %v sats", pendingSendSat, pendingReceiveSat)
 	}
