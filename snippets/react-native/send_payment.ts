@@ -6,8 +6,8 @@ import {
   type PrepareSendResponse
 } from '@breeztech/react-native-breez-sdk-liquid'
 
-const examplePrepareSendPaymentLightning = async () => {
-  // ANCHOR: prepare-send-payment-lightning
+const examplePrepareSendPaymentLightningBolt11 = async () => {
+  // ANCHOR: prepare-send-payment-lightning-bolt11
   // Set the bolt11 invoice you wish to pay
   const prepareResponse = await prepareSendPayment({
     destination: '<bolt11 invoice>'
@@ -16,7 +16,22 @@ const examplePrepareSendPaymentLightning = async () => {
   // If the fees are acceptable, continue to create the Send Payment
   const sendFeesSat = prepareResponse.feesSat
   console.log(`Fees: ${sendFeesSat} sats`)
-  // ANCHOR_END: prepare-send-payment-lightning
+  // ANCHOR_END: prepare-send-payment-lightning-bolt11
+}
+
+const examplePrepareSendPaymentLightningBolt12 = async () => {
+  // ANCHOR: prepare-send-payment-lightning-bolt12
+  // Set the bolt12 offer you wish to pay
+  const optionalAmount: PayAmount = {
+    type: PayAmountVariant.RECEIVER,
+    amountSat: 5_000
+  }
+
+  const prepareResponse = await prepareSendPayment({
+    destination: '<bolt12 offer>',
+    amount: optionalAmount
+  })
+  // ANCHOR_END: prepare-send-payment-lightning-bolt12
 }
 
 const examplePrepareSendPaymentLiquid = async () => {

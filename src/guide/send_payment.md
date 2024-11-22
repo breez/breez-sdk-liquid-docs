@@ -16,7 +16,9 @@ and also returns the relative fees related to the payment so they can be confirm
 The `destination` field of the payment request supports Liquid BIP21, Liquid addresses and Lightning invoices
 
 ### Lightning
-When sending via Lightning, the bolt11 invoice amount **must** be set. If the optional prepare request amount is also set, the SDK will make sure the two values match, else an error will be thrown. 
+Two types of Lightning destinations are possible: BOLT11 invoices and BOLT12 offers.
+
+For BOLT11 invoices, the amount **must** be set. If the optional prepare request amount is also set, the SDK will make sure the two values match, else an error will be thrown. 
 
 The SDK will also validate that the amount is within the send lightning limits of the swap service.
 
@@ -25,7 +27,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 <section>
 
 ```rust,ignore
-{{#include ../../snippets/rust/src/send_payment.rs:prepare-send-payment-lightning}}
+{{#include ../../snippets/rust/src/send_payment.rs:prepare-send-payment-lightning-bolt11}}
 ```
 </section>
 
@@ -33,7 +35,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 <section>
 
 ```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendPayment.swift:prepare-send-payment-lightning}}
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendPayment.swift:prepare-send-payment-lightning-bolt11}}
 ```
 </section>
 
@@ -41,7 +43,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 <section>
 
 ```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:prepare-send-payment-lightning}}
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:prepare-send-payment-lightning-bolt11}}
 ```
 </section>
 
@@ -49,7 +51,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 <section>
 
 ```typescript
-{{#include ../../snippets/react-native/send_payment.ts:prepare-send-payment-lightning}}
+{{#include ../../snippets/react-native/send_payment.ts:prepare-send-payment-lightning-bolt11}}
 ```
 </section>
 
@@ -57,7 +59,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 <section>
 
 ```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/send_payment.dart:prepare-send-payment-lightning}}
+{{#include ../../snippets/dart_snippets/lib/send_payment.dart:prepare-send-payment-lightning-bolt11}}
 ```
 </section>
 
@@ -65,7 +67,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 <section>
 
 ```python,ignore 
-{{#include ../../snippets/python/src/send_payment.py:prepare-send-payment-lightning}}
+{{#include ../../snippets/python/src/send_payment.py:prepare-send-payment-lightning-bolt11}}
 ```
 </section>
 
@@ -73,7 +75,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 <section>
 
 ```go,ignore
-{{#include ../../snippets/go/send_payment.go:prepare-send-payment-lightning}}
+{{#include ../../snippets/go/send_payment.go:prepare-send-payment-lightning-bolt11}}
 ```
 </section>
 
@@ -81,7 +83,75 @@ The SDK will also validate that the amount is within the send lightning limits o
 <section>
 
 ```cs,ignore
-{{#include ../../snippets/csharp/SendPayment.cs:prepare-send-payment-lightning}}
+{{#include ../../snippets/csharp/SendPayment.cs:prepare-send-payment-lightning-bolt11}}
+```
+</section>
+</custom-tabs>
+
+Payments to a BOLT12 offer can be done in a similar way. However, when paying to a BOLT12 offer, the SDK's prepare request **must** include an amount.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/send_payment.rs:prepare-send-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendPayment.swift:prepare-send-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:prepare-send-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/send_payment.ts:prepare-send-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/send_payment.dart:prepare-send-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/send_payment.py:prepare-send-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/send_payment.go:prepare-send-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/SendPayment.cs:prepare-send-payment-lightning-bolt12}}
 ```
 </section>
 </custom-tabs>

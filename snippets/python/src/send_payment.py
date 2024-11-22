@@ -2,8 +2,8 @@ import logging
 from breez_sdk_liquid import BindingLiquidSdk, PayAmount, PrepareSendRequest, SendPaymentRequest, PrepareSendResponse
 
 
-def prepare_send_payment_lightning(sdk: BindingLiquidSdk):
-    # ANCHOR: prepare-send-payment-lightning
+def prepare_send_payment_lightning_bolt11(sdk: BindingLiquidSdk):
+    # ANCHOR: prepare-send-payment-lightning-bolt11
     # Set the bolt11 invoice you wish to pay
     destination = "<bolt11 invoice>"
     try:
@@ -16,7 +16,22 @@ def prepare_send_payment_lightning(sdk: BindingLiquidSdk):
     except Exception as error:
         logging.error(error)
         raise
-    # ANCHOR_END: prepare-send-payment-lightning
+    # ANCHOR_END: prepare-send-payment-lightning-bolt11
+
+def prepare_send_payment_lightning_bolt12(sdk: BindingLiquidSdk):
+    # ANCHOR: prepare-send-payment-lightning-bolt12
+    # Set the bolt12 offer you wish to pay
+    destination = "<bolt12 offer>"
+    try:
+        optional_amount = PayAmount.RECEIVER(5_000)
+
+        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+
+        return prepare_response
+    except Exception as error:
+        logging.error(error)
+        raise
+    # ANCHOR_END: prepare-send-payment-lightning-bolt12
 
 def prepare_send_payment_liquid(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-send-payment-liquid

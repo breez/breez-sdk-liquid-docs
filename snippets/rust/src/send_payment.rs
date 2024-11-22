@@ -4,8 +4,8 @@ use anyhow::Result;
 use breez_sdk_liquid::prelude::*;
 use log::info;
 
-async fn prepare_send_payment_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
-    // ANCHOR: prepare-send-payment-lightning
+async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: prepare-send-payment-lightning-bolt11
     // Set the bolt11 invoice you wish to pay
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
@@ -17,7 +17,21 @@ async fn prepare_send_payment_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
     info!("Fees: {} sats", send_fees_sat);
-    // ANCHOR_END: prepare-send-payment-lightning
+    // ANCHOR_END: prepare-send-payment-lightning-bolt11
+    Ok(())
+}
+
+async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: prepare-send-payment-lightning-bolt12
+    // Set the bolt12 offer you wish to pay to
+    let optional_amount = Some(PayAmount::Receiver { amount_sat: 5_000 });
+    let prepare_response = sdk
+        .prepare_send_payment(&PrepareSendRequest {
+            destination: "<bolt12 offer>".to_string(),
+            amount: optional_amount,
+        })
+        .await?;
+    // ANCHOR_END: prepare-send-payment-lightning-bolt12
     Ok(())
 }
 

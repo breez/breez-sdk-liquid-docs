@@ -2,9 +2,9 @@ using Breez.Sdk.Liquid;
 
 public class SendPaymentSnippets
 {
-    public void PrepareSendPaymentLightning(BindingLiquidSdk sdk)
+    public void PrepareSendPaymentLightningBolt11(BindingLiquidSdk sdk)
     {
-        // ANCHOR: prepare-send-payment-lightning
+        // ANCHOR: prepare-send-payment-lightning-bolt11
         // Set the bolt11 invoice you wish to pay
         var destination = "<bolt11 invoice>";
         try
@@ -19,7 +19,24 @@ public class SendPaymentSnippets
         {
             // Handle error
         }
-        // ANCHOR_END: prepare-send-payment-lightning
+        // ANCHOR_END: prepare-send-payment-lightning-bolt11
+    }
+
+    public void PrepareSendPaymentLightningBolt12(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: prepare-send-payment-lightning-bolt12
+        // Set the bolt12 offer you wish to pay
+        var destination = "<bolt12 offer>";
+        try
+        {
+            var optionalAmount = new PayAmount.Receiver(5000);
+            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: prepare-send-payment-lightning-bolt12
     }
 
     public void PrepareSendPaymentLiquid(BindingLiquidSdk sdk)

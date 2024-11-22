@@ -1,8 +1,8 @@
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
-Future<PrepareSendResponse> prepareSendPaymentLightning() async {
-  // ANCHOR: prepare-send-payment-lightning
+Future<PrepareSendResponse> prepareSendPaymentLightningBolt11() async {
+  // ANCHOR: prepare-send-payment-lightning-bolt11
   // Set the bolt11 invoice you wish to pay
   PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
     req: PrepareSendRequest(destination: "<bolt11 invoice>"),
@@ -11,7 +11,18 @@ Future<PrepareSendResponse> prepareSendPaymentLightning() async {
   // If the fees are acceptable, continue to create the Send Payment
   BigInt sendFeesSat = prepareSendResponse.feesSat;
   print("Fees: $sendFeesSat sats");
-  // ANCHOR_END: prepare-send-payment-lightning
+  // ANCHOR_END: prepare-send-payment-lightning-bolt11
+  return prepareSendResponse;
+}
+
+Future<PrepareSendResponse> prepareSendPaymentLightningBolt12() async {
+  // ANCHOR: prepare-send-payment-lightning-bolt12
+  // Set the bolt12 offer you wish to pay
+  PayAmount_Receiver optionalAmount = PayAmount_Receiver(amountSat: 5000 as BigInt);
+  PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
+    req: PrepareSendRequest(destination: "<bolt12 offer>", amount: optionalAmount),
+  );
+  // ANCHOR_END: prepare-send-payment-lightning-bolt12
   return prepareSendResponse;
 }
 

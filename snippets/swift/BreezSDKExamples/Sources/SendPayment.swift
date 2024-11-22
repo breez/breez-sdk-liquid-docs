@@ -1,7 +1,7 @@
 import BreezSDKLiquid
 
-func prepareSendPaymentLightning(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
-    // ANCHOR: prepare-send-payment-lightning
+func prepareSendPaymentLightningBolt11(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
+    // ANCHOR: prepare-send-payment-lightning-bolt11
     // Set the bolt11 invoice you wish to pay
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
@@ -11,7 +11,21 @@ func prepareSendPaymentLightning(sdk: BindingLiquidSdk) -> PrepareSendResponse? 
     // If the fees are acceptable, continue to create the Send Payment
     let sendFeesSat = prepareResponse!.feesSat
     print("Fees: {} sats", sendFeesSat);
-    // ANCHOR_END: prepare-send-payment-lightning
+    // ANCHOR_END: prepare-send-payment-lightning-bolt11
+    return prepareResponse
+}
+
+func prepareSendPaymentLightningBolt12(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
+    // ANCHOR: prepare-send-payment-lightning-bolt12
+    // Set the bolt12 offer you wish to pay
+    let optionalAmount = PayAmount.receiver(amountSat: 5_000)
+
+    let prepareResponse = try? sdk
+        .prepareSendPayment(req: PrepareSendRequest (
+            destination: "<bolt12 offer>",
+            amount: optionalAmount
+        ))
+    // ANCHOR_END: prepare-send-payment-lightning-bolt12
     return prepareResponse
 }
 
