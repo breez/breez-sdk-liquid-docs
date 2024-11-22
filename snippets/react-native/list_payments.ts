@@ -44,7 +44,7 @@ const exampleListPaymentsDetailsAddress = async () => {
     const payments = await listPayments({
       details: {
         type: ListPaymentDetailsVariant.BITCOIN,
-        address: "<Bitcoin address>"
+        address: '<Bitcoin address>'
       }
     })
   } catch (err) {
@@ -59,7 +59,7 @@ const exampleListPaymentsDetailsDestination = async () => {
     const payments = await listPayments({
       details: {
         type: ListPaymentDetailsVariant.LIQUID,
-        destination: "<Liquid BIP21 or address>"
+        destination: '<Liquid BIP21 or address>'
       }
     })
   } catch (err) {

@@ -42,7 +42,7 @@ const examplePrepareSendPaymentLiquidDrain = async () => {
   // ANCHOR: prepare-send-payment-liquid-drain
   // Set the Liquid BIP21 or Liquid address you wish to pay
   const optionalAmount: PayAmount = {
-    type: PayAmountVariant.DRAIN,
+    type: PayAmountVariant.DRAIN
   }
 
   const prepareResponse = await prepareSendPayment({
