@@ -37,7 +37,7 @@ func ListPaymentsDetailsAddress(sdk: BindingLiquidSdk) -> [Payment]? {
     let address = "<Bitcoin address>"
     let payments = try? sdk.listPayments(
         req: ListPaymentsRequest(
-            details: ListPaymentDetails.Bitcoin(address: address)
+            details: ListPaymentDetails.bitcoin(address: address)
         ))
     // ANCHOR_END: list-payments-details-address
     return payments
@@ -48,7 +48,7 @@ func ListPaymentsDetailsDestination(sdk: BindingLiquidSdk) -> [Payment]? {
     let destination = "<Liquid BIP21 or address>"
     let payments = try? sdk.listPayments(
         req: ListPaymentsRequest(
-            details: ListPaymentDetails.Bitcoin(destination: destination)
+            details: ListPaymentDetails.liquid(destination: destination)
         ))
     // ANCHOR_END: list-payments-details-destination
     return payments
