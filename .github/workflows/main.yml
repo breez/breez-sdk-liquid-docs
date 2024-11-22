@@ -281,7 +281,7 @@ jobs:
 
     - uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: "16.1-beta"
+        xcode-version: "latest-stable"
           
     - name: Build
       working-directory: snippets/swift/BreezSDKExamples
