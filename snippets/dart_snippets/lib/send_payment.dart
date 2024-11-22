@@ -18,7 +18,7 @@ Future<PrepareSendResponse> prepareSendPaymentLightning() async {
 Future<PrepareSendResponse> prepareSendPaymentLiquid() async {
   // ANCHOR: prepare-send-payment-liquid
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  BigInt optionalAmount = PayAmount_Receiver(amountSat: 5000 as BigInt);
+  PayAmount_Receiver optionalAmount = PayAmount_Receiver(amountSat: 5000 as BigInt);
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: "<Liquid BIP21 or address>",
     amount: optionalAmount,
@@ -38,7 +38,7 @@ Future<PrepareSendResponse> prepareSendPaymentLiquid() async {
 Future<PrepareSendResponse> prepareSendPaymentLiquidDrain() async {
   // ANCHOR: prepare-send-payment-liquid-drain
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  BigInt optionalAmount = PayAmount_Drain(),
+  PayAmount_Drain optionalAmount = PayAmount_Drain();
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: "<Liquid BIP21 or address>",
     amount: optionalAmount,
