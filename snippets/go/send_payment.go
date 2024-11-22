@@ -28,7 +28,7 @@ func PrepareSendPaymentLiquid(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: prepare-send-payment-liquid
 	// Set the Liquid BIP21 or Liquid address you wish to pay
 	destination := "<Liquid BIP21 or address>"
-	optionalAmount := breez_sdk_liquid.PayAmountReceiver{AmountSat: uint64(5_000)}
+	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountReceiver{AmountSat: uint64(5_000)}
 
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
 		Destination: destination,
@@ -49,7 +49,7 @@ func PrepareSendPaymentLiquidDrain(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: prepare-send-payment-liquid-drain
 	// Set the Liquid BIP21 or Liquid address you wish to pay
 	destination := "<Liquid BIP21 or address>"
-	optionalAmount := breez_sdk_liquid.PayAmountDrain{}
+	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountDrain{}
 
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
 		Destination: destination,
