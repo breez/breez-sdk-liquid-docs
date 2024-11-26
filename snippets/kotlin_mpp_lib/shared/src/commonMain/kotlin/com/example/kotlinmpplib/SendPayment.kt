@@ -3,8 +3,8 @@ package com.example.kotlinmpplib
 import breez_sdk_liquid.*
 
 class SendPayment {
-    fun prepareSendPaymentLightning(sdk: BindingLiquidSdk) {
-        // ANCHOR: prepare-send-payment-lightning
+    fun prepareSendPaymentLightningBolt11(sdk: BindingLiquidSdk) {
+        // ANCHOR: prepare-send-payment-lightning-bolt11
         // Set the bolt11 you wish to pay
         val destination = "<bolt11 invoice>"
         try {
@@ -16,9 +16,21 @@ class SendPayment {
         } catch (e: Exception) {
             // handle error
         }
-        // ANCHOR_END: prepare-send-payment-lightning
+        // ANCHOR_END: prepare-send-payment-lightning-bolt11
     }
 
+    fun prepareSendPaymentLightningBolt12(sdk: BindingLiquidSdk) {
+        // ANCHOR: prepare-send-payment-lightning-bolt12
+        // Set the bolt12 offer you wish to pay
+        val destination = "<bolt12 offer>"
+        try {
+            val optionalAmount = PayAmount.Receiver(5_000.toULong())
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: prepare-send-payment-lightning-bolt12
+    }
     fun prepareSendPaymentLiquid(sdk: BindingLiquidSdk) {
         // ANCHOR: prepare-send-payment-liquid
         // Set the Liquid BIP21 or Liquid address you wish to pay

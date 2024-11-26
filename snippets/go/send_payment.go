@@ -6,8 +6,8 @@ import (
 	"github.com/breez/breez-sdk-liquid-go/breez_sdk_liquid"
 )
 
-func PrepareSendPaymentLightning(sdk *breez_sdk_liquid.BindingLiquidSdk) {
-	// ANCHOR: prepare-send-payment-lightning
+func PrepareSendPaymentLightningBolt11(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: prepare-send-payment-lightning-bolt11
 	// Set the bolt11 invoice you wish to pay
 	destination := "<bolt11 invoice>"
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
@@ -21,7 +21,26 @@ func PrepareSendPaymentLightning(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 
 	sendFeesSat := prepareResponse.FeesSat
 	log.Printf("Fees: %v sats", sendFeesSat)
-	// ANCHOR_END: prepare-send-payment-lightning
+	// ANCHOR_END: prepare-send-payment-lightning-bolt11
+}
+
+func PrepareSendPaymentLightningBolt12(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: prepare-send-payment-lightning-bolt12
+	// Set the bolt12 offer you wish to pay
+	destination := "<bolt12 offer>"
+	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountReceiver{AmountSat: uint64(5_000)}
+
+	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
+		Destination: destination,
+		Amount:      &optionalAmount,
+	}
+	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+	// ANCHOR_END: prepare-send-payment-lightning-bolt12
+	log.Printf("prepareResponse: %v", prepareResponse)
 }
 
 func PrepareSendPaymentLiquid(sdk *breez_sdk_liquid.BindingLiquidSdk) {
