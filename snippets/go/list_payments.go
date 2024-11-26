@@ -64,7 +64,9 @@ func ListPaymentsDetailsAddress(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 func ListPaymentsDetailsDestination(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: list-payments-details-destination
 	destination := "<Liquid BIP21 or address>"
-	var details breez_sdk_liquid.ListPaymentDetails = breez_sdk_liquid.ListPaymentDetailsLiquid{Destination: destination}
+	var details breez_sdk_liquid.ListPaymentDetails = breez_sdk_liquid.ListPaymentDetailsLiquid{
+		Destination: destination,
+	}
 	listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
 		Details: &details,
 	}
