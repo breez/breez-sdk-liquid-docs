@@ -14,7 +14,7 @@ func getCurrentLimits(sdk: BindingLiquidSdk) -> OnchainPaymentLimitsResponse?? {
 
 func preparePayOnchain(sdk: BindingLiquidSdk, currentLimits: Limits) -> PreparePayOnchainResponse? {
     // ANCHOR: prepare-pay-onchain
-    let amount = PayOnchainAmount.receiver(amountSat: 5_000)
+    let amount = PayAmount.receiver(amountSat: 5_000)
     let prepareRequest = PreparePayOnchainRequest(amount: amount)
     let prepareResponse = try? sdk.preparePayOnchain(req: prepareRequest)
 
@@ -28,7 +28,7 @@ func preparePayOnchain(sdk: BindingLiquidSdk, currentLimits: Limits) -> PrepareP
 
 func preparePayOnchainDrain(sdk: BindingLiquidSdk, currentLimits: Limits) -> PreparePayOnchainResponse? {
     // ANCHOR: prepare-pay-onchain-drain
-    let amount = PayOnchainAmount.drain
+    let amount = PayAmount.drain
     let prepareRequest = PreparePayOnchainRequest(amount: amount)
     let prepareResponse = try? sdk.preparePayOnchain(req: prepareRequest)
 
@@ -42,7 +42,7 @@ func preparePayOnchainDrain(sdk: BindingLiquidSdk, currentLimits: Limits) -> Pre
 
 func preparePayOnchainFeeRate(sdk: BindingLiquidSdk, currentLimits: Limits) -> PreparePayOnchainResponse? {
     // ANCHOR: prepare-pay-onchain-fee-rate
-    let amount = PayOnchainAmount.receiver(amountSat: 5_000)
+    let amount = PayAmount.receiver(amountSat: 5_000)
     let optionalSatPerVbyte = UInt32(21)
 
     let prepareRequest = PreparePayOnchainRequest(amount: amount, feeRateSatPerVbyte: optionalSatPerVbyte)

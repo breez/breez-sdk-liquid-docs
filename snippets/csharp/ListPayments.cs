@@ -53,4 +53,40 @@ public class ListPaymentsSnippets
         }
         // ANCHOR_END: list-payments-filtered
     }
+
+    public void ListPaymentsDetailsAddress(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: list-payments-details-address
+        try
+        {
+            var address = "<Bitcoin address>";
+            var payments = sdk.ListPayments(
+                new ListPaymentsRequest(
+                    details: new ListPaymentDetails.Bitcoin(address)
+                ));
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: list-payments-details-address
+    }
+
+    public void ListPaymentsDetailsDestination(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: list-payments-details-destination
+        try
+        {
+            var destination = "<Liquid BIP21 or address>";
+            var payments = sdk.ListPayments(
+                new ListPaymentsRequest(
+                    details: new ListPaymentDetails.Liquid(destination)
+                ));
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: list-payments-details-destination
+    }
 }

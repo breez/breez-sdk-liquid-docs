@@ -1,5 +1,5 @@
 import logging
-from breez_sdk_liquid import BindingLiquidSdk, PrepareSendRequest, SendPaymentRequest, PrepareSendResponse
+from breez_sdk_liquid import BindingLiquidSdk, PayAmount, PrepareSendRequest, SendPaymentRequest, PrepareSendResponse
 
 
 def prepare_send_payment_lightning(sdk: BindingLiquidSdk):
@@ -23,8 +23,9 @@ def prepare_send_payment_liquid(sdk: BindingLiquidSdk):
     # Set the Liquid BIP21 or Liquid address you wish to pay
     destination = "<Liquid BIP21 or address>"
     try:
-        optional_amount_sat = 5_000
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount_sat))
+        optional_amount = PayAmount.RECEIVER(5_000)
+
+        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
@@ -34,6 +35,24 @@ def prepare_send_payment_liquid(sdk: BindingLiquidSdk):
         logging.error(error)
         raise
     # ANCHOR_END: prepare-send-payment-liquid
+
+def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
+    # ANCHOR: prepare-send-payment-liquid-drain
+    # Set the Liquid BIP21 or Liquid address you wish to pay
+    destination = "<Liquid BIP21 or address>"
+    try:
+        optional_amount = PayAmount.DRAIN
+
+        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+
+        # If the fees are acceptable, continue to create the Send Payment
+        send_fees_sat = prepare_response.fees_sat
+        logging.debug("Fees: ", send_fees_sat, " sats")
+        return prepare_response
+    except Exception as error:
+        logging.error(error)
+        raise
+    # ANCHOR_END: prepare-send-payment-liquid-drain
 
 def send_payment(sdk: BindingLiquidSdk, prepare_response: PrepareSendResponse):
     # ANCHOR: send-payment

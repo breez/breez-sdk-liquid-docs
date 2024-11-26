@@ -13,7 +13,7 @@ Future<OnchainPaymentLimitsResponse> getCurrentLimits() async {
 Future<PreparePayOnchainResponse> preparePayOnchain() async {
   // ANCHOR: prepare-pay-onchain
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
-    amount: PayOnchainAmount_Receiver(amountSat: 5000 as BigInt),
+    amount: PayAmount_Receiver(amountSat: 5000 as BigInt),
   );
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,
@@ -29,7 +29,7 @@ Future<PreparePayOnchainResponse> preparePayOnchain() async {
 Future<PreparePayOnchainResponse> preparePayOnchainDrain() async {
   // ANCHOR: prepare-pay-onchain-drain
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
-    amount: PayOnchainAmount_Drain(),
+    amount: PayAmount_Drain(),
   );
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,
@@ -47,7 +47,7 @@ Future<PreparePayOnchainResponse> preparePayOnchainFeeRate() async {
   int optionalSatPerVbyte = 21;
 
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
-    amount: PayOnchainAmount_Receiver(amountSat: 5000 as BigInt),
+    amount: PayAmount_Receiver(amountSat: 5000 as BigInt),
     feeRateSatPerVbyte: optionalSatPerVbyte,
   );
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(

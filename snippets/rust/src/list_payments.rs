@@ -38,3 +38,43 @@ async fn list_payments_filtered(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
 
     Ok(payments)
 }
+
+async fn list_payments_details_address(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
+    // ANCHOR: list-payments-details-address
+    let address = "<Bitcoin address>".to_string();
+    let payments = sdk
+        .list_payments(&ListPaymentsRequest {
+            filters: None,
+            from_timestamp: None,
+            to_timestamp: None,
+            offset: None,
+            limit: None,
+            details: Some(ListPaymentDetails::Bitcoin {
+                address,
+            }),            
+        })
+        .await?;
+    // ANCHOR_END: list-payments-details-address
+
+    Ok(payments)
+}
+
+async fn list_payments_details_destination(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
+    // ANCHOR: list-payments-details-destination
+    let destination = "<Liquid BIP21 or address>".to_string();
+    let payments = sdk
+        .list_payments(&ListPaymentsRequest {
+            filters: None,
+            from_timestamp: None,
+            to_timestamp: None,
+            offset: None,
+            limit: None,
+            details: Some(ListPaymentDetails::Liquid {
+                destination,
+            }),            
+        })
+        .await?;
+    // ANCHOR_END: list-payments-details-addrdestinationess
+
+    Ok(payments)
+}

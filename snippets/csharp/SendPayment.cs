@@ -29,8 +29,8 @@ public class SendPaymentSnippets
         var destination = "<Liquid BIP21 or address>";
         try
         {
-            ulong optionalAmountSat = 5000;
-            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmountSat));
+            var optionalAmount = new PayAmount.Receiver(5000);
+            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
 
             // If the fees are acceptable, continue to create the Send Payment
             var sendFeesSat = prepareResponse.feesSat;
@@ -41,6 +41,27 @@ public class SendPaymentSnippets
             // Handle error
         }
         // ANCHOR_END: prepare-send-payment-liquid
+    }
+
+    public void PrepareSendPaymentLiquidDrain(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: prepare-send-payment-liquid-drain
+        // Set the Liquid BIP21 or address you wish to pay
+        var destination = "<Liquid BIP21 or address>";
+        try
+        {
+            var optionalAmount = new PayAmount.Drain();
+            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
+
+            // If the fees are acceptable, continue to create the Send Payment
+            var sendFeesSat = prepareResponse.feesSat;
+            Console.WriteLine($"Fees: {sendFeesSat} sats");
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: prepare-send-payment-liquid-drain
     }
 
     public void SendPayment(BindingLiquidSdk sdk, PrepareSendResponse prepareResponse)

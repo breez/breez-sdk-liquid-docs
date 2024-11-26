@@ -1,4 +1,4 @@
-from breez_sdk_liquid import BindingLiquidSdk, GetPaymentRequest, ListPaymentsRequest, PaymentType
+from breez_sdk_liquid import BindingLiquidSdk, GetPaymentRequest, ListPaymentDetails, ListPaymentsRequest, PaymentType
 import logging
 
 
@@ -32,6 +32,30 @@ def list_payments_filtered(sdk: BindingLiquidSdk):
             limit = 50)
         sdk.list_payments(req)
         # ANCHOR_END: list-payments-filtered
+    except Exception as error:
+        logging.error(error)
+        raise
+
+def list_payments_details_address(sdk: BindingLiquidSdk):
+    try:
+        # ANCHOR: list-payments-details-address
+        address = "<Bitcoin address>"
+        req = ListPaymentsRequest(
+            details = ListPaymentDetails.BITCOIN(address))
+        sdk.list_payments(req)
+        # ANCHOR_END: list-payments-details-address
+    except Exception as error:
+        logging.error(error)
+        raise
+
+def list_payments_details_destination(sdk: BindingLiquidSdk):
+    try:
+        # ANCHOR: list-payments-details-destination
+        destination = "<Liquid BIP21 or address>"
+        req = ListPaymentsRequest(
+            details = ListPaymentDetails.LIQUID(destination))
+        sdk.list_payments(req)
+        # ANCHOR_END: list-payments-details-destination
     except Exception as error:
         logging.error(error)
         raise

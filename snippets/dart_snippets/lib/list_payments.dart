@@ -31,3 +31,25 @@ Future<List<Payment>> listPaymentsFiltered() async {
   // ANCHOR_END: list-payments-filtered
   return paymentsList;
 }
+
+Future<List<Payment>> listPaymentsDetailsAddress() async {
+  // ANCHOR: list-payments-details-address
+  String address = "<Bitcoin address>";
+  ListPaymentsRequest req = ListPaymentsRequest(
+    details: ListPaymentDetails_Bitcoin(address: address),
+  );
+  List<Payment> paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
+  // ANCHOR_END: list-payments-details-address
+  return paymentsList;
+}
+
+Future<List<Payment>> listPaymentsDetailsDestination() async {
+  // ANCHOR: list-payments-details-destination
+  String destination = "<Liquid BIP21 or address>";
+  ListPaymentsRequest req = ListPaymentsRequest(
+    details: ListPaymentDetails_Liquid(destination: destination),
+  );
+  List<Payment> paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
+  // ANCHOR_END: list-payments-details-destination
+  return paymentsList;
+}

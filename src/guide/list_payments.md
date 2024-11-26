@@ -68,7 +68,10 @@ To view your payment history you can list all the sent and received payments mad
 </section>
 </custom-tabs>
 
-You can optionally filter payments by timestamp and type.
+## Filtering Payments
+
+When listing payment you can also filter and page the list results, by:
+### Type and timestamp
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -132,6 +135,142 @@ You can optionally filter payments by timestamp and type.
 
 ```cs,ignore
 {{#include ../../snippets/csharp/ListPayments.cs:list-payments-filtered}}
+```
+</section>
+</custom-tabs>
+
+### Bitcoin address
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/list_payments.rs:list-payments-details-address}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/ListPayments.swift:list-payments-details-address}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ListPayments.kt:list-payments-details-address}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/list_payments.ts:list-payments-details-address}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/list_payments.dart:list-payments-details-address}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/list_payments.py:list-payments-details-address}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/list_payments.go:list-payments-details-address}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ListPayments.cs:list-payments-details-address}}
+```
+</section>
+</custom-tabs>
+
+### Liquid destination
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/list_payments.rs:list-payments-details-destination}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/ListPayments.swift:list-payments-details-destination}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ListPayments.kt:list-payments-details-destination}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/list_payments.ts:list-payments-details-destination}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/list_payments.dart:list-payments-details-destination}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/list_payments.py:list-payments-details-destination}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/list_payments.go:list-payments-details-destination}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ListPayments.cs:list-payments-details-destination}}
 ```
 </section>
 </custom-tabs>
