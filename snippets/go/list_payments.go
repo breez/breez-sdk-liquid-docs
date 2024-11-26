@@ -49,7 +49,9 @@ func ListPaymentsFiltered(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 func ListPaymentsDetailsAddress(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: list-payments-details-address
 	address := "<Bitcoin address>"
-	var details breez_sdk_liquid.ListPaymentDetails = breez_sdk_liquid.ListPaymentDetailsBitcoin{Address: address}
+	var details breez_sdk_liquid.ListPaymentDetails = breez_sdk_liquid.ListPaymentDetailsBitcoin{
+		Address: address,
+	}
 	listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
 		Details: &details,
 	}
