@@ -10,7 +10,7 @@ async fn prepare_send_payment_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt11 invoice>".to_string(),
-            amount_sat: None,
+            amount: None,
         })
         .await?;
 

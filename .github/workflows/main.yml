@@ -11,10 +11,10 @@ on:
   workflow_dispatch:
     inputs:
       sdk-ref:
-        description: 'sdk commit/tag/branch reference. Defaults to 0.5.0-rc4'
+        description: 'sdk commit/tag/branch reference. Defaults to 0.5.0-rc8'
         required: false
         type: string
-        default: 0.5.0-rc4
+        default: 0.5.0-rc8
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -26,9 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # Used only for Rust snippets
-      sdk-ref: ${{ inputs.sdk-ref || '0.5.0-rc4' }}
+      sdk-ref: ${{ inputs.sdk-ref || '0.5.0-rc8' }}
       # Used for RN and Flutter snippets
-      package-version: '0.5.0-rc4'
+      package-version: '0.5.0-rc8'
     steps:
       - run: echo "set pre-setup output variables"
 
@@ -281,7 +281,7 @@ jobs:
 
     - uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: "16.1-beta"
+        xcode-version: "latest-stable"
           
     - name: Build
       working-directory: snippets/swift/BreezSDKExamples
