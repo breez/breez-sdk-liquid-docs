@@ -14,44 +14,44 @@ The following workflow is application specific and the steps detailed below refe
 ![pay](https://github.com/breez/breez-sdk-docs/assets/5394889/ef0a3111-3604-4789-89c6-23adbd7e5d52)
 
 ### Step 1: Registering for an LNURL-Pay service
-Use a POST request to the service endpoint:
-
-```
-https://app.domain/lnurlpay/[pubkey]
-```
-With the following payload:
+Use a POST request to the service endpoint ```https://app.domain/lnurlpay/[pubkey]``` with the following payload to register the app for an LNURL-Pay service:
 
 ```json
 {
- "time": "seconds since epoch",
- "webhook_url": "notification service webhook url",
- "signature": "signed payload"
+ "time": 1231006505, // Current UNIX timestamp
+ "webhook_url": "[notification service webhook URL]",
+ "username": "[optional username]",
+ "signature": "[signed message]"
 }
 ```
 
-to register the app for an LNURL-Pay service.
-The ```signature``` refers to the result of a message signed by the private key of the ```pubkey```, where the message comprises of: ```[time]-[webhook_url]``` where ```time``` and ```webhook_url``` are the payload fields.
+The ```signature``` refers to the result of a message signed by the private key of the ```pubkey```, where the message comprises the following text where ```time```, ```webhook_url``` and ```username``` are the payload fields: 
+
+```
+[time]-[webhook_url]
+``` 
+When the optional username is set:
+```
+[time]-[webhook_url]-[username]
+``` 
 
 The service responds with following payload: 
 ```json
 {
- "lnurl": "https://app.domain.com/lnurlp/[pubkey]", 
+ "lnurl": "[LNURL-pay encoded endpoint]", 
+ "lightning_address": "username@app.domain" // Only set when username is included
 }
 ```
 
 ### Step 2: Processing an LNURL-Pay request
-When an LNURL-Pay request is triggered a GET request to:
-```
-https://app.domain.com/lnurlp/[pubkey]
-```
-The service then sends a push notification to the app with the LNURL-Pay request and a callback URL. The payload may look like the following:
+When an LNURL-Pay GET request is received at ```https://app.domain/lnurlp/[identifier]``` (or ```https://app.domain/.well-known/lnurlp/[identifier]``` for lightning addresses) the service then sends a push notification to the app with the LNURL-Pay request and a callback URL. The payload may look like the following:
 
 ```json
 {
  "template": "lnurlpay_info",
  "data": {  
-  "reply_url": https://app.domain.com/respond/<request_id>
-  "callback_url": https://app.domain.com/lnurlpay/invoice
+  "reply_url": "https://app.domain/respond/[request_id]"
+  "callback_url": "https://app.domain/lnurlpay/[identifier]/invoice"
   }
 }
 ```
@@ -64,7 +64,7 @@ When the app receives the push notification, it parses the payload and then uses
 
 ```json
 {
- "callback": "https://app.domain.com/lnurlpay/invoice",
+ "callback": "https://app.domain/lnurlpay/[identifier]/invoice",
  "maxSendable": 10000,
  "minSendable": 1000,
  "metadata": "[[\"text/plain\",\"Pay to Breez\"]]",
@@ -76,9 +76,9 @@ The service receives the response from the app and forwards it to the sender.
 
 ### Step 4: Fetching a bolt11 invoice
 
-The sender fetches a bolt11 invoice by invoking a GET request to the callback_url with adding a specific amount as a query parameter. For example: 
+The sender fetches a bolt11 invoice by invoking a GET request to the ```callback``` URL with adding a specific amount as a query parameter. For example: 
 ```
-https://app.domain.com/lnurlpay/invoice?amount=1000
+https://app.domain/lnurlpay/[identifier]/invoice?amount=1000
 ```
 An additional push notification is triggered to send the invoice request to the app. Then the app responds with the bolt11 invoice data.
 
