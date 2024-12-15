@@ -609,7 +609,7 @@ dependencies = [
 [[package]]
 name = "boltz-client"
 version = "0.1.3"
-source = "git+https://github.com/SatoshiPortal/boltz-rust?branch=trunk#19e01071f5722c21f80ae9b34edef5c3972e9e0b"
+source = "git+https://github.com/SatoshiPortal/boltz-rust?branch=trunk#68ff15b0f80abfa54d8dca4c11c8c2794e4b6921"
 dependencies = [
  "bip39",
  "bitcoin 0.31.2",
@@ -629,8 +629,8 @@ dependencies = [
 
 [[package]]
 name = "breez-sdk-liquid"
-version = "0.5.0-rc8"
-source = "git+https://github.com/breez/breez-sdk-liquid?tag=0.5.0-rc8#c4c17e40a46da6d3c0b2c9c2f91e13d43e039ac2"
+version = "0.4.0-rc3"
+source = "git+https://github.com/breez/breez-sdk-liquid?rev=e3fa3d62d180e13cc8a9181a5ad28f4e1d18eb64#e3fa3d62d180e13cc8a9181a5ad28f4e1d18eb64"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -2895,7 +2895,7 @@ dependencies = [
 [[package]]
 name = "sdk-common"
 version = "0.6.2"
-source = "git+https://github.com/breez/breez-sdk?rev=5955216ec4ed003972b4473a77207dfb744da882#5955216ec4ed003972b4473a77207dfb744da882"
+source = "git+https://github.com/breez/breez-sdk?rev=e537feb8ed134bc3c7af5196e10a0a189dd36ac7#e537feb8ed134bc3c7af5196e10a0a189dd36ac7"
 dependencies = [
  "aes 0.8.4",
  "anyhow",
@@ -2908,6 +2908,7 @@ dependencies = [
  "lightning 0.0.118",
  "lightning-invoice 0.26.0",
  "log",
+ "percent-encoding",
  "prost",
  "querystring",
  "regex",
@@ -2961,7 +2962,7 @@ version = "0.29.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9465315bc9d4566e1724f0fffcbcc446268cb522e60f9a27bcded6b19c108113"
 dependencies = [
- "bitcoin_hashes 0.12.0",
+ "bitcoin_hashes 0.14.0",
  "secp256k1-sys 0.10.1",
 ]
 
@@ -3420,9 +3421,9 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.40.0"
+version = "1.42.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e2b070231665d27ad9ec9b8df639893f46727666c6767db40317fbe920a5d998"
+checksum = "5cec9b21b0450273377fc97bd4c33a8acffc8c996c987a7c5b319a0083707551"
 dependencies = [
  "backtrace",
  "bytes",

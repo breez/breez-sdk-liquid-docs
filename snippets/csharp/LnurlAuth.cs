@@ -11,7 +11,7 @@ public class LnurlAuthSnippets
 
         try
         {
-            var input = BreezSdkLiquidMethods.Parse(lnurlAuthUrl);
+            var input = sdk.Parse(lnurlAuthUrl);
             if (input is InputType.LnUrlAuth lnurla)
             {
                 var result = sdk.LnurlAuth(lnurla.data);
