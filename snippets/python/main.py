@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from src.parsing_inputs import configure_parsers, parse_input
 from src.getting_started import start, set_logger, fetch_balance, add_event_listener, remove_event_listener, SdkLogger, SdkListener
 from src.buy_btc import fetch_onchain_limits, prepare_buy_btc, buy_btc
 from src.fiat_currencies import list_fiat_currencies, fetch_fiat_rates
@@ -33,6 +34,10 @@ def main():
    # list payments
    list_payments(sdk)
    list_payments_filtered(sdk)
+
+   # parsing
+   parse_input(sdk)
+   configure_parsers()
 
    # lnurl
    auth(sdk)

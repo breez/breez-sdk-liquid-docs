@@ -1,5 +1,5 @@
 import logging
-from breez_sdk_liquid import BindingLiquidSdk, InputType
+from breez_sdk_liquid import BindingLiquidSdk, ConnectRequest, InputType, LiquidNetwork, connect, default_config
 
 def parse_input(sdk: BindingLiquidSdk):
     # ANCHOR: parse-inputs
@@ -24,3 +24,33 @@ def parse_input(sdk: BindingLiquidSdk):
         logging.error(error)
         raise
     # ANCHOR_END: parse-inputs
+
+def configure_parsers():
+    # ANCHOR: configure-external-parser
+    mnemonic = "<mnemonic words>"
+
+    # Create the default config, providing your Breez API key
+    config = default_config(network=LiquidNetwork.MAINNET, breez_api_key="<your-Breez-API-key>")
+
+    # Configure external parsers
+    config.external_input_parsers = [
+        {
+            "provider_id": "provider_a",
+            "input_regex": "^provider_a",
+            "parser_url": "https://parser-domain.com/parser?input=<input>"
+        },
+        {
+            "provider_id": "provider_b", 
+            "input_regex": "^provider_b",
+            "parser_url": "https://parser-domain.com/parser?input=<input>"
+        }
+    ]
+
+    try:
+        connect_request = ConnectRequest(config, mnemonic)
+        sdk = connect(connect_request)
+        return sdk
+    except Exception as error:
+        logging.error(error)
+        raise
+    # ANCHOR_END: configure-external-parser

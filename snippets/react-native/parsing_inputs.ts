@@ -1,6 +1,9 @@
 import {
   InputTypeVariant,
-  parse
+  parse,
+  defaultConfig,
+  LiquidNetwork,
+  connect
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const parseInputs = async () => {
@@ -41,4 +44,32 @@ const parseInputs = async () => {
       break
   }
   // ANCHOR_END: parse-inputs
+}
+
+const configureParsers = async () => {
+  // ANCHOR: configure-external-parser
+  const mnemonic = '<mnemonics words>'
+
+  // Create the default config, providing your Breez API key
+  const config = await defaultConfig(
+    LiquidNetwork.MAINNET,
+    '<your-Breez-API-key>'
+  )
+
+  // Configure external parsers
+  config.externalInputParsers = [
+    {
+      providerId: 'provider_a',
+      inputRegex: '^provider_a',
+      parserUrl: 'https://parser-domain.com/parser?input=<input>'
+    },
+    {
+      providerId: 'provider_b',
+      inputRegex: '^provider_b',
+      parserUrl: 'https://parser-domain.com/parser?input=<input>'
+    }
+  ]
+
+  await connect({ mnemonic, config })
+  // ANCHOR_END: configure-external-parser
 }

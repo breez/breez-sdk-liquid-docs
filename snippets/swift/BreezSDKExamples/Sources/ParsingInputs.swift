@@ -29,3 +29,31 @@ func parseInput(sdk: BindingLiquidSdk) {
     }
     // ANCHOR_END: parse-inputs
 }
+
+func configureParsers() throws -> BindingLiquidSdk? {
+    // ANCHOR: configure-external-parser
+    let mnemonic = "<mnemonic words>"
+
+    // Create the default config, providing your Breez API key
+    var config = try defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>")
+
+    // Configure external parsers
+    config.externalInputParsers = [
+        ExternalInputParser(
+            providerId: "provider_a",
+            inputRegex: "^provider_a",
+            parserUrl: "https://parser-domain.com/parser?input=<input>"
+        ),
+        ExternalInputParser(
+            providerId: "provider_b", 
+            inputRegex: "^provider_b",
+            parserUrl: "https://parser-domain.com/parser?input=<input>"
+        )
+    ]
+
+    let connectRequest = ConnectRequest(config: config, mnemonic: mnemonic)
+    let sdk = try? connect(req: connectRequest)
+    // ANCHOR_END: configure-external-parser
+
+    return sdk
+}
