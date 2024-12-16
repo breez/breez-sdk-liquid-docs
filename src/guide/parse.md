@@ -83,7 +83,7 @@ Configuring external parsers can only be done before [connecting](connecting.md#
 Multiple parsers can be configured, and each one is defined by:
 * **Provider ID**: an arbitrary id to identify the provider input type
 * **Input regex**: a regex expression that should, on a best-effort basis, identify inputs that can be processed by this parser
-* **Parser URL**: a URL containing the placeholder `{{input}}`
+* **Parser URL**: a URL containing the placeholder <code>&lcub;&lcub;input&rcub;&rcub;</code>
 
 When parsing an input that isn't recognized as one of the native input types, the SDK will check if the input conforms to any of the external parsers regex expressions. If so, it will make an HTTP `GET` request to the provided URL, replacing the placeholder with the input. If the input is recognized, the response should include in its body a string that can be parsed into one of the natively supported types.
 
@@ -92,4 +92,4 @@ When parsing an input that isn't recognized as one of the native input types, th
 * [**PicknPay QRs**](https://www.pnp.co.za/)
   * Maintainer: [MoneyBadger](https://www.moneybadger.co.za/)
   * Regex: `(.*)(za.co.electrum.picknpay)(.*)`
-  * URL: `https://staging.cryptoqr.net/.well-known/lnurlp/{{input}}`
+  * URL: <code>https://staging.cryptoqr.net/.well-known/lnurlp/&lcub;&lcub;input&rcub;&rcub;</code>
