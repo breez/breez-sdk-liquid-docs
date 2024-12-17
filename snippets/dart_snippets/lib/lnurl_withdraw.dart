@@ -8,7 +8,7 @@ Future<void> lnurlWithdraw() async {
   String lnurlWithdrawUrl =
       "lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4exctthd96xserjv9mn7um9wdekjmmw843xxwpexdnxzen9vgunsvfexq6rvdecx93rgdmyxcuxverrvcursenpxvukzv3c8qunsdecx33nzwpnvg6ryc3hv93nzvecxgcxgwp3h33lxk";
 
-  InputType inputType = await parse(input: lnurlWithdrawUrl);
+  InputType inputType = await breezSDKLiquid.instance!.parse(input: lnurlWithdrawUrl);
   if (inputType is InputType_LnUrlWithdraw) {
     BigInt amountMsat = inputType.data.minWithdrawable;
     LnUrlWithdrawRequest req = LnUrlWithdrawRequest(

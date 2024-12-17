@@ -1,6 +1,6 @@
 import logging
 import breez_sdk_liquid
-from breez_sdk_liquid import connect, connect_with_signer, default_config, BindingLiquidSdk, ConnectRequest, EventListener, LiquidNetwork, LogEntry, Logger, SdkEvent, Signer
+from breez_sdk_liquid import connect, connect_with_signer, default_config, BindingLiquidSdk, ConnectRequest, EventListener, LiquidNetwork, LogEntry, Logger, SdkEvent, Signer, ConnectWithSignerRequest
  
  # ANCHOR: self-signer
 def connect_with_self_signer(signer: Signer):

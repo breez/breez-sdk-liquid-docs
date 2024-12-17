@@ -6,9 +6,9 @@ use breez_sdk_liquid::prelude::*;
 async fn get_payment(sdk: Arc<LiquidSdk>) -> Result<Option<Payment>> {
     // ANCHOR: get-payment
     let payment_hash = "<payment hash>".to_string();
-    let payment = sdk.get_payment(&GetPaymentRequest::Lightning {
-        payment_hash
-    }).await?;
+    let payment = sdk
+        .get_payment(&GetPaymentRequest::Lightning { payment_hash })
+        .await?;
     // ANCHOR_END: get-payment
 
     Ok(payment)
@@ -49,9 +49,7 @@ async fn list_payments_details_address(sdk: Arc<LiquidSdk>) -> Result<Vec<Paymen
             to_timestamp: None,
             offset: None,
             limit: None,
-            details: Some(ListPaymentDetails::Bitcoin {
-                address,
-            }),            
+            details: Some(ListPaymentDetails::Bitcoin { address }),
         })
         .await?;
     // ANCHOR_END: list-payments-details-address
@@ -69,9 +67,7 @@ async fn list_payments_details_destination(sdk: Arc<LiquidSdk>) -> Result<Vec<Pa
             to_timestamp: None,
             offset: None,
             limit: None,
-            details: Some(ListPaymentDetails::Liquid {
-                destination,
-            }),            
+            details: Some(ListPaymentDetails::Liquid { destination }),
         })
         .await?;
     // ANCHOR_END: list-payments-details-addrdestinationess
