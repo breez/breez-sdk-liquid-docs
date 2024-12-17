@@ -1,5 +1,5 @@
 import logging
-from breez_sdk_liquid import BindingLiquidSdk, ConnectRequest, InputType, LiquidNetwork, connect, default_config
+from breez_sdk_liquid import BindingLiquidSdk, ConnectRequest, InputType, LiquidNetwork, connect, default_config, ExternalInputParser
 
 def parse_input(sdk: BindingLiquidSdk):
     # ANCHOR: parse-inputs
@@ -34,16 +34,16 @@ def configure_parsers():
 
     # Configure external parsers
     config.external_input_parsers = [
-        {
-            "provider_id": "provider_a",
-            "input_regex": "^provider_a",
-            "parser_url": "https://parser-domain.com/parser?input=<input>"
-        },
-        {
-            "provider_id": "provider_b", 
-            "input_regex": "^provider_b",
-            "parser_url": "https://parser-domain.com/parser?input=<input>"
-        }
+        ExternalInputParser(
+            provider_id="provider_a",
+            input_regex="^provider_a",
+            parser_url="https://parser-domain.com/parser?input=<input>"
+        ),
+        ExternalInputParser(
+            provider_id="provider_b",
+            input_regex="^provider_b",
+            parser_url="https://parser-domain.com/parser?input=<input>"
+        )
     ]
 
     try:
