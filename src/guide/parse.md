@@ -158,3 +158,7 @@ When parsing an input that isn't recognized as one of the native input types, th
   * Maintainer: [MoneyBadger](https://www.moneybadger.co.za/)
   * Regex: `(.*)(za.co.electrum.picknpay)(.*)`
   * URL: `https://staging.cryptoqr.net/.well-known/lnurlp/<input>`
+
+### Default external parsers
+
+The SDK ships with some embedded default external parsers. If you prefer not to use them, you can disable them in the SDK's configuration. See the available default parsers in the [API Documentation](https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/constant.DEFAULT_EXTERNAL_INPUT_PARSERS.html) by checking the source of the constant.
