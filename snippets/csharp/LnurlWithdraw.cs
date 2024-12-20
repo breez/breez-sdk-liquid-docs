@@ -11,7 +11,7 @@ public class LnurlWithdrawSnippets
 
         try
         {
-            var input = BreezSdkLiquidMethods.Parse(lnurlWithdrawUrl);
+            var input = sdk.Parse(lnurlWithdrawUrl);
             if (input is InputType.LnUrlWithdraw lnurlw)
             {
                 var amountMsat = lnurlw.data.minWithdrawable;

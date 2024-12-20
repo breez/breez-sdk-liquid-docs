@@ -10,6 +10,7 @@
   - [Listening to events](guide/events.md)
   - [Adding logging](guide/logging.md)
 - [Payment fundamentals](guide/payments.md)
+  - [Parsing inputs](guide/parse.md)
   - [Receiving payments](guide/receive_payment.md)
   - [Sending payments](guide/send_payment.md)
   - [Listing payments](guide/list_payments.md)
