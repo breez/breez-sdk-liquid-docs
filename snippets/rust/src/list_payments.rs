@@ -27,6 +27,7 @@ async fn list_payments_filtered(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
     let payments = sdk
         .list_payments(&ListPaymentsRequest {
             filters: Some(vec![PaymentType::Send]),
+            states: None,
             from_timestamp: Some(1696880000),
             to_timestamp: Some(1696959200),
             offset: Some(0),
@@ -45,6 +46,7 @@ async fn list_payments_details_address(sdk: Arc<LiquidSdk>) -> Result<Vec<Paymen
     let payments = sdk
         .list_payments(&ListPaymentsRequest {
             filters: None,
+            states: None,
             from_timestamp: None,
             to_timestamp: None,
             offset: None,
@@ -63,6 +65,7 @@ async fn list_payments_details_destination(sdk: Arc<LiquidSdk>) -> Result<Vec<Pa
     let payments = sdk
         .list_payments(&ListPaymentsRequest {
             filters: None,
+            states: None,
             from_timestamp: None,
             to_timestamp: None,
             offset: None,
