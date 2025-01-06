@@ -25,15 +25,16 @@ Use a POST request to the service endpoint ```https://app.domain/lnurlpay/[pubke
 }
 ```
 
-The ```signature``` refers to the result of a message signed by the private key of the ```pubkey```, where the message comprises the following text where ```time```, ```webhook_url``` and ```username``` are the payload fields: 
+The `signature` refers to the result of a message signed by the private key of the `pubkey`, where the message is comprised of the following text: 
 
 ```
 [time]-[webhook_url]
 ``` 
-When the optional username is set:
+or, when the optional `username` field is set:
 ```
 [time]-[webhook_url]-[username]
 ``` 
+where `time`, `webhook_url` and `username` are the payload fields. 
 
 The service responds with following payload: 
 ```json
@@ -76,7 +77,7 @@ The service receives the response from the app and forwards it to the sender.
 
 ### Step 4: Fetching a bolt11 invoice
 
-The sender fetches a bolt11 invoice by invoking a GET request to the ```callback``` URL with adding a specific amount as a query parameter. For example: 
+The sender fetches a bolt11 invoice by invoking a GET request to the ```callback``` URL when a specific amount is added as a query parameter. For example: 
 ```
 https://app.domain/lnurlpay/[identifier]/invoice?amount=1000
 ```
