@@ -337,4 +337,60 @@ To reduce the likelihood of this extra fee review step being necessary, you can 
 {{#include ../../snippets/rust/src/receive_onchain.rs:handle-payments-waiting-fee-acceptance}}
 ```
 </section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/ReceiveOnchain.swift:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ReceiveOnchain.kt:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/receive_onchain.ts:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/receive_onchain.dart:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_onchain.py:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_onchain.go:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceiveOnchain.cs:handle-payments-waiting-fee-acceptance}}
+```
+</section>
 </custom-tabs>

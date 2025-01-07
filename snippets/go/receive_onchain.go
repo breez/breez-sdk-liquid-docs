@@ -45,3 +45,43 @@ func RecommendedFees(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	}
 	// ANCHOR_END: recommended-fees
 }
+
+func HandlePaymentsWaitingFeeAcceptance(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: handle-payments-waiting-fee-acceptance
+	// Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+	request := breez_sdk_liquid.ListPaymentsRequest{
+		States: &[]breez_sdk_liquid.PaymentState{breez_sdk_liquid.PaymentStateWaitingFeeAcceptance},
+	}
+
+	paymentsWaitingFeeAcceptance, err := sdk.ListPayments(request)
+	if err != nil {
+		return
+	}
+
+	for _, payment := range paymentsWaitingFeeAcceptance {
+		bitcoinPayment, ok := payment.Details.(breez_sdk_liquid.PaymentDetailsBitcoin)
+		if !ok {
+			// Only Bitcoin payments can be `WaitingFeeAcceptance`
+			continue
+		}
+
+		fetchFeesRequest := breez_sdk_liquid.FetchPaymentProposedFeesRequest{
+			SwapId: bitcoinPayment.SwapId,
+		}
+
+		fetchFeesResponse, err := sdk.FetchPaymentProposedFees(fetchFeesRequest)
+		if err != nil {
+			continue
+		}
+
+		log.Printf("Payer sent %d and currently proposed fees are %d",
+			fetchFeesResponse.PayerAmountSat, fetchFeesResponse.FeesSat)
+
+		// If the user is ok with the fees, accept them, allowing the payment to proceed
+		acceptFeesRequest := breez_sdk_liquid.AcceptPaymentProposedFeesRequest{
+			Response: fetchFeesResponse,
+		}
+		sdk.AcceptPaymentProposedFees(acceptFeesRequest)
+	}
+	// ANCHOR_END: handle-payments-waiting-fee-acceptance
+}

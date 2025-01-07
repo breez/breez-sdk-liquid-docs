@@ -185,7 +185,9 @@ extension ConfigCopyWith on liquid_sdk.Config {
     liquid_sdk.LiquidNetwork? network,
     BigInt? paymentTimeoutSec,
     int? zeroConfMinFeeRateMsat,
+    String? syncServiceUrl,
     List<liquid_sdk.ExternalInputParser>? externalInputParsers,
+    bool? useDefaultExternalInputParsers,
   }) {
     return liquid_sdk.Config(
       liquidElectrumUrl: liquidElectrumUrl ?? this.liquidElectrumUrl,
@@ -195,6 +197,8 @@ extension ConfigCopyWith on liquid_sdk.Config {
       network: network ?? this.network,
       paymentTimeoutSec: paymentTimeoutSec ?? this.paymentTimeoutSec,
       zeroConfMinFeeRateMsat: zeroConfMinFeeRateMsat ?? this.zeroConfMinFeeRateMsat,
+      syncServiceUrl: syncServiceUrl ?? this.syncServiceUrl,
+      useDefaultExternalInputParsers: useDefaultExternalInputParsers ?? this.useDefaultExternalInputParsers,
       externalInputParsers: externalInputParsers ?? this.externalInputParsers,
     );
   }

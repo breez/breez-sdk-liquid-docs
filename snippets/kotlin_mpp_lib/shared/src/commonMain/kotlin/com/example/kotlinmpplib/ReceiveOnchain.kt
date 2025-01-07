@@ -43,4 +43,36 @@ class ReceiveOnchain {
         }
         // ANCHOR_END: recommended-fees
     }
+
+    fun handlePaymentsWaitingFeeAcceptance(sdk: BindingLiquidSdk) {
+        // ANCHOR: handle-payments-waiting-fee-acceptance
+        try {
+            // Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+            val paymentsWaitingFeeAcceptance = sdk.listPayments(ListPaymentsRequest(
+                states = listOf(PaymentState.WaitingFeeAcceptance)
+            ))
+
+            for (payment in paymentsWaitingFeeAcceptance) {
+                when (val details = payment.details) {
+                    is PaymentDetails.Bitcoin -> {
+                        val fetchFeesResponse = sdk.fetchPaymentProposedFees(
+                            FetchPaymentProposedFeesRequest(details.swapId)
+                        )
+
+                        println("Payer sent ${fetchFeesResponse.payerAmountSat} and currently proposed fees are ${fetchFeesResponse.feesSat}")
+
+                        // If the user is ok with the fees, accept them, allowing the payment to proceed
+                        sdk.acceptPaymentProposedFees(AcceptPaymentProposedFeesRequest(fetchFeesResponse))
+                    }
+                    else -> {
+                        // Only Bitcoin payments can be `WaitingFeeAcceptance`
+                        continue
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: handle-payments-waiting-fee-acceptance
+    }
 }
