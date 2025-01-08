@@ -253,7 +253,7 @@ receive method, optionally specifying a description.
 
 <div class="warning">
 <h4>Developer note</h4>
-When waiting for a payment to be received, it is enough to wait for a <code>PaymentWaitingNotification</code> event before displaying a successful payment feedback in the UI. At this point the transaction is broadcast and will be shortly confirmed.
+When waiting for a payment to be received, it is enough to wait for a <code>PaymentWaitingConfirmation</code> event before displaying a successful payment feedback in the UI. At this point the transaction is broadcast and will be shortly confirmed.
 </div>
 
 <custom-tabs category="lang">
