@@ -251,6 +251,11 @@ receive method, optionally specifying a description.
 - For Bitcoin/Liquid BIP21 payments, it will be encoded in the URI as the `message` field.
 - For plain Liquid payments, the description has no effect.
 
+<div class="warning">
+<h4>Developer note</h4>
+When waiting for a payment to be received, it is enough to wait for a <code>PaymentWaitingConfirmation</code> event before displaying a successful payment feedback in the UI. At this point the transaction is broadcast and will be shortly confirmed.
+</div>
+
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>
