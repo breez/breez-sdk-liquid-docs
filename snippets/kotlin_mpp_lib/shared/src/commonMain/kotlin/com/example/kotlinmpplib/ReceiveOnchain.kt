@@ -49,7 +49,7 @@ class ReceiveOnchain {
         try {
             // Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
             val paymentsWaitingFeeAcceptance = sdk.listPayments(ListPaymentsRequest(
-                states = listOf(PaymentState.WaitingFeeAcceptance)
+                states = listOf(PaymentState.WAITING_FEE_ACCEPTANCE)
             ))
 
             for (payment in paymentsWaitingFeeAcceptance) {
