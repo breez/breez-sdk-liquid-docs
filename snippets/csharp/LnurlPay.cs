@@ -12,7 +12,7 @@ public class LnurlPaySnippets
 
         try
         {
-            var input = BreezSdkLiquidMethods.Parse(lnurlPayUrl);
+            var input = sdk.Parse(lnurlPayUrl);
             if (input is InputType.LnUrlPay lnurlp)
             {
                 var amountMsat = lnurlp.data.minSendable;

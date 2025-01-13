@@ -35,9 +35,9 @@ public class GettingStartedSnippets
         try
         {
             var info = sdk.GetInfo();
-            var balanceSat = info?.balanceSat;
-            var pendingSendSat = info?.pendingSendSat;
-            var pendingReceiveSat = info?.pendingReceiveSat;
+            var balanceSat = info?.walletInfo.balanceSat;
+            var pendingSendSat = info?.walletInfo.pendingSendSat;
+            var pendingReceiveSat = info?.walletInfo.pendingReceiveSat;
         }
         catch (Exception)
         {

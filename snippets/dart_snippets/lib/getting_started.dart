@@ -25,10 +25,7 @@ Future<void> initializeSDK() async {
   String mnemonic = "<mnemonic words>";
 
   // Create the default config, providing your Breez API key
-  Config config = defaultConfig(
-    network: LiquidNetwork.mainnet,
-    breezApiKey: "<your-Breez-API-key>"
-  );
+  Config config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>");
 
   // Customize the config object according to your needs
   config = config.copyWith(workingDir: "path to an existing directory");
@@ -43,9 +40,9 @@ Future<void> initializeSDK() async {
 Future<void> fetchBalance(String lspId) async {
   // ANCHOR: fetch-balance
   GetInfoResponse? info = await breezSDKLiquid.instance!.getInfo();
-  BigInt balanceSat = info.balanceSat;
-  BigInt pendingSendSat = info.pendingSendSat;
-  BigInt pendingReceiveSat = info.pendingReceiveSat;
+  BigInt balanceSat = info.walletInfo.balanceSat;
+  BigInt pendingSendSat = info.walletInfo.pendingSendSat;
+  BigInt pendingReceiveSat = info.walletInfo.pendingReceiveSat;
   // ANCHOR_END: fetch-balance
   print(balanceSat);
   print(pendingSendSat);

@@ -22,9 +22,9 @@ func gettingStarted() throws -> BindingLiquidSdk? {
 func gettingStartedNodeInfo(sdk: BindingLiquidSdk) {
     // ANCHOR: fetch-balance
     if let info = try? sdk.getInfo() {
-        let balanceSat = info.balanceSat
-        let pendingSendSat = info.pendingSendSat
-        let pendingReceiveSat = info.pendingReceiveSat
+        let balanceSat = info.walletInfo.balanceSat
+        let pendingSendSat = info.walletInfo.pendingSendSat
+        let pendingReceiveSat = info.walletInfo.pendingReceiveSat
 
         print(balanceSat)
         print(pendingSendSat)
