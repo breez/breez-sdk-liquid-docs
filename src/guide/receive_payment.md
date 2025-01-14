@@ -93,8 +93,12 @@ When receiving via Lightning, we generate an invoice to be paid.  Note that the 
 ### Bitcoin
 When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.
 
+The `amount` field is optional when preparing a Bitcoin payment. However, if no amount is provided, the returned fees will only be an estimation. This is because:
 
-**Note:** The amount field is currently mandatory when paying via Bitcoin.
+1. The fees have an amount-dependent component that can only be determined once the sender initiates the payment
+2. The fees also depend on current onchain fee conditions, which may change between the time of preparation and actual payment
+
+If the onchain fee rate increases between preparation and payment time, the payment will be put on hold until the user explicitly confirms the new fees. To learn more about this, see the [Amountless Bitcoin Payments](#amountless-bitcoin-payments) section below.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -165,7 +169,7 @@ When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.
 <div class="warning">
 <h4>Developer note</h4>
 
-The above checks include validating against maximum and minimum limits. Your application's users must be informed of these limits because if the amount transferred to the swap address falls outside this valid range, the funds will not be successfully received via the normal swap flow. In such cases, a manual refund will be necessary.
+The above checks include validating against maximum and minimum limits. **Even when no specific amount is provided**, the amount transferred to the swap address must still fall within these limits. Your application's users must be informed of these limits because if the amount transferred falls outside this valid range, the funds will not be successfully received via the normal swap flow. In such cases, a manual refund will be necessary.
 For further instructions on how to execute a manual refund, see the section on [refunding payments](refund_payment.md#bitcoin).
 
 </div>
@@ -313,6 +317,80 @@ receive method, optionally specifying a description.
 
 ```cs,ignore
 {{#include ../../snippets/csharp/ReceivePayment.cs:receive-payment}}
+```
+</section>
+</custom-tabs>
+
+### Amountless Bitcoin Payments
+
+To receive a Bitcoin payment that does not specify an amount, it may be necessary to explicitly accept the associated fees. This will be the case when the onchain fee rate increases between preparation and payment time.
+
+Alternatively, if the fees are considered too high, the user can either choose to wait for them to come down or outright refund the payment. To learn more about refunds, see the [Refunding payments](./refund_payment.md#refunding-payments) section.
+
+To reduce the likelihood of this extra fee review step being necessary, you can configure a fee rate leeway in the SDK's configuration that will automatically accept slightly higher fees within the specified tolerance.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/receive_onchain.rs:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/ReceiveOnchain.swift:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ReceiveOnchain.kt:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/receive_onchain.ts:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/receive_onchain.dart:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_onchain.py:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_onchain.go:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceiveOnchain.cs:handle-payments-waiting-fee-acceptance}}
 ```
 </section>
 </custom-tabs>

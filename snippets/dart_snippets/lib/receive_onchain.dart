@@ -39,3 +39,40 @@ Future recommendedFees() async {
   // ANCHOR_END: recommended-fees
   print(fees);
 }
+
+Future<void> handlePaymentsWaitingFeeAcceptance() async {
+  // ANCHOR: handle-payments-waiting-fee-acceptance
+  // Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+  List<Payment> paymentsWaitingFeeAcceptance = await breezSDKLiquid.instance!.listPayments(
+    req: ListPaymentsRequest(
+      states: [PaymentState.waitingFeeAcceptance],
+    ),
+  );
+
+  for (Payment payment in paymentsWaitingFeeAcceptance) {
+    if (payment.details is! PaymentDetails_Bitcoin) {
+      // Only Bitcoin payments can be `WaitingFeeAcceptance`
+      continue;
+    }
+
+    PaymentDetails_Bitcoin details = payment.details as PaymentDetails_Bitcoin;
+    FetchPaymentProposedFeesResponse fetchFeesResponse =
+        await breezSDKLiquid.instance!.fetchPaymentProposedFees(
+      req: FetchPaymentProposedFeesRequest(
+        swapId: details.swapId,
+      ),
+    );
+
+    print(
+      "Payer sent ${fetchFeesResponse.payerAmountSat} and currently proposed fees are ${fetchFeesResponse.feesSat}",
+    );
+
+    // If the user is ok with the fees, accept them, allowing the payment to proceed
+    await breezSDKLiquid.instance!.acceptPaymentProposedFees(
+      req: AcceptPaymentProposedFeesRequest(
+        response: fetchFeesResponse,
+      ),
+    );
+  }
+  // ANCHOR_END: handle-payments-waiting-fee-acceptance
+}

@@ -8,9 +8,9 @@ from src.lnurl_auth import auth
 from src.lnurl_pay import pay
 from src.lnurl_withdraw import withdraw
 from src.pay_onchain import fetch_pay_onchain_limits, prepare_pay_onchain, prepare_pay_onchain_fee_rate, start_pay_onchain
-from src.receive_onchain import list_refundables, execute_refund, rescan_swaps
+from src.receive_onchain import list_refundables, execute_refund, rescan_swaps, recommended_fees, handle_payments_waiting_fee_acceptance
 from src.receive_payment import prepare_receive_lightning, prepare_receive_onchain, prepare_receive_liquid, receive_payment
-from src.send_payment import prepare_send_payment_lightning, prepare_send_payment_liquid, send_payment
+from src.send_payment import prepare_send_payment_lightning_bolt11, prepare_send_payment_lightning_bolt12, prepare_send_payment_liquid, send_payment
 from src.webhook import register_webhook, unregister_webhook
 
 
@@ -54,6 +54,8 @@ def main():
    refundables = list_refundables(sdk)
    execute_refund(sdk, 1, refundables[0])
    rescan_swaps(sdk)
+   recommended_fees(sdk)
+   handle_payments_waiting_fee_acceptance(sdk)
 
    # receive payment
    prepare_response = prepare_receive_lightning(sdk)
@@ -62,7 +64,8 @@ def main():
    receive_payment(sdk, prepare_response)
 
    # send payment
-   prepare_response = prepare_send_payment_lightning(sdk)
+   prepare_response = prepare_send_payment_lightning_bolt11(sdk)
+   prepare_response = prepare_send_payment_lightning_bolt12(sdk)
    prepare_send_payment_liquid(sdk)
    send_payment(sdk, prepare_response)
 

@@ -3,7 +3,12 @@ import {
   rescanOnchainSwaps,
   type RefundableSwap,
   refund,
-  recommendedFees
+  recommendedFees,
+  listPayments,
+  fetchPaymentProposedFees,
+  acceptPaymentProposedFees,
+  PaymentState,
+  PaymentDetailsVariant
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const exampleListRefundables = async () => {
@@ -47,4 +52,33 @@ const exampleRecommendedFees = async () => {
     console.error(err)
   }
   // ANCHOR_END: recommended-fees
+}
+
+const exampleHandlePaymentsWaitingFeeAcceptance = async () => {
+  // ANCHOR: handle-payments-waiting-fee-acceptance
+  // Payments on hold waiting for fee acceptance have the state WAITING_FEE_ACCEPTANCE
+  const paymentsWaitingFeeAcceptance = await listPayments({
+    states: [PaymentState.WAITING_FEE_ACCEPTANCE]
+  })
+
+  for (const payment of paymentsWaitingFeeAcceptance) {
+    if (payment.details.type !== PaymentDetailsVariant.BITCOIN) {
+      // Only Bitcoin payments can be `WAITING_FEE_ACCEPTANCE`
+      continue
+    }
+
+    const fetchFeesResponse = await fetchPaymentProposedFees({
+      swapId: payment.details.swapId
+    })
+
+    console.info(
+      `Payer sent ${fetchFeesResponse.payerAmountSat} and currently proposed fees are ${fetchFeesResponse.feesSat}`
+    )
+
+    // If the user is ok with the fees, accept them, allowing the payment to proceed
+    await acceptPaymentProposedFees({
+      response: fetchFeesResponse
+    })
+  }
+  // ANCHOR_END: handle-payments-waiting-fee-acceptance
 }
