@@ -2,7 +2,7 @@
 language = "en"
 multilingual = true
 src = "src"
-title = "Breez SDK - Liquid"
+title = "Breez SDK - Nodeless"
 
 [output.html]
 theme = "theme"
