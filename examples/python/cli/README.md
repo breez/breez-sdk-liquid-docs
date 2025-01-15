@@ -1,7 +1,7 @@
-# Breez SDK - *Liquid* 
+# Breez SDK - Nodeless *(Liquid Implementation)* 
 ## Python CLI Example
 
-This is a basic CLI to send and receive payments in Python using Breez SDK - *Liquid*
+This is a basic CLI to send and receive payments in Python using Breez SDK - Nodeless *(Liquid Implementation)*
 
 ### Setup
 

@@ -1,6 +1,6 @@
 # Receiving payments using LNURL-Pay
 
-Breez SDK - *Liquid* users have the ability to receive Lightning payments using [LNURL-Pay](https://github.com/lnurl/luds/blob/luds/06.md).
+Breez SDK - Nodeless *(Liquid Implementation)* users have the ability to receive Lightning payments using [LNURL-Pay](https://github.com/lnurl/luds/blob/luds/06.md).
 
 LNURL-Pay requires a web service that serves LNURL-Pay requests. This service needs to communicate with the SDK in order to fetch the necessary metadata data and the associated payment request.
 To interact with the SDK, the service uses a simple protocol over push notifications:

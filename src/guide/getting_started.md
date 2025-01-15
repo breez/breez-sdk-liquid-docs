@@ -1,6 +1,6 @@
 # Getting started
 
-Integrating Breez SDK - *Liquid* into your application takes just a few minutes. Follow these steps to get started:
+Integrating Breez SDK - Nodeless *(Liquid Implementation)* into your application takes just a few minutes. Follow these steps to get started:
 - **[Installing the SDK](/guide/install.md)**
 - **[Connecting](/guide/connecting.md)**
 - **[Fetching the Wallet State](/guide/wallet_state.md)**
@@ -8,7 +8,7 @@ Integrating Breez SDK - *Liquid* into your application takes just a few minutes.
 - **[Adding logging](/guide/logging.md)**
 
 ## API Key
-The _Liquid_ Breez API key must be set in order for the SDK to work. 
+The _Nodeless_ Breez API key must be set in order for the SDK to work. 
 You can request one for free by filling our form <a target="_blank" href="{{api_key_form_uri}}">here</a>.
 
 **Note:** This is not the same as the Greenlight Breez API key, so it cannot be reused.
