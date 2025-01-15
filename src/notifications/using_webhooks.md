@@ -1,6 +1,6 @@
 # Using Webhooks
 
-## Registering a Webhook
+## Registering a Webhook <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.register_webhook">API docs</a>
 
 Once your vendor [NDS is set up](setup_nds.md) and can accept POST requests from the SDK services, you can register the webhook URL within your main application by calling the register webhook API as follows
 
@@ -72,7 +72,7 @@ Once your vendor [NDS is set up](setup_nds.md) and can accept POST requests from
 
 When the NDS receives a POST request for the registered webhook URL, it will forward the request data via push notification to the applications Service Extension (iOS) or Foreground Service (Android) to be handled by the [Notification Plugin](setup_plugin.md).
 
-## Unregistering a Webhook
+## Unregistering a Webhook <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.unregister_webhook">API docs</a>
 
 When a webhook is no longer needed you can unregister the webhook as follows:
 

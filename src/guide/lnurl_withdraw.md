@@ -1,6 +1,4 @@
-# LNURL-Withdraw
-
-## Usage
+# LNURL-Withdraw <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.lnurl_withdraw">API docs</a>
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>

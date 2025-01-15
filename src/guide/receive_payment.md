@@ -11,7 +11,7 @@ Once the SDK is initialized, you can directly begin receiving payments. The rece
 Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
 </div>
 
-## Preparing Payments
+## Preparing Payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_receive_payment">API docs</a>
 During the prepare step, the SDK ensures that the inputs are valid with respect to the specified payment method,
 and also returns the relative fees related to the payment so they can be confirmed.
 
@@ -242,7 +242,7 @@ To generate a BIP21 address, all you have to do is specify a payer amount.
 </section>
 </custom-tabs>
 
-## Receiving Payments
+## Receiving Payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.receive_payment">API docs</a>
 Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the
 receive method, optionally specifying a description.
 

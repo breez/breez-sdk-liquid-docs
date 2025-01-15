@@ -7,7 +7,7 @@ You can send funds from the Breez SDK wallet to an on-chain address as follows.
 Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
 </div>
 
-## Preparing Payments
+## Preparing Payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_pay_onchain">API docs</a>
 When sending an onchain payment, the swap limits for sending onchain need to be first checked.
 
 <custom-tabs category="lang">
@@ -292,7 +292,7 @@ When you want send all funds from your wallet to another address.
 </section>
 </custom-tabs>
 
-## Sending Payments
+## Sending Payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.pay_onchain">API docs</a>
 
 Once you checked the amounts and the fees are acceptable, you can continue with sending the payment.
 
