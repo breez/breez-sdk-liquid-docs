@@ -323,7 +323,7 @@ Once a receive payment is initiated, you can follow and react to the different p
 ### Lightning
 | Event | Description | UX Suggestion |
 | --- | --- | --- |
-| **PaymentPending** | The swap service is holding an incoming payment for the Lightning invoice and has broadcast a lockup transaction. The SDK has seen the lockup transaction and will broadcast the claim transaction, either when the lockup transaction is confirmed or if it is accepted as a zero-conf payment. | Show payment as pending. |
+| **PaymentPending** | The swap service is holding an incoming payment for the Lightning invoice and has broadcast a lockup transaction. The SDK has seen the lockup transaction and will broadcast the claim transaction, either when the lockup transaction is confirmed or immediately if it is accepted as a zero-conf payment. | Show payment as pending. |
 | **PaymentWaitingConfirmation** | The claim transaction has been broadcast or a direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) has been seen. | Display successful payment feedback. |
 | **PaymentSucceeded** | The claim transaction or direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) is confirmed. | Show payment as complete. |
 | **PaymentFailed** | The swap has failed from one of several reasons. Either the swap/invoice has expired or the lockup transaction failed to broadcast. |  |
@@ -332,7 +332,7 @@ Once a receive payment is initiated, you can follow and react to the different p
 | Event | Description | UX Suggestion |
 | --- | --- | --- |
 | **PaymentWaitingFeeAcceptance** | The swap service has seen the Bitcoin lockup transaction for an amountless swap and the associated fees need to be accepted. If the fees are within the configured leeway they will be automatically accepted, otherwise the user has to explicitly accept the fees. See [Amountless Bitcoin Payments](#amountless-bitcoin-payments). | Allow the user to review fees for this payment. |
-| **PaymentPending** | The swap service has seen the Bitcoin lockup transaction and the amount is accepted. Once the SDK has seen the Liquid lockup transaction it will broadcast the Liquid claim transaction, either when the Liquid lockup transaction is confirmed or if it is accepted as a zero-conf payment. | Show payment as pending. |
+| **PaymentPending** | The swap service has seen the Bitcoin lockup transaction and the amount is accepted. Once the SDK has seen the Liquid lockup transaction, it will broadcast the Liquid claim transaction, either when the Liquid lockup transaction is confirmed or immediately if it is accepted as a zero-conf payment. | Show payment as pending. |
 | **PaymentWaitingConfirmation** | The Liquid claim transaction has been broadcast and is waiting confirmation. | Display successful payment feedback. |
 | **PaymentSucceeded** | The Liquid claim transaction is confirmed. | Show payment as complete. |
 | **PaymentFailed** | The swap has failed from one of several reasons. Either the swap has expired, the fee was not accepted or the Liquid lockup transaction failed to broadcast. If a Bitcoin lockup transaction was broadcast then the funds will need to be refunded, see [Refunding payments](/guide/refund_payment.html). |  |
