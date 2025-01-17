@@ -3,7 +3,7 @@
 Integrating Breez SDK - Nodeless *(Liquid Implementation)* into your application takes just a few minutes. Follow these steps to get started:
 - **[Installing the SDK](/guide/install.md)**
 - **[Connecting](/guide/connecting.md)**
-- **[Fetching the Wallet State](/guide/wallet_state.md)**
+- **[Fetching the balance](/guide/wallet_state.md)**
 - **[Listening to events](/guide/events.md)**
 - **[Adding logging](/guide/logging.md)**
 
