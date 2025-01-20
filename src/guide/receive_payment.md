@@ -255,11 +255,6 @@ receive method, optionally specifying a description.
 - For Bitcoin/Liquid BIP21 payments, it will be encoded in the URI as the `message` field.
 - For plain Liquid payments, the description has no effect.
 
-<div class="warning">
-<h4>Developer note</h4>
-When waiting for a payment to be received, it is enough to wait for a <code>PaymentWaitingConfirmation</code> event before displaying a successful payment feedback in the UI. At this point the transaction is broadcast and will be shortly confirmed.
-</div>
-
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>
@@ -399,3 +394,31 @@ To reduce the likelihood of this extra fee review step being necessary, you can 
 ```
 </section>
 </custom-tabs>
+
+## Event Flows
+Once a receive payment is initiated, you can follow and react to the different payment events using the guide below for each payment method. See [Listening to events](/guide/events.html) for how to subscribe to events.
+
+### Lightning
+| Event | Description | UX Suggestion |
+| --- | --- | --- |
+| **PaymentPending** | The swap service is holding an incoming payment for the Lightning invoice and has broadcast a lockup transaction. The SDK has seen the lockup transaction and will broadcast the claim transaction, either when the lockup transaction is confirmed or immediately if it is accepted as a zero-conf payment. | Show payment as pending. |
+| **PaymentWaitingConfirmation** | The claim transaction has been broadcast or a direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) has been seen. | Display successful payment feedback. |
+| **PaymentSucceeded** | The claim transaction or direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) is confirmed. | Show payment as complete. |
+| **PaymentFailed** | The swap has failed from one of several reasons. Either the swap/invoice has expired or the lockup transaction failed to broadcast. |  |
+
+### Bitcoin
+| Event | Description | UX Suggestion |
+| --- | --- | --- |
+| **PaymentWaitingFeeAcceptance** | The swap service has seen the Bitcoin lockup transaction for an amountless swap and the associated fees need to be accepted. If the fees are within the configured leeway they will be automatically accepted, otherwise the user has to explicitly accept the fees. See [Amountless Bitcoin Payments](#amountless-bitcoin-payments). | Allow the user to review fees for this payment. |
+| **PaymentPending** | The swap service has seen the Bitcoin lockup transaction and the amount is accepted. Once the SDK has seen the Liquid lockup transaction, it will broadcast the Liquid claim transaction, either when the Liquid lockup transaction is confirmed or immediately if it is accepted as a zero-conf payment. | Show payment as pending. |
+| **PaymentWaitingConfirmation** | The Liquid claim transaction has been broadcast and is waiting confirmation. | Display successful payment feedback. |
+| **PaymentSucceeded** | The Liquid claim transaction is confirmed. | Show payment as complete. |
+| **PaymentFailed** | The swap has failed from one of several reasons. Either the swap has expired, the fee was not accepted or the Liquid lockup transaction failed to broadcast. If a Bitcoin lockup transaction was broadcast then the funds will need to be refunded, see [Refunding payments](/guide/refund_payment.html). |  |
+| **PaymentRefundPending** | A Bitcoin refund transaction has been broadcast and is waiting confirmation. |  |
+
+### Liquid
+| Event | Description | UX Suggestion |
+| --- | --- | --- |
+| **PaymentWaitingConfirmation** | The transaction has been seen. | Display successful payment feedback. |
+| **PaymentSucceeded** | The transaction is confirmed. | Show payment as complete. |
+
