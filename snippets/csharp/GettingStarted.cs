@@ -35,9 +35,9 @@ public class GettingStartedSnippets
         try
         {
             var info = sdk.GetInfo();
-            var balanceSat = info?.balanceSat;
-            var pendingSendSat = info?.pendingSendSat;
-            var pendingReceiveSat = info?.pendingReceiveSat;
+            var balanceSat = info?.walletInfo?.balanceSat;
+            var pendingSendSat = info?.walletInfo?.pendingSendSat;
+            var pendingReceiveSat = info?.walletInfo?.pendingReceiveSat;
         }
         catch (Exception)
         {
@@ -45,7 +45,7 @@ public class GettingStartedSnippets
         }
         // ANCHOR_END: fetch-balance
     }
-    
+
     // ANCHOR: logging
     public class SdkLogger : Logger
     {
@@ -55,7 +55,8 @@ public class GettingStartedSnippets
         }
     }
 
-    public void SetLogger(SdkLogger logger) {
+    public void SetLogger(SdkLogger logger)
+    {
         try
         {
             BreezSdkLiquidMethods.SetLogger(logger);
@@ -70,7 +71,7 @@ public class GettingStartedSnippets
     // ANCHOR: add-event-listener
     public class SdkListener : EventListener
     {
-        public void OnEvent(SdkEvent e) 
+        public void OnEvent(SdkEvent e)
         {
             Console.WriteLine($"Received event {e}");
         }
@@ -104,7 +105,7 @@ public class GettingStartedSnippets
         }
     }
     // ANCHOR_END: remove-event-listener
-    
+
     // ANCHOR: disconnect
     public void Disconnect(BindingLiquidSdk sdk)
     {

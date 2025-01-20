@@ -25,8 +25,8 @@ public class ReceiveOnchainSnippets
         {
             sdk.Refund(
                 new RefundRequest(
-                    refundable.swapAddress, 
-                    destinationAddress, 
+                    refundable.swapAddress,
+                    destinationAddress,
                     feeRateSatPerVbyte));
         }
         catch (Exception)
@@ -62,5 +62,36 @@ public class ReceiveOnchainSnippets
             // Handle error
         }
         // ANCHOR_END: recommended-fees
+    }
+
+    public void HandlePaymentsWaitingFeeAcceptance(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: handle-payments-waiting-fee-acceptance
+        // Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+        var paymentsWaitingFeeAcceptance = sdk.ListPayments(
+            new ListPaymentsRequest()
+            {
+                states = new List<PaymentState>() { PaymentState.WaitingFeeAcceptance }
+            });
+
+        foreach (var payment in paymentsWaitingFeeAcceptance)
+        {
+            if (payment.details is not PaymentDetails.Bitcoin bitcoinDetails)
+            {
+                // Only Bitcoin payments can be `WaitingFeeAcceptance`
+                continue;
+            }
+
+            var fetchFeesResponse = sdk.FetchPaymentProposedFees(
+                new FetchPaymentProposedFeesRequest(bitcoinDetails.swapId));
+
+            Console.WriteLine(
+                $"Payer sent {fetchFeesResponse.payerAmountSat} and currently proposed fees are {fetchFeesResponse.feesSat}");
+
+            // If the user is ok with the fees, accept them, allowing the payment to proceed
+            sdk.AcceptPaymentProposedFees(
+                new AcceptPaymentProposedFeesRequest(fetchFeesResponse));
+        }
+        // ANCHOR_END: handle-payments-waiting-fee-acceptance
     }
 }

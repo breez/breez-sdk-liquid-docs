@@ -158,4 +158,3 @@ This is especially useful in cases where the SDK has to be re-instantiated, for 
 ```
 </section>
 </custom-tabs>
-
