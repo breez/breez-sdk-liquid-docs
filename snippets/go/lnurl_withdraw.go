@@ -12,7 +12,7 @@ func LnurlWithdraw(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// lnurlw://domain.com/lnurl-withdraw?key=val
 	lnurlWithdrawUrl := "lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4exctthd96xserjv9mn7um9wdekjmmw843xxwpexdnxzen9vgunsvfexq6rvdecx93rgdmyxcuxverrvcursenpxvukzv3c8qunsdecx33nzwpnvg6ryc3hv93nzvecxgcxgwp3h33lxk"
 
-	if input, err := breez_sdk_liquid.Parse(lnurlWithdrawUrl); err != nil {
+	if input, err := sdk.Parse(lnurlWithdrawUrl); err != nil {
 		switch inputType := input.(type) {
 		case breez_sdk_liquid.InputTypeLnUrlWithdraw:
 			amountMsat := inputType.Data.MinWithdrawable

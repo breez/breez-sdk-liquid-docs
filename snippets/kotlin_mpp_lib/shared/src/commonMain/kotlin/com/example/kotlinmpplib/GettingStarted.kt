@@ -25,9 +25,9 @@ class GettingStarted {
         // ANCHOR: fetch-balance
         try {
             val info = sdk.getInfo()
-            val balanceSat = info?.balanceSat
-            val pendingSendSat = info?.pendingSendSat
-            val pendingReceiveSat = info?.pendingReceiveSat
+            val balanceSat = info?.walletInfo?.balanceSat
+            val pendingSendSat = info?.walletInfo?.pendingSendSat
+            val pendingReceiveSat = info?.walletInfo?.pendingReceiveSat
         } catch (e: Exception) {
             // handle error
         }
