@@ -109,6 +109,14 @@ jobs:
         with:
           dotnet-version: '7.0.x'
 
+      - name: Install Mono
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mono-complete
+
+      - name: Setup nuget
+        uses: nuget/setup-nuget@v2
+
       - name: Download archived package
         uses: actions/download-artifact@v4
         with:
