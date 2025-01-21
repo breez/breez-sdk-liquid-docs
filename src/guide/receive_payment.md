@@ -419,18 +419,18 @@ Once a receive payment is initiated, you can follow and react to the different p
 | **PaymentFailed** | The swap has failed from one of several reasons. Either the swap/invoice has expired or the lockup transaction failed to broadcast. |  |
 
 ### Bitcoin
-| Event | Description | UX Suggestion |
-| --- | --- | --- |
+| Event                           | Description                                                                                                                                                                                                                                                                                                                           | UX Suggestion                                   |
+|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
 | **PaymentWaitingFeeAcceptance** | The swap service has seen the Bitcoin lockup transaction for an amountless swap and the associated fees need to be accepted. If the fees are within the configured leeway they will be automatically accepted, otherwise the user has to explicitly accept the fees. See [Amountless Bitcoin Payments](#amountless-bitcoin-payments). | Allow the user to review fees for this payment. |
-| **PaymentPending** | The swap service has seen the Bitcoin lockup transaction and the amount is accepted. Once the SDK has seen the Liquid lockup transaction, it will broadcast the Liquid claim transaction, either when the Liquid lockup transaction is confirmed or immediately if it is accepted as a zero-conf payment. | Show payment as pending. |
-| **PaymentWaitingConfirmation** | The Liquid claim transaction has been broadcast and is waiting confirmation. | Display successful payment feedback. |
-| **PaymentSucceeded** | The Liquid claim transaction is confirmed. | Show payment as complete. |
-| **PaymentFailed** | The swap has failed from one of several reasons. Either the swap has expired, the fee was not accepted or the Liquid lockup transaction failed to broadcast. If a Bitcoin lockup transaction was broadcast then the funds will need to be refunded, see [Refunding payments](/guide/refund_payment.html). |  |
-| **PaymentRefundPending** | A Bitcoin refund transaction has been broadcast and is waiting confirmation. |  |
+| **PaymentPending**              | The swap service has seen the Bitcoin lockup transaction and the amount is accepted. Once the SDK has seen the Liquid lockup transaction, it will broadcast the Liquid claim transaction, either when the Liquid lockup transaction is confirmed or immediately if it is accepted as a zero-conf payment.                             | Show payment as pending.                        |
+| **PaymentWaitingConfirmation**  | The Liquid claim transaction has been broadcast and is waiting confirmation.                                                                                                                                                                                                                                                          | Display successful payment feedback.            |
+| **PaymentSucceeded**            | The Liquid claim transaction is confirmed.                                                                                                                                                                                                                                                                                            | Show payment as complete.                       |
+| **PaymentFailed**               | The swap has failed from one of several reasons. Either the swap has expired, the fee was not accepted or the Liquid lockup transaction failed to broadcast.                                                                                                                                                                          |                                                 |
+| **PaymentRefundable**           | Similar to PaymentFailed, but a Bitcoin lockup transaction was broadcast so the funds will need to be refunded, see [Refunding payments](/guide/refund_payment.html).                                                                                                                                                                 |                                                 |
+| **PaymentRefundPending**        | A Bitcoin refund transaction has been broadcast and is waiting confirmation.                                                                                                                                                                                                                                                          |                                                 |
 
 ### Liquid
 | Event | Description | UX Suggestion |
 | --- | --- | --- |
 | **PaymentWaitingConfirmation** | The transaction has been seen. | Display successful payment feedback. |
 | **PaymentSucceeded** | The transaction is confirmed. | Show payment as complete. |
-
