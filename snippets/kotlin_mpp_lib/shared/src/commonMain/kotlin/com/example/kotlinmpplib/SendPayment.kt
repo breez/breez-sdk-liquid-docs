@@ -24,7 +24,7 @@ class SendPayment {
         // Set the bolt12 offer you wish to pay
         val destination = "<bolt12 offer>"
         try {
-            val optionalAmount = PayAmount.Receiver(5_000.toULong())
+            val optionalAmount = PayAmount.Bitcoin(5_000.toULong())
             val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
         } catch (e: Exception) {
             // handle error
@@ -36,7 +36,7 @@ class SendPayment {
         // Set the Liquid BIP21 or Liquid address you wish to pay
         val destination = "<Liquid BIP21 or address>"
         try {
-            val optionalAmount = PayAmount.Receiver(5_000.toULong())
+            val optionalAmount = PayAmount.Bitcoin(5_000.toULong())
             val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
 
             // If the fees are acceptable, continue to create the Send Payment

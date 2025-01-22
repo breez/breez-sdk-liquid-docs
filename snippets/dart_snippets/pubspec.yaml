@@ -18,6 +18,11 @@ dependencies:
   rxdart: ^0.28.0  
 
 dependency_overrides:
+  # Comment out to use published packages
+  breez_liquid:
+    path: ./packages/breez-sdk-liquid-dart
+  flutter_breez_liquid:
+    path: ./packages/breez-sdk-liquid-flutter
   # Enable overrides below to work with Liquid SDK packages locally
   #breez_liquid:
   #  path: ../../../breez-sdk-liquid/packages/dart

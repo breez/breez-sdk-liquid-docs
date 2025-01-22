@@ -40,7 +40,7 @@ jobs:
       repository: breez/breez-sdk-liquid
       ref: ${{ needs.setup.outputs.sdk-ref }}
       package-version: ${{ needs.setup.outputs.package-version }}
-      packages-to-publish: '["csharp", "flutter", "golang", "react-native", "python"]'
+      packages-to-publish: '["csharp", "golang", "flutter", "react-native", "python", "swift"]'
       use-dummy-binaries: true
 
   check-rust:
@@ -100,9 +100,14 @@ jobs:
       - build-packages
     name: Check C# snippets
     runs-on: ubuntu-latest
+    env:
+      DOTNET_INSTALL_DIR: "${{ github.workspace }}/dotnet"
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Install Mono
+        run: sudo apt-get update && sudo apt-get install -y mono-complete
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
@@ -153,6 +158,11 @@ jobs:
         with:
           channel: 'stable'
           cache: true
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: breez-sdk-liquid-dart-${{ needs.setup.outputs.package-version }}
+          path: snippets/dart_snippets/packages/breez-sdk-liquid-dart
 
       - uses: actions/download-artifact@v4
         with:
@@ -280,21 +290,20 @@ jobs:
         run: yarn run lint
 
   check-swift:
-    
+    needs: setup
     name: Check Swift snippets
     runs-on: macos-14
-      
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: "latest-stable"
-          
-    - name: Build
-      working-directory: snippets/swift/BreezSDKExamples
-      run: |
-            swift build
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "latest-stable"
+
+      - name: Build
+        working-directory: snippets/swift/BreezSDKExamples
+        run: |
+              swift build
 
   check-kotlin:
     needs: setup

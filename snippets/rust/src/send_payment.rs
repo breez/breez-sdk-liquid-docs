@@ -24,7 +24,9 @@ async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()
 async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-send-payment-lightning-bolt12
     // Set the bolt12 offer you wish to pay to
-    let optional_amount = Some(PayAmount::Receiver { amount_sat: 5_000 });
+    let optional_amount = Some(PayAmount::Bitcoin {
+        receiver_amount_sat: 5_000,
+    });
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt12 offer>".to_string(),
@@ -38,7 +40,9 @@ async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()
 async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-send-payment-liquid
     // Set the Liquid BIP21 or Liquid address you wish to pay
-    let optional_amount = Some(PayAmount::Receiver { amount_sat: 5_000 });
+    let optional_amount = Some(PayAmount::Bitcoin {
+        receiver_amount_sat: 5_000,
+    });
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),

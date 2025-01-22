@@ -53,7 +53,7 @@ def list_payments_details_destination(sdk: BindingLiquidSdk):
         # ANCHOR: list-payments-details-destination
         destination = "<Liquid BIP21 or address>"
         req = ListPaymentsRequest(
-            details = ListPaymentDetails.LIQUID(destination))
+            details = ListPaymentDetails.LIQUID(destination=destination))
         sdk.list_payments(req)
         # ANCHOR_END: list-payments-details-destination
     except Exception as error:

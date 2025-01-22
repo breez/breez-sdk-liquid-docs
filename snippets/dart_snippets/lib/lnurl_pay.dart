@@ -13,7 +13,7 @@ Future<void> prepareLnurlPay() async {
     BigInt amountMsat = inputType.data.minSendable;
     String optionalComment = "<comment>";
     bool optionalValidateSuccessActionUrl = true;
-    
+
     PrepareLnUrlPayRequest req = PrepareLnUrlPayRequest(
       data: inputType.data,
       amountMsat: amountMsat,
@@ -21,7 +21,7 @@ Future<void> prepareLnurlPay() async {
       validateSuccessActionUrl: optionalValidateSuccessActionUrl,
     );
     PrepareLnUrlPayResponse prepareResponse = await breezSDKLiquid.instance!.prepareLnurlPay(req: req);
-    
+
     // If the fees are acceptable, continue to create the LNURL Pay
     BigInt feesSat = prepareResponse.feesSat;
     print("Fees: $feesSat sats");
