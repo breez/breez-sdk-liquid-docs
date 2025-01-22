@@ -34,13 +34,20 @@ When making a payment via lightning or a Bitcoin onchain address, the SDK uses a
 The `swap_updated` notification type will be received by the webhook in the following format:
 ```json
 {
-    "template": "swap_updated",
+    "event": "swap.update",
     "data": {  
         "id": "",    // The hashed id of the swap
         "status": "" // The latest swap status
     }
 }
 ```
+| Swap type | Possible received statuses |
+|---|---|
+| Submarine | `transaction.claim.pending`, `invoice.failedToPay`, `swap.expired`, `transaction.lockupFailed` |
+| Reverse | `transaction.mempool` / `transaction.confirmed` _*_ |
+| Chain | `transaction.server.confirmed`, `transaction.lockupFailed`, `transaction.failed` |
+
+_* Depending if a zero-conf swap is accepted_
 
 #### Handling LNURL pay requests
 
