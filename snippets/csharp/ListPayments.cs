@@ -80,7 +80,7 @@ public class ListPaymentsSnippets
             var destination = "<Liquid BIP21 or address>";
             var payments = sdk.ListPayments(
                 new ListPaymentsRequest(
-                    details: new ListPaymentDetails.Liquid(destination)
+                    details: new ListPaymentDetails.Liquid(assetId: null, destination: destination)
                 ));
         }
         catch (Exception)

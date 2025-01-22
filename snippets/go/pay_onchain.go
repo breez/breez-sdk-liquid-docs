@@ -17,7 +17,7 @@ func GetCurrentRevSwapLimits(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 
 func PreparePayOnchain(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: prepare-pay-onchain
-	amount := breez_sdk_liquid.PayAmountReceiver{AmountSat: 5_000}
+	amount := breez_sdk_liquid.PayAmountBitcoin{ReceiverAmountSat: 5_000}
 	prepareRequest := breez_sdk_liquid.PreparePayOnchainRequest{
 		Amount: amount,
 	}
@@ -47,7 +47,7 @@ func PreparePayOnchainDrain(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 
 func PreparePayOnchainFeeRate(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: prepare-pay-onchain-fee-rate
-	amount := breez_sdk_liquid.PayAmountReceiver{AmountSat: 5_000}
+	amount := breez_sdk_liquid.PayAmountBitcoin{ReceiverAmountSat: 5_000}
 	optionalSatPerVbyte := uint32(21)
 	prepareRequest := breez_sdk_liquid.PreparePayOnchainRequest{
 		Amount:             amount,
