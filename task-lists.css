@@ -1,7 +1,0 @@
-.content li:has(> input[type="checkbox"]) {
-    list-style: none;
-}
-
-.content ul:has(> li > input[type="checkbox"]) {
-    padding-left: 15px;
-}

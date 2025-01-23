@@ -2,7 +2,7 @@
 
 The SDK also provides access to a Fiat on-ramp to purchase Bitcoin using Moonpay as a provider. It will generate a Bitcoin address and prepare a URL using the specified provider. The user then needs to open the URL and proceed with the provider flow to buy Bitcoin. Once the buy is completed, the provider will transfer the purchased amount to the Bitcoin address.
 
-## Checking the limits
+## Checking the limits <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.fetch_onchain_limits">API docs</a>
 
 Fetch the current onchain limits to check the minimum and maximum allowed to purchase.
 
@@ -73,7 +73,7 @@ Fetch the current onchain limits to check the minimum and maximum allowed to pur
 </section>
 </custom-tabs>
 
-## Preparing to buy, checking fees
+## Preparing to buy, checking fees <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_buy_bitcoin">API docs</a>
 
 Using the current onchain limits, select a provider and amount to purchase.
 
@@ -144,7 +144,7 @@ Using the current onchain limits, select a provider and amount to purchase.
 </section>
 </custom-tabs>
 
-## Generate the URL
+## Generate the URL <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.buy_bitcoin">API docs</a>
 
 Generate a URL to the provider with a Bitcoin address to receive the purchase to. You can also pass in an optional redirect URL here that the provider redirects to after a successful purchase.
 

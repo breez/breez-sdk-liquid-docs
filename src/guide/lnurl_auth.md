@@ -1,6 +1,4 @@
-# LNURL-Auth
-
-## Usage
+# LNURL-Auth <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.lnurl_auth">API docs</a>
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
