@@ -1,6 +1,6 @@
 # Handling multiple assets
 
-The Liquid sidechain can also be used to send and receive other assets registered on the Liquid Network. Using the SDK you can send and receive these assets by using a Liquid payment with an additional asset ID. By default the SDK includes the metadata for L-BTC and Tether USD. To include addition asset metadata, see [Adding asset metadata](#adding-asset-metadata).
+The Liquid sidechain can also be used to send and receive other assets registered on the Liquid Network. Using the SDK you can send and receive these assets by using a Liquid payment with an additional asset ID. By default the SDK includes the metadata for [L-BTC and Tether USD](#default-asset-metadata). To include addition asset metadata, see [Adding asset metadata](#adding-asset-metadata).
 
 ## Adding asset metadata <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/model/struct.Config.html#structfield.asset_metadata">API docs</a>
 
@@ -72,6 +72,19 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 ```
 </section>
 </custom-tabs>
+
+### Default asset metadata
+#### Mainnet
+| Name | Ticker | Asset ID | Precision | 
+| --- | --- | --- | --- |
+| Bitcoin | BTC | 6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d | 8 |
+| Tether USD | USDt | ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2 | 8 |
+
+#### Testnet
+| Name | Ticker | Asset ID | Precision | 
+| --- | --- | --- | --- |
+| Testnet Bitcoin | BTC | 144c654344aa716d6f3abcc1ca90e5641e4e2a7f633bc09fe3baf64585819a49 | 8 |
+| Testnet Tether USD | USDt | b612eb46313a2cd6ebabd8b7a8eed5696e29898b87a43bff41c94f51acef9d73 | 8 |
 
 ## Fetching the asset balances <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.get_info">API docs</a>
 
