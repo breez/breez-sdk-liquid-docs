@@ -147,8 +147,8 @@ def receive_payment(params):
         prepare_req = breez_sdk_liquid.PrepareReceiveRequest(getattr(breez_sdk_liquid.PaymentMethod, params.method), params.amount)
         prepare_res = sdk.instance.prepare_receive_payment(prepare_req)
         # Prompt to accept fees
-        accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
-        if accepted == "Y":
+        accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (y/N)? : ")
+        if accepted in ["Y", "y"]:
             # Receive payment
             req = breez_sdk_liquid.ReceivePaymentRequest(prepare_res)
             res = sdk.instance.receive_payment(req)
