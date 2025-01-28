@@ -214,6 +214,14 @@ def wait_for_payment(sdk: Sdk, destination: str):
             break
         time.sleep(1)
 
+def get_info(params):
+    sdk = Sdk(params.network)
+    res = sdk.instance.get_info()
+    print(json.dumps({
+        "walletInfo": res.wallet_info.__dict__,
+        "blockchainInfo": res.blockchain_info.__dict__,
+    }, indent=2))
+
 def main():
     if len(sys.argv) <= 1:
         sys.argv.append('--help')
@@ -223,6 +231,9 @@ def main():
                         help='The network the SDK runs on, either "MAINNET" or "TESTNET"',
                         type=parse_network)
     subparser = parser.add_subparsers(title='subcommands')
+    # info
+    info_parser = subparser.add_parser('info', help='Get wallet info')
+    info_parser.set_defaults(run=get_info)
     # list
     list_parser = subparser.add_parser('list', help='List payments')
     list_parser.add_argument('-f', '--from_timestamp', 
