@@ -2,12 +2,15 @@ from typing import Optional
 from colorama import init as colorama_init, Style
 from mnemonic import Mnemonic
 from os.path import exists
-from breez_sdk_liquid import LiquidNetwork
+from qrcode.main import QRCode
+from qrcode.constants import ERROR_CORRECT_L
+from breez_sdk_liquid import LiquidNetwork, PayAmount
 import argparse
 import breez_sdk_liquid
-import qrcode
 import sys
 import time
+import os
+import json
 
 colorama_init()
 
@@ -178,7 +181,7 @@ def send_payment(params):
     sdk = Sdk(params.network)
     try:
         # Prepare the send request to get fees
-        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, params.amount)
+        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, PayAmount.RECEIVER(params.amount))
         prepare_res = sdk.instance.prepare_send_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
@@ -198,9 +201,9 @@ def print_dim(data):
     print(Style.RESET_ALL)
 
 def print_qr(text: str):
-    qr = qrcode.QRCode(
+    qr = QRCode(
         version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        error_correction=ERROR_CORRECT_L,
         box_size=10,
         border=4,
     )
