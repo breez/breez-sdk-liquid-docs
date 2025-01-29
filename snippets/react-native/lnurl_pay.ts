@@ -1,9 +1,12 @@
 import {
   InputTypeVariant,
+  lnurlPay,
+  LnUrlPayRequestData,
   parse,
+  type PayAmount,
+  PayAmountVariant,
   prepareLnurlPay,
-  type PrepareLnUrlPayResponse,
-  lnurlPay
+  type PrepareLnUrlPayResponse
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const examplePrepareLnurlPay = async () => {
@@ -15,13 +18,16 @@ const examplePrepareLnurlPay = async () => {
 
   const input = await parse(lnurlPayUrl)
   if (input.type === InputTypeVariant.LN_URL_PAY) {
-    const amountMsat = input.data.minSendable
+    const amount: PayAmount = {
+      type: PayAmountVariant.BITCOIN,
+      receiverAmountSat: 5_000
+    }
     const optionalComment = '<comment>'
     const optionalValidateSuccessActionUrl = true
 
     const prepareResponse = await prepareLnurlPay({
       data: input.data,
-      amountMsat,
+      amount,
       comment: optionalComment,
       validateSuccessActionUrl: optionalValidateSuccessActionUrl
     })
@@ -31,6 +37,23 @@ const examplePrepareLnurlPay = async () => {
     console.log(`Fees: ${feesSat} sats`)
   }
   // ANCHOR_END: prepare-lnurl-pay
+}
+
+const examplePrepareLnurlPayDrain = async (data: LnUrlPayRequestData) => {
+  // ANCHOR: prepare-lnurl-pay-drain
+  const amount: PayAmount = {
+    type: PayAmountVariant.DRAIN
+  }
+  const optionalComment = '<comment>'
+  const optionalValidateSuccessActionUrl = true
+
+  const prepareResponse = await prepareLnurlPay({
+    data,
+    amount,
+    comment: optionalComment,
+    validateSuccessActionUrl: optionalValidateSuccessActionUrl
+  })
+  // ANCHOR_END: prepare-lnurl-pay-drain
 }
 
 const exampleLnurlPay = async (prepareResponse: PrepareLnUrlPayResponse) => {
