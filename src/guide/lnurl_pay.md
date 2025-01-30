@@ -77,7 +77,7 @@ The SDK will also validate that the amount is within the sendable limits of the 
 </custom-tabs>
 
 #### Draining all funds
-When you want send all funds from your wallet to another address.
+When you want to send all funds from your wallet to the payment recipient.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
