@@ -26,10 +26,13 @@ class Sdk:
         listener: An instance of SdkListener to handle SDK events.
     """
 
-    def __init__(self, network: Optional[LiquidNetwork] = None):
+    def __init__(self, network: Optional[LiquidNetwork] = None, debug: Optional[bool] = False):
         api_key = os.getenv('BREEZ_API_KEY')
         if api_key is None:
             raise Exception("Cannot start SDK without a Breez API key. You can request one here: https://breez.technology/request-api-key/#contact-us-form-sdk")
+        
+        if debug:
+            breez_sdk_liquid.set_logger(SdkLogListener())
 
         mnemonic = self.read_mnemonic()
         config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET, api_key)
@@ -59,6 +62,12 @@ class Sdk:
                 return words
 
 
+class SdkLogListener(breez_sdk_liquid.Logger):
+    def log(self, log_entry):
+        if log_entry.level != "TRACE":
+            print_dim("{}: {}".format(log_entry.level, log_entry.line))
+
+
 class SdkListener(breez_sdk_liquid.EventListener):
     """
     A listener class for handling Breez SDK events.
@@ -80,8 +89,9 @@ class SdkListener(breez_sdk_liquid.EventListener):
         self.paid = []
 
     def on_event(self, event):
-        if isinstance(event, breez_sdk_liquid.SdkEvent.SYNCED) == False:
+        if isinstance(event, breez_sdk_liquid.SdkEvent.SYNCED):
             self.synced = True
+        else:
             print_dim(event)
         if isinstance(event, breez_sdk_liquid.SdkEvent.PAYMENT_SUCCEEDED):
             if event.details.destination:
@@ -118,7 +128,7 @@ def list_payments(params):
     Raises:
         Exception: If any error occurs during the process of listing payments.
     """
-    sdk = Sdk()
+    sdk = Sdk(params.network, params.debug)
     try:
         req = breez_sdk_liquid.ListPaymentsRequest(from_timestamp=params.from_timestamp, 
                                                    to_timestamp=params.to_timestamp, 
@@ -149,7 +159,7 @@ def receive_payment(params):
     Raises:
         Exception: If any error occurs during the payment receiving process
     """
-    sdk = Sdk(params.network)
+    sdk = Sdk(params.network, params.debug)
     try:
         # Prepare the receive request to get fees
         prepare_req = breez_sdk_liquid.PrepareReceiveRequest(getattr(breez_sdk_liquid.PaymentMethod, params.method), params.amount)
@@ -186,7 +196,7 @@ def send_payment(params):
     Raises:
         Exception: If any error occurs during the payment sending process
     """
-    sdk = Sdk(params.network)
+    sdk = Sdk(params.network, params.debug)
     try:
         # Prepare the send request to get fees
         prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, PayAmount.RECEIVER(params.amount))
@@ -232,7 +242,7 @@ def wait_for_synced(sdk: Sdk):
         time.sleep(1)
 
 def get_info(params):
-    sdk = Sdk(params.network)
+    sdk = Sdk(params.network, params.debug)
     wait_for_synced(sdk)
     res = sdk.instance.get_info()
     print(json.dumps({
@@ -245,6 +255,10 @@ def main():
         sys.argv.append('--help')
 
     parser = argparse.ArgumentParser('Pythod SDK Example', description='Simple CLI to receive/send payments')
+    parser.add_argument('-d', '--debug',
+                        default=False,
+                        action='store_true',
+                        help='Output SDK logs')
     parser.add_argument('-n', '--network',
                         help='The network the SDK runs on, either "MAINNET" or "TESTNET"',
                         type=parse_network)
