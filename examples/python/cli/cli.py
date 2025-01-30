@@ -111,6 +111,15 @@ def parse_network(network_str: str) -> LiquidNetwork:
 
     raise Exception("Invalid network specified")
 
+def parse_pay_amount(params) -> Optional[PayAmount]:
+    amount = getattr(params, 'amount', None)
+    drain = getattr(params, 'drain', None)
+    if drain is True:
+        return PayAmount.DRAIN
+    elif amount is not None:
+        return PayAmount.RECEIVER(amount)
+    return None
+
 def list_payments(params):
     """
     List payments using the Breez SDK.
@@ -192,6 +201,7 @@ def send_payment(params):
         params (argparse.Namespace): Command-line arguments containing:
             - destination (str): The bolt11 or Liquid BIP21 URI/address
             - amount (int): The amount to send in satoshis
+            - drain: Drain all funds when sending
 
     Raises:
         Exception: If any error occurs during the payment sending process
@@ -199,7 +209,8 @@ def send_payment(params):
     sdk = Sdk(params.network, params.debug)
     try:
         # Prepare the send request to get fees
-        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, PayAmount.RECEIVER(params.amount))
+        amount = parse_pay_amount(params)
+        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, amount)
         prepare_res = sdk.instance.prepare_send_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
@@ -295,6 +306,7 @@ def main():
     send_parser = subparser.add_parser('send', help='Send a payment')
     send_parser.add_argument('-d', '--destination', help='The bolt11 or Liquid BIP21 URI/address', required=True)
     send_parser.add_argument('-a', '--amount', type=int, help='The optional amount to send in sats')
+    send_parser.add_argument('--drain', default=False, action='store_true', help='Drain all funds when sending')
     send_parser.set_defaults(run=send_payment)
 
     args = parser.parse_args()
