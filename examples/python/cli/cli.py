@@ -40,6 +40,9 @@ class Sdk:
 
     def is_paid(self, destination: str):
         return self.listener.is_paid(destination)
+
+    def is_synced(self):
+        return self.listener.is_synced()
     
     def read_mnemonic(self):
         if exists('phrase'):
@@ -73,17 +76,22 @@ class SdkListener(breez_sdk_liquid.EventListener):
 
         Sets up an empty list to track paid destinations.
         """
+        self.synced = False
         self.paid = []
 
     def on_event(self, event):
         if isinstance(event, breez_sdk_liquid.SdkEvent.SYNCED) == False:
+            self.synced = True
             print_dim(event)
         if isinstance(event, breez_sdk_liquid.SdkEvent.PAYMENT_SUCCEEDED):
             if event.details.destination:
                 self.paid.append(event.details.destination)
-
+    
     def is_paid(self, destination: str):
         return destination in self.paid
+    
+    def is_synced(self):
+        return self.synced
 
 def parse_network(network_str: str) -> LiquidNetwork:
     if network_str == 'TESTNET':
@@ -217,8 +225,15 @@ def wait_for_payment(sdk: Sdk, destination: str):
             break
         time.sleep(1)
 
+def wait_for_synced(sdk: Sdk):
+    while True:
+        if sdk.is_synced():
+            break
+        time.sleep(1)
+
 def get_info(params):
     sdk = Sdk(params.network)
+    wait_for_synced(sdk)
     res = sdk.instance.get_info()
     print(json.dumps({
         "walletInfo": res.wallet_info.__dict__,
