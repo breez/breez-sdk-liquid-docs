@@ -2,12 +2,15 @@ from typing import Optional
 from colorama import init as colorama_init, Style
 from mnemonic import Mnemonic
 from os.path import exists
-from breez_sdk_liquid import LiquidNetwork
+from qrcode.main import QRCode
+from qrcode.constants import ERROR_CORRECT_L
+from breez_sdk_liquid import LiquidNetwork, PayAmount
 import argparse
 import breez_sdk_liquid
-import qrcode
 import sys
 import time
+import os
+import json
 
 colorama_init()
 
@@ -23,10 +26,13 @@ class Sdk:
         listener: An instance of SdkListener to handle SDK events.
     """
 
-    def __init__(self, network: Optional[LiquidNetwork] = None):
+    def __init__(self, network: Optional[LiquidNetwork] = None, debug: Optional[bool] = False):
         api_key = os.getenv('BREEZ_API_KEY')
         if api_key is None:
             raise Exception("Cannot start SDK without a Breez API key. You can request one here: https://breez.technology/request-api-key/#contact-us-form-sdk")
+        
+        if debug:
+            breez_sdk_liquid.set_logger(SdkLogListener())
 
         mnemonic = self.read_mnemonic()
         config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET, api_key)
@@ -37,6 +43,9 @@ class Sdk:
 
     def is_paid(self, destination: str):
         return self.listener.is_paid(destination)
+
+    def is_synced(self):
+        return self.listener.is_synced()
     
     def read_mnemonic(self):
         if exists('phrase'):
@@ -51,6 +60,12 @@ class Sdk:
                 f.write(words)
                 f.close()
                 return words
+
+
+class SdkLogListener(breez_sdk_liquid.Logger):
+    def log(self, log_entry):
+        if log_entry.level != "TRACE":
+            print_dim("{}: {}".format(log_entry.level, log_entry.line))
 
 
 class SdkListener(breez_sdk_liquid.EventListener):
@@ -70,17 +85,23 @@ class SdkListener(breez_sdk_liquid.EventListener):
 
         Sets up an empty list to track paid destinations.
         """
+        self.synced = False
         self.paid = []
 
     def on_event(self, event):
-        if isinstance(event, breez_sdk_liquid.SdkEvent.SYNCED) == False:
+        if isinstance(event, breez_sdk_liquid.SdkEvent.SYNCED):
+            self.synced = True
+        else:
             print_dim(event)
         if isinstance(event, breez_sdk_liquid.SdkEvent.PAYMENT_SUCCEEDED):
             if event.details.destination:
                 self.paid.append(event.details.destination)
-
+    
     def is_paid(self, destination: str):
         return destination in self.paid
+    
+    def is_synced(self):
+        return self.synced
 
 def parse_network(network_str: str) -> LiquidNetwork:
     if network_str == 'TESTNET':
@@ -89,6 +110,15 @@ def parse_network(network_str: str) -> LiquidNetwork:
         return LiquidNetwork.MAINNET
 
     raise Exception("Invalid network specified")
+
+def parse_pay_amount(params) -> Optional[PayAmount]:
+    amount = getattr(params, 'amount', None)
+    drain = getattr(params, 'drain', None)
+    if drain is True:
+        return PayAmount.DRAIN
+    elif amount is not None:
+        return PayAmount.RECEIVER(amount)
+    return None
 
 def list_payments(params):
     """
@@ -107,7 +137,7 @@ def list_payments(params):
     Raises:
         Exception: If any error occurs during the process of listing payments.
     """
-    sdk = Sdk()
+    sdk = Sdk(params.network, params.debug)
     try:
         req = breez_sdk_liquid.ListPaymentsRequest(from_timestamp=params.from_timestamp, 
                                                    to_timestamp=params.to_timestamp, 
@@ -138,14 +168,14 @@ def receive_payment(params):
     Raises:
         Exception: If any error occurs during the payment receiving process
     """
-    sdk = Sdk(params.network)
+    sdk = Sdk(params.network, params.debug)
     try:
         # Prepare the receive request to get fees
         prepare_req = breez_sdk_liquid.PrepareReceiveRequest(getattr(breez_sdk_liquid.PaymentMethod, params.method), params.amount)
         prepare_res = sdk.instance.prepare_receive_payment(prepare_req)
         # Prompt to accept fees
-        accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
-        if accepted == "Y":
+        accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (y/N)? : ")
+        if accepted in ["Y", "y"]:
             # Receive payment
             req = breez_sdk_liquid.ReceivePaymentRequest(prepare_res)
             res = sdk.instance.receive_payment(req)
@@ -171,14 +201,16 @@ def send_payment(params):
         params (argparse.Namespace): Command-line arguments containing:
             - destination (str): The bolt11 or Liquid BIP21 URI/address
             - amount (int): The amount to send in satoshis
+            - drain: Drain all funds when sending
 
     Raises:
         Exception: If any error occurs during the payment sending process
     """
-    sdk = Sdk(params.network)
+    sdk = Sdk(params.network, params.debug)
     try:
         # Prepare the send request to get fees
-        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, params.amount)
+        amount = parse_pay_amount(params)
+        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, amount)
         prepare_res = sdk.instance.prepare_send_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
@@ -198,9 +230,9 @@ def print_dim(data):
     print(Style.RESET_ALL)
 
 def print_qr(text: str):
-    qr = qrcode.QRCode(
+    qr = QRCode(
         version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        error_correction=ERROR_CORRECT_L,
         box_size=10,
         border=4,
     )
@@ -214,15 +246,37 @@ def wait_for_payment(sdk: Sdk, destination: str):
             break
         time.sleep(1)
 
+def wait_for_synced(sdk: Sdk):
+    while True:
+        if sdk.is_synced():
+            break
+        time.sleep(1)
+
+def get_info(params):
+    sdk = Sdk(params.network, params.debug)
+    wait_for_synced(sdk)
+    res = sdk.instance.get_info()
+    print(json.dumps({
+        "walletInfo": res.wallet_info.__dict__,
+        "blockchainInfo": res.blockchain_info.__dict__,
+    }, indent=2))
+
 def main():
     if len(sys.argv) <= 1:
         sys.argv.append('--help')
 
     parser = argparse.ArgumentParser('Pythod SDK Example', description='Simple CLI to receive/send payments')
+    parser.add_argument('-d', '--debug',
+                        default=False,
+                        action='store_true',
+                        help='Output SDK logs')
     parser.add_argument('-n', '--network',
                         help='The network the SDK runs on, either "MAINNET" or "TESTNET"',
                         type=parse_network)
     subparser = parser.add_subparsers(title='subcommands')
+    # info
+    info_parser = subparser.add_parser('info', help='Get wallet info')
+    info_parser.set_defaults(run=get_info)
     # list
     list_parser = subparser.add_parser('list', help='List payments')
     list_parser.add_argument('-f', '--from_timestamp', 
@@ -252,6 +306,7 @@ def main():
     send_parser = subparser.add_parser('send', help='Send a payment')
     send_parser.add_argument('-d', '--destination', help='The bolt11 or Liquid BIP21 URI/address', required=True)
     send_parser.add_argument('-a', '--amount', type=int, help='The optional amount to send in sats')
+    send_parser.add_argument('--drain', default=False, action='store_true', help='Drain all funds when sending')
     send_parser.set_defaults(run=send_payment)
 
     args = parser.parse_args()
