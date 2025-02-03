@@ -23,7 +23,7 @@ def prepare_send_payment_lightning_bolt12(sdk: BindingLiquidSdk):
     # Set the bolt12 offer you wish to pay
     destination = "<bolt12 offer>"
     try:
-        optional_amount = PayAmount.RECEIVER(5_000)
+        optional_amount = PayAmount.BITCOIN(5_000)
 
         prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
 
@@ -38,8 +38,7 @@ def prepare_send_payment_liquid(sdk: BindingLiquidSdk):
     # Set the Liquid BIP21 or Liquid address you wish to pay
     destination = "<Liquid BIP21 or address>"
     try:
-        optional_amount = PayAmount.RECEIVER(5_000)
-
+        optional_amount = PayAmount.BITCOIN(5_000)
         prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
 
         # If the fees are acceptable, continue to create the Send Payment
@@ -57,7 +56,6 @@ def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
     destination = "<Liquid BIP21 or address>"
     try:
         optional_amount = PayAmount.DRAIN
-
         prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
 
         # If the fees are acceptable, continue to create the Send Payment

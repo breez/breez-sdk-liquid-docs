@@ -33,6 +33,7 @@ async fn list_payments_filtered(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
             offset: Some(0),
             limit: Some(50),
             details: None,
+            sort_ascending: None,
         })
         .await?;
     // ANCHOR_END: list-payments-filtered
@@ -42,7 +43,7 @@ async fn list_payments_filtered(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
 
 async fn list_payments_details_address(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
     // ANCHOR: list-payments-details-address
-    let address = "<Bitcoin address>".to_string();
+    let address = Some("<Bitcoin address>".to_string());
     let payments = sdk
         .list_payments(&ListPaymentsRequest {
             filters: None,
@@ -52,6 +53,7 @@ async fn list_payments_details_address(sdk: Arc<LiquidSdk>) -> Result<Vec<Paymen
             offset: None,
             limit: None,
             details: Some(ListPaymentDetails::Bitcoin { address }),
+            sort_ascending: None,
         })
         .await?;
     // ANCHOR_END: list-payments-details-address
@@ -61,7 +63,7 @@ async fn list_payments_details_address(sdk: Arc<LiquidSdk>) -> Result<Vec<Paymen
 
 async fn list_payments_details_destination(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
     // ANCHOR: list-payments-details-destination
-    let destination = "<Liquid BIP21 or address>".to_string();
+    let destination = Some("<Liquid BIP21 or address>".to_string());
     let payments = sdk
         .list_payments(&ListPaymentsRequest {
             filters: None,
@@ -70,7 +72,11 @@ async fn list_payments_details_destination(sdk: Arc<LiquidSdk>) -> Result<Vec<Pa
             to_timestamp: None,
             offset: None,
             limit: None,
-            details: Some(ListPaymentDetails::Liquid { destination }),
+            details: Some(ListPaymentDetails::Liquid {
+                asset_id: None,
+                destination,
+            }),
+            sort_ascending: None,
         })
         .await?;
     // ANCHOR_END: list-payments-details-addrdestinationess

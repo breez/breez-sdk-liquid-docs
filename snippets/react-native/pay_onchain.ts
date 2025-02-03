@@ -24,8 +24,8 @@ const examplePreparePayOnchain = async () => {
   try {
     const prepareResponse = await preparePayOnchain({
       amount: {
-        type: PayAmountVariant.RECEIVER,
-        amountSat: 5_000
+        type: PayAmountVariant.BITCOIN,
+        receiverAmountSat: 5_000
       }
     })
 
@@ -61,8 +61,8 @@ const examplePreparePayOnchainFeeRate = async () => {
 
     const prepareResponse = await preparePayOnchain({
       amount: {
-        type: PayAmountVariant.RECEIVER,
-        amountSat: 5_000
+        type: PayAmountVariant.BITCOIN,
+        receiverAmountSat: 5_000
       },
       feeRateSatPerVbyte: optionalSatPerVbyte
     })

@@ -16,13 +16,15 @@ func PrepareLnurlPay(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	if input, err := sdk.Parse(lnurlPayUrl); err != nil {
 		switch inputType := input.(type) {
 		case breez_sdk_liquid.InputTypeLnUrlPay:
-			amountMsat := inputType.Data.MinSendable
+			var amount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountBitcoin{
+				ReceiverAmountSat: uint64(5_000),
+			}
 			optionalComment := "<comment>"
 			optionalValidateSuccessActionUrl := true
 
 			req := breez_sdk_liquid.PrepareLnUrlPayRequest{
 				Data:                     inputType.Data,
-				AmountMsat:               amountMsat,
+				Amount:                   amount,
 				Comment:                  &optionalComment,
 				ValidateSuccessActionUrl: &optionalValidateSuccessActionUrl,
 			}
@@ -38,6 +40,27 @@ func PrepareLnurlPay(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		}
 	}
 	// ANCHOR_END: prepare-lnurl-pay
+}
+
+func PrepareLnurlPayDrain(sdk *breez_sdk_liquid.BindingLiquidSdk, data breez_sdk_liquid.LnUrlPayRequestData) {
+	// ANCHOR: prepare-lnurl-pay-drain
+	var amount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountDrain{}
+	optionalComment := "<comment>"
+	optionalValidateSuccessActionUrl := true
+
+	req := breez_sdk_liquid.PrepareLnUrlPayRequest{
+		Data:                     data,
+		Amount:                   amount,
+		Comment:                  &optionalComment,
+		ValidateSuccessActionUrl: &optionalValidateSuccessActionUrl,
+	}
+	prepareResponse, err := sdk.PrepareLnurlPay(req)
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+	// ANCHOR_END: prepare-lnurl-pay-drain
+	log.Printf("prepareResponse: %#v", prepareResponse)
 }
 
 func LnurlPay(sdk *breez_sdk_liquid.BindingLiquidSdk, prepareResponse breez_sdk_liquid.PrepareLnUrlPayResponse) {

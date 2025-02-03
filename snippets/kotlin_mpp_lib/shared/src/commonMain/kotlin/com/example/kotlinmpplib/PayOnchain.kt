@@ -17,7 +17,7 @@ class PayOnchain {
     fun preparePayOnchain(sdk: BindingLiquidSdk) {
         // ANCHOR: prepare-pay-onchain
         try {
-            val amount = PayAmount.Receiver(5_000.toULong())
+            val amount = PayAmount.Bitcoin(5_000.toULong())
             val prepareRequest = PreparePayOnchainRequest(amount)
             val prepareResponse = sdk.preparePayOnchain(prepareRequest)
 
@@ -47,7 +47,7 @@ class PayOnchain {
     fun preparePayOnchainFeeRate(sdk: BindingLiquidSdk) {
         // ANCHOR: prepare-pay-onchain-fee-rate
         try {
-            val amount = PayAmount.Receiver(5_000.toULong())
+            val amount = PayAmount.Bitcoin(5_000.toULong())
             val optionalSatPerVbyte = 21
 
             val prepareRequest = PreparePayOnchainRequest(amount, optionalSatPerVbyte.toUInt())

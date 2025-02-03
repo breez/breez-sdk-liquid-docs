@@ -13,7 +13,7 @@ Future<OnchainPaymentLimitsResponse> getCurrentLimits() async {
 Future<PreparePayOnchainResponse> preparePayOnchain() async {
   // ANCHOR: prepare-pay-onchain
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
-    amount: PayAmount_Receiver(amountSat: 5000 as BigInt),
+    amount: PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt),
   );
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,
@@ -47,7 +47,7 @@ Future<PreparePayOnchainResponse> preparePayOnchainFeeRate() async {
   int optionalSatPerVbyte = 21;
 
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
-    amount: PayAmount_Receiver(amountSat: 5000 as BigInt),
+    amount: PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt),
     feeRateSatPerVbyte: optionalSatPerVbyte,
   );
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(

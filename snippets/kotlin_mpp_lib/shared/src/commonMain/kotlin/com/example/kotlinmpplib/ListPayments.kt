@@ -60,7 +60,7 @@ class ListPayments {
             val destination = "<Liquid BIP21 or address>"
             val payments = sdk.listPayments(
                 ListPaymentsRequest(
-                    details = ListPaymentDetails.Liquid(destination)
+                    details = ListPaymentDetails.Liquid(assetId = null, destination = destination)
                 ))
         } catch (e: Exception) {
             // handle error

@@ -8,10 +8,11 @@ func prepareReceiveLightning(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     print("Maximum amount: {} sats", currentLimits?.receive.maxSat ?? 0);
 
     // Set the invoice amount you wish the payer to send, which should be within the above limits
+    let optionalAmount = ReceiveAmount.bitcoin(payerAmountSat: 5_000)
     let prepareResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
             paymentMethod: PaymentMethod.lightning,
-            payerAmountSat: 5_000
+            amount: optionalAmount
         ));
 
     // If the fees are acceptable, continue to create the Receive Payment
@@ -30,10 +31,11 @@ func prepareReceiveOnchain(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     print("Maximum amount: {} sats", currentLimits?.receive.maxSat ?? 0);
 
     // Set the onchain amount you wish the payer to send, which should be within the above limits
+    let optionalAmount = ReceiveAmount.bitcoin(payerAmountSat: 5_000)
     let prepareResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
             paymentMethod: PaymentMethod.bitcoinAddress,
-            payerAmountSat: 5_000
+            amount: optionalAmount
         ));
 
     // If the fees are acceptable, continue to create the Receive Payment
@@ -48,10 +50,12 @@ func prepareReceiveLiquid(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     // ANCHOR: prepare-receive-payment-liquid
     // Create a Liquid BIP21 URI/address to receive a payment to.
     // There are no limits, but the payer amount should be greater than broadcast fees when specified
+    // Note: Not setting the amount will generate a plain Liquid address
+    let optionalAmount = ReceiveAmount.bitcoin(payerAmountSat: 5_000)
     let prepareResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
             paymentMethod: PaymentMethod.liquidAddress,
-            payerAmountSat: 5_000 // Not specifying the amount will create a plain Liquid address instead
+            amount: optionalAmount
         ))
 
     // If the fees are acceptable, continue to create the Receive Payment

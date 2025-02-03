@@ -11,15 +11,17 @@ async fn prepare_pay(sdk: Arc<LiquidSdk>) -> Result<()> {
     // lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
     let lnurl_pay_url = "lightning@address.com";
 
-    if let Ok(InputType::LnUrlPay { data: pd }) = sdk.parse(lnurl_pay_url).await {
-        let amount_msat = pd.min_sendable;
+    if let Ok(InputType::LnUrlPay { data }) = sdk.parse(lnurl_pay_url).await {
+        let amount = PayAmount::Bitcoin {
+            receiver_amount_sat: 5_000,
+        };
         let optional_comment = Some("<comment>".to_string());
         let optional_validate_success_action_url = Some(true);
 
         let prepare_response = sdk
             .prepare_lnurl_pay(PrepareLnUrlPayRequest {
-                data: pd,
-                amount_msat,
+                data,
+                amount,
                 comment: optional_comment,
                 validate_success_action_url: optional_validate_success_action_url,
             })
@@ -30,6 +32,24 @@ async fn prepare_pay(sdk: Arc<LiquidSdk>) -> Result<()> {
         info!("Fees: {} sats", fees_sat);
     }
     // ANCHOR_END: prepare-lnurl-pay
+    Ok(())
+}
+
+async fn prepare_pay_drain(sdk: Arc<LiquidSdk>, data: LnUrlPayRequestData) -> Result<()> {
+    // ANCHOR: prepare-lnurl-pay-drain
+    let amount = PayAmount::Drain;
+    let optional_comment = Some("<comment>".to_string());
+    let optional_validate_success_action_url = Some(true);
+
+    let prepare_response = sdk
+        .prepare_lnurl_pay(PrepareLnUrlPayRequest {
+            data,
+            amount,
+            comment: optional_comment,
+            validate_success_action_url: optional_validate_success_action_url,
+        })
+        .await?;
+    // ANCHOR_END: prepare-lnurl-pay-drain
     Ok(())
 }
 

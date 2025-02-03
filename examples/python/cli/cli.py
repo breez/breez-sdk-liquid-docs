@@ -4,7 +4,7 @@ from mnemonic import Mnemonic
 from os.path import exists
 from qrcode.main import QRCode
 from qrcode.constants import ERROR_CORRECT_L
-from breez_sdk_liquid import LiquidNetwork, PayAmount
+from breez_sdk_liquid import LiquidNetwork, PayAmount, ReceiveAmount
 import argparse
 import breez_sdk_liquid
 import sys
@@ -27,13 +27,10 @@ class Sdk:
     """
 
     def __init__(self, network: Optional[LiquidNetwork] = None, debug: Optional[bool] = False):
-        api_key = os.getenv('BREEZ_API_KEY')
-        if api_key is None:
-            raise Exception("Cannot start SDK without a Breez API key. You can request one here: https://breez.technology/request-api-key/#contact-us-form-sdk")
-        
         if debug:
             breez_sdk_liquid.set_logger(SdkLogListener())
 
+        api_key = os.getenv('BREEZ_API_KEY')
         mnemonic = self.read_mnemonic()
         config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET, api_key)
         connect_request = breez_sdk_liquid.ConnectRequest(config=config, mnemonic=mnemonic)
@@ -112,12 +109,29 @@ def parse_network(network_str: str) -> LiquidNetwork:
     raise Exception("Invalid network specified")
 
 def parse_pay_amount(params) -> Optional[PayAmount]:
+    amount_sat = getattr(params, 'amount_sat', None)
     amount = getattr(params, 'amount', None)
+    asset_id = getattr(params, 'asset_id', None)
     drain = getattr(params, 'drain', None)
+    asset_params = (asset_id, amount)
     if drain is True:
         return PayAmount.DRAIN
-    elif amount is not None:
-        return PayAmount.RECEIVER(amount)
+    elif amount_sat is not None:
+        return PayAmount.BITCOIN(amount_sat)
+    elif any(asset_params):
+        if not all(asset_params):
+            raise ValueError('Sending an asset requires both `asset_id` and `amount`')
+        return PayAmount.ASSET(asset_id, amount)
+    return None
+
+def parse_receive_amount(params) -> Optional[ReceiveAmount]:
+    amount_sat = getattr(params, 'amount_sat', None)
+    amount = getattr(params, 'amount', None)
+    asset_id = getattr(params, 'asset_id', None)
+    if amount_sat is not None:
+        return ReceiveAmount.BITCOIN(amount_sat)
+    elif asset_id is not None:
+        return ReceiveAmount.ASSET(asset_id, amount)
     return None
 
 def list_payments(params):
@@ -162,8 +176,10 @@ def receive_payment(params):
 
     Args:
         params (argparse.Namespace): Command-line arguments containing:
-            - amount (int): The amount to receive in satoshis
             - method (str): The payment method (e.g., 'LIGHTNING', 'BITCOIN_ADDRESS', 'LIQUID_ADDRESS')
+            - amount_sat (int): The amount to receive in satoshis
+            - asset_id (str): The optional id of the asset to receive
+            - amount (float): The optional amount to receive of the asset
 
     Raises:
         Exception: If any error occurs during the payment receiving process
@@ -171,7 +187,8 @@ def receive_payment(params):
     sdk = Sdk(params.network, params.debug)
     try:
         # Prepare the receive request to get fees
-        prepare_req = breez_sdk_liquid.PrepareReceiveRequest(getattr(breez_sdk_liquid.PaymentMethod, params.method), params.amount)
+        receive_amount = parse_receive_amount(params)
+        prepare_req = breez_sdk_liquid.PrepareReceiveRequest(getattr(breez_sdk_liquid.PaymentMethod, params.method), receive_amount)
         prepare_res = sdk.instance.prepare_receive_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (y/N)? : ")
@@ -200,7 +217,9 @@ def send_payment(params):
     Args:
         params (argparse.Namespace): Command-line arguments containing:
             - destination (str): The bolt11 or Liquid BIP21 URI/address
-            - amount (int): The amount to send in satoshis
+            - amount_sats (int): The amount to send in satoshis
+            - asset_id (str): The optional id of the asset to send
+            - amount (float): The optional amount to send of the asset
             - drain: Drain all funds when sending
 
     Raises:
@@ -209,8 +228,8 @@ def send_payment(params):
     sdk = Sdk(params.network, params.debug)
     try:
         # Prepare the send request to get fees
-        amount = parse_pay_amount(params)
-        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, amount)
+        pay_amount = parse_pay_amount(params)
+        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, pay_amount)
         prepare_res = sdk.instance.prepare_send_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
@@ -256,10 +275,7 @@ def get_info(params):
     sdk = Sdk(params.network, params.debug)
     wait_for_synced(sdk)
     res = sdk.instance.get_info()
-    print(json.dumps({
-        "walletInfo": res.wallet_info.__dict__,
-        "blockchainInfo": res.blockchain_info.__dict__,
-    }, indent=2))
+    print(json.dumps(res, default=lambda x: x.__dict__, indent=2))
 
 def main():
     if len(sys.argv) <= 1:
@@ -298,14 +314,18 @@ def main():
                                 choices=['LIGHTNING', 'BITCOIN_ADDRESS', 'LIQUID_ADDRESS'], 
                                 help='The payment method', 
                                 required=True)
-    receive_parser.add_argument('-a', '--amount', 
+    receive_parser.add_argument('-a', '--amount_sat', 
                                 type=int, 
                                 help='The optional amount to receive in sats')
+    receive_parser.add_argument('--asset_id', help='The optional id of the asset to receive')
+    receive_parser.add_argument('--amount', type=float, help='The optional amount to receive of the asset')
     receive_parser.set_defaults(run=receive_payment)
     # send
     send_parser = subparser.add_parser('send', help='Send a payment')
     send_parser.add_argument('-d', '--destination', help='The bolt11 or Liquid BIP21 URI/address', required=True)
-    send_parser.add_argument('-a', '--amount', type=int, help='The optional amount to send in sats')
+    send_parser.add_argument('-a', '--amount_sat', type=int, help='The optional amount to send in sats')
+    send_parser.add_argument('--asset_id', help='The optional id of the asset to send')
+    send_parser.add_argument('--amount', type=float, help='The optional amount to send of the asset')
     send_parser.add_argument('--drain', default=False, action='store_true', help='Drain all funds when sending')
     send_parser.set_defaults(run=send_payment)
 

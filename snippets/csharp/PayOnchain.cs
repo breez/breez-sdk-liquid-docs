@@ -23,7 +23,7 @@ public class SendOnchainSnippets
         // ANCHOR: prepare-pay-onchain
         try
         {
-            var amount = new PayAmount.Receiver(5000);
+            var amount = new PayAmount.Bitcoin(5000);
             var prepareRequest = new PreparePayOnchainRequest(amount);
             var prepareResponse = sdk.PreparePayOnchain(prepareRequest);
 
@@ -61,7 +61,7 @@ public class SendOnchainSnippets
         // ANCHOR: prepare-pay-onchain-fee-rate
         try
         {
-            var amount = new PayAmount.Receiver(5000);
+            var amount = new PayAmount.Bitcoin(5000);
             uint optionalSatPerVbyte = 21;
 
             var prepareRequest = new PreparePayOnchainRequest(amount, optionalSatPerVbyte);

@@ -18,7 +18,7 @@ Future<PrepareSendResponse> prepareSendPaymentLightningBolt11() async {
 Future<PrepareSendResponse> prepareSendPaymentLightningBolt12() async {
   // ANCHOR: prepare-send-payment-lightning-bolt12
   // Set the bolt12 offer you wish to pay
-  PayAmount_Receiver optionalAmount = PayAmount_Receiver(amountSat: 5000 as BigInt);
+  PayAmount_Bitcoin optionalAmount = PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt);
   PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
     req: PrepareSendRequest(destination: "<bolt12 offer>", amount: optionalAmount),
   );
@@ -29,7 +29,7 @@ Future<PrepareSendResponse> prepareSendPaymentLightningBolt12() async {
 Future<PrepareSendResponse> prepareSendPaymentLiquid() async {
   // ANCHOR: prepare-send-payment-liquid
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  PayAmount_Receiver optionalAmount = PayAmount_Receiver(amountSat: 5000 as BigInt);
+  PayAmount_Bitcoin optionalAmount = PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt);
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: "<Liquid BIP21 or address>",
     amount: optionalAmount,

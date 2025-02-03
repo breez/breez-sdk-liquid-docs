@@ -48,7 +48,7 @@ func ListPaymentsDetailsDestination(sdk: BindingLiquidSdk) -> [Payment]? {
     let destination = "<Liquid BIP21 or address>"
     let payments = try? sdk.listPayments(
         req: ListPaymentsRequest(
-            details: ListPaymentDetails.liquid(destination: destination)
+            details: ListPaymentDetails.liquid(assetId: nil, destination: destination)
         ))
     // ANCHOR_END: list-payments-details-destination
     return payments

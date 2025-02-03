@@ -1,6 +1,6 @@
 import breez_sdk_liquid
 import logging
-from breez_sdk_liquid import BindingLiquidSdk, InputType, LnUrlPayRequest, PrepareLnUrlPayRequest, PrepareLnUrlPayResponse
+from breez_sdk_liquid import BindingLiquidSdk, InputType, LnUrlPayRequest, LnUrlPayRequestData, PayAmount, PrepareLnUrlPayRequest, PrepareLnUrlPayResponse
 
 
 def prepare_pay(sdk: BindingLiquidSdk):
@@ -12,12 +12,12 @@ def prepare_pay(sdk: BindingLiquidSdk):
     try: 
         parsed_input = sdk.parse(lnurl_pay_url)
         if isinstance(parsed_input, InputType.LN_URL_PAY):
-            amount_msat = parsed_input.data.min_sendable
+            amount = PayAmount.BITCOIN(5_000)
             optional_comment = "<comment>"
             optional_validate_success_action_url = True
 
             req = PrepareLnUrlPayRequest(parsed_input.data,
-                                         amount_msat, 
+                                         amount, 
                                          optional_comment, 
                                          optional_validate_success_action_url)
             prepare_response = sdk.prepare_lnurl_pay(req)
@@ -30,6 +30,24 @@ def prepare_pay(sdk: BindingLiquidSdk):
         logging.error(error)
         raise 
   # ANCHOR_END: prepare-lnurl-pay
+
+def prepare_pay_drain(sdk: BindingLiquidSdk, data: LnUrlPayRequestData):
+    # ANCHOR: prepare-lnurl-pay-drain
+    try: 
+        amount = PayAmount.DRAIN
+        optional_comment = "<comment>"
+        optional_validate_success_action_url = True
+
+        req = PrepareLnUrlPayRequest(data,
+                                     amount, 
+                                     optional_comment, 
+                                     optional_validate_success_action_url)
+        prepare_response = sdk.prepare_lnurl_pay(req)
+        return prepare_response
+    except Exception as error:
+        logging.error(error)
+        raise 
+  # ANCHOR_END: prepare-lnurl-pay-drain
 
 def pay(sdk: BindingLiquidSdk, prepare_response: PrepareLnUrlPayResponse):
     # ANCHOR: lnurl-pay

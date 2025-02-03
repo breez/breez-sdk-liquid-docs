@@ -10,23 +10,40 @@ Future<void> prepareLnurlPay() async {
 
   InputType inputType = await breezSDKLiquid.instance!.parse(input: lnurlPayUrl);
   if (inputType is InputType_LnUrlPay) {
-    BigInt amountMsat = inputType.data.minSendable;
+    PayAmount_Bitcoin amount = PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt);
     String optionalComment = "<comment>";
     bool optionalValidateSuccessActionUrl = true;
-    
+
     PrepareLnUrlPayRequest req = PrepareLnUrlPayRequest(
       data: inputType.data,
-      amountMsat: amountMsat,
+      amount: amount,
       comment: optionalComment,
       validateSuccessActionUrl: optionalValidateSuccessActionUrl,
     );
     PrepareLnUrlPayResponse prepareResponse = await breezSDKLiquid.instance!.prepareLnurlPay(req: req);
-    
+
     // If the fees are acceptable, continue to create the LNURL Pay
     BigInt feesSat = prepareResponse.feesSat;
     print("Fees: $feesSat sats");
   }
   // ANCHOR_END: prepare-lnurl-pay
+}
+
+Future<void> prepareLnurlPayDrain({required LnUrlPayRequestData data}) async {
+  // ANCHOR: prepare-lnurl-pay-drain
+  PayAmount_Drain amount = PayAmount_Drain();
+  String optionalComment = "<comment>";
+  bool optionalValidateSuccessActionUrl = true;
+
+  PrepareLnUrlPayRequest req = PrepareLnUrlPayRequest(
+    data: data,
+    amount: amount,
+    comment: optionalComment,
+    validateSuccessActionUrl: optionalValidateSuccessActionUrl,
+  );
+  PrepareLnUrlPayResponse prepareResponse = await breezSDKLiquid.instance!.prepareLnurlPay(req: req);
+  // ANCHOR_END: prepare-lnurl-pay-drain
+  print(prepareResponse);
 }
 
 Future<void> lnurlPay({required PrepareLnUrlPayResponse prepareResponse}) async {

@@ -11,14 +11,14 @@ class LnurlPay {
         try {
             val inputType = sdk.parse(lnurlPayUrl)
             if (inputType is InputType.LnUrlPay) {
-                val requestData = inputType.data
-                val amountMsat = requestData.minSendable
+                val amount = PayAmount.Bitcoin(5_000.toULong())
                 val optionalComment = "<comment>";
                 val optionalValidateSuccessActionUrl = true;
-    
+                val lnurlData = inputType.data
+
                 val req = PrepareLnUrlPayRequest(
-                    requestData, 
-                    amountMsat, 
+                    lnurlData, 
+                    amount, 
                     optionalComment, 
                     optionalValidateSuccessActionUrl)
                 val prepareResponse = sdk.prepareLnurlPay(req)
@@ -31,6 +31,25 @@ class LnurlPay {
             // handle error
         }
         // ANCHOR_END: prepare-lnurl-pay
+    }
+    
+    fun prepareLnurlPayDrain(sdk: BindingLiquidSdk, lnurlData: LnUrlPayRequestData) {
+        // ANCHOR: prepare-lnurl-pay-drain
+        try {
+            val amount = PayAmount.Drain
+            val optionalComment = "<comment>";
+            val optionalValidateSuccessActionUrl = true;
+
+            val req = PrepareLnUrlPayRequest(
+                lnurlData, 
+                amount, 
+                optionalComment, 
+                optionalValidateSuccessActionUrl)
+            val prepareResponse = sdk.prepareLnurlPay(req)
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: prepare-lnurl-pay-drain
     }
     
     fun lnurlPay(sdk: BindingLiquidSdk, prepareResponse: PrepareLnUrlPayResponse) {

@@ -17,7 +17,7 @@ def fetch_pay_onchain_limits(sdk: BindingLiquidSdk):
 def prepare_pay_onchain(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-pay-onchain
     try:
-        amount = PayAmount.RECEIVER(5_000)
+        amount = PayAmount.BITCOIN(5_000)
         prepare_request = PreparePayOnchainRequest(amount)
         prepare_response = sdk.prepare_pay_onchain(prepare_request)
 
@@ -45,7 +45,7 @@ def prepare_pay_onchain_drain(sdk: BindingLiquidSdk):
 def prepare_pay_onchain_fee_rate(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-pay-onchain-fee-rate
     try:
-        amount = PayAmount.RECEIVER(5_000)
+        amount = PayAmount.BITCOIN(5_000)
         optional_sat_per_vbyte = 21
 
         prepare_request = PreparePayOnchainRequest(amount, optional_sat_per_vbyte)

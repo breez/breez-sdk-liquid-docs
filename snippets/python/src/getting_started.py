@@ -25,9 +25,9 @@ def fetch_balance(sdk: BindingLiquidSdk):
     # ANCHOR: fetch-balance
     try:
         info = sdk.get_info()
-        balance_sat = info.balance_sat
-        pending_send_sat = info.pending_send_sat
-        pending_receive_sat = info.pending_receive_sat
+        balance_sat = info.wallet_info.balance_sat
+        pending_send_sat = info.wallet_info.pending_send_sat
+        pending_receive_sat = info.wallet_info.pending_receive_sat
     except Exception as error:
         logging.error(error)
         raise
