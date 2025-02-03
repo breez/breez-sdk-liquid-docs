@@ -1,7 +1,7 @@
 import {
   InputTypeVariant,
   lnurlPay,
-  LnUrlPayRequestData,
+  type LnUrlPayRequestData,
   parse,
   type PayAmount,
   PayAmountVariant,

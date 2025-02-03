@@ -33,13 +33,12 @@ class LnurlPay {
         // ANCHOR_END: prepare-lnurl-pay
     }
     
-    fun prepareLnurlPayDrain(sdk: BindingLiquidSdk, lnurlData LnUrlPayRequestData) {
+    fun prepareLnurlPayDrain(sdk: BindingLiquidSdk, lnurlData: LnUrlPayRequestData) {
         // ANCHOR: prepare-lnurl-pay-drain
         try {
             val amount = PayAmount.Drain
             val optionalComment = "<comment>";
             val optionalValidateSuccessActionUrl = true;
-            val requestData = inputType.data
 
             val req = PrepareLnUrlPayRequest(
                 lnurlData, 

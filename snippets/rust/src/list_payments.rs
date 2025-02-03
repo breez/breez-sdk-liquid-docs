@@ -33,6 +33,7 @@ async fn list_payments_filtered(sdk: Arc<LiquidSdk>) -> Result<Vec<Payment>> {
             offset: Some(0),
             limit: Some(50),
             details: None,
+            sort_ascending: None,
         })
         .await?;
     // ANCHOR_END: list-payments-filtered
@@ -52,6 +53,7 @@ async fn list_payments_details_address(sdk: Arc<LiquidSdk>) -> Result<Vec<Paymen
             offset: None,
             limit: None,
             details: Some(ListPaymentDetails::Bitcoin { address }),
+            sort_ascending: None,
         })
         .await?;
     // ANCHOR_END: list-payments-details-address
@@ -74,6 +76,7 @@ async fn list_payments_details_destination(sdk: Arc<LiquidSdk>) -> Result<Vec<Pa
                 asset_id: None,
                 destination,
             }),
+            sort_ascending: None,
         })
         .await?;
     // ANCHOR_END: list-payments-details-addrdestinationess
