@@ -177,8 +177,12 @@ For further instructions on how to execute a manual refund, see the section on [
 ### Liquid
 When receiving via Liquid, we can either generate an address to receive to, or a BIP21 URI with information regarding the payment (currently only the amount and message).
 
-
 To generate a BIP21 address, all you have to do is specify a payer amount.
+
+<div class="warning">
+<h4>Developer note</h4>
+To receive non-Bitcoin assets, see <a href="assets.md#receiving-a-non-bitcoin-asset">Handling multiple assets</a>.
+</div>
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>

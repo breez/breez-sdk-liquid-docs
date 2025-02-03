@@ -9,9 +9,8 @@ Future<void> parseInput() async {
   if (inputType is InputType_BitcoinAddress) {
     print("Input is Bitcoin address ${inputType.address.address}");
   } else if (inputType is InputType_Bolt11) {
-    String amountStr = inputType.invoice.amountMsat != null
-        ? inputType.invoice.amountMsat.toString()
-        : "unknown";
+    String amountStr =
+        inputType.invoice.amountMsat != null ? inputType.invoice.amountMsat.toString() : "unknown";
     print("Input is BOLT11 invoice for $amountStr msats");
   } else if (inputType is InputType_LnUrlPay) {
     print(
@@ -31,10 +30,7 @@ Future<void> configureParsers() async {
   String mnemonic = "<mnemonic words>";
 
   // Create the default config, providing your Breez API key
-  Config config = defaultConfig(
-    network: LiquidNetwork.mainnet,
-    breezApiKey: "<your-Breez-API-key>"
-  );
+  Config config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>");
 
   // Configure external parsers
   config = config.copyWith(
@@ -45,7 +41,7 @@ Future<void> configureParsers() async {
         parserUrl: "https://parser-domain.com/parser?input=<input>",
       ),
       ExternalInputParser(
-        providerId: "provider_b", 
+        providerId: "provider_b",
         inputRegex: "^provider_b",
         parserUrl: "https://parser-domain.com/parser?input=<input>",
       ),

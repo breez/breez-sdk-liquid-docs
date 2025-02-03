@@ -13,7 +13,8 @@ public class ReceivePaymentSnippets
             Console.WriteLine($"Maximum amount allowed to deposit in sats: {currentLimits.receive.maxSat}");
 
             // Set the invoice amount you wish the payer to send, which should be within the above limits
-            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.Lightning, 5000);
+            var optionalAmount = new ReceiveAmount.Bitcoin(5000);
+            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.Lightning, optionalAmount);
             var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
 
             // If the fees are acceptable, continue to create the Receive Payment
@@ -38,7 +39,8 @@ public class ReceivePaymentSnippets
             Console.WriteLine($"Maximum amount allowed to deposit in sats: {currentLimits.receive.maxSat}");
 
             // Set the onchain amount you wish the payer to send, which should be within the above limits
-            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.BitcoinAddress, 5000);
+            var optionalAmount = new ReceiveAmount.Bitcoin(5000);
+            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.BitcoinAddress, optionalAmount);
             var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
 
             // If the fees are acceptable, continue to create the Receive Payment
@@ -60,7 +62,8 @@ public class ReceivePaymentSnippets
             // Create a Liquid BIP21 URI/address to receive a payment to.
             // There are no limits, but the payer amount should be greater than broadcast fees when specified
             // Note: Not setting the amount will generate a plain Liquid address
-            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.LiquidAddress, 5000);
+            var optionalAmount = new ReceiveAmount.Bitcoin(5000);
+            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.LiquidAddress, optionalAmount);
             var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
 
             // If the fees are acceptable, continue to create the Receive Payment

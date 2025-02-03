@@ -29,7 +29,7 @@ public class SendPaymentSnippets
         var destination = "<bolt12 offer>";
         try
         {
-            var optionalAmount = new PayAmount.Receiver(5000);
+            var optionalAmount = new PayAmount.Bitcoin(5000);
             var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
         }
         catch (Exception)
@@ -46,7 +46,7 @@ public class SendPaymentSnippets
         var destination = "<Liquid BIP21 or address>";
         try
         {
-            var optionalAmount = new PayAmount.Receiver(5000);
+            var optionalAmount = new PayAmount.Bitcoin(5000);
             var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
 
             // If the fees are acceptable, continue to create the Send Payment
