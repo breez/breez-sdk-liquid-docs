@@ -43,6 +43,7 @@ Future<void> prepareLnurlPayDrain({required LnUrlPayRequestData data}) async {
   );
   PrepareLnUrlPayResponse prepareResponse = await breezSDKLiquid.instance!.prepareLnurlPay(req: req);
   // ANCHOR_END: prepare-lnurl-pay-drain
+  print(prepareResponse);
 }
 
 Future<void> lnurlPay({required PrepareLnUrlPayResponse prepareResponse}) async {

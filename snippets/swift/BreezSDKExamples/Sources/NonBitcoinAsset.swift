@@ -41,7 +41,7 @@ func prepareSendPaymentAsset(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
     return prepareResponse
 }
 
-func configureAssetMetadata() throws -> BindingLiquidSdk? {
+func configureAssetMetadata() throws {
     // ANCHOR: configure-asset-metadata
     // Create the default config
     var config = try defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>")
@@ -56,7 +56,6 @@ func configureAssetMetadata() throws -> BindingLiquidSdk? {
         )
     ]
     // ANCHOR_END: configure-asset-metadata
-    return sdk
 }
 
 func fetchAssetBalance(sdk: BindingLiquidSdk) {
@@ -64,7 +63,7 @@ func fetchAssetBalance(sdk: BindingLiquidSdk) {
     if let info = try? sdk.getInfo() {
         let assetBalances = info.walletInfo.assetBalances
         
-        print(balanceSat)
+        print(assetBalances)
     }
     // ANCHOR_END: fetch-asset-balance
 }
