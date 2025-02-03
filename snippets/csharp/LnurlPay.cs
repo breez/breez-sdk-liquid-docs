@@ -15,13 +15,13 @@ public class LnurlPaySnippets
             var input = sdk.Parse(lnurlPayUrl);
             if (input is InputType.LnUrlPay lnurlp)
             {
-                var amountMsat = lnurlp.data.minSendable;
+                var amount = new PayAmount.Bitcoin(5000);
                 var optionalComment = "<comment>";
                 var optionalValidateSuccessActionUrl = true;
                 
                 var req = new PrepareLnUrlPayRequest(
                     lnurlp.data, 
-                    amountMsat, 
+                    amount, 
                     optionalComment, 
                     optionalValidateSuccessActionUrl);
                 var prepareResponse = sdk.PrepareLnurlPay(req);
@@ -36,6 +36,28 @@ public class LnurlPaySnippets
             // Handle error
         }
         // ANCHOR_END: prepare-lnurl-pay
+    }
+    public void PrepareLnurlPayDrain(BindingLiquidSdk sdk, LnUrlPayRequestData data)
+    {
+        // ANCHOR: prepare-lnurl-pay-drain
+        try
+        {
+            var amount = new PayAmount.Drain();
+            var optionalComment = "<comment>";
+            var optionalValidateSuccessActionUrl = true;
+            
+            var req = new PrepareLnUrlPayRequest(
+                data, 
+                amount, 
+                optionalComment, 
+                optionalValidateSuccessActionUrl);
+            var prepareResponse = sdk.PrepareLnurlPay(req);
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: prepare-lnurl-pay-drain
     }
 
     public void LnurlPay(BindingLiquidSdk sdk, PrepareLnUrlPayResponse prepareResponse)
