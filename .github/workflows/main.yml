@@ -2,9 +2,9 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push events but only for the "main" branch
+  # Triggers the workflow on push events but only for the "main" and "pre-release" branches
   push:
-    branches: [ main ]
+    branches: [ main, pre-release ]
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
@@ -357,3 +357,12 @@ jobs:
           git add -f book
           git commit -m "Generate documentation"
           git push origin --force main:main-generated
+
+      - name: Push book to pre-release-generated branch
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/pre-release' }}
+        run: |
+          git config --global user.name "Generator"
+          git config --global user.email "no-reply@breez.technology"
+          git add -f book
+          git commit -m "Generate documentation"
+          git push origin --force pre-release:pre-release-generated
