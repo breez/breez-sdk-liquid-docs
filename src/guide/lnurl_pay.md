@@ -1,6 +1,10 @@
 # LNURL-Pay
 
-## Preparing LNURL Payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_lnurl_pay">API docs</a>
+<h2 id="preparing-lnurl-payments">
+    <a class="header" href="#preparing-lnurl-payments">Preparing LNURL Payments</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_lnurl_pay">API docs</a>
+</h2>
+
 During the prepare step, the SDK ensures that the inputs are valid with respect to the LNURL-pay request,
 and also returns the relative fees related to the payment so they can be confirmed. If the LNURL-pay invoice
 includes a <a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">Magic Routing Hint</a> for a direct Liquid payment, the fees will reflect this.
@@ -71,7 +75,11 @@ includes a <a target="_blank" href="https://docs.boltz.exchange/v/api/magic-rout
 </section>
 </custom-tabs>
 
-## LNURL Payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.lnurl_pay">API docs</a>
+<h2 id="lnurl-payments">
+    <a class="header" href="#lnurl-payments">LNURL Payments</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.lnurl_pay">API docs</a>
+</h2>
+
 Once the payment has been prepared and the fees are accepted, all you have to do is pass the prepare response as an argument to the
 LNURL pay method.
 

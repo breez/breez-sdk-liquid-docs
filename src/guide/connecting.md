@@ -1,4 +1,7 @@
-# Connecting <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.connect">API docs</a>
+<h1 id="connecting">
+    <a class="header" href="#connecting">Connecting</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.connect">API docs</a>
+</h1>
 
 The first step is to construct the SDK configuration. Among others, it sets the network you want to use, the SDK working directory and the Breez API key.
 
@@ -83,7 +86,10 @@ By default, the config working directory is set to the directory where the SDK i
 
 </div>
 
-# Disconnecting <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.disconnect">API docs</a>
+<h2 id="disconnecting">
+    <a class="header" href="#disconnecting">Disonnecting</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.disconnect">API docs</a>
+</h2>
 
 Once you are done using the SDK, you can call the `disconnect` method to free up the resources which are currently in use.
 

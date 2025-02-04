@@ -1,4 +1,7 @@
-# Connecting an External Signer <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.connect_with_signer">API docs</a>
+<h2 id="connecting-an-external-signer">
+    <a class="header" href="#connecting-an-external-signer">Connecting an External Signer</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.connect_with_signer">API docs</a>
+</h2>
 
 By default, the SDK uses mnemonics to generate keys and sign transactions. However, in some cases, developers would prefer not to pass the seed key to the SDK. In these cases, you can provide an external signer that provides more control over key management and signing.
 

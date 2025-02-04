@@ -1,4 +1,7 @@
-# Fetching the balance <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.get_info">API docs</a>
+<h1 id="fetching-the-balance">
+    <a class="header" href="#fetching-the-balance">Fetching the balance</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.get_info">API docs</a>
+</h1>
 
 Once connected, the balance can be retrieved at any time.
 

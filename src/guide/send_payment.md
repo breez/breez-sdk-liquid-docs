@@ -9,7 +9,11 @@ Once the SDK is initialized, you can directly begin sending payments. The send p
 Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
 </div>
 
-## Preparing Payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_send_payment">API docs</a>
+<h2 id="preparing-payments">
+    <a class="header" href="#preparing-payments">Preparing Payments</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_send_payment">API docs</a>
+</h2>
+
 During the prepare step, the SDK ensures that the inputs are valid with respect to the destination,
 and also returns the relative fees related to the payment so they can be confirmed. 
 
@@ -315,8 +319,11 @@ When you want send all funds from your wallet to another address.
 </section>
 </custom-tabs>
 
+<h2 id="sending-payments">
+    <a class="header" href="#sending-payments">Sending Payments</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.send_payment">API docs</a>
+</h2>
 
-## Sending Payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.send_payment">API docs</a>
 Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the
 send method.
 

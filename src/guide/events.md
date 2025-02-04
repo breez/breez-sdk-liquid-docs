@@ -2,7 +2,10 @@
 
 The SDK emits several events to provide the application with an up-to-date state of the wallet or ongoing payments.
 
-## Add event listener <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.add_event_listener">API docs</a>
+<h2 id="add-event-listener">
+    <a class="header" href="#add-event-listener">Add event listener</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.add_event_listener">API docs</a>
+</h2>
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -74,7 +77,10 @@ The SDK emits several events to provide the application with an up-to-date state
 </section>
 </custom-tabs>
 
-## Remove event listener <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.remove_event_listener">API docs</a>
+<h2 id="remove-event-listener">
+    <a class="header" href="#remove-event-listener">Remove event listener</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.remove_event_listener">API docs</a>
+</h2>
 
 When you no longer need to listen to events, you can remove the listener.
 

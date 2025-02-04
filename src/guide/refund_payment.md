@@ -2,7 +2,10 @@
 
 The SDK handles refunding of failed payments automatically except when receiving Bitcoin payments where the refund of a failed swap has to be managed manually.
 
-## List refundables <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.list_refundables">API docs</a>
+<h2 id="list-refundables">
+    <a class="header" href="#list-refundables">List refundables</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.list_refundables">API docs</a>
+</h2>
 
 In order to manually execute a Bitcoin refund, you need to supply an on-chain Bitcoin address to which the refunded amount will be sent. The following code will retrieve the refundable swaps:
 
@@ -72,7 +75,10 @@ In order to manually execute a Bitcoin refund, you need to supply an on-chain Bi
 </section>
 </custom-tabs>
 
-## Recommended fees <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.recommended_fees">API docs</a>
+<h2 id="recommended-fees">
+    <a class="header" href="#recommended-fees">Recommended fees</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.recommended_fees">API docs</a>
+</h2>
 
 To refund a swap, you need to set a fee rate for the Bitcoin transaction. You can get the Bitcoin mempool fee estimates from the SDK:
 
@@ -142,7 +148,10 @@ To refund a swap, you need to set a fee rate for the Bitcoin transaction. You ca
 </section>
 </custom-tabs>
 
-## Refund payment <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.refund">API docs</a>
+<h2 id="refund-payment">
+    <a class="header" href="#refund-payment">Refund payment</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.refund">API docs</a>
+</h2>
 
 Once you have a refundable swap, use the following code to execute a refund:
 
