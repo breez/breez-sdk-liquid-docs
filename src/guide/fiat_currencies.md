@@ -1,6 +1,9 @@
 # Supporting fiat currencies
 
-## List fiat currencies <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.list_fiat_currencies">API docs</a>
+<h2 id="list-fiat-currencies">
+    <a class="header" href="#list-fiat-currencies">List fiat currencies</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.list_fiat_currencies">API docs</a>
+</h2>
 
 You can get the full details of supported fiat currencies, such as symbols and localized names:
 
@@ -70,7 +73,10 @@ You can get the full details of supported fiat currencies, such as symbols and l
 </section>
 </custom-tabs>
 
-## Fetch fiat rates <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.fetch_fiat_rates">API docs</a>
+<h2 id="fetch-fiat-rates">
+    <a class="header" href="#fetch-fiat-rates">Fetch fiat rates</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.fetch_fiat_rates">API docs</a>
+</h2>
 
 To get the current BTC rate in the various supported fiat currencies:
 

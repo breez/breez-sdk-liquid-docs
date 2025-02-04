@@ -1,4 +1,7 @@
-# Rescanning swaps <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.rescan_onchain_swaps">API docs</a>
+<h1 id="rescanning-swaps">
+    <a class="header" href="#rescanning-swaps">Rescanning swaps</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.rescan_onchain_swaps">API docs</a>
+</h1>
 
 The SDK continuously monitors any ongoing swap transactions until they are either completed or refunded. Once one of these outcomes occurs, the SDK ceases its monitoring activities, and users are advised against sending additional funds to the swap address. 
 

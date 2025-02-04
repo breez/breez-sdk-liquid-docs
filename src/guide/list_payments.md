@@ -1,4 +1,7 @@
-# Listing payments <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.list_payments">API docs</a>
+<h1 id="listing-payments">
+    <a class="header" href="#listing-payments">Listing payments</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.list_payments">API docs</a>
+</h1>
 
 To view your payment history you can list all the sent and received payments made.
 
@@ -275,7 +278,10 @@ When listing payment you can also filter and page the list results, by:
 </section>
 </custom-tabs>
 
-## Get Payment <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.get_payment">API docs</a>
+<h2 id="get-payment">
+    <a class="header" href="#get-payment">Get Payment</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.get_payment">API docs</a>
+</h2>
 
 You can also retrieve a single Lightning payment using the invoice payment hash.
 
