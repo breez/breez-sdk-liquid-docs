@@ -20,7 +20,8 @@ a.tag {
     border-radius: 10px;
     border: 1px solid #fff;
     background-color: var(--searchresults-header-fg);
-    text-decoration: none;
+    white-space: nowrap;
+    max-height: 1.5em;
 }
 
 h1 a.tag {
