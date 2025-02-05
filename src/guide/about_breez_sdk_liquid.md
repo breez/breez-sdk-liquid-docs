@@ -22,6 +22,7 @@ It’s a nodeless Lightning integration that offers a self-custodial, end-to-end
 
 **Key Features**
 
+- [x] Send and receive Lightning payments 
 - [x] On-chain interoperability
 - [x] LNURL functionality
 - [x] Multi-app support
