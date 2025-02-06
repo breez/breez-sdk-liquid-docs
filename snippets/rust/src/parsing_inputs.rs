@@ -65,8 +65,9 @@ async fn configure_parsers() -> Result<Arc<LiquidSdk>> {
     ]);
 
     let connect_request = ConnectRequest {
-        mnemonic: mnemonic.to_string(),
         config,
+        mnemonic: mnemonic.to_string(),
+        passphrase: None,
     };
     let sdk = LiquidSdk::connect(connect_request).await?;
     // ANCHOR_END: configure-external-parser

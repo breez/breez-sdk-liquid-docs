@@ -672,7 +672,7 @@
 
 "@breeztech/react-native-breez-sdk-liquid@^0.7.0-rc4":
   version "0.7.0-rc4"
-  resolved "https://registry.npmjs.org/@breeztech/react-native-breez-sdk-liquid/-/react-native-breez-sdk-liquid-0.7.0-rc4.tgz"
+  resolved "https://registry.yarnpkg.com/@breeztech/react-native-breez-sdk-liquid/-/react-native-breez-sdk-liquid-0.7.0-rc4.tgz#4a7304741a2fbaf81f6da14d597b89cea5e099d7"
   integrity sha512-m/1HwAca9PhhM7f/Vg7CAaDzR+fBkV3R5nHk4AS6vlTMjD4NJd/5hDsQNaJG9nrubZT5flN8EcqimUq2A6SQtA==
 
 "@esbuild/android-arm64@0.18.20":
