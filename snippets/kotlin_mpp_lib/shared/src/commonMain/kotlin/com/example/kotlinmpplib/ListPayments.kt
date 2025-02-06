@@ -8,7 +8,7 @@ class ListPayments {
             val paymentHash = "<payment hash>";
             val paymentByHash = sdk.getPayment(GetPaymentRequest.PaymentHash(paymentHash))
 
-            val swapId = "<swap if>";
+            val swapId = "<swap id>";
             val paymentBySwapId = sdk.getPayment(GetPaymentRequest.SwapId(swapId))
         } catch (e: Exception) {
             // handle error
