@@ -16,7 +16,7 @@ func GetPayment(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		log.Printf("%#v", payment)
 	}
 
-    swapId := "<swap id>"
+	swapId := "<swap id>"
 	reqBySwapId := breez_sdk_liquid.GetPaymentRequestSwapId{
 		SwapId: swapId,
 	}
