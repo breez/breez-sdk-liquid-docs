@@ -1,13 +1,17 @@
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
-Future<Payment?> getPayment() async {
+Future<(Payment?, Payment?)> getPayment() async {
   // ANCHOR: get-payment
   String paymentHash = "<payment hash>";
-  GetPaymentRequest req = GetPaymentRequest.lightning(paymentHash: paymentHash);
-  Payment? payment = await breezSDKLiquid.instance!.getPayment(req: req);
+  GetPaymentRequest reqByHash = GetPaymentRequest.paymentHash(paymentHash: paymentHash);
+  Payment? paymentByHash = await breezSDKLiquid.instance!.getPayment(req: reqByHash);
+
+  String swapId = "<swap id>";
+  GetPaymentRequest reqBySwapId = GetPaymentRequest.swapId(swapId: swapId);
+  Payment? paymentBySwapId = await breezSDKLiquid.instance!.getPayment(req: reqBySwapId);
   // ANCHOR_END: get-payment
-  return payment;
+  return (paymentByHash, paymentBySwapId);
 }
 
 Future<List<Payment>> listPayments() async {

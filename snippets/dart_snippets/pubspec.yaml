@@ -10,11 +10,11 @@ dependencies:
   breez_liquid:
     git:
       url: https://github.com/breez/breez-sdk-liquid-dart
-      tag: 0.7.0-rc1
+      tag: 0.7.0-rc4
   flutter_breez_liquid:
     git:
       url: https://github.com/breez/breez-sdk-liquid-flutter
-      tag: 0.7.0-rc1
+      tag: 0.7.0-rc4
   rxdart: ^0.28.0  
 
 dependency_overrides:

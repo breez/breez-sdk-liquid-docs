@@ -1,5 +1,5 @@
 import logging
-from breez_sdk_liquid import BindingLiquidSdk, PrepareReceiveRequest, PaymentMethod, PrepareReceiveResponse, ReceivePaymentRequest
+from breez_sdk_liquid import BindingLiquidSdk, PrepareReceiveRequest, PaymentMethod, PrepareReceiveResponse, ReceivePaymentRequest, ReceiveAmount
 
 
 def prepare_receive_lightning(sdk: BindingLiquidSdk):
