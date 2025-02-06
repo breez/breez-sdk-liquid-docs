@@ -7,7 +7,12 @@ async fn get_payment(sdk: Arc<LiquidSdk>) -> Result<Option<Payment>> {
     // ANCHOR: get-payment
     let payment_hash = "<payment hash>".to_string();
     let payment = sdk
-        .get_payment(&GetPaymentRequest::Lightning { payment_hash })
+        .get_payment(&GetPaymentRequest::PaymentHash { payment_hash })
+        .await?;
+
+    let swap_id = "<swap id>".to_string();
+    let payment = sdk
+        .get_payment(&GetPaymentRequest::SwapId { swap_id })
         .await?;
     // ANCHOR_END: get-payment
 

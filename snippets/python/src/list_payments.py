@@ -6,7 +6,10 @@ def get_payment(sdk: BindingLiquidSdk):
     try:
         # ANCHOR: get-payment
         payment_hash = "<payment hash>"
-        sdk.get_payment(GetPaymentRequest.LIGHTNING(payment_hash))
+        sdk.get_payment(GetPaymentRequest.PAYMENT_HASH(payment_hash))
+
+        swap_id = "<swap id>"
+        sdk.get_payment(GetPaymentRequest.SWAP_ID(swap_id))
         # ANCHOR_END: get-payment
     except Exception as error:
         logging.error(error)

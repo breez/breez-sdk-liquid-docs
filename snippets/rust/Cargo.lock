@@ -39,6 +39,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "aes-gcm"
+version = "0.10.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "831010a0f742e1209b3bcea8fab6a8e149051ba6099432c8cb2cc117dec3ead1"
+dependencies = [
+ "aead",
+ "aes",
+ "cipher",
+ "ctr",
+ "ghash",
+ "subtle",
+]
+
+[[package]]
 name = "aes-gcm-siv"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -707,8 +721,8 @@ dependencies = [
 
 [[package]]
 name = "breez-sdk-liquid"
-version = "0.7.0-rc1"
-source = "git+https://github.com/breez/breez-sdk-liquid?tag=0.7.0-rc1#c1b7ea1302248af0db098be8fbb8f7744738ea57"
+version = "0.7.0-rc4"
+source = "git+https://github.com/breez/breez-sdk-liquid?tag=0.7.0-rc4#2ae49043df9efecc1afba8118004b009dc1f6662"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1142,14 +1156,15 @@ version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e0206e602d2645ec8b24ed8307fadbc6c3110e2b11ab2f806fc02fee49327079"
 dependencies = [
+ "aes-gcm",
  "getrandom 0.2.14",
  "hkdf",
  "libsecp256k1",
  "once_cell",
- "openssl",
  "parking_lot 0.12.3",
  "rand_core",
  "sha2",
+ "typenum",
  "wasm-bindgen",
 ]
 
@@ -1581,6 +1596,16 @@ dependencies = [
  "libc",
  "wasi 0.13.3+wasi-0.2.2",
  "windows-targets 0.52.6",
+]
+
+[[package]]
+name = "ghash"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f0d8a4362ccb29cb0b265253fb0a2728f592895ee6854fd9bc13f2ffda266ff1"
+dependencies = [
+ "opaque-debug",
+ "polyval",
 ]
 
 [[package]]

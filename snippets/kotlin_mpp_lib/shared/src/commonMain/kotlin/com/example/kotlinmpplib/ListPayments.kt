@@ -6,7 +6,10 @@ class ListPayments {
         // ANCHOR: get-payment
         try {
             val paymentHash = "<payment hash>";
-            val payment = sdk.getPayment(GetPaymentRequest.Lightning(paymentHash))
+            val paymentByHash = sdk.getPayment(GetPaymentRequest.PaymentHash(paymentHash))
+
+            val swapId = "<swap if>";
+            val paymentBySwapId = sdk.getPayment(GetPaymentRequest.SwapId(swapId))
         } catch (e: Exception) {
             // handle error
         }
