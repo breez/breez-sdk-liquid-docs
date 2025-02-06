@@ -280,7 +280,7 @@ When listing payment you can also filter and page the list results, by:
 You can also retrieve a single Lightning payment using one of the following identifier kinds:
 
 * Lightning payment hash
-* Swap ID
+* Swap ID or its SHA256 hash
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
