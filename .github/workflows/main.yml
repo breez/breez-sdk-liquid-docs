@@ -11,10 +11,10 @@ on:
   workflow_dispatch:
     inputs:
       sdk-ref:
-        description: 'sdk commit/tag/branch reference. Defaults to 0.7.0-rc1'
+        description: 'sdk commit/tag/branch reference. Defaults to 0.7.0-rc4'
         required: false
         type: string
-        default: 0.7.0-rc1
+        default: 0.7.0-rc4
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -26,9 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # Used only for Rust snippets
-      sdk-ref: ${{ inputs.sdk-ref || '0.7.0-rc1' }}
+      sdk-ref: ${{ inputs.sdk-ref || '0.7.0-rc4' }}
       # Used for RN and Flutter snippets
-      package-version: '0.7.0-rc1'
+      package-version: '0.7.0-rc4'
     steps:
       - run: echo "set pre-setup output variables"
 

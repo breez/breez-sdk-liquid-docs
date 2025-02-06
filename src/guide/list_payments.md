@@ -277,7 +277,10 @@ When listing payment you can also filter and page the list results, by:
 
 ## Get Payment <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.get_payment">API docs</a>
 
-You can also retrieve a single Lightning payment using the invoice payment hash.
+You can also retrieve a single Lightning payment using one of the following identifier kinds:
+
+* Lightning payment hash
+* Swap ID or its SHA256 hash
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
