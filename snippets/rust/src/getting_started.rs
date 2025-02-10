@@ -21,8 +21,9 @@ async fn getting_started() -> Result<Arc<LiquidSdk>> {
     config.working_dir = "path to an existing directory".into();
 
     let connect_request = ConnectRequest {
-        mnemonic: mnemonic.to_string(),
         config,
+        mnemonic: mnemonic.to_string(),
+        passphrase: None,
     };
     let sdk = LiquidSdk::connect(connect_request).await?;
     // ANCHOR_END: init-sdk
