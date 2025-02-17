@@ -66,7 +66,7 @@ func ConfigureParsers() (*breez_sdk_liquid.BindingLiquidSdk, error) {
 
 	connectRequest := breez_sdk_liquid.ConnectRequest{
 		Config:   config,
-		Mnemonic: mnemonic,
+		Mnemonic: &mnemonic,
 	}
 
 	sdk, err := breez_sdk_liquid.Connect(connectRequest)
