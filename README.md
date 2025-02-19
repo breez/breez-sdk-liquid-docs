@@ -16,4 +16,5 @@ cargo install --path ./snippets-processor
 cargo install mdbook-variables
 mdbook build
 mdbook serve --open
+
 ```
