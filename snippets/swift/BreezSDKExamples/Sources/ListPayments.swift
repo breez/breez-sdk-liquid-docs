@@ -4,11 +4,16 @@ import Foundation
 func getPayment(sdk: BindingLiquidSdk) -> Payment? {
     // ANCHOR: get-payment
     let paymentHash = "<payment hash>"
-    let payment = try? sdk.getPayment(
-        req: GetPaymentRequest.lightning(paymentHash: paymentHash)
+    let paymentByHash = try? sdk.getPayment(
+        req: GetPaymentRequest.paymentHash(paymentHash: paymentHash)
+    )
+
+    let swapId = "<swap id>"
+    let paymentBySwapId = try? sdk.getPayment(
+        req: GetPaymentRequest.swapId(swapId: swapId)
     )
     // ANCHOR_END: get-payment
-    return payment
+    return paymentBySwapId
 }
 
 func listPayments(sdk: BindingLiquidSdk) -> [Payment]? {
@@ -48,7 +53,7 @@ func ListPaymentsDetailsDestination(sdk: BindingLiquidSdk) -> [Payment]? {
     let destination = "<Liquid BIP21 or address>"
     let payments = try? sdk.listPayments(
         req: ListPaymentsRequest(
-            details: ListPaymentDetails.liquid(destination: destination)
+            details: ListPaymentDetails.liquid(assetId: nil, destination: destination)
         ))
     // ANCHOR_END: list-payments-details-destination
     return payments

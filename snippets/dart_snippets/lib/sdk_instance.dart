@@ -188,6 +188,7 @@ extension ConfigCopyWith on liquid_sdk.Config {
     String? syncServiceUrl,
     List<liquid_sdk.ExternalInputParser>? externalInputParsers,
     bool? useDefaultExternalInputParsers,
+    List<liquid_sdk.AssetMetadata>? assetMetadata,
   }) {
     return liquid_sdk.Config(
       liquidElectrumUrl: liquidElectrumUrl ?? this.liquidElectrumUrl,
@@ -200,6 +201,7 @@ extension ConfigCopyWith on liquid_sdk.Config {
       syncServiceUrl: syncServiceUrl ?? this.syncServiceUrl,
       useDefaultExternalInputParsers: useDefaultExternalInputParsers ?? this.useDefaultExternalInputParsers,
       externalInputParsers: externalInputParsers ?? this.externalInputParsers,
+      assetMetadata: assetMetadata ?? this.assetMetadata,
     );
   }
 }

@@ -181,6 +181,11 @@ If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request 
 
 **Note:** If a valid Breez API key is not provided, the method will throw an error requiring you to specify one.
 
+<div class="warning">
+<h4>Developer note</h4>
+To send non-Bitcoin assets, see <a href="assets.md#sending-a-non-bitcoin-asset">Handling multiple assets</a>.
+</div>
+
 #### Setting the receiver amount
 When you want the payment receipient to receive a specific amount.
 

@@ -6,7 +6,10 @@ class ListPayments {
         // ANCHOR: get-payment
         try {
             val paymentHash = "<payment hash>";
-            val payment = sdk.getPayment(GetPaymentRequest.Lightning(paymentHash))
+            val paymentByHash = sdk.getPayment(GetPaymentRequest.PaymentHash(paymentHash))
+
+            val swapId = "<swap id>";
+            val paymentBySwapId = sdk.getPayment(GetPaymentRequest.SwapId(swapId))
         } catch (e: Exception) {
             // handle error
         }
@@ -60,7 +63,7 @@ class ListPayments {
             val destination = "<Liquid BIP21 or address>"
             val payments = sdk.listPayments(
                 ListPaymentsRequest(
-                    details = ListPaymentDetails.Liquid(destination)
+                    details = ListPaymentDetails.Liquid(assetId = null, destination = destination)
                 ))
         } catch (e: Exception) {
             // handle error

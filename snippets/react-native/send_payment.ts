@@ -23,8 +23,8 @@ const examplePrepareSendPaymentLightningBolt12 = async () => {
   // ANCHOR: prepare-send-payment-lightning-bolt12
   // Set the bolt12 offer you wish to pay
   const optionalAmount: PayAmount = {
-    type: PayAmountVariant.RECEIVER,
-    amountSat: 5_000
+    type: PayAmountVariant.BITCOIN,
+    receiverAmountSat: 5_000
   }
 
   const prepareResponse = await prepareSendPayment({
@@ -38,8 +38,8 @@ const examplePrepareSendPaymentLiquid = async () => {
   // ANCHOR: prepare-send-payment-liquid
   // Set the Liquid BIP21 or Liquid address you wish to pay
   const optionalAmount: PayAmount = {
-    type: PayAmountVariant.RECEIVER,
-    amountSat: 5_000
+    type: PayAmountVariant.BITCOIN,
+    receiverAmountSat: 5_000
   }
 
   const prepareResponse = await prepareSendPayment({

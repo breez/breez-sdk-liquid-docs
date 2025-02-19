@@ -45,7 +45,7 @@ func handlePaymentsWaitingFeeAcceptance(sdk: BindingLiquidSdk) {
     else { return }
 
     for payment in paymentsWaitingFeeAcceptance {
-        guard case .bitcoin(let swapId, _, _, _, _, _) = payment.details else { continue }
+        guard case .bitcoin(let swapId, _, _, _, _, _, _, _) = payment.details else { continue }
 
         // Only Bitcoin payments can be `WaitingFeeAcceptance`
         guard

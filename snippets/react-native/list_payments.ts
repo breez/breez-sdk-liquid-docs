@@ -9,9 +9,15 @@ import {
 const exampleGetPayment = async () => {
   // ANCHOR: get-payment
   const paymentHash = '<payment hash>'
-  const payment = await getPayment({
-    type: GetPaymentRequestVariant.LIGHTNING,
+  const paymentByHash = await getPayment({
+    type: GetPaymentRequestVariant.PAYMENT_HASH,
     paymentHash
+  })
+
+  const swapId = '<swap id>'
+  const paymentBySwapId = await getPayment({
+    type: GetPaymentRequestVariant.SWAP_ID,
+    swapId
   })
   // ANCHOR_END: get-payment
 }

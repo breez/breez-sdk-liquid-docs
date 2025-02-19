@@ -9,10 +9,18 @@ import (
 func GetPayment(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: get-payment
 	paymentHash := "<payment hash>"
-	req := breez_sdk_liquid.GetPaymentRequestLightning{
+	reqByPaymentHash := breez_sdk_liquid.GetPaymentRequestPaymentHash{
 		PaymentHash: paymentHash,
 	}
-	if payment, err := sdk.GetPayment(req); err == nil {
+	if payment, err := sdk.GetPayment(reqByPaymentHash); err == nil {
+		log.Printf("%#v", payment)
+	}
+
+	swapId := "<swap id>"
+	reqBySwapId := breez_sdk_liquid.GetPaymentRequestSwapId{
+		SwapId: swapId,
+	}
+	if payment, err := sdk.GetPayment(reqBySwapId); err == nil {
 		log.Printf("%#v", payment)
 	}
 	// ANCHOR_END: get-payment
@@ -50,7 +58,7 @@ func ListPaymentsDetailsAddress(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: list-payments-details-address
 	address := "<Bitcoin address>"
 	var details breez_sdk_liquid.ListPaymentDetails = breez_sdk_liquid.ListPaymentDetailsBitcoin{
-		Address: address,
+		Address: &address,
 	}
 	listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
 		Details: &details,
@@ -65,7 +73,7 @@ func ListPaymentsDetailsDestination(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: list-payments-details-destination
 	destination := "<Liquid BIP21 or address>"
 	var details breez_sdk_liquid.ListPaymentDetails = breez_sdk_liquid.ListPaymentDetailsLiquid{
-		Destination: destination,
+		Destination: &destination,
 	}
 	listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
 		Details: &details,

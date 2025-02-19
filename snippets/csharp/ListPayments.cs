@@ -8,8 +8,13 @@ public class ListPaymentsSnippets
         try
         {
             var paymentHash = "<payment hash>";
-            var payment = sdk.GetPayment(
-                new GetPaymentRequest.Lightning(paymentHash)
+            var paymentByHash = sdk.GetPayment(
+                new GetPaymentRequest.PaymentHash(paymentHash)
+            );
+
+            var swapId = "<swap id>";
+            var paymentBySwapId = sdk.GetPayment(
+                new GetPaymentRequest.SwapId(swapId)
             );
         }
         catch (Exception)
@@ -80,7 +85,7 @@ public class ListPaymentsSnippets
             var destination = "<Liquid BIP21 or address>";
             var payments = sdk.ListPayments(
                 new ListPaymentsRequest(
-                    details: new ListPaymentDetails.Liquid(destination)
+                    details: new ListPaymentDetails.Liquid(assetId: null, destination: destination)
                 ));
         }
         catch (Exception)

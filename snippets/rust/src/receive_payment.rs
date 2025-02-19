@@ -12,10 +12,13 @@ async fn prepare_receive_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
     info!("Maximum amount: {} sats", current_limits.receive.max_sat);
 
     // Set the invoice amount you wish the payer to send, which should be within the above limits
+    let optional_amount = Some(ReceiveAmount::Bitcoin {
+        payer_amount_sat: 5_000,
+    });
     let prepare_response = sdk
         .prepare_receive_payment(&PrepareReceiveRequest {
             payment_method: PaymentMethod::Lightning,
-            payer_amount_sat: Some(5_000),
+            amount: optional_amount,
         })
         .await?;
 
@@ -34,10 +37,13 @@ async fn prepare_receive_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
     info!("Maximum amount: {} sats", current_limits.receive.max_sat);
 
     // Set the onchain amount you wish the payer to send, which should be within the above limits
+    let optional_amount = Some(ReceiveAmount::Bitcoin {
+        payer_amount_sat: 5_000,
+    });
     let prepare_response = sdk
         .prepare_receive_payment(&PrepareReceiveRequest {
             payment_method: PaymentMethod::BitcoinAddress,
-            payer_amount_sat: Some(5_000),
+            amount: optional_amount,
         })
         .await?;
 
@@ -52,10 +58,14 @@ async fn prepare_receive_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-receive-payment-liquid
     // Create a Liquid BIP21 URI/address to receive a payment to.
     // There are no limits, but the payer amount should be greater than broadcast fees when specified
+    // Note: Not setting the amount will generate a plain Liquid address
+    let optional_amount = Some(ReceiveAmount::Bitcoin {
+        payer_amount_sat: 5_000,
+    });
     let prepare_response = sdk
         .prepare_receive_payment(&PrepareReceiveRequest {
             payment_method: PaymentMethod::LiquidAddress,
-            payer_amount_sat: Some(5_000), // Not specifying the amount will create a plain Liquid address instead
+            amount: optional_amount,
         })
         .await?;
 

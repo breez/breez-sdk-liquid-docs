@@ -1,5 +1,5 @@
 import logging
-from breez_sdk_liquid import BindingLiquidSdk, PrepareReceiveRequest, PaymentMethod, PrepareReceiveResponse, ReceivePaymentRequest
+from breez_sdk_liquid import BindingLiquidSdk, PrepareReceiveRequest, PaymentMethod, PrepareReceiveResponse, ReceivePaymentRequest, ReceiveAmount
 
 
 def prepare_receive_lightning(sdk: BindingLiquidSdk):
@@ -11,7 +11,8 @@ def prepare_receive_lightning(sdk: BindingLiquidSdk):
         logging.debug("Maximum amount allowed to deposit in sats ", current_limits.receive.max_sat)
 
         # Set the invoice amount you wish the payer to send, which should be within the above limits
-        prepare_request = PrepareReceiveRequest(PaymentMethod.LIGHTNING, 5_000)
+        optional_amount = ReceiveAmount.BITCOIN(5_000)
+        prepare_request = PrepareReceiveRequest(PaymentMethod.LIGHTNING, optional_amount)
         prepare_response = sdk.prepare_receive_payment(prepare_request)
 
         # If the fees are acceptable, continue to create the Receive Payment
@@ -32,7 +33,8 @@ def prepare_receive_onchain(sdk: BindingLiquidSdk):
         logging.debug("Maximum amount allowed to deposit in sats ", current_limits.receive.max_sat)
 
         # Set the onchain amount you wish the payer to send, which should be within the above limits
-        prepare_request = PrepareReceiveRequest(PaymentMethod.BITCOIN_ADDRESS, 5_000)
+        optional_amount = ReceiveAmount.BITCOIN(5_000)
+        prepare_request = PrepareReceiveRequest(PaymentMethod.BITCOIN_ADDRESS, optional_amount)
         prepare_response = sdk.prepare_receive_payment(prepare_request)
 
         # If the fees are acceptable, continue to create the Receive Payment
@@ -50,7 +52,8 @@ def prepare_receive_liquid(sdk: BindingLiquidSdk):
         # Create a Liquid BIP21 URI/address to receive a payment to.
         # There are no limits, but the payer amount should be greater than broadcast fees when specified
         # Note: Not setting the amount will generate a plain Liquid address
-        prepare_request = PrepareReceiveRequest(PaymentMethod.LIQUID_ADDRESS, 5_000)
+        optional_amount = ReceiveAmount.BITCOIN(5_000)
+        prepare_request = PrepareReceiveRequest(PaymentMethod.LIQUID_ADDRESS, optional_amount)
         prepare_response = sdk.prepare_receive_payment(prepare_request)
 
         # If the fees are acceptable, continue to create the Receive Payment
