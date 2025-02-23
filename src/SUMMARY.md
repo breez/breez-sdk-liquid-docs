@@ -38,11 +38,11 @@
 - [Using webhooks](notifications/using_webhooks.md)
 - [Integrating the plugin](notifications/setup_plugin.md)
     - [Android](notifications/android_setup.md)
-      - [Setting up the Foreground Service](notifications/android_service.md)
-      - [Adding the Notification Plugin](notifications/android_plugin.md)
+      - [Setting up the foreground service](notifications/android_service.md)
+      - [Adding the notification plugin](notifications/android_plugin.md)
     - [iOS](notifications/ios_setup.md)
-      - [Setting up the Notification Service Extension](notifications/ios_service.md)
-      - [Adding the Notification Plugin](notifications/ios_plugin.md)
+      - [Setting up the notification dervice extension](notifications/ios_service.md)
+      - [Adding the notification plugin](notifications/ios_plugin.md)
 
 ---
 
