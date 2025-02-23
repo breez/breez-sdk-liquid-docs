@@ -69,4 +69,6 @@ Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or em
 Head over to the [Breez SDK - Nodeless *(Liquid Implementation)* repo](https://github.com/breez/breez-sdk-liquid).
 
 
-### Ready to light up your app? [Get Started](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)
+### Ready to light up your app? 
+
+[Get Started!](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)
