@@ -35,8 +35,8 @@ def fetch_balance(sdk: BindingLiquidSdk):
 
 # ANCHOR: logging
 class SdkLogger(Logger):
-    def log(log_entry: LogEntry):
-        logging.debug("Received log [", log_entry.level, "]: ", log_entry.line)
+    def log(self, log_entry: LogEntry):
+        logging.debug(f"Received log [{log_entry.level}]: {log_entry.line}")
 
 def set_logger(logger: SdkLogger):
     try:
@@ -48,8 +48,8 @@ def set_logger(logger: SdkLogger):
 
 # ANCHOR: add-event-listener
 class SdkListener(EventListener):
-    def on_event(sdk_event: SdkEvent):
-        logging.debug("Received event ", sdk_event)
+    def on_event(self, sdk_event: SdkEvent):
+        logging.debug(f"Received event {sdk_event}")
 
 def add_event_listener(sdk: BindingLiquidSdk, listener: SdkListener):
     try:

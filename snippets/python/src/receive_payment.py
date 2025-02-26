@@ -7,8 +7,8 @@ def prepare_receive_lightning(sdk: BindingLiquidSdk):
     try:
         # Fetch the lightning Receive limits
         current_limits = sdk.fetch_lightning_limits()
-        logging.debug("Minimum amount allowed to deposit in sats ", current_limits.receive.min_sat)
-        logging.debug("Maximum amount allowed to deposit in sats ", current_limits.receive.max_sat)
+        logging.debug(f"Minimum amount allowed to deposit in sats {current_limits.receive.min_sat}")
+        logging.debug(f"Maximum amount allowed to deposit in sats {current_limits.receive.max_sat}")
 
         # Set the invoice amount you wish the payer to send, which should be within the above limits
         optional_amount = ReceiveAmount.BITCOIN(5_000)
@@ -17,7 +17,7 @@ def prepare_receive_lightning(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Receive Payment
         receive_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", receive_fees_sat, " sats")
+        logging.debug(f"Fees: {receive_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -29,8 +29,8 @@ def prepare_receive_onchain(sdk: BindingLiquidSdk):
     try:
         # Fetch the onchain Receive limits
         current_limits = sdk.fetch_onchain_limits()
-        logging.debug("Minimum amount allowed to deposit in sats ", current_limits.receive.min_sat)
-        logging.debug("Maximum amount allowed to deposit in sats ", current_limits.receive.max_sat)
+        logging.debug(f"Minimum amount allowed to deposit in sats {current_limits.receive.min_sat}")
+        logging.debug(f"Maximum amount allowed to deposit in sats {current_limits.receive.max_sat}")
 
         # Set the onchain amount you wish the payer to send, which should be within the above limits
         optional_amount = ReceiveAmount.BITCOIN(5_000)
@@ -39,7 +39,7 @@ def prepare_receive_onchain(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Receive Payment
         receive_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", receive_fees_sat, " sats")
+        logging.debug(f"Fees: {receive_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -58,7 +58,7 @@ def prepare_receive_liquid(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Receive Payment
         receive_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", receive_fees_sat, " sats")
+        logging.debug(f"Fees: {receive_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
