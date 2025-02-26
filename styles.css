@@ -6,6 +6,10 @@
     padding-left: 15px;
 }
 
+h1:has(.tag), h2:has(.tag), h3:has(.tag) {
+  display: flex;
+}
+
 a.tag {
     color: #fff;
     cursor: pointer;
