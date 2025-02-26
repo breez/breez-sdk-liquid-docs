@@ -11,7 +11,7 @@ def prepare_send_payment_lightning_bolt11(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", send_fees_sat, " sats")
+        logging.debug(f"Fees: {send_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -43,7 +43,7 @@ def prepare_send_payment_liquid(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", send_fees_sat, " sats")
+        logging.debug(f"Fees: {send_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -60,7 +60,7 @@ def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", send_fees_sat, " sats")
+        logging.debug(f"Fees: {send_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
