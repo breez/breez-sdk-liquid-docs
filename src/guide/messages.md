@@ -7,7 +7,7 @@ Through signing and verifying messages we can provide proof that a digital signa
     <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.sign_message">API docs</a>
 </h2>
 
-By signing a message using the SDK we can provide a digital signature. Anyone with the message, pubkey and signature can verify the signature was created by the private key of this pubkey.
+By signing a message using the SDK we can provide a digital signature. Anyone with the `message`, `pubkey` and `signature` can verify the signature was created by the private key of this pubkey.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -80,7 +80,7 @@ By signing a message using the SDK we can provide a digital signature. Anyone wi
     <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.check_message">API docs</a>
 </h2>
 
-You can prove control of a private key by verifying a message with it's signature and pubkey. 
+You can prove control of a private key by verifying a `message` with it's `signature` and `pubkey`. 
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>

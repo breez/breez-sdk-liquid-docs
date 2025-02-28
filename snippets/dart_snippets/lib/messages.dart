@@ -3,8 +3,11 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<SignMessageResponse> signMessage() async {
   // ANCHOR: sign-message
+  SignMessageRequest signMessageRequest = SignMessageRequest(
+    message: "<message to sign>",
+  );
   SignMessageResponse signMessageResponse = breezSDKLiquid.instance!.signMessage(
-    req: SignMessageRequest(message: "<message to sign>"),
+    req: signMessageRequest,
   );
 
   // Get the wallet info for your pubkey
@@ -21,12 +24,13 @@ Future<SignMessageResponse> signMessage() async {
 
 Future<CheckMessageResponse> checkMessage() async {
   // ANCHOR: check-message
+  CheckMessageRequest checkMessageRequest = CheckMessageRequest(
+    message: "<message>",
+    pubkey: "<pubkey of signer>",
+    signature: "<message signature>",
+  );
   CheckMessageResponse checkMessageResponse = breezSDKLiquid.instance!.checkMessage(
-    req: CheckMessageRequest(
-      message: "<message>",
-      pubkey: "<pubkey of signer>",
-      signature: "<message signature>"
-    ),
+    req: checkMessageRequest,
   );
 
   bool isValid = checkMessageResponse.isValid;

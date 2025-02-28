@@ -7,7 +7,8 @@ class Messages {
         // ANCHOR: sign-message
         val message = "<message to sign>"
         try {
-            val signMessageResponse = sdk.signMessage(SignMessageRequest(message))
+            val signMessageRequest = SignMessageRequest(message)
+            val signMessageResponse = sdk.signMessage(signMessageRequest)
 
             // Get the wallet info for your pubkey
             val info = sdk.getInfo()

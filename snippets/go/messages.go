@@ -13,7 +13,6 @@ func SignMessage(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	signMessageRequest := breez_sdk_liquid.SignMessageRequest{
 		Message: message,
 	}
-
 	signMessageResponse, err := sdk.SignMessage(signMessageRequest)
 	if err != nil {
 		log.Printf("Error: %#v", err)
@@ -46,7 +45,6 @@ func CheckMessage(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		Pubkey:    pubkey,
 		Signature: signature,
 	}
-
 	checkMessageResponse, err := sdk.CheckMessage(checkMessageRequest)
 	if err != nil {
 		log.Printf("Error: %#v", err)

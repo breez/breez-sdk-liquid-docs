@@ -8,7 +8,8 @@ public class MessagesSnippets
         var message = "<message to sign>";
         try
         {
-            var signMessageResponse = sdk.SignMessage(new SignMessageRequest(message));
+            var signMessageRequest = new SignMessageRequest(message);
+            var signMessageResponse = sdk.SignMessage(signMessageRequest);
 
             // Get the wallet info for your pubkey
             var info = sdk.GetInfo();
