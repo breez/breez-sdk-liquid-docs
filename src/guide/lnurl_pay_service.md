@@ -44,6 +44,13 @@ The service responds with following payload:
 }
 ```
 
+<div class="warning">
+<h4>Developer note</h4>
+
+When a user changes their already registered username, this previous username is freely available to be registered by another user.
+
+</div>
+
 ### Step 2: Processing an LNURL-Pay request
 When an LNURL-Pay GET request is received at ```https://app.domain/lnurlp/[identifier]``` (or ```https://app.domain/.well-known/lnurlp/[identifier]``` for lightning addresses) the service then sends a push notification to the app with the LNURL-Pay request and a callback URL. The payload may look like the following:
 
