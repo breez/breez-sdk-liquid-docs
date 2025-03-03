@@ -22,6 +22,7 @@
   - [Receiving payments using LNURL-Pay/Lightning address](guide/lnurl_pay_service.md)
   - [Receiving payments using LNURL-Withdraw](guide/lnurl_withdraw.md)
   - [Authenticating using LNURL-Auth](guide/lnurl_auth.md)
+- [Signing and verifying messages](guide/messages.md)
 - [Supporting fiat currencies](guide/fiat_currencies.md)
 - [Buying Bitcoin](guide/buy_btc.md)
 - [End-user fees](guide/end-user_fees.md)
@@ -43,12 +44,8 @@
     - [iOS](notifications/ios_setup.md)
       - [Setting up the notification dervice extension](notifications/ios_service.md)
       - [Adding the notification plugin](notifications/ios_plugin.md)
-
----
-
-# Advanced 
-
-- [Adding logging](notifications/logging.md)
-- [Changing default strings](notifications/changing_strings.md)
-- [Customising push messages](notifications/custom_messages.md)
-- [Handling custom notifications](notifications/custom_notifications.md)
+- [Advanced](notifications/advanced.md)
+  - [Adding logging](notifications/logging.md)
+  - [Changing default strings](notifications/changing_strings.md)
+  - [Customising push messages](notifications/custom_messages.md)
+  - [Handling custom notifications](notifications/custom_notifications.md)
