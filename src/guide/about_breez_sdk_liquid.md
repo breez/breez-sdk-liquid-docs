@@ -59,6 +59,8 @@ When receiving a payment, the SDK performs a reverse submarine swap, converting 
 ## Pricing
 
 The Breez SDK is **free** for developers. 
+See [this](end-user_fees.md) for end user fees.
+
 
 
 ## Support
