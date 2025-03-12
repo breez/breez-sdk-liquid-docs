@@ -1,0 +1,367 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Adding the notification plugin - Breez SDK - Nodeless</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../styles.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Breez SDK - Nodeless</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs/edit/main/src/notifications/android_plugin.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="adding-the-notification-plugin"><a class="header" href="#adding-the-notification-plugin">Adding the Notification Plugin</a></h1>
+<h2 id="preserve-flutter-and-jna-classes"><a class="header" href="#preserve-flutter-and-jna-classes">Preserve Flutter and JNA classes</a></h2>
+<p>In the <code>proguard-rules.pro</code> file make sure that the Flutter and JNA classes are preserved to avoid any exceptions with missing plugins or classes.</p>
+<pre><code># Preserve Flutter Wrapper code
+-keep class io.flutter.app.** { *; }
+-keep class io.flutter.plugin.**  { *; }
+-keep class io.flutter.util.**  { *; }
+-keep class io.flutter.view.**  { *; }
+-keep class io.flutter.**  { *; }
+-keep class io.flutter.plugins.**  { *; }
+-keep class io.flutter.plugin.editing.** { *; }
+
+# JNA
+-keep class com.sun.jna.** { *; }
+-keep class * implements com.sun.jna.** { *; }
+
+# To ignore minifyEnabled: true error
+# https://github.com/flutter/flutter/issues/19250
+# https://github.com/flutter/flutter/issues/37441
+-dontwarn io.flutter.embedding.**
+-ignorewarnings
+-keep class * {
+    public private *;
+}
+</code></pre>
+<h2 id="adding-the-sdk-dependency"><a class="header" href="#adding-the-sdk-dependency">Adding the SDK dependency</a></h2>
+<p>Add the maven <code>jitpack</code> repository to your project <code>build.gradle</code> file.</p>
+<pre><code class="language-gradle">allprojects {
+    repositories {
+        maven { url 'https://www.jitpack.io' }
+    }
+}
+</code></pre>
+<p>Add the <code>breez-sdk-liquid</code> dependency to your application's <code>build.gradle</code> file in the <code>app</code> directory.</p>
+<pre><code class="language-gradle">android {
+    defaultConfig {
+        // Add a build config field to read the Breez API key 
+        // from a git ignored `gradle.properties` file 
+        buildConfigField "String", "BREEZ_SDK_API_KEY", project.property('BREEZ_SDK_API_KEY')
+    }
+
+    // This might help building if duplicate libraries are found
+    packagingOptions {
+        pickFirst "lib/armeabi-v7a/libc++_shared.so"
+        pickFirst "lib/arm64-v8a/libc++_shared.so"
+        pickFirst "lib/x86/libc++_shared.so"
+        pickFirst "lib/x86_64/libc++_shared.so"
+        exclude "META-INF/*"
+    }
+}
+
+dependencies {
+    // Add the breez-sdk-liquid dependency
+    implementation "com.github.breez:breez-sdk-liquid"
+}
+</code></pre>
+<h2 id="integrate-the-notification-plugin"><a class="header" href="#integrate-the-notification-plugin">Integrate the Notification Plugin</a></h2>
+<p>You're ready to add some Kotlin code to implement the Notification Plugin in your application. In the example below, we are using the <code>FirebaseMessagingService</code> to receive the message intents. First, let's implement the Notification Plugin's <code>MessagingService</code> class along with <code>FirebaseMessagingService</code>.</p>
+<pre><code class="language-kotlin">package com.example.application
+
+import android.annotation.SuppressLint
+import android.content.Intent
+import androidx.core.content.ContextCompat
+import breez_sdk_liquid_notification.Constants
+import breez_sdk_liquid_notification.Message
+import breez_sdk_liquid_notification.MessagingService
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
+
+@SuppressLint("MissingFirebaseInstanceTokenRefresh")
+class ExampleFcmService : MessagingService, FirebaseMessagingService() {
+    companion object {
+        private const val TAG = "FcmService"
+    }
+
+    // Override the `onMessageReceived` to handle the remote message
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        super.onMessageReceived(remoteMessage)
+
+        // Check if the message is high priority and can be handled
+        if (remoteMessage.priority == RemoteMessage.PRIORITY_HIGH) {
+            remoteMessage.asMessage()?.also { message -&gt; 
+                // Call `startServiceIfNeeded` to check if the foreground
+                // service is needed depending on the message type and 
+                // foreground state of the application
+                startServiceIfNeeded(applicationContext, message)
+            }
+        }
+    }
+
+    // A helper function the convert the `RemoteMessage` 
+    // to a notification plugin 'Message'
+    private fun RemoteMessage.asMessage(): Message? {
+        return data[Constants.MESSAGE_DATA_TYPE]?.let {
+            Message(
+                data[Constants.MESSAGE_DATA_TYPE], data[Constants.MESSAGE_DATA_PAYLOAD]
+            )
+        }
+    }
+
+    // Override the `startForegroundService` function to start the foreground service
+    // using the `ExampleForegroundService` handler
+    override fun startForegroundService(message: Message) {
+        val intent = Intent(applicationContext, ExampleForegroundService::class.java)
+        intent.putExtra(Constants.EXTRA_REMOTE_MESSAGE, message)
+        ContextCompat.startForegroundService(applicationContext, intent)
+    }
+}
+</code></pre>
+<p>Now lets add the foreground service implementation. This should implement the notification plugin <code>ForegroundService</code> class, which handles the incoming notification intent and processes the event. To properly implement this, your class needs to override the <code>onCreate</code>, <code>getConnectRequest</code> and <code>getServiceConfig</code> functions. The <code>getConnectRequest</code> function is called by the <code>ForegroundService</code> to get a <code>ConnectRequest</code> which contains the data necessary to connect to the SDK. This data includes the Breez API key, the <code>Config</code> with it's <code>workingDir</code> and the mnemonic.</p>
+<div class="warning">
+<h4 id="developer-note"><a class="header" href="#developer-note">Developer note</a></h4>
+In Android reading from secured storage can vary a lot depending if it is a Kotlin, Flutter or React Native based application and the dependencies used to write to the secured storage. Consult the dependency used to write to the secured storage on how to read data back from them.
+</div>
+<pre><code class="language-kotlin">package com.example.application
+
+import breez_sdk_liquid.ConnectRequest
+import breez_sdk_liquid.defaultConfig
+import breez_sdk_liquid.LiquidNetwork
+import breez_sdk_liquid_notification.ForegroundService
+import breez_sdk_liquid_notification.NotificationHelper.Companion.registerNotificationChannels
+import com.example.application.BuildConfig
+
+class ExampleForegroundService : ForegroundService() {
+    companion object {
+        private const val TAG = "ForegroundService"
+        private const val ACCOUNT_MNEMONIC = "BREEZ_SDK_LIQUID_SEED_MNEMONIC"
+    }
+
+    // Override the `onCreate` function
+    override fun onCreate() {
+        super.onCreate()
+        // Register the default notification channels
+        registerNotificationChannels(applicationContext)
+    }
+
+    // Override the `getConnectRequest` function
+    override fun getConnectRequest(): ConnectRequest? {
+        // Get the Breez API key from the build config
+        val apiKey = BuildConfig.BREEZ_SDK_API_KEY
+        val config = defaultConfig(LiquidNetwork.MAINNET, apiKey)
+
+        // Set the workingDir as the same directory as the main application
+        config.workingDir = "${applicationContext.filesDir}/breezSdkLiquid"
+
+        // Get the mnemonic from secured storage using an implementation of
+        // `readSecuredValue` depending on how data is written to secured storage.
+        // See Developer Note
+        return readSecuredValue(applicationContext, ACCOUNT_MNEMONIC)
+            ?.let { mnemonic -&gt;
+                ConnectRequest(config, mnemonic)
+            }
+    }
+}
+</code></pre>
+<h2 id="reference-implementation"><a class="header" href="#reference-implementation">Reference implementation</a></h2>
+<p>For a complete reference, see how we implemented it in misty-breez wallet: <a href="https://github.com/breez/misty-breez/blob/main/android/app/src/main/kotlin/com/breez/liquid/l_breez/BreezFcmService.kt">BreezFcmService.kt</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../notifications/android_service.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../notifications/ios_setup.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../notifications/android_service.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../notifications/ios_setup.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../tabs.js"></script>
+
+
+    </div>
+    </body>
+</html>
