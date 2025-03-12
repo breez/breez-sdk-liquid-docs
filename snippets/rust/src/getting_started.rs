@@ -22,8 +22,9 @@ async fn getting_started() -> Result<Arc<LiquidSdk>> {
 
     let connect_request = ConnectRequest {
         config,
-        mnemonic: mnemonic.to_string(),
+        mnemonic: Some(mnemonic.to_string()),
         passphrase: None,
+        seed: None,
     };
     let sdk = LiquidSdk::connect(connect_request).await?;
     // ANCHOR_END: init-sdk
