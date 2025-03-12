@@ -17,6 +17,7 @@ Future<void> prepareLnurlPay() async {
     PrepareLnUrlPayRequest req = PrepareLnUrlPayRequest(
       data: inputType.data,
       amount: amount,
+      bip353Address: inputType.bip353Address,
       comment: optionalComment,
       validateSuccessActionUrl: optionalValidateSuccessActionUrl,
     );

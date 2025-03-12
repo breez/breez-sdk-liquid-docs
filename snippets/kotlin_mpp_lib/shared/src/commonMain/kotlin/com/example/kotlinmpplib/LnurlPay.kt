@@ -18,7 +18,8 @@ class LnurlPay {
 
                 val req = PrepareLnUrlPayRequest(
                     lnurlData, 
-                    amount, 
+                    amount,
+                    inputType.bip353Address, 
                     optionalComment, 
                     optionalValidateSuccessActionUrl)
                 val prepareResponse = sdk.prepareLnurlPay(req)
@@ -42,7 +43,8 @@ class LnurlPay {
 
             val req = PrepareLnUrlPayRequest(
                 lnurlData, 
-                amount, 
+                amount,
+                null,
                 optionalComment, 
                 optionalValidateSuccessActionUrl)
             val prepareResponse = sdk.prepareLnurlPay(req)

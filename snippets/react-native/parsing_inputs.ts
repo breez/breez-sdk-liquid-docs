@@ -29,7 +29,7 @@ const parseInputs = async () => {
 
     case InputTypeVariant.LN_URL_PAY:
       console.log(
-        `Input is LNURL-Pay/Lightning address accepting min/max ${parsed.data.minSendable}/${parsed.data.maxSendable} msats`
+        `Input is LNURL-Pay/Lightning address accepting min/max ${parsed.data.minSendable}/${parsed.data.maxSendable} msats - BIP353 was used: ${parsed.bip353Address != null}`
       )
       break
 
