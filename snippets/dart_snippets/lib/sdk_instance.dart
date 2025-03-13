@@ -197,7 +197,6 @@ extension ConfigCopyWith on liquid_sdk.Config {
       workingDir: workingDir ?? this.workingDir,
       network: network ?? this.network,
       paymentTimeoutSec: paymentTimeoutSec ?? this.paymentTimeoutSec,
-      zeroConfMinFeeRateMsat: zeroConfMinFeeRateMsat ?? this.zeroConfMinFeeRateMsat,
       syncServiceUrl: syncServiceUrl ?? this.syncServiceUrl,
       useDefaultExternalInputParsers: useDefaultExternalInputParsers ?? this.useDefaultExternalInputParsers,
       externalInputParsers: externalInputParsers ?? this.externalInputParsers,

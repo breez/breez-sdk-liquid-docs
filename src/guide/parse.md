@@ -4,6 +4,8 @@ The SDK provides a versatile and extensible parsing module designed to process a
 
 Natively supported formats include: BOLT11 invoices, BOLT12 offers, LNURLs of different types, Bitcoin addresses, and others. For the complete list, consult the [API documentation](https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/enum.InputType.html).
 
+BIP353 addresses are also supported, in which case they will be parsed into a BOLT12 offer or an LNURL-Pay. In these cases, the BIP353 address is also returned to indicate BIP353 was used.
+
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>

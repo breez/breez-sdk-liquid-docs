@@ -26,7 +26,7 @@ public class ParsingInputsSnippets
 
                 case InputType.LnUrlPay lnUrlPay:
                     Console.WriteLine(
-                        $"Input is LNURL-Pay/Lightning address accepting min/max {lnUrlPay.data.minSendable}/{lnUrlPay.data.maxSendable} msats"
+                        $"Input is LNURL-Pay/Lightning address accepting min/max {lnUrlPay.data.minSendable}/{lnUrlPay.data.maxSendable} msats - BIP353 was used: {lnUrlPay.bip353Address != null}"
                     );
                     break;
 
@@ -67,7 +67,7 @@ public class ParsingInputsSnippets
                     parserUrl: "https://parser-domain.com/parser?input=<input>"
                 ),
                 new(
-                    providerId: "provider_b", 
+                    providerId: "provider_b",
                     inputRegex: "^provider_b",
                     parserUrl: "https://parser-domain.com/parser?input=<input>"
                 )

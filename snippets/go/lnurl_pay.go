@@ -25,6 +25,7 @@ func PrepareLnurlPay(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 			req := breez_sdk_liquid.PrepareLnUrlPayRequest{
 				Data:                     inputType.Data,
 				Amount:                   amount,
+				Bip353Address:            inputType.Bip353Address,
 				Comment:                  &optionalComment,
 				ValidateSuccessActionUrl: &optionalValidateSuccessActionUrl,
 			}

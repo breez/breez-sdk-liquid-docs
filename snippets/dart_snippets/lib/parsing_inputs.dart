@@ -14,7 +14,7 @@ Future<void> parseInput() async {
     print("Input is BOLT11 invoice for $amountStr msats");
   } else if (inputType is InputType_LnUrlPay) {
     print(
-        "Input is LNURL-Pay/Lightning address accepting min/max ${inputType.data.minSendable}/${inputType.data.maxSendable} msats");
+        "Input is LNURL-Pay/Lightning address accepting min/max ${inputType.data.minSendable}/${inputType.data.maxSendable} msats - BIP353 was used: ${inputType.bip353Address != null}");
   } else if (inputType is InputType_LnUrlWithdraw) {
     print(
         "Input is LNURL-Withdraw for min/max ${inputType.data.minWithdrawable}/${inputType.data.maxWithdrawable} msats");

@@ -9,22 +9,23 @@ func preparePay(sdk: BindingLiquidSdk) -> PrepareLnUrlPayResponse? {
     var response: PrepareLnUrlPayResponse?
     let lnurlPayUrl = "lightning@address.com"
     if let inputType = try? sdk.parse(input: lnurlPayUrl) {
-        if case.lnUrlPay(let `data`) = inputType {
+        if case .lnUrlPay(let `data`, let bip353Address) = inputType {
             let amount = PayAmount.bitcoin(receiverAmountSat: 5_000)
             let optionalComment = "<comment>"
             let optionalValidateSuccessActionUrl = true
 
             let req = PrepareLnUrlPayRequest(
-                data: data, 
-                amount: amount, 
-                comment: optionalComment, 
+                data: data,
+                amount: amount,
+                bip353Address: bip353Address,
+                comment: optionalComment,
                 validateSuccessActionUrl: optionalValidateSuccessActionUrl
             )
-            let prepareResponse = try? sdk.prepareLnurlPay(req: req)
-                
+            response = try? sdk.prepareLnurlPay(req: req)
+
             // If the fees are acceptable, continue to create the LNURL Pay
-            let feesSat = prepareResponse!.feesSat
-            print("Fees: {} sats", feesSat);
+            let feesSat = response!.feesSat
+            print("Fees: {} sats", feesSat)
         }
     }
     // ANCHOR_END: prepare-lnurl-pay
@@ -38,9 +39,9 @@ func preparePayDrain(sdk: BindingLiquidSdk, data: LnUrlPayRequestData) -> Prepar
     let optionalValidateSuccessActionUrl = true
 
     let req = PrepareLnUrlPayRequest(
-        data: data, 
-        amount: amount, 
-        comment: optionalComment, 
+        data: data,
+        amount: amount,
+        comment: optionalComment,
         validateSuccessActionUrl: optionalValidateSuccessActionUrl
     )
     let prepareResponse = try? sdk.prepareLnurlPay(req: req)
@@ -50,9 +51,10 @@ func preparePayDrain(sdk: BindingLiquidSdk, data: LnUrlPayRequestData) -> Prepar
 
 func pay(sdk: BindingLiquidSdk, prepareResponse: PrepareLnUrlPayResponse) -> LnUrlPayResult? {
     // ANCHOR: lnurl-pay
-    let result = try? sdk.lnurlPay(req: LnUrlPayRequest (
-        prepareResponse: prepareResponse
-    ))
+    let result = try? sdk.lnurlPay(
+        req: LnUrlPayRequest(
+            prepareResponse: prepareResponse
+        ))
     // ANCHOR_END: lnurl-pay
     return result
 }

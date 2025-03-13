@@ -10,19 +10,22 @@ func parseInput(sdk: BindingLiquidSdk) {
         switch inputType {
         case .bitcoinAddress(let address):
             print("Input is Bitcoin address \(address.address)")
-            
+
         case .bolt11(let invoice):
             let amount = invoice.amountMsat.map { String($0) } ?? "unknown"
             print("Input is BOLT11 invoice for \(amount) msats")
-            
-        case .lnUrlPay(let data):
-            print("Input is LNURL-Pay/Lightning address accepting min/max \(data.minSendable)/\(data.maxSendable) msats")
-            
+
+        case .lnUrlPay(let data, let bip353Address):
+            print(
+                "Input is LNURL-Pay/Lightning address accepting min/max \(data.minSendable)/\(data.maxSendable) msats - BIP353 was used: \(bip353Address != nil)"
+            )
         case .lnUrlWithdraw(let data):
-            print("Input is LNURL-Withdraw for min/max \(data.minWithdrawable)/\(data.maxWithdrawable) msats")
-        
+            print(
+                "Input is LNURL-Withdraw for min/max \(data.minWithdrawable)/\(data.maxWithdrawable) msats"
+            )
+
         default:
-            break // Other input types are available
+            break  // Other input types are available
         }
     } catch {
         print("Failed to parse input: \(error)")
@@ -35,7 +38,8 @@ func configureParsers() throws -> BindingLiquidSdk? {
     let mnemonic = "<mnemonic words>"
 
     // Create the default config, providing your Breez API key
-    var config = try defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>")
+    var config = try defaultConfig(
+        network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>")
 
     // Configure external parsers
     config.externalInputParsers = [
@@ -45,10 +49,10 @@ func configureParsers() throws -> BindingLiquidSdk? {
             parserUrl: "https://parser-domain.com/parser?input=<input>"
         ),
         ExternalInputParser(
-            providerId: "provider_b", 
+            providerId: "provider_b",
             inputRegex: "^provider_b",
             parserUrl: "https://parser-domain.com/parser?input=<input>"
-        )
+        ),
     ]
 
     let connectRequest = ConnectRequest(config: config, mnemonic: mnemonic)

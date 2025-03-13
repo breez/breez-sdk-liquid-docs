@@ -11,7 +11,7 @@ async fn prepare_pay(sdk: Arc<LiquidSdk>) -> Result<()> {
     // lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
     let lnurl_pay_url = "lightning@address.com";
 
-    if let Ok(InputType::LnUrlPay { data }) = sdk.parse(lnurl_pay_url).await {
+    if let Ok(InputType::LnUrlPay { data, bip353_address }) = sdk.parse(lnurl_pay_url).await {
         let amount = PayAmount::Bitcoin {
             receiver_amount_sat: 5_000,
         };
@@ -22,6 +22,7 @@ async fn prepare_pay(sdk: Arc<LiquidSdk>) -> Result<()> {
             .prepare_lnurl_pay(PrepareLnUrlPayRequest {
                 data,
                 amount,
+                bip353_address,
                 comment: optional_comment,
                 validate_success_action_url: optional_validate_success_action_url,
             })
@@ -45,6 +46,7 @@ async fn prepare_pay_drain(sdk: Arc<LiquidSdk>, data: LnUrlPayRequestData) -> Re
         .prepare_lnurl_pay(PrepareLnUrlPayRequest {
             data,
             amount,
+            bip353_address: None,
             comment: optional_comment,
             validate_success_action_url: optional_validate_success_action_url,
         })
