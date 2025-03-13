@@ -21,10 +21,10 @@ async fn parse_input(sdk: Arc<LiquidSdk>) -> Result<()> {
                     .map_or("unknown".to_string(), |a| a.to_string())
             );
         }
-        InputType::LnUrlPay { data } => {
+        InputType::LnUrlPay { data, bip353_address } => {
             println!(
-                "Input is LNURL-Pay/Lightning address accepting min/max {}/{} msats",
-                data.min_sendable, data.max_sendable
+                "Input is LNURL-Pay/Lightning address accepting min/max {}/{} msats - BIP353 was used: {}",
+                data.min_sendable, data.max_sendable, bip353_address.is_some()
             );
         }
         InputType::LnUrlWithdraw { data } => {
@@ -66,8 +66,9 @@ async fn configure_parsers() -> Result<Arc<LiquidSdk>> {
 
     let connect_request = ConnectRequest {
         config,
-        mnemonic: mnemonic.to_string(),
+        mnemonic: Some(mnemonic.to_string()),
         passphrase: None,
+        seed: None,
     };
     let sdk = LiquidSdk::connect(connect_request).await?;
     // ANCHOR_END: configure-external-parser

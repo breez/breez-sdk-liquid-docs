@@ -18,7 +18,7 @@ class ParsingInputs {
                 }
                 is InputType.LnUrlPay -> {
                     println("Input is LNURL-Pay/Lightning address accepting min/max " +
-                           "${inputType.data.minSendable}/${inputType.data.maxSendable} msats")
+                           "${inputType.data.minSendable}/${inputType.data.maxSendable} msats - BIP353 was used: ${inputType.bip353Address != null}")
                 }
                 is InputType.LnUrlWithdraw -> {
                     println("Input is LNURL-Withdraw for min/max " +

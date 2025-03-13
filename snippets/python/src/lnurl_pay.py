@@ -17,8 +17,9 @@ def prepare_pay(sdk: BindingLiquidSdk):
             optional_validate_success_action_url = True
 
             req = PrepareLnUrlPayRequest(parsed_input.data,
-                                         amount, 
-                                         optional_comment, 
+                                         amount,
+                                         parsed_input.bip353_address,
+                                         optional_comment,
                                          optional_validate_success_action_url)
             prepare_response = sdk.prepare_lnurl_pay(req)
 

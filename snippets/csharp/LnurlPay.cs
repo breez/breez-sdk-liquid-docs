@@ -18,11 +18,12 @@ public class LnurlPaySnippets
                 var amount = new PayAmount.Bitcoin(5000);
                 var optionalComment = "<comment>";
                 var optionalValidateSuccessActionUrl = true;
-                
+
                 var req = new PrepareLnUrlPayRequest(
-                    lnurlp.data, 
-                    amount, 
-                    optionalComment, 
+                    lnurlp.data,
+                    amount,
+                    lnurlp.bip353Address,
+                    optionalComment,
                     optionalValidateSuccessActionUrl);
                 var prepareResponse = sdk.PrepareLnurlPay(req);
 
@@ -45,11 +46,12 @@ public class LnurlPaySnippets
             var amount = new PayAmount.Drain();
             var optionalComment = "<comment>";
             var optionalValidateSuccessActionUrl = true;
-            
+
             var req = new PrepareLnUrlPayRequest(
-                data, 
-                amount, 
-                optionalComment, 
+                data,
+                amount,
+                null,
+                optionalComment,
                 optionalValidateSuccessActionUrl);
             var prepareResponse = sdk.PrepareLnurlPay(req);
         }

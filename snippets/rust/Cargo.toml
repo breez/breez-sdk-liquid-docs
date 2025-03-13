@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 bip39 = { version = "2", features = ["rand"] }
-breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.7.0-rc5" }
+breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.7.2" }
 log = "0.4"
 tokio = "1.42.0"
 

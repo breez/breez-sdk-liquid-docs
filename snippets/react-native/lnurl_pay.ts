@@ -28,6 +28,7 @@ const examplePrepareLnurlPay = async () => {
     const prepareResponse = await prepareLnurlPay({
       data: input.data,
       amount,
+      bip353Address: input.bip353Address,
       comment: optionalComment,
       validateSuccessActionUrl: optionalValidateSuccessActionUrl
     })
