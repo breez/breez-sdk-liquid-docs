@@ -8,10 +8,10 @@ Integrating Breez SDK - Nodeless *(Liquid Implementation)* into your application
 - **[Adding logging](/guide/logging.md)**
 
 ## API Key
-The _Nodeless_ Breez API key must be set in order for the SDK to work. 
-You can request one for free by filling our form <a target="_blank" href="{{api_key_form_uri}}">here</a>.
 
-**Note:** This is not the same as the Native (Greenlight) Breez API key, so it cannot be reused.
+The _Nodeless_ Breez API key must be set for the SDK to work. You can request one for free by filling our form <a target="_blank" href="{{api_key_form_uri}}">here</a>.
+
+**Note:** This is not the same as the _Native_ (Greenlight) Breez API key, so it can't be reused.
 
 ## Tutorials
 
@@ -25,7 +25,10 @@ You can request one for free by filling our form <a target="_blank" href="{{api_
 
 ## Misty Breez
 
-[Misty Breez](https://github.com/breez/misty-breez/) is a reference app built with the Breez SDK - Nodeless. The app showcases best practices for designing intuitive UI and UX for self-custodial Lightning payments, and is available to partners as a white-label solution.
+[Misty Breez](https://github.com/breez/misty-breez/) is a mobile app built with Flutter that serves as a reference implementation for the Breez SDK - Nodeless that:
+* Demonstrates the full capabilities of building with the SDK
+* Showcases best practices for designing an intuitive UI and UX for self-custodial Lightning payments
+* Offers a ready-made solution that can be white-labeled for partners looking to build a new app
 
 ## Support
 
