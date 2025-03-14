@@ -1,0 +1,474 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Connecting and disconnecting - Breez SDK - Nodeless</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../styles.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Breez SDK - Nodeless</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs/edit/main/src/guide/connecting.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="connecting">
+    <a class="header" href="#connecting">Connecting</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.connect">API docs</a>
+</h1>
+<p>The first step is to construct the SDK configuration. Among others, it sets the network you want to use, the SDK working directory and the Breez API key.</p>
+<p>The SDK uses the config <code>working_dir</code> to store the state of the SDK instance. When handling multiple instances of the SDK, each instance needs to have a different working directory defined.</p>
+<p>Now you are ready to interact with the SDK.</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">let mnemonic = Mnemonic::generate_in(Language::English, 12)?;
+
+// Create the default config, providing your Breez API key
+let mut config = LiquidSdk::default_config(
+    LiquidNetwork::Mainnet,
+    Some("&lt;your-Breez-API-key&gt;".to_string()),
+)?;
+
+// Customize the config object according to your needs
+config.working_dir = "path to an existing directory".into();
+
+let connect_request = ConnectRequest {
+    config,
+    mnemonic: Some(mnemonic.to_string()),
+    passphrase: None,
+    seed: None,
+};
+let sdk = LiquidSdk::connect(connect_request).await?;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let mnemonic = "&lt;mnemonic words&gt;"
+
+// Create the default config, providing your Breez API key
+var config = try defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "&lt;your-Breez-API-key&gt;")
+
+// Customize the config object according to your needs
+config.workingDir = "path to an existing directory"
+
+let connectRequest = ConnectRequest(config: config, mnemonic: mnemonic)
+let sdk = try? connect(req: connectRequest)
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">val mnemonic = "&lt;mnemonic words&gt;"
+
+// Create the default config, providing your Breez API key
+val config : Config = defaultConfig(LiquidNetwork.MAINNET, "&lt;your Breez API key&gt;")
+
+// Customize the config object according to your needs
+config.workingDir = "path to an existing directory"
+
+try {
+    val connectRequest = ConnectRequest(config, mnemonic)
+    val sdk = connect(connectRequest)
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const mnemonic = '&lt;mnemonics words&gt;'
+
+// Create the default config, providing your Breez API key
+const config = await defaultConfig(
+  LiquidNetwork.MAINNET,
+  '&lt;your-Breez-API-key&gt;'
+)
+
+// By default in React Native the workingDir is set to:
+// `/&lt;APPLICATION_SANDBOX_DIRECTORY&gt;/breezSdkLiquid`
+// You can change this to another writable directory or a
+// subdirectory of the workingDir if managing multiple mnemonics.
+console.log(`Working directory: ${config.workingDir}`)
+// config.workingDir = "path to writable directory"
+
+await connect({ mnemonic, config })
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">// It is recommended to use a single instance of BreezSDKLiquid across your Dart/Flutter app.
+//
+// All of the snippets assume a BreezSDKLiquid object is created on entrypoint of the app as such:
+//
+// ConnectRequest req = ConnectRequest(...);
+// BindingLiquidSdk instance = await connect(req: req);
+//
+// and is accessible throughout the app. There are various approaches on how to achieve this:
+// creating a Singleton class using factory constructor, using state management libraries such as 'provider', 'GetX',
+// 'Riverpod' and 'Redux' to name a few.
+//
+// The Dart snippets included here rely on the example approach seen on sdk_instance.dart to manage wallet connection
+// and Liquid SDK streams. This approach also has essential helper methods to ensure wallet data is in sync.
+// Please see sdk_instance.dart for more details:
+// [sdk_instance.dart](https://github.com/breez/breez-sdk-liquid-docs/blob/main/snippets/dart_snippets/lib/sdk_instance.dart)
+
+// Create the default config
+String mnemonic = "&lt;mnemonic words&gt;";
+
+// Create the default config, providing your Breez API key
+Config config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "&lt;your-Breez-API-key&gt;");
+
+// Customize the config object according to your needs
+config = config.copyWith(workingDir: "path to an existing directory");
+
+ConnectRequest connectRequest = ConnectRequest(mnemonic: mnemonic, config: config);
+
+await breezSDKLiquid.connect(req: connectRequest);
+
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">mnemonic = "&lt;mnemonic words&gt;"
+
+# Create the default config, providing your Breez API key
+config = default_config(network=LiquidNetwork.MAINNET, breez_api_key="&lt;your-Breez-API-key&gt;")
+
+# Customize the config object according to your needs
+config.working_dir = "path to an existing directory"
+
+try:
+    connect_request = ConnectRequest(config, mnemonic)
+    sdk = connect(connect_request)
+    return sdk
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">mnemonic := "&lt;mnemonic words&gt;"
+
+// Create the default config, providing your Breez API key
+breezApiKey := "&lt;your-Breez-API-key&gt;"
+config, err := breez_sdk_liquid.DefaultConfig(breez_sdk_liquid.LiquidNetworkMainnet, &amp;breezApiKey)
+if err != nil {
+    return nil, err
+}
+
+// Customize the config object according to your needs
+config.WorkingDir = "path to an existing directory"
+
+connectRequest := breez_sdk_liquid.ConnectRequest{
+    Config:   config,
+    Mnemonic: &amp;mnemonic,
+}
+
+sdk, err := breez_sdk_liquid.Connect(connectRequest)
+
+return sdk, err
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">var mnemonic = "&lt;mnemonic words&gt;";
+
+// Create the default config, providing your Breez API key
+var config = BreezSdkLiquidMethods.DefaultConfig(
+    LiquidNetwork.Mainnet,
+    "&lt;your-Breez-API-key&gt;"
+) with
+{
+    // Customize the config object according to your needs
+    workingDir = "path to an existing directory"
+};
+
+try
+{
+    var connectRequest = new ConnectRequest(config, mnemonic);
+    var sdk = BreezSdkLiquidMethods.Connect(connectRequest);
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<div class="warning">
+<h4 id="developer-note"><a class="header" href="#developer-note">Developer note</a></h4>
+<p>By default, the config working directory is set to the directory where the SDK is running. Some platforms may require that you use an application specific directory that is writable within the application sandbox. For example applications running on Android or iOS.</p>
+</div>
+<h2 id="disconnecting">
+    <a class="header" href="#disconnecting">Disonnecting</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.disconnect">API docs</a>
+</h2>
+<p>Once you are done using the SDK, you can call the <code>disconnect</code> method to free up the resources which are currently in use.</p>
+<p>This is especially useful in cases where the SDK has to be re-instantiated, for example when you need to change the mnemonic and/or configuration.</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">async fn disconnect(sdk: Arc&lt;LiquidSdk&gt;) -&gt; Result&lt;()&gt; {
+    sdk.disconnect().await?;
+    Ok(())
+}</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">func disconnect(sdk: BindingLiquidSdk) throws {
+    try? sdk.disconnect()
+}
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">fun disconnect(sdk: BindingLiquidSdk)  {
+    try {
+        sdk.disconnect()
+    } catch (e: Exception) {
+        // handle error
+    }
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">await disconnect()
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">void disconnect() {
+  breezSDKLiquid.disconnect();
+}
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">def disconnect(sdk: BindingLiquidSdk):
+    try:
+        sdk.disconnect()
+    except Exception as error:
+        logging.error(error)
+        raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">func Disconnect(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+    sdk.Disconnect()
+}
+
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">public void Disconnect(BindingLiquidSdk sdk)
+{
+    try
+    {
+        sdk.Disconnect();
+    }
+    catch (Exception)
+    {
+        // Handle error
+    }
+}
+</code></pre>
+</section>
+</custom-tabs>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../guide/install.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../guide/wallet_state.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../guide/install.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../guide/wallet_state.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../tabs.js"></script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,1165 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Receiving payments - Breez SDK - Nodeless</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../styles.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Breez SDK - Nodeless</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs/edit/main/src/guide/receive_payment.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="receiving-payments"><a class="header" href="#receiving-payments">Receiving payments</a></h1>
+<p>With the Breez SDK you aren't required to open a channel and set up your inbound liquidity.</p>
+<p>Once the SDK is initialized, you can directly begin receiving payments. The receive process takes two steps:</p>
+<ol>
+<li><a href="receive_payment.html#preparing-payments">Preparing the Payment</a></li>
+<li><a href="receive_payment.html#receiving-payments-1">Receiving the Payment</a></li>
+</ol>
+<div class="warning">
+<h4 id="developer-note"><a class="header" href="#developer-note">Developer note</a></h4>
+Consider implementing the <a href="/notifications/getting_started.html">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
+</div>
+<h2 id="preparing-payments">
+    <a class="header" href="#preparing-payments">Preparing Payments</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_receive_payment">API docs</a>
+</h2>
+<p>During the prepare step, the SDK ensures that the inputs are valid with respect to the specified payment method,
+and also returns the relative fees related to the payment so they can be confirmed.</p>
+<p>The SDK currently supports three methods of receiving: Lightning, Bitcoin and Liquid:</p>
+<h3 id="lightning"><a class="header" href="#lightning">Lightning</a></h3>
+<p>When receiving via Lightning, we generate an invoice to be paid.  Note that the payment may fallback to a direct Liquid payment (if the payer's client supports this).</p>
+<p><strong>Note:</strong> The amount field is currently mandatory when paying via Lightning.</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">// Fetch the Receive lightning limits
+let current_limits = sdk.fetch_lightning_limits().await?;
+info!("Minimum amount: {} sats", current_limits.receive.min_sat);
+info!("Maximum amount: {} sats", current_limits.receive.max_sat);
+
+// Set the invoice amount you wish the payer to send, which should be within the above limits
+let optional_amount = Some(ReceiveAmount::Bitcoin {
+    payer_amount_sat: 5_000,
+});
+let prepare_response = sdk
+    .prepare_receive_payment(&amp;PrepareReceiveRequest {
+        payment_method: PaymentMethod::Lightning,
+        amount: optional_amount,
+    })
+    .await?;
+
+// If the fees are acceptable, continue to create the Receive Payment
+let receive_fees_sat = prepare_response.fees_sat;
+info!("Fees: {} sats", receive_fees_sat);</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">// Fetch the Receive lightning limits
+let currentLimits = try? sdk.fetchLightningLimits()
+print("Minimum amount: {} sats", currentLimits?.receive.minSat ?? 0);
+print("Maximum amount: {} sats", currentLimits?.receive.maxSat ?? 0);
+
+// Set the invoice amount you wish the payer to send, which should be within the above limits
+let optionalAmount = ReceiveAmount.bitcoin(payerAmountSat: 5_000)
+let prepareResponse = try? sdk
+    .prepareReceivePayment(req: PrepareReceiveRequest(
+        paymentMethod: PaymentMethod.lightning,
+        amount: optionalAmount
+    ));
+
+// If the fees are acceptable, continue to create the Receive Payment
+let receiveFeesSat = prepareResponse!.feesSat;
+print("Fees: {} sats", receiveFeesSat);
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    // Fetch the lightning Receive limits
+    val currentLimits = sdk.fetchLightningLimits()
+    // Log.v("Breez", "Minimum amount allowed to deposit in sats: ${currentLimits.receive.minSat}")
+    // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${currentLimits.receive.maxSat}")
+
+    // Set the invoice amount you wish the payer to send, which should be within the above limits
+    val optionalAmount = ReceiveAmount.Bitcoin(5_000.toULong())
+    val prepareRequest = PrepareReceiveRequest(PaymentMethod.LIGHTNING, optionalAmount)
+    val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
+
+    // If the fees are acceptable, continue to create the Receive Payment
+    val receiveFeesSat = prepareResponse.feesSat;
+    // Log.v("Breez", "Fees: ${receiveFeesSat} sats")
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">// Fetch the Receive lightning limits
+const currentLimits = await fetchLightningLimits()
+console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
+console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
+
+// Set the amount you wish the payer to send via lightning, which should be within the above limits
+const optionalAmount: ReceiveAmount = {
+  type: ReceiveAmountVariant.BITCOIN,
+  payerAmountSat: 5_000
+}
+
+const prepareResponse = await prepareReceivePayment({
+  paymentMethod: PaymentMethod.LIGHTNING,
+  amount: optionalAmount
+})
+
+// If the fees are acceptable, continue to create the Receive Payment
+const receiveFeesSat = prepareResponse.feesSat
+console.log(`Fees: ${receiveFeesSat} sats`)
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">// Fetch the Receive lightning limits
+LightningPaymentLimitsResponse currentLightningLimits =
+    await breezSDKLiquid.instance!.fetchLightningLimits();
+print("Minimum amount: ${currentLightningLimits.receive.minSat} sats");
+print("Maximum amount: ${currentLightningLimits.receive.maxSat} sats");
+
+// Create an invoice and set the amount you wish the payer to send
+ReceiveAmount_Bitcoin optionalAmount = ReceiveAmount_Bitcoin(payerAmountSat: 5000 as BigInt);
+PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
+  req: PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.lightning,
+    amount: optionalAmount,
+  ),
+);
+
+// If the fees are acceptable, continue to create the Receive Payment
+BigInt receiveFeesSat = prepareResponse.feesSat;
+print("Fees: $receiveFeesSat sats");
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">try:
+    # Fetch the lightning Receive limits
+    current_limits = sdk.fetch_lightning_limits()
+    logging.debug(f"Minimum amount allowed to deposit in sats {current_limits.receive.min_sat}")
+    logging.debug(f"Maximum amount allowed to deposit in sats {current_limits.receive.max_sat}")
+
+    # Set the invoice amount you wish the payer to send, which should be within the above limits
+    optional_amount = ReceiveAmount.BITCOIN(5_000)
+    prepare_request = PrepareReceiveRequest(PaymentMethod.LIGHTNING, optional_amount)
+    prepare_response = sdk.prepare_receive_payment(prepare_request)
+
+    # If the fees are acceptable, continue to create the Receive Payment
+    receive_fees_sat = prepare_response.fees_sat
+    logging.debug(f"Fees: {receive_fees_sat} sats")
+    return prepare_response
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">// Fetch the lightning Receive limits
+if currentLimits, err := sdk.FetchLightningLimits(); err == nil {
+    log.Printf("Minimum amount, in sats: %v", currentLimits.Receive.MinSat)
+    log.Printf("Maximum amount, in sats: %v", currentLimits.Receive.MaxSat)
+}
+
+// Set the invoice amount you wish the payer to send, which should be within the above limits
+var optionalAmount breez_sdk_liquid.ReceiveAmount = breez_sdk_liquid.ReceiveAmountBitcoin{
+    PayerAmountSat: uint64(5_000),
+}
+prepareRequest := breez_sdk_liquid.PrepareReceiveRequest{
+    PaymentMethod: breez_sdk_liquid.PaymentMethodLightning,
+    Amount:        &amp;optionalAmount,
+}
+if prepareResponse, err := sdk.PrepareReceivePayment(prepareRequest); err == nil {
+    // If the fees are acceptable, continue to create the Receive Payment
+    receiveFeesSat := prepareResponse.FeesSat
+    log.Printf("Fees: %v sats", receiveFeesSat)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    // Fetch the lightning Receive limits
+    var currentLimits = sdk.FetchLightningLimits();
+    Console.WriteLine($"Minimum amount allowed to deposit in sats: {currentLimits.receive.minSat}");
+    Console.WriteLine($"Maximum amount allowed to deposit in sats: {currentLimits.receive.maxSat}");
+
+    // Set the invoice amount you wish the payer to send, which should be within the above limits
+    var optionalAmount = new ReceiveAmount.Bitcoin(5000);
+    var prepareRequest = new PrepareReceiveRequest(PaymentMethod.Lightning, optionalAmount);
+    var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
+
+    // If the fees are acceptable, continue to create the Receive Payment
+    var receiveFeesSat = prepareResponse.feesSat;
+    Console.WriteLine($"Fees: {receiveFeesSat} sats");
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h3 id="bitcoin"><a class="header" href="#bitcoin">Bitcoin</a></h3>
+<p>When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.</p>
+<p>The <code>amount</code> field is optional when preparing a Bitcoin payment. However, if no amount is provided, the returned fees will only be an estimation. This is because:</p>
+<ol>
+<li>The fees have an amount-dependent component that can only be determined once the sender initiates the payment</li>
+<li>The fees also depend on current onchain fee conditions, which may change between the time of preparation and actual payment</li>
+</ol>
+<p>If the onchain fee rate increases between preparation and payment time, the payment will be put on hold until the user explicitly confirms the new fees. To learn more about this, see the <a href="#amountless-bitcoin-payments">Amountless Bitcoin Payments</a> section below.</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">// Fetch the Receive onchain limits
+let current_limits = sdk.fetch_onchain_limits().await?;
+info!("Minimum amount: {} sats", current_limits.receive.min_sat);
+info!("Maximum amount: {} sats", current_limits.receive.max_sat);
+
+// Set the onchain amount you wish the payer to send, which should be within the above limits
+let optional_amount = Some(ReceiveAmount::Bitcoin {
+    payer_amount_sat: 5_000,
+});
+let prepare_response = sdk
+    .prepare_receive_payment(&amp;PrepareReceiveRequest {
+        payment_method: PaymentMethod::BitcoinAddress,
+        amount: optional_amount,
+    })
+    .await?;
+
+// If the fees are acceptable, continue to create the Receive Payment
+let receive_fees_sat = prepare_response.fees_sat;
+info!("Fees: {} sats", receive_fees_sat);</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">// Fetch the Receive onchain limits
+let currentLimits = try? sdk.fetchOnchainLimits()
+print("Minimum amount: {} sats", currentLimits?.receive.minSat ?? 0);
+print("Maximum amount: {} sats", currentLimits?.receive.maxSat ?? 0);
+
+// Set the onchain amount you wish the payer to send, which should be within the above limits
+let optionalAmount = ReceiveAmount.bitcoin(payerAmountSat: 5_000)
+let prepareResponse = try? sdk
+    .prepareReceivePayment(req: PrepareReceiveRequest(
+        paymentMethod: PaymentMethod.bitcoinAddress,
+        amount: optionalAmount
+    ));
+
+// If the fees are acceptable, continue to create the Receive Payment
+let receiveFeesSat = prepareResponse!.feesSat;
+print("Fees: {} sats", receiveFeesSat);
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    // Fetch the onchain Receive limits
+    val currentLimits = sdk.fetchOnchainLimits()
+    // Log.v("Breez", "Minimum amount allowed to deposit in sats: ${currentLimits.receive.minSat}")
+    // Log.v("Breez", "Maximum amount allowed to deposit in sats: ${currentLimits.receive.maxSat}")
+
+    // Set the onchain amount you wish the payer to send, which should be within the above limits
+    val optionalAmount = ReceiveAmount.Bitcoin(5_000.toULong())
+    val prepareRequest = PrepareReceiveRequest(PaymentMethod.BITCOIN_ADDRESS, optionalAmount)
+    val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
+
+    // If the fees are acceptable, continue to create the Receive Payment
+    val receiveFeesSat = prepareResponse.feesSat;
+    // Log.v("Breez", "Fees: ${receiveFeesSat} sats")
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">// Fetch the Onchain lightning limits
+const currentLimits = await fetchOnchainLimits()
+console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
+console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
+
+// Set the onchain amount you wish the payer to send, which should be within the above limits
+const optionalAmount: ReceiveAmount = {
+  type: ReceiveAmountVariant.BITCOIN,
+  payerAmountSat: 5_000
+}
+
+const prepareResponse = await prepareReceivePayment({
+  paymentMethod: PaymentMethod.BITCOIN_ADDRESS,
+  amount: optionalAmount
+})
+
+// If the fees are acceptable, continue to create the Receive Payment
+const receiveFeesSat = prepareResponse.feesSat
+console.log(`Fees: ${receiveFeesSat} sats`)
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">// Fetch the Receive onchain limits
+OnchainPaymentLimitsResponse currentOnchainLimits = await breezSDKLiquid.instance!.fetchOnchainLimits();
+print("Minimum amount: ${currentOnchainLimits.receive.minSat} sats");
+print("Maximum amount: ${currentOnchainLimits.receive.maxSat} sats");
+
+// Or create a cross-chain transfer (Liquid to Bitcoin) via chain swap
+ReceiveAmount_Bitcoin optionalAmount = ReceiveAmount_Bitcoin(payerAmountSat: 5000 as BigInt);
+PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
+  req: PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.bitcoinAddress,
+    amount: optionalAmount,
+  ),
+);
+
+// If the fees are acceptable, continue to create the Receive Payment
+BigInt receiveFeesSat = prepareResponse.feesSat;
+print("Fees: $receiveFeesSat sats");
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">try:
+    # Fetch the onchain Receive limits
+    current_limits = sdk.fetch_onchain_limits()
+    logging.debug(f"Minimum amount allowed to deposit in sats {current_limits.receive.min_sat}")
+    logging.debug(f"Maximum amount allowed to deposit in sats {current_limits.receive.max_sat}")
+
+    # Set the onchain amount you wish the payer to send, which should be within the above limits
+    optional_amount = ReceiveAmount.BITCOIN(5_000)
+    prepare_request = PrepareReceiveRequest(PaymentMethod.BITCOIN_ADDRESS, optional_amount)
+    prepare_response = sdk.prepare_receive_payment(prepare_request)
+
+    # If the fees are acceptable, continue to create the Receive Payment
+    receive_fees_sat = prepare_response.fees_sat
+    logging.debug(f"Fees: {receive_fees_sat} sats")
+    return prepare_response
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">// Fetch the onchain Receive limits
+if currentLimits, err := sdk.FetchOnchainLimits(); err == nil {
+    log.Printf("Minimum amount, in sats: %v", currentLimits.Receive.MinSat)
+    log.Printf("Maximum amount, in sats: %v", currentLimits.Receive.MaxSat)
+}
+
+// Set the onchain amount you wish the payer to send, which should be within the above limits
+var optionalAmount breez_sdk_liquid.ReceiveAmount = breez_sdk_liquid.ReceiveAmountBitcoin{
+    PayerAmountSat: uint64(5_000),
+}
+prepareRequest := breez_sdk_liquid.PrepareReceiveRequest{
+    PaymentMethod: breez_sdk_liquid.PaymentMethodBitcoinAddress,
+    Amount:        &amp;optionalAmount,
+}
+if prepareResponse, err := sdk.PrepareReceivePayment(prepareRequest); err == nil {
+    // If the fees are acceptable, continue to create the Receive Payment
+    receiveFeesSat := prepareResponse.FeesSat
+    log.Printf("Fees: %v sats", receiveFeesSat)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    // Fetch the onchain Receive limits
+    var currentLimits = sdk.FetchOnchainLimits();
+    Console.WriteLine($"Minimum amount allowed to deposit in sats: {currentLimits.receive.minSat}");
+    Console.WriteLine($"Maximum amount allowed to deposit in sats: {currentLimits.receive.maxSat}");
+
+    // Set the onchain amount you wish the payer to send, which should be within the above limits
+    var optionalAmount = new ReceiveAmount.Bitcoin(5000);
+    var prepareRequest = new PrepareReceiveRequest(PaymentMethod.BitcoinAddress, optionalAmount);
+    var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
+
+    // If the fees are acceptable, continue to create the Receive Payment
+    var receiveFeesSat = prepareResponse.feesSat;
+    Console.WriteLine($"Fees: {receiveFeesSat} sats");
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<div class="warning">
+<h4 id="developer-note-1"><a class="header" href="#developer-note-1">Developer note</a></h4>
+<p>The above checks include validating against maximum and minimum limits. <strong>Even when no specific amount is provided</strong>, the amount transferred to the swap address must still fall within these limits. Your application's users must be informed of these limits because if the amount transferred falls outside this valid range, the funds will not be successfully received via the normal swap flow. In such cases, a manual refund will be necessary.
+For further instructions on how to execute a manual refund, see the section on <a href="refund_payment.html#bitcoin">refunding payments</a>.</p>
+</div>
+<h3 id="liquid"><a class="header" href="#liquid">Liquid</a></h3>
+<p>When receiving via Liquid, we can either generate an address to receive to, or a BIP21 URI with information regarding the payment (currently only the amount and message).</p>
+<p>To generate a BIP21 address, all you have to do is specify a payer amount.</p>
+<div class="warning">
+<h4 id="developer-note-2"><a class="header" href="#developer-note-2">Developer note</a></h4>
+To receive non-Bitcoin assets, see <a href="assets.html#receiving-a-non-bitcoin-asset">Handling multiple assets</a>.
+</div>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">// Create a Liquid BIP21 URI/address to receive a payment to.
+// There are no limits, but the payer amount should be greater than broadcast fees when specified
+// Note: Not setting the amount will generate a plain Liquid address
+let optional_amount = Some(ReceiveAmount::Bitcoin {
+    payer_amount_sat: 5_000,
+});
+let prepare_response = sdk
+    .prepare_receive_payment(&amp;PrepareReceiveRequest {
+        payment_method: PaymentMethod::LiquidAddress,
+        amount: optional_amount,
+    })
+    .await?;
+
+// If the fees are acceptable, continue to create the Receive Payment
+let receive_fees_sat = prepare_response.fees_sat;
+info!("Fees: {} sats", receive_fees_sat);</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">// Create a Liquid BIP21 URI/address to receive a payment to.
+// There are no limits, but the payer amount should be greater than broadcast fees when specified
+// Note: Not setting the amount will generate a plain Liquid address
+let optionalAmount = ReceiveAmount.bitcoin(payerAmountSat: 5_000)
+let prepareResponse = try? sdk
+    .prepareReceivePayment(req: PrepareReceiveRequest(
+        paymentMethod: PaymentMethod.liquidAddress,
+        amount: optionalAmount
+    ))
+
+// If the fees are acceptable, continue to create the Receive Payment
+let receiveFeesSat = prepareResponse!.feesSat;
+print("Fees: {} sats", receiveFeesSat);
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    // Create a Liquid BIP21 URI/address to receive a payment to.
+    // There are no limits, but the payer amount should be greater than broadcast fees when specified
+    // Note: Not setting the amount will generate a plain Liquid address
+    val optionalAmount = ReceiveAmount.Bitcoin(5_000.toULong())
+    val prepareRequest = PrepareReceiveRequest(PaymentMethod.LIQUID_ADDRESS, optionalAmount)
+    val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
+
+    // If the fees are acceptable, continue to create the Receive Payment
+    val receiveFeesSat = prepareResponse.feesSat;
+    // Log.v("Breez", "Fees: ${receiveFeesSat} sats")
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">
+// Create a Liquid BIP21 URI/address to receive a payment to.
+// There are no limits, but the payer amount should be greater than broadcast fees when specified
+// Note: Not setting the amount will generate a plain Liquid address
+const optionalAmount: ReceiveAmount = {
+  type: ReceiveAmountVariant.BITCOIN,
+  payerAmountSat: 5_000
+}
+
+const prepareResponse = await prepareReceivePayment({
+  paymentMethod: PaymentMethod.LIQUID_ADDRESS,
+  amount: optionalAmount
+})
+
+// If the fees are acceptable, continue to create the Receive Payment
+const receiveFeesSat = prepareResponse.feesSat
+console.log(`Fees: ${receiveFeesSat} sats`)
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">// Create a Liquid BIP21 URI/address to receive a payment to.
+// There are no limits, but the payer amount should be greater than broadcast fees when specified
+// Note: Not setting the amount will generate a plain Liquid address
+ReceiveAmount_Bitcoin optionalAmount = ReceiveAmount_Bitcoin(payerAmountSat: 5000 as BigInt);
+PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
+  req: PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.liquidAddress,
+    amount: optionalAmount,
+  ),
+);
+
+// If the fees are acceptable, continue to create the Receive Payment
+BigInt receiveFeesSat = prepareResponse.feesSat;
+print("Fees: $receiveFeesSat sats");
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">try:
+    # Create a Liquid BIP21 URI/address to receive a payment to.
+    # There are no limits, but the payer amount should be greater than broadcast fees when specified
+    # Note: Not setting the amount will generate a plain Liquid address
+    optional_amount = ReceiveAmount.BITCOIN(5_000)
+    prepare_request = PrepareReceiveRequest(PaymentMethod.LIQUID_ADDRESS, optional_amount)
+    prepare_response = sdk.prepare_receive_payment(prepare_request)
+
+    # If the fees are acceptable, continue to create the Receive Payment
+    receive_fees_sat = prepare_response.fees_sat
+    logging.debug(f"Fees: {receive_fees_sat} sats")
+    return prepare_response
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">// Create a Liquid BIP21 URI/address to receive a payment to.
+// There are no limits, but the payer amount should be greater than broadcast fees when specified
+// Note: Not setting the amount will generate a plain Liquid address
+var optionalAmount breez_sdk_liquid.ReceiveAmount = breez_sdk_liquid.ReceiveAmountBitcoin{
+    PayerAmountSat: uint64(5_000),
+}
+prepareRequest := breez_sdk_liquid.PrepareReceiveRequest{
+    PaymentMethod: breez_sdk_liquid.PaymentMethodLiquidAddress,
+    Amount:        &amp;optionalAmount,
+}
+if prepareResponse, err := sdk.PrepareReceivePayment(prepareRequest); err == nil {
+    // If the fees are acceptable, continue to create the Receive Payment
+    receiveFeesSat := prepareResponse.FeesSat
+    log.Printf("Fees: %v sats", receiveFeesSat)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    // Create a Liquid BIP21 URI/address to receive a payment to.
+    // There are no limits, but the payer amount should be greater than broadcast fees when specified
+    // Note: Not setting the amount will generate a plain Liquid address
+    var optionalAmount = new ReceiveAmount.Bitcoin(5000);
+    var prepareRequest = new PrepareReceiveRequest(PaymentMethod.LiquidAddress, optionalAmount);
+    var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
+
+    // If the fees are acceptable, continue to create the Receive Payment
+    var receiveFeesSat = prepareResponse.feesSat;
+    Console.WriteLine($"Fees: {receiveFeesSat} sats");
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h2 id="receiving-payments">
+    <a class="header" href="#receiving-payments">Receiving Payments</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.receive_payment">API docs</a>
+</h2>
+<p>Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the
+receive method, optionally specifying a description.</p>
+<p><strong>Note:</strong> The description field will be used differently, depending on the payment method:</p>
+<ul>
+<li>For Lightning payments, it will be encoded in the invoice</li>
+<li>For Bitcoin/Liquid BIP21 payments, it will be encoded in the URI as the <code>message</code> field.</li>
+<li>For plain Liquid payments, the description has no effect.</li>
+</ul>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">let optional_description = Some("&lt;description&gt;".to_string());
+let res = sdk
+    .receive_payment(&amp;ReceivePaymentRequest {
+        prepare_response,
+        description: optional_description,
+        use_description_hash: None,
+    })
+    .await?;
+
+let destination = res.destination;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let optionalDescription = "&lt;description&gt;"
+let res = try? sdk.receivePayment(req: ReceivePaymentRequest(
+        prepareResponse: prepareResponse,
+        description: optionalDescription
+    ))
+
+let destination: String = res!.destination;
+print("Destination: {}", destination);
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    val optionalDescription = "&lt;description&gt;";
+    val req = ReceivePaymentRequest(prepareResponse, optionalDescription)
+    val res = sdk.receivePayment(req)
+    val destination = res.destination;
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const optionalDescription = '&lt;description&gt;'
+const res = await receivePayment({
+  prepareResponse,
+  description: optionalDescription
+})
+
+const destination = res.destination
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">String optionalDescription = "&lt;description&gt;";
+ReceivePaymentResponse res = await breezSDKLiquid.instance!.receivePayment(
+  req: ReceivePaymentRequest(
+    description: optionalDescription,
+    prepareResponse: prepareResponse,
+  ),
+);
+
+String destination = res.destination;
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">try:
+    optional_description = "&lt;description&gt;"
+    req = ReceivePaymentRequest(prepare_response, optional_description)
+    res = sdk.receive_payment(req)
+    destination = res.destination
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">optionalDescription := "&lt;description&gt;"
+req := breez_sdk_liquid.ReceivePaymentRequest{
+    PrepareResponse: prepareResponse,
+    Description:     &amp;optionalDescription,
+}
+if res, err := sdk.ReceivePayment(req); err == nil {
+    // If the fees are acceptable, continue to create the Receive Payment
+    destination := res.Destination
+    log.Printf("Destination: %v", destination)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    var optionalDescription = "&lt;description&gt;";
+    var req = new ReceivePaymentRequest(prepareResponse, optionalDescription);
+    var res = sdk.ReceivePayment(req);
+    var destination = res.destination;
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h3 id="amountless-bitcoin-payments"><a class="header" href="#amountless-bitcoin-payments">Amountless Bitcoin Payments</a></h3>
+<p>To receive a Bitcoin payment that does not specify an amount, it may be necessary to explicitly accept the associated fees. This will be the case when the onchain fee rate increases between preparation and payment time.</p>
+<p>Alternatively, if the fees are considered too high, the user can either choose to wait for them to come down or outright refund the payment. To learn more about refunds, see the <a href="./refund_payment.html#refunding-payments">Refunding payments</a> section.</p>
+<p>To reduce the likelihood of this extra fee review step being necessary, you can configure a fee rate leeway in the SDK's configuration that will automatically accept slightly higher fees within the specified tolerance.</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">// Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+let payments_waiting_fee_acceptance = sdk
+    .list_payments(&amp;ListPaymentsRequest {
+        states: Some(vec![WaitingFeeAcceptance]),
+        ..Default::default()
+    })
+    .await?;
+
+for payment in payments_waiting_fee_acceptance {
+    let PaymentDetails::Bitcoin { swap_id, .. } = payment.details else {
+        // Only Bitcoin payments can be `WaitingFeeAcceptance`
+        continue;
+    };
+
+    let fetch_fees_response = sdk
+        .fetch_payment_proposed_fees(&amp;FetchPaymentProposedFeesRequest { swap_id })
+        .await?;
+
+    info!(
+        "Payer sent {} and currently proposed fees are {}",
+        fetch_fees_response.payer_amount_sat, fetch_fees_response.fees_sat
+    );
+
+    // If the user is ok with the fees, accept them, allowing the payment to proceed
+    sdk.accept_payment_proposed_fees(&amp;AcceptPaymentProposedFeesRequest {
+        response: fetch_fees_response,
+    })
+    .await?;
+}</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">// Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+guard
+    let paymentsWaitingFeeAcceptance = try? sdk.listPayments(
+        req: ListPaymentsRequest(states: [.waitingFeeAcceptance]))
+else { return }
+
+for payment in paymentsWaitingFeeAcceptance {
+    guard case .bitcoin(let swapId, _, _, _, _, _, _, _) = payment.details else { continue }
+
+    // Only Bitcoin payments can be `WaitingFeeAcceptance`
+    guard
+        let fetchFeesResponse = try? sdk.fetchPaymentProposedFees(
+            req: FetchPaymentProposedFeesRequest(
+                swapId: swapId))
+    else { continue }
+
+    print(
+        "Payer sent \(fetchFeesResponse.payerAmountSat) and currently proposed fees are \(fetchFeesResponse.feesSat)"
+    )
+
+    // If the user is ok with the fees, accept them, allowing the payment to proceed
+    try? sdk.acceptPaymentProposedFees(
+        req: AcceptPaymentProposedFeesRequest(
+            response: fetchFeesResponse))
+}
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    // Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+    val paymentsWaitingFeeAcceptance = sdk.listPayments(ListPaymentsRequest(
+        states = listOf(PaymentState.WAITING_FEE_ACCEPTANCE)
+    ))
+
+    for (payment in paymentsWaitingFeeAcceptance) {
+        when (val details = payment.details) {
+            is PaymentDetails.Bitcoin -&gt; {
+                val fetchFeesResponse = sdk.fetchPaymentProposedFees(
+                    FetchPaymentProposedFeesRequest(details.swapId)
+                )
+
+                println("Payer sent ${fetchFeesResponse.payerAmountSat} and currently proposed fees are ${fetchFeesResponse.feesSat}")
+
+                // If the user is ok with the fees, accept them, allowing the payment to proceed
+                sdk.acceptPaymentProposedFees(AcceptPaymentProposedFeesRequest(fetchFeesResponse))
+            }
+            else -&gt; {
+                // Only Bitcoin payments can be `WaitingFeeAcceptance`
+                continue
+            }
+        }
+    }
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">// Payments on hold waiting for fee acceptance have the state WAITING_FEE_ACCEPTANCE
+const paymentsWaitingFeeAcceptance = await listPayments({
+  states: [PaymentState.WAITING_FEE_ACCEPTANCE]
+})
+
+for (const payment of paymentsWaitingFeeAcceptance) {
+  if (payment.details.type !== PaymentDetailsVariant.BITCOIN) {
+    // Only Bitcoin payments can be `WAITING_FEE_ACCEPTANCE`
+    continue
+  }
+
+  const fetchFeesResponse = await fetchPaymentProposedFees({
+    swapId: payment.details.swapId
+  })
+
+  console.info(
+    `Payer sent ${fetchFeesResponse.payerAmountSat} and currently proposed fees are ${fetchFeesResponse.feesSat}`
+  )
+
+  // If the user is ok with the fees, accept them, allowing the payment to proceed
+  await acceptPaymentProposedFees({
+    response: fetchFeesResponse
+  })
+}
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">// Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+List&lt;Payment&gt; paymentsWaitingFeeAcceptance = await breezSDKLiquid.instance!.listPayments(
+  req: ListPaymentsRequest(
+    states: [PaymentState.waitingFeeAcceptance],
+  ),
+);
+
+for (Payment payment in paymentsWaitingFeeAcceptance) {
+  if (payment.details is! PaymentDetails_Bitcoin) {
+    // Only Bitcoin payments can be `WaitingFeeAcceptance`
+    continue;
+  }
+
+  PaymentDetails_Bitcoin details = payment.details as PaymentDetails_Bitcoin;
+  FetchPaymentProposedFeesResponse fetchFeesResponse =
+      await breezSDKLiquid.instance!.fetchPaymentProposedFees(
+    req: FetchPaymentProposedFeesRequest(
+      swapId: details.swapId,
+    ),
+  );
+
+  print(
+    "Payer sent ${fetchFeesResponse.payerAmountSat} and currently proposed fees are ${fetchFeesResponse.feesSat}",
+  );
+
+  // If the user is ok with the fees, accept them, allowing the payment to proceed
+  await breezSDKLiquid.instance!.acceptPaymentProposedFees(
+    req: AcceptPaymentProposedFeesRequest(
+      response: fetchFeesResponse,
+    ),
+  );
+}
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">try:
+    # Payments on hold waiting for fee acceptance have the state WAITING_FEE_ACCEPTANCE
+    payments_waiting_fee_acceptance = sdk.list_payments(
+        ListPaymentsRequest(states=[PaymentState.WAITING_FEE_ACCEPTANCE])
+    )
+
+    for payment in payments_waiting_fee_acceptance:
+        if not isinstance(payment.details, PaymentDetails.BITCOIN):
+            # Only Bitcoin payments can be `WAITING_FEE_ACCEPTANCE`
+            continue
+
+        fetch_fees_response = sdk.fetch_payment_proposed_fees(
+            FetchPaymentProposedFeesRequest(payment.details.swap_id)
+        )
+
+        logging.info(
+            f"Payer sent {fetch_fees_response.payer_amount_sat} and currently proposed fees are {fetch_fees_response.fees_sat}"
+        )
+
+        # If the user is ok with the fees, accept them, allowing the payment to proceed
+        sdk.accept_payment_proposed_fees(
+            AcceptPaymentProposedFeesRequest(fetch_fees_response)
+        )
+
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">// Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+request := breez_sdk_liquid.ListPaymentsRequest{
+    States: &amp;[]breez_sdk_liquid.PaymentState{breez_sdk_liquid.PaymentStateWaitingFeeAcceptance},
+}
+
+paymentsWaitingFeeAcceptance, err := sdk.ListPayments(request)
+if err != nil {
+    return
+}
+
+for _, payment := range paymentsWaitingFeeAcceptance {
+    bitcoinPayment, ok := payment.Details.(breez_sdk_liquid.PaymentDetailsBitcoin)
+    if !ok {
+        // Only Bitcoin payments can be `WaitingFeeAcceptance`
+        continue
+    }
+
+    fetchFeesRequest := breez_sdk_liquid.FetchPaymentProposedFeesRequest{
+        SwapId: bitcoinPayment.SwapId,
+    }
+
+    fetchFeesResponse, err := sdk.FetchPaymentProposedFees(fetchFeesRequest)
+    if err != nil {
+        continue
+    }
+
+    log.Printf("Payer sent %d and currently proposed fees are %d",
+        fetchFeesResponse.PayerAmountSat, fetchFeesResponse.FeesSat)
+
+    // If the user is ok with the fees, accept them, allowing the payment to proceed
+    acceptFeesRequest := breez_sdk_liquid.AcceptPaymentProposedFeesRequest{
+        Response: fetchFeesResponse,
+    }
+    sdk.AcceptPaymentProposedFees(acceptFeesRequest)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">// Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+var paymentsWaitingFeeAcceptance = sdk.ListPayments(
+    new ListPaymentsRequest()
+    {
+        states = new List&lt;PaymentState&gt;() { PaymentState.WaitingFeeAcceptance }
+    });
+
+foreach (var payment in paymentsWaitingFeeAcceptance)
+{
+    if (payment.details is not PaymentDetails.Bitcoin bitcoinDetails)
+    {
+        // Only Bitcoin payments can be `WaitingFeeAcceptance`
+        continue;
+    }
+
+    var fetchFeesResponse = sdk.FetchPaymentProposedFees(
+        new FetchPaymentProposedFeesRequest(bitcoinDetails.swapId));
+
+    Console.WriteLine(
+        $"Payer sent {fetchFeesResponse.payerAmountSat} and currently proposed fees are {fetchFeesResponse.feesSat}");
+
+    // If the user is ok with the fees, accept them, allowing the payment to proceed
+    sdk.AcceptPaymentProposedFees(
+        new AcceptPaymentProposedFeesRequest(fetchFeesResponse));
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h2 id="event-flows"><a class="header" href="#event-flows">Event Flows</a></h2>
+<p>Once a receive payment is initiated, you can follow and react to the different payment events using the guide below for each payment method. See <a href="/guide/events.html">Listening to events</a> for how to subscribe to events.</p>
+<h3 id="lightning-1"><a class="header" href="#lightning-1">Lightning</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Event</th><th>Description</th><th>UX Suggestion</th></tr></thead><tbody>
+<tr><td><strong>PaymentPending</strong></td><td>The swap service is holding an incoming payment for the Lightning invoice and has broadcast a lockup transaction. The SDK has seen the lockup transaction and will broadcast the claim transaction, either when the lockup transaction is confirmed or immediately if it is accepted as a zero-conf payment.</td><td>Show payment as pending.</td></tr>
+<tr><td><strong>PaymentWaitingConfirmation</strong></td><td>The claim transaction has been broadcast or a direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) has been seen.</td><td>Display successful payment feedback.</td></tr>
+<tr><td><strong>PaymentSucceeded</strong></td><td>The claim transaction or direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) is confirmed.</td><td>Show payment as complete.</td></tr>
+<tr><td><strong>PaymentFailed</strong></td><td>The swap has failed from one of several reasons. Either the swap/invoice has expired or the lockup transaction failed to broadcast.</td><td></td></tr>
+</tbody></table>
+</div>
+<h3 id="bitcoin-1"><a class="header" href="#bitcoin-1">Bitcoin</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Event</th><th>Description</th><th>UX Suggestion</th></tr></thead><tbody>
+<tr><td><strong>PaymentWaitingFeeAcceptance</strong></td><td>The swap service has seen the Bitcoin lockup transaction for an amountless swap and the associated fees need to be accepted. If the fees are within the configured leeway they will be automatically accepted, otherwise the user has to explicitly accept the fees. See <a href="#amountless-bitcoin-payments">Amountless Bitcoin Payments</a>.</td><td>Allow the user to review fees for this payment.</td></tr>
+<tr><td><strong>PaymentPending</strong></td><td>The swap service has seen the Bitcoin lockup transaction and the amount is accepted. Once the SDK has seen the Liquid lockup transaction, it will broadcast the Liquid claim transaction, either when the Liquid lockup transaction is confirmed or immediately if it is accepted as a zero-conf payment.</td><td>Show payment as pending.</td></tr>
+<tr><td><strong>PaymentWaitingConfirmation</strong></td><td>The Liquid claim transaction has been broadcast and is waiting confirmation.</td><td>Display successful payment feedback.</td></tr>
+<tr><td><strong>PaymentSucceeded</strong></td><td>The Liquid claim transaction is confirmed.</td><td>Show payment as complete.</td></tr>
+<tr><td><strong>PaymentFailed</strong></td><td>The swap has failed from one of several reasons. Either the swap has expired, the fee was not accepted or the Liquid lockup transaction failed to broadcast.</td><td></td></tr>
+<tr><td><strong>PaymentRefundable</strong></td><td>Similar to PaymentFailed, but a Bitcoin lockup transaction was broadcast so the funds will need to be refunded, see <a href="/guide/refund_payment.html">Refunding payments</a>.</td><td>Show payment as refundable.</td></tr>
+<tr><td><strong>PaymentRefundPending</strong></td><td>A Bitcoin refund transaction has been broadcast and is waiting confirmation.</td><td></td></tr>
+</tbody></table>
+</div>
+<h3 id="liquid-1"><a class="header" href="#liquid-1">Liquid</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Event</th><th>Description</th><th>UX Suggestion</th></tr></thead><tbody>
+<tr><td><strong>PaymentWaitingConfirmation</strong></td><td>The transaction has been seen.</td><td>Display successful payment feedback.</td></tr>
+<tr><td><strong>PaymentSucceeded</strong></td><td>The transaction is confirmed.</td><td>Show payment as complete.</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../guide/parse.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../guide/send_payment.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../guide/parse.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../guide/send_payment.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../tabs.js"></script>
+
+
+    </div>
+    </body>
+</html>

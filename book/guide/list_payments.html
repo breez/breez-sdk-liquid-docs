@@ -1,0 +1,726 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Listing payments - Breez SDK - Nodeless</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../styles.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Breez SDK - Nodeless</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs/edit/main/src/guide/list_payments.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="listing-payments">
+    <a class="header" href="#listing-payments">Listing payments</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.list_payments">API docs</a>
+</h1>
+<p>To view your payment history you can list all the sent and received payments made.</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">let payments = sdk.list_payments(&amp;ListPaymentsRequest::default()).await?;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let payments = try? sdk.listPayments(req: ListPaymentsRequest())
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    val payments = sdk.listPayments(ListPaymentsRequest())
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const payments = await listPayments({})
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">ListPaymentsRequest req = ListPaymentsRequest();
+List&lt;Payment&gt; paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">sdk.list_payments(ListPaymentsRequest())
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">if payments, err := sdk.ListPayments(breez_sdk_liquid.ListPaymentsRequest{}); err == nil {
+    log.Printf("%#v", payments)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    var payments = sdk.ListPayments(new ListPaymentsRequest());
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h2 id="filtering-payments"><a class="header" href="#filtering-payments">Filtering Payments</a></h2>
+<p>When listing payment you can also filter and page the list results, by:</p>
+<h3 id="type-and-timestamp"><a class="header" href="#type-and-timestamp">Type and timestamp</a></h3>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">let payments = sdk
+    .list_payments(&amp;ListPaymentsRequest {
+        filters: Some(vec![PaymentType::Send]),
+        states: None,
+        from_timestamp: Some(1696880000),
+        to_timestamp: Some(1696959200),
+        offset: Some(0),
+        limit: Some(50),
+        details: None,
+        sort_ascending: None,
+    })
+    .await?;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let payments = try? sdk.listPayments(
+    req: ListPaymentsRequest(
+        filters: [.send],
+        fromTimestamp: 1696880000,
+        toTimestamp: 1696959200,
+        offset: 0,
+        limit: 50
+    ))
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    val payments = sdk.listPayments(
+        ListPaymentsRequest(
+            listOf(PaymentType.SEND),
+            fromTimestamp = 1696880000,
+            toTimestamp = 1696959200,
+            offset = 0u,
+            limit = 50u
+        ))
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">try {
+  const payments = await listPayments({
+    filters: [PaymentType.SEND],
+    fromTimestamp: 1696880000,
+    toTimestamp: 1696959200,
+    offset: 0,
+    limit: 50
+  })
+} catch (err) {
+  console.error(err)
+}
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">ListPaymentsRequest req = ListPaymentsRequest(
+  filters: [PaymentType.send],
+  fromTimestamp: 1696880000,
+  toTimestamp: 1696959200,
+  offset: 0,
+  limit: 50,
+);
+List&lt;Payment&gt; paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">req = ListPaymentsRequest(
+    [PaymentType.SEND], 
+    from_timestamp = 1696880000, 
+    to_timestamp = 1696959200, 
+    offset = 0,
+    limit = 50)
+sdk.list_payments(req)
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">filters := []breez_sdk_liquid.PaymentType{breez_sdk_liquid.PaymentTypeSend}
+fromTimestamp := int64(1696880000)
+toTimestamp := int64(1696959200)
+limit := uint32(50)
+offset := uint32(0)
+listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
+    Filters:       &amp;filters,
+    FromTimestamp: &amp;fromTimestamp,
+    ToTimestamp:   &amp;toTimestamp,
+    Offset:        &amp;offset,
+    Limit:         &amp;limit,
+}
+if payments, err := sdk.ListPayments(listPaymentsRequest); err == nil {
+    log.Printf("%#v", payments)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    var payments = sdk.ListPayments(
+        new ListPaymentsRequest(
+            new() { PaymentType.Send },
+            fromTimestamp: 1696880000,
+            toTimestamp: 1696959200,
+            offset: 0,
+            limit: 50
+        ));
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h3 id="bitcoin-address"><a class="header" href="#bitcoin-address">Bitcoin address</a></h3>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">let address = Some("&lt;Bitcoin address&gt;".to_string());
+let payments = sdk
+    .list_payments(&amp;ListPaymentsRequest {
+        filters: None,
+        states: None,
+        from_timestamp: None,
+        to_timestamp: None,
+        offset: None,
+        limit: None,
+        details: Some(ListPaymentDetails::Bitcoin { address }),
+        sort_ascending: None,
+    })
+    .await?;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let address = "&lt;Bitcoin address&gt;"
+let payments = try? sdk.listPayments(
+    req: ListPaymentsRequest(
+        details: ListPaymentDetails.bitcoin(address: address)
+    ))
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    val address = "&lt;Bitcoin address&gt;"
+    val payments = sdk.listPayments(
+        ListPaymentsRequest(
+            details = ListPaymentDetails.Bitcoin(address)
+        ))
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">try {
+  const payments = await listPayments({
+    details: {
+      type: ListPaymentDetailsVariant.BITCOIN,
+      address: '&lt;Bitcoin address&gt;'
+    }
+  })
+} catch (err) {
+  console.error(err)
+}
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">String address = "&lt;Bitcoin address&gt;";
+ListPaymentsRequest req = ListPaymentsRequest(
+  details: ListPaymentDetails_Bitcoin(address: address),
+);
+List&lt;Payment&gt; paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">address = "&lt;Bitcoin address&gt;"
+req = ListPaymentsRequest(
+    details = ListPaymentDetails.BITCOIN(address))
+sdk.list_payments(req)
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">address := "&lt;Bitcoin address&gt;"
+var details breez_sdk_liquid.ListPaymentDetails = breez_sdk_liquid.ListPaymentDetailsBitcoin{
+    Address: &amp;address,
+}
+listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
+    Details: &amp;details,
+}
+if payments, err := sdk.ListPayments(listPaymentsRequest); err == nil {
+    log.Printf("%#v", payments)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    var address = "&lt;Bitcoin address&gt;";
+    var payments = sdk.ListPayments(
+        new ListPaymentsRequest(
+            details: new ListPaymentDetails.Bitcoin(address)
+        ));
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h3 id="liquid-destination"><a class="header" href="#liquid-destination">Liquid destination</a></h3>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">    let destination = Some("&lt;Liquid BIP21 or address&gt;".to_string());
+    let payments = sdk
+        .list_payments(&amp;ListPaymentsRequest {
+            filters: None,
+            states: None,
+            from_timestamp: None,
+            to_timestamp: None,
+            offset: None,
+            limit: None,
+            details: Some(ListPaymentDetails::Liquid {
+                asset_id: None,
+                destination,
+            }),
+            sort_ascending: None,
+        })
+        .await?;
+
+    Ok(payments)
+}</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let destination = "&lt;Liquid BIP21 or address&gt;"
+let payments = try? sdk.listPayments(
+    req: ListPaymentsRequest(
+        details: ListPaymentDetails.liquid(assetId: nil, destination: destination)
+    ))
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    val destination = "&lt;Liquid BIP21 or address&gt;"
+    val payments = sdk.listPayments(
+        ListPaymentsRequest(
+            details = ListPaymentDetails.Liquid(assetId = null, destination = destination)
+        ))
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">try {
+  const payments = await listPayments({
+    details: {
+      type: ListPaymentDetailsVariant.LIQUID,
+      destination: '&lt;Liquid BIP21 or address&gt;'
+    }
+  })
+} catch (err) {
+  console.error(err)
+}
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">String destination = "&lt;Liquid BIP21 or address&gt;";
+ListPaymentsRequest req = ListPaymentsRequest(
+  details: ListPaymentDetails_Liquid(destination: destination),
+);
+List&lt;Payment&gt; paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">destination = "&lt;Liquid BIP21 or address&gt;"
+req = ListPaymentsRequest(
+    details = ListPaymentDetails.LIQUID(destination=destination))
+sdk.list_payments(req)
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">destination := "&lt;Liquid BIP21 or address&gt;"
+var details breez_sdk_liquid.ListPaymentDetails = breez_sdk_liquid.ListPaymentDetailsLiquid{
+    Destination: &amp;destination,
+}
+listPaymentsRequest := breez_sdk_liquid.ListPaymentsRequest{
+    Details: &amp;details,
+}
+if payments, err := sdk.ListPayments(listPaymentsRequest); err == nil {
+    log.Printf("%#v", payments)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    var destination = "&lt;Liquid BIP21 or address&gt;";
+    var payments = sdk.ListPayments(
+        new ListPaymentsRequest(
+            details: new ListPaymentDetails.Liquid(assetId: null, destination: destination)
+        ));
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h2 id="get-payment">
+    <a class="header" href="#get-payment">Get Payment</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.get_payment">API docs</a>
+</h2>
+<p>You can also retrieve a single Lightning payment using one of the following identifier kinds:</p>
+<ul>
+<li>Lightning payment hash</li>
+<li>Swap ID or its SHA256 hash</li>
+</ul>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">let payment_hash = "&lt;payment hash&gt;".to_string();
+let payment = sdk
+    .get_payment(&amp;GetPaymentRequest::PaymentHash { payment_hash })
+    .await?;
+
+let swap_id = "&lt;swap id&gt;".to_string();
+let payment = sdk
+    .get_payment(&amp;GetPaymentRequest::SwapId { swap_id })
+    .await?;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let paymentHash = "&lt;payment hash&gt;"
+let paymentByHash = try? sdk.getPayment(
+    req: GetPaymentRequest.paymentHash(paymentHash: paymentHash)
+)
+
+let swapId = "&lt;swap id&gt;"
+let paymentBySwapId = try? sdk.getPayment(
+    req: GetPaymentRequest.swapId(swapId: swapId)
+)
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    val paymentHash = "&lt;payment hash&gt;";
+    val paymentByHash = sdk.getPayment(GetPaymentRequest.PaymentHash(paymentHash))
+
+    val swapId = "&lt;swap id&gt;";
+    val paymentBySwapId = sdk.getPayment(GetPaymentRequest.SwapId(swapId))
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const paymentHash = '&lt;payment hash&gt;'
+const paymentByHash = await getPayment({
+  type: GetPaymentRequestVariant.PAYMENT_HASH,
+  paymentHash
+})
+
+const swapId = '&lt;swap id&gt;'
+const paymentBySwapId = await getPayment({
+  type: GetPaymentRequestVariant.SWAP_ID,
+  swapId
+})
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">String paymentHash = "&lt;payment hash&gt;";
+GetPaymentRequest reqByHash = GetPaymentRequest.paymentHash(paymentHash: paymentHash);
+Payment? paymentByHash = await breezSDKLiquid.instance!.getPayment(req: reqByHash);
+
+String swapId = "&lt;swap id&gt;";
+GetPaymentRequest reqBySwapId = GetPaymentRequest.swapId(swapId: swapId);
+Payment? paymentBySwapId = await breezSDKLiquid.instance!.getPayment(req: reqBySwapId);
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">payment_hash = "&lt;payment hash&gt;"
+sdk.get_payment(GetPaymentRequest.PAYMENT_HASH(payment_hash))
+
+swap_id = "&lt;swap id&gt;"
+sdk.get_payment(GetPaymentRequest.SWAP_ID(swap_id))
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">paymentHash := "&lt;payment hash&gt;"
+reqByPaymentHash := breez_sdk_liquid.GetPaymentRequestPaymentHash{
+    PaymentHash: paymentHash,
+}
+if payment, err := sdk.GetPayment(reqByPaymentHash); err == nil {
+    log.Printf("%#v", payment)
+}
+
+swapId := "&lt;swap id&gt;"
+reqBySwapId := breez_sdk_liquid.GetPaymentRequestSwapId{
+    SwapId: swapId,
+}
+if payment, err := sdk.GetPayment(reqBySwapId); err == nil {
+    log.Printf("%#v", payment)
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    var paymentHash = "&lt;payment hash&gt;";
+    var paymentByHash = sdk.GetPayment(
+        new GetPaymentRequest.PaymentHash(paymentHash)
+    );
+
+    var swapId = "&lt;swap id&gt;";
+    var paymentBySwapId = sdk.GetPayment(
+        new GetPaymentRequest.SwapId(swapId)
+    );
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../guide/send_payment.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../guide/refund_payment.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../guide/send_payment.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../guide/refund_payment.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../tabs.js"></script>
+
+
+    </div>
+    </body>
+</html>
