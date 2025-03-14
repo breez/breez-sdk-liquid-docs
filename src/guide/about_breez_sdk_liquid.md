@@ -27,7 +27,7 @@ It’s a nodeless integration that offers a self-custodial, end-to-end solution 
 - [x] Keys are only held by users
 - [x] USDT and multi-asset support on Liquid
 - [x] Built-in fiat on-ramp
-- [x] Free and open-source
+- [x] Free open-source solution
 
 
 ## How Does Nodeless *(Liquid Implementation)* Work?
