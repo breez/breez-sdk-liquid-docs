@@ -26,9 +26,13 @@ Future<PrepareSendResponse> prepareSendPaymentAsset() async {
   // Set the Liquid BIP21 or Liquid address you wish to pay
   String destination = "<Liquid BIP21 or address>";
   // If the destination is an address or an amountless BIP21 URI,
-  // you must specifiy an asset amount
+  // you must specify an asset amount
   String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
-  PayAmount_Asset optionalAmount = PayAmount_Asset(assetId: usdtAssetId, receiverAmount: 1.50);
+  PayAmount_Asset optionalAmount = PayAmount_Asset(
+    assetId: usdtAssetId,
+    receiverAmount: 1.50,
+    estimateAssetFees: false,
+  );
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: destination,
     amount: optionalAmount,
@@ -45,12 +49,55 @@ Future<PrepareSendResponse> prepareSendPaymentAsset() async {
   return prepareSendResponse;
 }
 
+Future<PrepareSendResponse> prepareSendPaymentAssetFees() async {
+  // ANCHOR: prepare-send-payment-asset-fees
+  String destination = "<Liquid BIP21 or address>";
+  String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
+  // Set the optional estimate asset fees param to true
+  PayAmount_Asset optionalAmount = PayAmount_Asset(
+    assetId: usdtAssetId,
+    receiverAmount: 1.50,
+    estimateAssetFees: true,
+  );
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(
+    destination: destination,
+    amount: optionalAmount,
+  );
+
+  PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
+    req: prepareSendRequest,
+  );
+
+  // If the asset fees are set, you can use these fees to pay to send the asset
+  double sendAssetFees = prepareSendResponse.assetFees;
+  print("Fees: $sendAssetFees");
+
+  // If the asset fess are not set, you can use the sats fees to pay to send the asset
+  BigInt sendFeesSat = prepareSendResponse.feesSat;
+  print("Fees: $sendFeesSat sats");
+  // ANCHOR_END: prepare-send-payment-asset-fees
+  return prepareSendResponse;
+}
+
+Future<SendPaymentResponse> sendPaymentFees({required PrepareSendResponse prepareResponse}) async {
+  // ANCHOR: send-payment-fees
+  // Set the use asset fees param to true
+  SendPaymentResponse sendPaymentResponse = await breezSDKLiquid.instance!.sendPayment(
+    req: SendPaymentRequest(prepareResponse: prepareResponse, useAssetFees: true),
+  );
+  Payment payment = sendPaymentResponse.payment;
+  // ANCHOR_END: send-payment-fees
+  print(payment);
+  return sendPaymentResponse;
+}
+
 Future<void> configureAssetMatedata() async {
   // ANCHOR: configure-asset-metadata
   // Create the default config
   Config config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>");
 
-  // Configure asset metadata
+  // Configure asset metadata. Setting the optional fiat ID will enable
+  // paying fees using the asset (if available).
   config = config.copyWith(
     assetMetadata: [
       AssetMetadata(
@@ -58,6 +105,7 @@ Future<void> configureAssetMatedata() async {
         name: "PEGx EUR",
         ticker: "EURx",
         precision: 8,
+        fiatId: "EUR",
       ),
     ],
   );

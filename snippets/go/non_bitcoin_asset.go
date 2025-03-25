@@ -33,12 +33,14 @@ func PrepareSendPaymentAsset(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// Set the Liquid BIP21 or Liquid address you wish to pay
 	destination := "<Liquid BIP21 or address>"
 	// If the destination is an address or an amountless BIP21 URI,
-	// you must specifiy an asset amount
+	// you must specify an asset amount
 	usdtAssetId := "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
 	receiverAmount := float64(1.50)
+	estimateAssetFees := false
 	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountAsset{
-		AssetId:        usdtAssetId,
-		ReceiverAmount: receiverAmount,
+		AssetId:           usdtAssetId,
+		ReceiverAmount:    receiverAmount,
+		EstimateAssetFees: &estimateAssetFees,
 	}
 
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
@@ -56,6 +58,54 @@ func PrepareSendPaymentAsset(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR_END: prepare-send-payment-asset
 }
 
+func PrepareSendPaymentAssetFees(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: prepare-send-payment-asset-fees
+	destination := "<Liquid BIP21 or address>"
+	usdtAssetId := "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
+	receiverAmount := float64(1.50)
+    // Set the optional estimate asset fees param to true
+	estimateAssetFees := true
+	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountAsset{
+		AssetId:           usdtAssetId,
+		ReceiverAmount:    receiverAmount,
+		EstimateAssetFees: &estimateAssetFees,
+	}
+
+	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
+		Destination: destination,
+		Amount:      &optionalAmount,
+	}
+	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+
+    // If the asset fees are set, you can use these fees to pay to send the asset
+	sendAssetFees := prepareResponse.AssetFees
+	log.Printf("Fees: %v", sendAssetFees)
+
+    // If the asset fess are not set, you can use the sats fees to pay to send the asset
+	sendFeesSat := prepareResponse.FeesSat
+	log.Printf("Fees: %v sats", sendFeesSat)
+	// ANCHOR_END: prepare-send-payment-asset-fees
+}
+
+func SendPaymentFees(sdk *breez_sdk_liquid.BindingLiquidSdk, prepareResponse breez_sdk_liquid.PrepareSendResponse) {
+	// ANCHOR: send-payment-fees
+	// Set the use asset fees param to true
+	useAssetFees := true
+	req := breez_sdk_liquid.SendPaymentRequest{
+		PrepareResponse: prepareResponse,
+		UseAssetFees:    &useAssetFees,
+	}
+	if response, err := sdk.SendPayment(req); err == nil {
+		payment := response.Payment
+		log.Printf("Payment: %#v", payment)
+	}
+	// ANCHOR_END: send-payment-fees
+}
+
 func ConfigureAssetMetadata() error {
 	// ANCHOR: configure-asset-metadata
 	// Create the default config
@@ -65,13 +115,16 @@ func ConfigureAssetMetadata() error {
 		return err
 	}
 
-	// Configure asset metadata
-	assetMetadata := []breez_sdk_liquid.AssetMetadata{
+  // Configure asset metadata. Setting the optional fiat ID will enable
+  // paying fees using the asset (if available).
+  fiatId := "EUR"
+  assetMetadata := []breez_sdk_liquid.AssetMetadata{
 		{
 			AssetId:   "18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec",
 			Name:      "PEGx EUR",
 			Ticker:    "EURx",
 			Precision: 8,
+			FiatId:    &fiatId,
 		},
 	}
 	config.AssetMetadata = &assetMetadata

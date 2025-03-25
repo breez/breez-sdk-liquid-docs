@@ -78,7 +78,10 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
 async fn send_payment(sdk: Arc<LiquidSdk>, prepare_response: PrepareSendResponse) -> Result<()> {
     // ANCHOR: send-payment
     let send_response = sdk
-        .send_payment(&SendPaymentRequest { prepare_response })
+        .send_payment(&SendPaymentRequest {
+            prepare_response,
+            use_asset_fees: None,
+        })
         .await?;
     let payment = send_response.payment;
     // ANCHOR_END: send-payment
