@@ -13,7 +13,7 @@ def start():
     config.working_dir = "path to an existing directory"
 
     try:
-        connect_request = ConnectRequest(config, mnemonic)
+        connect_request = ConnectRequest(config=config, mnemonic=mnemonic)
         sdk = connect(connect_request)
         return sdk
     except Exception as error:

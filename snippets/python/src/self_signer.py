@@ -1,6 +1,6 @@
 import logging
 import breez_sdk_liquid
-from breez_sdk_liquid import connect, connect_with_signer, default_config, BindingLiquidSdk, ConnectRequest, EventListener, LiquidNetwork, LogEntry, Logger, SdkEvent, Signer, ConnectWithSignerRequest
+from breez_sdk_liquid import connect_with_signer, default_config, LiquidNetwork, Signer, ConnectWithSignerRequest
  
  # ANCHOR: self-signer
 def connect_with_self_signer(signer: Signer):
@@ -12,7 +12,7 @@ def connect_with_self_signer(signer: Signer):
     config.working_dir = "path to an existing directory"
 
     try:
-        connect_request = ConnectWithSignerRequest(config)
+        connect_request = ConnectWithSignerRequest(config=config)
         sdk = connect_with_signer(connect_request, signer)
         return sdk
     except Exception as error:

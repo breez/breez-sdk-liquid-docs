@@ -9,7 +9,7 @@ def prepare_receive_asset(sdk: BindingLiquidSdk):
         # Note: Not setting the amount will generate an amountless BIP21 URI.
         usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
         optional_amount = ReceiveAmount.ASSET(usdt_asset_id, 1.50)
-        prepare_request = PrepareReceiveRequest(PaymentMethod.LIQUID_ADDRESS, optional_amount)
+        prepare_request = PrepareReceiveRequest(payment_method=PaymentMethod.LIQUID_ADDRESS, amount=optional_amount)
         prepare_response = sdk.prepare_receive_payment(prepare_request)
 
         # If the fees are acceptable, continue to create the Receive Payment

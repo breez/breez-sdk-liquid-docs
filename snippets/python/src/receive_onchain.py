@@ -17,7 +17,7 @@ def execute_refund(sdk: BindingLiquidSdk, refund_tx_fee_rate: int, refundable: R
     destination_address = "..."
     fee_rate_sat_per_vbyte = refund_tx_fee_rate
     try:
-        sdk.refund(RefundRequest(refundable.swap_address, destination_address, fee_rate_sat_per_vbyte))
+        sdk.refund(RefundRequest(swap_address=refundable.swap_address, refund_address=destination_address, fee_rate_sat_per_vbyte=fee_rate_sat_per_vbyte))
     except Exception as error:
         logging.error(error)
         raise
@@ -55,7 +55,7 @@ def handle_payments_waiting_fee_acceptance(sdk: BindingLiquidSdk):
                 continue
 
             fetch_fees_response = sdk.fetch_payment_proposed_fees(
-                FetchPaymentProposedFeesRequest(payment.details.swap_id)
+                FetchPaymentProposedFeesRequest(swap_id=payment.details.swap_id)
             )
 
             logging.info(
@@ -64,7 +64,7 @@ def handle_payments_waiting_fee_acceptance(sdk: BindingLiquidSdk):
 
             # If the user is ok with the fees, accept them, allowing the payment to proceed
             sdk.accept_payment_proposed_fees(
-                AcceptPaymentProposedFeesRequest(fetch_fees_response)
+                AcceptPaymentProposedFeesRequest(response=fetch_fees_response)
             )
 
     except Exception as error:
