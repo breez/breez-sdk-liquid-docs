@@ -17,7 +17,11 @@ def execute_refund(sdk: BindingLiquidSdk, refund_tx_fee_rate: int, refundable: R
     destination_address = "..."
     fee_rate_sat_per_vbyte = refund_tx_fee_rate
     try:
-        sdk.refund(RefundRequest(swap_address=refundable.swap_address, refund_address=destination_address, fee_rate_sat_per_vbyte=fee_rate_sat_per_vbyte))
+        sdk.refund(RefundRequest(
+            swap_address=refundable.swap_address,
+            refund_address=destination_address,
+            fee_rate_sat_per_vbyte=fee_rate_sat_per_vbyte
+        ))
     except Exception as error:
         logging.error(error)
         raise
@@ -46,7 +50,9 @@ def handle_payments_waiting_fee_acceptance(sdk: BindingLiquidSdk):
     try:
         # Payments on hold waiting for fee acceptance have the state WAITING_FEE_ACCEPTANCE
         payments_waiting_fee_acceptance = sdk.list_payments(
-            ListPaymentsRequest(states=[PaymentState.WAITING_FEE_ACCEPTANCE])
+            ListPaymentsRequest(
+                states=[PaymentState.WAITING_FEE_ACCEPTANCE]
+            )
         )
 
         for payment in payments_waiting_fee_acceptance:
@@ -55,16 +61,21 @@ def handle_payments_waiting_fee_acceptance(sdk: BindingLiquidSdk):
                 continue
 
             fetch_fees_response = sdk.fetch_payment_proposed_fees(
-                FetchPaymentProposedFeesRequest(swap_id=payment.details.swap_id)
+                FetchPaymentProposedFeesRequest(
+                    swap_id=payment.details.swap_id
+                )
             )
 
             logging.info(
-                f"Payer sent {fetch_fees_response.payer_amount_sat} and currently proposed fees are {fetch_fees_response.fees_sat}"
+                f"Payer sent {fetch_fees_response.payer_amount_sat} "
+                f"and currently proposed fees are {fetch_fees_response.fees_sat}"
             )
 
             # If the user is ok with the fees, accept them, allowing the payment to proceed
             sdk.accept_payment_proposed_fees(
-                AcceptPaymentProposedFeesRequest(response=fetch_fees_response)
+                AcceptPaymentProposedFeesRequest(
+                    response=fetch_fees_response
+                )
             )
 
     except Exception as error:

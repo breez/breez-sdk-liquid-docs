@@ -28,7 +28,11 @@ def check_message(sdk: BindingLiquidSdk):
     pubkey = "<pubkey of signer>"
     signature = "<message signature>"
     try:
-        check_message_request = CheckMessageRequest(message=message, pubkey=pubkey, signature=signature)
+        check_message_request = CheckMessageRequest(
+            message=message,
+            pubkey=pubkey,
+            signature=signature
+        )
         check_message_response = sdk.check_message(check_message_request)
 
         is_valid = check_message_response.is_valid

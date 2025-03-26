@@ -12,7 +12,10 @@ def prepare_receive_lightning(sdk: BindingLiquidSdk):
 
         # Set the invoice amount you wish the payer to send, which should be within the above limits
         optional_amount = ReceiveAmount.BITCOIN(5_000)
-        prepare_request = PrepareReceiveRequest(payment_method=PaymentMethod.LIGHTNING, amount=optional_amount)
+        prepare_request = PrepareReceiveRequest(
+            payment_method=PaymentMethod.LIGHTNING,
+            amount=optional_amount
+        )
         prepare_response = sdk.prepare_receive_payment(prepare_request)
 
         # If the fees are acceptable, continue to create the Receive Payment
@@ -34,7 +37,10 @@ def prepare_receive_onchain(sdk: BindingLiquidSdk):
 
         # Set the onchain amount you wish the payer to send, which should be within the above limits
         optional_amount = ReceiveAmount.BITCOIN(5_000)
-        prepare_request = PrepareReceiveRequest(payment_method=PaymentMethod.BITCOIN_ADDRESS, amount=optional_amount)
+        prepare_request = PrepareReceiveRequest(
+            payment_method=PaymentMethod.BITCOIN_ADDRESS,
+            amount=optional_amount
+        )
         prepare_response = sdk.prepare_receive_payment(prepare_request)
 
         # If the fees are acceptable, continue to create the Receive Payment
@@ -53,7 +59,10 @@ def prepare_receive_liquid(sdk: BindingLiquidSdk):
         # There are no limits, but the payer amount should be greater than broadcast fees when specified
         # Note: Not setting the amount will generate a plain Liquid address
         optional_amount = ReceiveAmount.BITCOIN(5_000)
-        prepare_request = PrepareReceiveRequest(payment_method=PaymentMethod.LIQUID_ADDRESS, amount=optional_amount)
+        prepare_request = PrepareReceiveRequest(
+            payment_method=PaymentMethod.LIQUID_ADDRESS,
+            amount=optional_amount
+        )
         prepare_response = sdk.prepare_receive_payment(prepare_request)
 
         # If the fees are acceptable, continue to create the Receive Payment
@@ -69,7 +78,10 @@ def receive_payment(sdk: BindingLiquidSdk, prepare_response: PrepareReceiveRespo
     # ANCHOR: receive-payment
     try:
         optional_description = "<description>"
-        req = ReceivePaymentRequest(prepare_response=prepare_response, description=optional_description)
+        req = ReceivePaymentRequest(
+            prepare_response=prepare_response,
+            description=optional_description
+        )
         res = sdk.receive_payment(req)
         destination = res.destination
     except Exception as error:

@@ -6,7 +6,10 @@ from breez_sdk_liquid import connect_with_signer, default_config, LiquidNetwork,
 def connect_with_self_signer(signer: Signer):
    
     # Create the default config, providing your Breez API key
-    config = default_config(network=LiquidNetwork.MAINNET, breez_api_key="<your-Breez-API-key>")
+    config = default_config(
+        network=LiquidNetwork.MAINNET,
+        breez_api_key="<your-Breez-API-key>"
+    )
 
     # Customize the config object according to your needs
     config.working_dir = "path to an existing directory"

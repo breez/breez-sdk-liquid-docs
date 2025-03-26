@@ -29,7 +29,10 @@ def configure_parsers():
     mnemonic = "<mnemonic words>"
 
     # Create the default config, providing your Breez API key
-    config = default_config(network=LiquidNetwork.MAINNET, breez_api_key="<your-Breez-API-key>")
+    config = default_config(
+        network=LiquidNetwork.MAINNET,
+        breez_api_key="<your-Breez-API-key>"
+    )
 
     # Configure external parsers
     config.external_input_parsers = [
@@ -46,7 +49,10 @@ def configure_parsers():
     ]
 
     try:
-        connect_request = ConnectRequest(config=config, mnemonic=mnemonic)
+        connect_request = ConnectRequest(
+            config=config,
+            mnemonic=mnemonic
+        )
         sdk = connect(connect_request)
         return sdk
     except Exception as error:
