@@ -28,7 +28,7 @@ def list_payments_filtered(sdk: BindingLiquidSdk):
     try:
         # ANCHOR: list-payments-filtered
         req = ListPaymentsRequest(
-            [PaymentType.SEND], 
+            filters = [PaymentType.SEND],
             from_timestamp = 1696880000, 
             to_timestamp = 1696959200, 
             offset = 0,

@@ -6,8 +6,14 @@ def fetch_pay_onchain_limits(sdk: BindingLiquidSdk):
     # ANCHOR: get-current-pay-onchain-limits
     try:
         current_limits = sdk.fetch_onchain_limits()
-        logging.debug("Minimum amount, in sats ", current_limits.send.min_sat)
-        logging.debug("Maximum amount, in sats ", current_limits.send.max_sat)
+        logging.debug(
+            "Minimum amount, in sats ",
+            current_limits.send.min_sat
+        )
+        logging.debug(
+            "Maximum amount, in sats ",
+            current_limits.send.max_sat
+        )
         return current_limits
     except Exception as error:
         logging.error(error)
@@ -18,7 +24,7 @@ def prepare_pay_onchain(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-pay-onchain
     try:
         amount = PayAmount.BITCOIN(5_000)
-        prepare_request = PreparePayOnchainRequest(amount)
+        prepare_request = PreparePayOnchainRequest(amount=amount)
         prepare_response = sdk.prepare_pay_onchain(prepare_request)
 
         # Check if the fees are acceptable before proceeding
@@ -32,7 +38,7 @@ def prepare_pay_onchain_drain(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-pay-onchain-drain
     try:
         amount = PayAmount.DRAIN
-        prepare_request = PreparePayOnchainRequest(amount)
+        prepare_request = PreparePayOnchainRequest(amount=amount)
         prepare_response = sdk.prepare_pay_onchain(prepare_request)
 
         # Check if the fees are acceptable before proceeding
@@ -48,7 +54,10 @@ def prepare_pay_onchain_fee_rate(sdk: BindingLiquidSdk):
         amount = PayAmount.BITCOIN(5_000)
         optional_sat_per_vbyte = 21
 
-        prepare_request = PreparePayOnchainRequest(amount, optional_sat_per_vbyte)
+        prepare_request = PreparePayOnchainRequest(
+            amount=amount,
+            fee_rate_sat_per_vbyte=optional_sat_per_vbyte
+        )
         prepare_response = sdk.prepare_pay_onchain(prepare_request)
 
         # Check if the fees are acceptable before proceeding
@@ -63,7 +72,10 @@ def start_pay_onchain(sdk: BindingLiquidSdk, prepare_response: PreparePayOnchain
     # ANCHOR: start-reverse-swap
     address = "bc1.."
     try:
-        sdk.pay_onchain(PayOnchainRequest(address, prepare_response))
+        sdk.pay_onchain(PayOnchainRequest(
+            address=address,
+            prepare_response=prepare_response
+        ))
     except Exception as error:
         logging.error(error)
         raise

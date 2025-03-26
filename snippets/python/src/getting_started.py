@@ -7,13 +7,19 @@ def start():
     mnemonic = "<mnemonic words>"
 
     # Create the default config, providing your Breez API key
-    config = default_config(network=LiquidNetwork.MAINNET, breez_api_key="<your-Breez-API-key>")
+    config = default_config(
+        network=LiquidNetwork.MAINNET,
+        breez_api_key="<your-Breez-API-key>"
+    )
 
     # Customize the config object according to your needs
     config.working_dir = "path to an existing directory"
 
     try:
-        connect_request = ConnectRequest(config, mnemonic)
+        connect_request = ConnectRequest(
+            config=config,
+            mnemonic=mnemonic
+        )
         sdk = connect(connect_request)
         return sdk
     except Exception as error:

@@ -6,7 +6,7 @@ def sign_message(sdk: BindingLiquidSdk):
     # ANCHOR: sign-message
     message = "<message to sign>"
     try:
-        sign_message_request = SignMessageRequest(message)
+        sign_message_request = SignMessageRequest(message=message)
         sign_message_response = sdk.sign_message(sign_message_request)
 
         # Get the wallet info for your pubkey
@@ -28,7 +28,11 @@ def check_message(sdk: BindingLiquidSdk):
     pubkey = "<pubkey of signer>"
     signature = "<message signature>"
     try:
-        check_message_request = CheckMessageRequest(message, pubkey, signature)
+        check_message_request = CheckMessageRequest(
+            message=message,
+            pubkey=pubkey,
+            signature=signature
+        )
         check_message_response = sdk.check_message(check_message_request)
 
         is_valid = check_message_response.is_valid

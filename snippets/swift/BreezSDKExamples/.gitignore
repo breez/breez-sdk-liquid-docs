@@ -1,4 +1,5 @@
 sync/
 .swiftpm
 .build
+.index-build
 *.sql
