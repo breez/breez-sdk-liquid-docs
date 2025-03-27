@@ -94,7 +94,7 @@ Check https://github.com/breez/breez-sdk-liquid/releases for the latest version.
 breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.7.2" }
 
 [patch.crates-io]
-secp256k1-zkp = {git = "https://github.com/sanket1729/rust-secp256k1-zkp.git", rev = "60e631c24588a0c9e271badd61959294848c665d"}
+secp256k1-zkp = { git = "https://github.com/breez/rust-secp256k1-zkp.git", rev = "eac2e479255a6e32b5588bc25ee53c642fdd8395" }
 ```
 
 ## Flutter/Dart
