@@ -71,8 +71,8 @@ async fn prepare_send_payment_asset_fees(sdk: Arc<LiquidSdk>) -> Result<()> {
         .await?;
 
     // If the asset fees are set, you can use these fees to pay to send the asset
-    let send_asset_fees = prepare_response.asset_fees;
-    info!("Fees: {:?}", send_asset_fees);
+    let send_asset_fees = prepare_response.estimated_asset_fees;
+    info!("Estimated Fees: ~{:?}", send_asset_fees);
 
     // If the asset fess are not set, you can use the sats fees to pay to send the asset
     let send_fees_sat = prepare_response.fees_sat;

@@ -16,7 +16,7 @@ async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()
 
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {} sats", send_fees_sat);
+    info!("Fees: {:?} sats", send_fees_sat);
     // ANCHOR_END: prepare-send-payment-lightning-bolt11
     Ok(())
 }
@@ -52,7 +52,7 @@ async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {} sats", send_fees_sat);
+    info!("Fees: {:?} sats", send_fees_sat);
     // ANCHOR_END: prepare-send-payment-liquid
     Ok(())
 }
@@ -70,7 +70,7 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {} sats", send_fees_sat);
+    info!("Fees: {:?} sats", send_fees_sat);
     // ANCHOR_END: prepare-send-payment-liquid-drain
     Ok(())
 }

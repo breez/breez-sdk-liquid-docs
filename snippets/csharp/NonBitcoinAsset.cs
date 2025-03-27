@@ -62,8 +62,8 @@ public class NonBitcoinAssetSnippets
             var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
 
             // If the asset fees are set, you can use these fees to pay to send the asset
-            var sendAssetFees = prepareResponse.assetFees;
-            Console.WriteLine($"Fees: {sendAssetFees}");
+            var sendAssetFees = prepareResponse.estimatedAssetFees;
+            Console.WriteLine($"Estimated Fees: ~{sendAssetFees}");
 
             // If the asset fess are not set, you can use the sats fees to pay to send the asset
             var sendFeesSat = prepareResponse.feesSat;
@@ -82,7 +82,7 @@ public class NonBitcoinAssetSnippets
         try
         {
             // Set the use asset fees param to true
-            var sendRequest = new SendPaymentRequest(prepareResponse, true)
+            var sendRequest = new SendPaymentRequest(prepareResponse, true);
             var sendResponse = sdk.SendPayment(sendRequest);
             var payment = sendResponse.payment;
         }

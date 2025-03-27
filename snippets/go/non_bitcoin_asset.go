@@ -63,7 +63,7 @@ func PrepareSendPaymentAssetFees(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	destination := "<Liquid BIP21 or address>"
 	usdtAssetId := "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
 	receiverAmount := float64(1.50)
-    // Set the optional estimate asset fees param to true
+	// Set the optional estimate asset fees param to true
 	estimateAssetFees := true
 	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountAsset{
 		AssetId:           usdtAssetId,
@@ -81,11 +81,11 @@ func PrepareSendPaymentAssetFees(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		return
 	}
 
-    // If the asset fees are set, you can use these fees to pay to send the asset
-	sendAssetFees := prepareResponse.AssetFees
-	log.Printf("Fees: %v", sendAssetFees)
+	// If the asset fees are set, you can use these fees to pay to send the asset
+	sendAssetFees := prepareResponse.EstimatedAssetFees
+	log.Printf("Estimated Fees: ~%v", sendAssetFees)
 
-    // If the asset fess are not set, you can use the sats fees to pay to send the asset
+	// If the asset fess are not set, you can use the sats fees to pay to send the asset
 	sendFeesSat := prepareResponse.FeesSat
 	log.Printf("Fees: %v sats", sendFeesSat)
 	// ANCHOR_END: prepare-send-payment-asset-fees
@@ -115,10 +115,10 @@ func ConfigureAssetMetadata() error {
 		return err
 	}
 
-  // Configure asset metadata. Setting the optional fiat ID will enable
-  // paying fees using the asset (if available).
-  fiatId := "EUR"
-  assetMetadata := []breez_sdk_liquid.AssetMetadata{
+	// Configure asset metadata. Setting the optional fiat ID will enable
+	// paying fees using the asset (if available).
+	fiatId := "EUR"
+	assetMetadata := []breez_sdk_liquid.AssetMetadata{
 		{
 			AssetId:   "18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec",
 			Name:      "PEGx EUR",

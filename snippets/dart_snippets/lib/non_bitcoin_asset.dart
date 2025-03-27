@@ -43,7 +43,7 @@ Future<PrepareSendResponse> prepareSendPaymentAsset() async {
   );
 
   // If the fees are acceptable, continue to create the Send Payment
-  BigInt sendFeesSat = prepareSendResponse.feesSat;
+  BigInt? sendFeesSat = prepareSendResponse.feesSat;
   print("Fees: $sendFeesSat sats");
   // ANCHOR_END: prepare-send-payment-asset
   return prepareSendResponse;
@@ -69,11 +69,11 @@ Future<PrepareSendResponse> prepareSendPaymentAssetFees() async {
   );
 
   // If the asset fees are set, you can use these fees to pay to send the asset
-  double sendAssetFees = prepareSendResponse.assetFees;
-  print("Fees: $sendAssetFees");
+  double? sendAssetFees = prepareSendResponse.estimatedAssetFees;
+  print("Estimated Fees: ~$sendAssetFees");
 
   // If the asset fess are not set, you can use the sats fees to pay to send the asset
-  BigInt sendFeesSat = prepareSendResponse.feesSat;
+  BigInt? sendFeesSat = prepareSendResponse.feesSat;
   print("Fees: $sendFeesSat sats");
   // ANCHOR_END: prepare-send-payment-asset-fees
   return prepareSendResponse;

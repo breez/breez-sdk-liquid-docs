@@ -51,8 +51,8 @@ def prepare_send_payment_asset_fees(sdk: BindingLiquidSdk):
         prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
 
         # If the asset fees are set, you can use these fees to pay to send the asset
-        send_asset_fees = prepare_response.asset_fees
-        logging.debug("Fees: ", send_asset_fees)
+        send_asset_fees = prepare_response.estimated_asset_fees
+        logging.debug("Estimated Fees: ~", send_asset_fees)
 
         # If the asset fess are not set, you can use the sats fees to pay to send the asset
         send_fees_sat = prepare_response.fees_sat

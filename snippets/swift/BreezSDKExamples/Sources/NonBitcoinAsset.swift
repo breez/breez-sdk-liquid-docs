@@ -62,8 +62,8 @@ func prepareSendPaymentAssetFees(sdk: BindingLiquidSdk) -> PrepareSendResponse? 
         ))
 
     // If the asset fees are set, you can use these fees to pay to send the asset
-    let sendAssetFees = prepareResponse!.assetFees
-    print("Fees: {}", sendAssetFees);
+    let sendAssetFees = prepareResponse!.estimatedAssetFees
+    print("Estimated Fees: ~{}", sendAssetFees);
 
     // If the asset fess are not set, you can use the sats fees to pay to send the asset
     let sendFeesSat = prepareResponse!.feesSat

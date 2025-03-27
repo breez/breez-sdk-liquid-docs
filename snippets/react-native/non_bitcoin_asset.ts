@@ -78,8 +78,8 @@ const examplePrepareSendPaymentAssetFees = async () => {
   })
 
   // If the asset fees are set, you can use these fees to pay to send the asset
-  const sendAssetFees = prepareResponse.assetFees
-  console.log(`Fees: ${sendAssetFees}`)
+  const sendAssetFees = prepareResponse.estimatedAssetFees
+  console.log(`Estimated Fees: ~${sendAssetFees}`)
 
   // If the asset fess are not set, you can use the sats fees to pay to send the asset
   const sendFeesSat = prepareResponse.feesSat

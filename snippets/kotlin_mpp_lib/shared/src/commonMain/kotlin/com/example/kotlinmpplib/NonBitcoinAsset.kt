@@ -51,8 +51,8 @@ class NonBitcoinAsset {
             val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
 
             // If the asset fees are set, you can use these fees to pay to send the asset
-            val sendAssetFees = prepareResponse.assetFees;
-            // Log.v("Breez", "Fees: ${sendAssetFees}")
+            val sendAssetFees = prepareResponse.estimatedAssetFees;
+            // Log.v("Breez", "Estimated Fees: ~${sendAssetFees}")
             
             // If the asset fess are not set, you can use the sats fees to pay to send the asset
             val sendFeesSat = prepareResponse.feesSat;
@@ -88,7 +88,7 @@ class NonBitcoinAsset {
                 name = "PEGx EUR",
                 ticker = "EURx",
                 precision = 8.toUByte(),
-                fiatID = "EUR"
+                fiatId = "EUR"
             )
         )
         // ANCHOR_END: configure-asset-metadata
