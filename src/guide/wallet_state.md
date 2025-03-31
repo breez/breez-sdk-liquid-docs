@@ -30,6 +30,14 @@ Once connected, the balance can be retrieved at any time.
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/getting_started.ts:fetch-balance}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 

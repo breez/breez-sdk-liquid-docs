@@ -35,6 +35,14 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/non_bitcoin_asset.ts:configure-asset-metadata}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -121,6 +129,14 @@ Once connected, the asset balances can be retreived.
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/Wasm/non_bitcoin_asset.ts:fetch-asset-balance}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -193,6 +209,14 @@ In the example below we are using the [Mainnet Tether USD](https://assets.blocks
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NonBitcoinAsset.kt:prepare-receive-payment-asset}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/non_bitcoin_asset.ts:prepare-receive-payment-asset}}
 ```
 </section>
 
@@ -269,6 +293,14 @@ In the example below we are using the [Mainnet Tether USD](https://assets.blocks
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NonBitcoinAsset.kt:prepare-send-payment-asset}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/non_bitcoin_asset.ts:prepare-send-payment-asset}}
 ```
 </section>
 

@@ -53,6 +53,14 @@ When receiving via Lightning, we generate an invoice to be paid.  Note that the 
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_payment.ts:prepare-receive-payment-lightning}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -126,6 +134,14 @@ If the onchain fee rate increases between preparation and payment time, the paym
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ReceivePayment.kt:prepare-receive-payment-onchain}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_payment.ts:prepare-receive-payment-onchain}}
 ```
 </section>
 
@@ -213,6 +229,14 @@ To receive non-Bitcoin assets, see <a href="assets.md#receiving-a-non-bitcoin-as
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_payment.ts:prepare-receive-payment-liquid}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -292,6 +316,15 @@ receive method, optionally specifying a description.
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_payment.ts:receive-payment}}
+```
+</section>
+
+
 <div slot="title">React Native</div>
 <section>
 
@@ -363,6 +396,14 @@ To reduce the likelihood of this extra fee review step being necessary, you can 
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ReceiveOnchain.kt:handle-payments-waiting-fee-acceptance}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_onchain.ts:handle-payments-waiting-fee-acceptance}}
 ```
 </section>
 

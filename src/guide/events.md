@@ -35,6 +35,15 @@ The SDK emits several events to provide the application with an up-to-date state
 
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/getting_started.ts:add-event-listener}}
+```
+
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -108,6 +117,15 @@ When you no longer need to listen to events, you can remove the listener.
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/GettingStarted.kt:remove-event-listener}}
+```
+
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/getting_started.ts:remove-event-listener}}
 ```
 
 </section>
