@@ -28,6 +28,14 @@
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/lnurl_withdraw.ts:lnurl-withdraw}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 

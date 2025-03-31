@@ -40,7 +40,7 @@ jobs:
       repository: breez/breez-sdk-liquid
       ref: ${{ needs.setup.outputs.sdk-ref }}
       package-version: ${{ needs.setup.outputs.package-version }}
-      packages-to-publish: '["csharp", "golang", "flutter", "react-native", "python", "swift"]'
+      packages-to-publish: '["csharp", "golang", "flutter", "react-native", "python", "swift", "wasm"]'
       use-dummy-binaries: true
 
   check-rust:
@@ -282,6 +282,39 @@ jobs:
 
       - name: Check formatting
         working-directory: snippets/react-native 
+        run: yarn run lint
+
+  check-wasm:
+    needs: 
+      - setup
+      - build-packages
+    name: Check wasm snippets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Download archived package
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-${{ needs.setup.outputs.package-version }}
+          path: snippets/wasm/packages
+
+      - name: Install dependencies
+        working-directory: snippets/wasm
+        run: yarn
+
+      - name: Check syntax
+        working-directory: snippets/wasm
+        run: tsc
+
+      - name: Check formatting
+        working-directory: snippets/wasm 
         run: yarn run lint
 
   check-swift:

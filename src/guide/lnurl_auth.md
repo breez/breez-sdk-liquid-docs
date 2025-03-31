@@ -28,6 +28,14 @@
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/lnurl_auth.ts:lnurl-auth}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 

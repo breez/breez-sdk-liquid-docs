@@ -31,6 +31,14 @@ BIP353 addresses are also supported, in which case they will be parsed into a BO
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/parsing_inputs.ts:parse-inputs}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -110,6 +118,14 @@ When parsing an input that isn't recognized as one of the native input types, th
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ParsingInputs.kt:configure-external-parser}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/parsing_inputs.ts:configure-external-parser}}
 ```
 </section>
 

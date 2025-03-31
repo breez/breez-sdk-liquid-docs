@@ -34,6 +34,14 @@ By signing a message using the SDK we can provide a digital signature. Anyone wi
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/messages.ts:sign-message}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -104,6 +112,14 @@ You can prove control of a private key by verifying a `message` with it's `signa
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Messages.kt:check-message}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/messages.ts:check-message}}
 ```
 </section>
 

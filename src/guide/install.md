@@ -56,6 +56,18 @@ dependencies {
 }
 ```
 
+## Javascript/Typescript (Wasm)
+
+We recommend using the official npm package: [@breeztech/breez-sdk-liquid](https://www.npmjs.com/package/@breeztech/breez-sdk-liquid).
+
+```console
+npm install @breeztech/breez-sdk-liquid
+```
+or
+```console
+yarn add @breeztech/breez-sdk-liquid
+```
+
 ## React Native
 
 We recommend using the official npm package: [@breeztech/react-native-breez-sdk-liquid](https://www.npmjs.com/package/@breeztech/react-native-breez-sdk-liquid).
