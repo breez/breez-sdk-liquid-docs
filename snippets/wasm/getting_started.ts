@@ -2,8 +2,9 @@ import {
   defaultConfig,
   connect,
   type SdkEvent,
-  initLogger,
-  type BindingLiquidSdk
+  setLogger,
+  type BindingLiquidSdk,
+  LogEntry
 } from '@breeztech/breez-sdk-liquid'
 
 // Init stub
@@ -37,7 +38,14 @@ const exampleFetchNodeInfo = async (sdk: BindingLiquidSdk) => {
 
 const exampleLogging = async () => {
   // ANCHOR: logging
-  initLogger('trace')
+  class JsLogger {
+    log = (l: LogEntry) => {
+      console.log(`[${l.level}]: ${l.line}`)
+    }
+  }
+
+  const logger = new JsLogger()
+  setLogger(logger)
   // ANCHOR_END: logging
 }
 
