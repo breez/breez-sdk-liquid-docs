@@ -44,19 +44,27 @@ class Sdk:
     def is_synced(self):
         return self.listener.is_synced()
     
+    def generate_mnemonic(self):
+        mnemo = Mnemonic("english")
+        words = mnemo.generate(strength=128)
+        return words
+
     def read_mnemonic(self):
         if exists('phrase'):
             with open('phrase') as f:
                 mnemonic = f.readline()
+                if not mnemonic:
+                    mnemonic = self.generate_mnemonic()
+                    with open('phrase', 'w') as f:
+                        f.write(mnemonic)
                 f.close()
                 return mnemonic
         else:
             with open('phrase', 'w') as f:
-                mnemo = Mnemonic("english")
-                words = mnemo.generate(strength=128)
-                f.write(words)
+                mnemonic = self.generate_mnemonic()
+                f.write(mnemonic)
                 f.close()
-                return words
+                return mnemonic
 
 
 class SdkLogListener(breez_sdk_liquid.Logger):
