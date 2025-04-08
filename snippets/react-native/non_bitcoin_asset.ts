@@ -5,10 +5,12 @@ import {
   PaymentMethod,
   type PayAmount,
   PayAmountVariant,
-  prepareSendPayment,
   prepareReceivePayment,
+  prepareSendPayment,
+  type PrepareSendResponse,
   type ReceiveAmount,
-  ReceiveAmountVariant
+  ReceiveAmountVariant,
+  sendPayment
 } from '@breeztech/react-native-breez-sdk-liquid'
 
 const examplePrepareAssetPayment = async () => {
