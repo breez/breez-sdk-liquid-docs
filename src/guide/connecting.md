@@ -7,13 +7,6 @@ The first step is to construct the SDK configuration. Among others, it sets the 
 
 The SDK uses the config `working_dir` to store the state of the SDK instance. When handling multiple instances of the SDK, each instance needs to have a different working directory defined.
 
-<div class="warning">
-<h4>Developer note</h4>
-
-This does not apply to Javascript (Wasm) as the SDK state is stored in memory.
-
-</div>
-
 Now you are ready to interact with the SDK.
 
 <custom-tabs category="lang">
