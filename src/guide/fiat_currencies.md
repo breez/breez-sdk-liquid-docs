@@ -32,6 +32,14 @@ You can get the full details of supported fiat currencies, such as symbols and l
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/fiat_currencies.ts:list-fiat-currencies}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -102,6 +110,14 @@ To get the current BTC rate in the various supported fiat currencies:
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/FiatCurrencies.kt:fetch-fiat-rates}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/fiat_currencies.ts:fetch-fiat-rates}}
 ```
 </section>
 

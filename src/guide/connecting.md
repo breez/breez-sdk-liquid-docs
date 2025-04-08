@@ -37,6 +37,15 @@ Now you are ready to interact with the SDK.
 
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/getting_started.ts:init-sdk}}
+```
+
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -119,6 +128,15 @@ This is especially useful in cases where the SDK has to be re-instantiated, for 
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/GettingStarted.kt:disconnect}}
+```
+
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/getting_started.ts:disconnect}}
 ```
 
 </section>

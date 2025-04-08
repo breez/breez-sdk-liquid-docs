@@ -40,6 +40,14 @@ Here's how to implement this:
 
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript 
+{{#include ../../snippets/wasm/self_signer.ts:self-signer}}
+```
+</section>
+
 <div slot="title">Python</div>
 <section>
 

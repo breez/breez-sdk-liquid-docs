@@ -30,6 +30,14 @@ To view your payment history you can list all the sent and received payments mad
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/list_payments.ts:list-payments}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -101,6 +109,14 @@ When listing payment you can also filter and page the list results, by:
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/list_payments.ts:list-payments-filtered}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -169,6 +185,14 @@ When listing payment you can also filter and page the list results, by:
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/list_payments.ts:list-payments-details-address}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -234,6 +258,14 @@ When listing payment you can also filter and page the list results, by:
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ListPayments.kt:list-payments-details-destination}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/list_payments.ts:list-payments-details-destination}}
 ```
 </section>
 
@@ -310,6 +342,14 @@ You can also retrieve a single Lightning payment using one of the following iden
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ListPayments.kt:get-payment}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/list_payments.ts:get-payment}}
 ```
 </section>
 

@@ -51,6 +51,14 @@ The SDK will also validate that the amount is within the send lightning limits o
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/send_payment.ts:prepare-send-payment-lightning-bolt11}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -116,6 +124,14 @@ Payments to a BOLT12 offer can be done in a similar way. However, when paying to
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:prepare-send-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/send_payment.ts:prepare-send-payment-lightning-bolt12}}
 ```
 </section>
 
@@ -214,6 +230,14 @@ When you want the payment receipient to receive a specific amount.
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/send_payment.ts:prepare-send-payment-liquid}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -280,6 +304,14 @@ When you want send all funds from your wallet to another address.
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:prepare-send-payment-liquid-drain}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/send_payment.ts:prepare-send-payment-liquid-drain}}
 ```
 </section>
 
@@ -354,6 +386,14 @@ send method.
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:send-payment}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/send_payment.ts:send-payment}}
 ```
 </section>
 

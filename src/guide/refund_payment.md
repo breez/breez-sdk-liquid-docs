@@ -34,6 +34,14 @@ In order to manually execute a Bitcoin refund, you need to supply an on-chain Bi
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_onchain.ts:list-refundables}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -107,6 +115,14 @@ To refund a swap, you need to set a fee rate for the Bitcoin transaction. You ca
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_onchain.ts:recommended-fees}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -177,6 +193,14 @@ Once you have a refundable swap, use the following code to execute a refund:
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ReceiveOnchain.kt:execute-refund}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_onchain.ts:execute-refund}}
 ```
 </section>
 
