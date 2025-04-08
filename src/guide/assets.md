@@ -386,6 +386,14 @@ In the prepare send payment step, set the **estimate asset fees** param to `true
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/non_bitcoin_asset.ts:prepare-send-payment-asset-fees}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -451,6 +459,14 @@ If the **asset fees** are set in the response, then set the **use asset fees** t
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NonBitcoinAsset.kt:send-payment-fees}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/non_bitcoin_asset.ts:send-payment-fees}}
 ```
 </section>
 

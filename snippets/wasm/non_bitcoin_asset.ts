@@ -1,6 +1,7 @@
 import {
   defaultConfig,
   type PayAmount,
+  type PrepareSendResponse,
   type ReceiveAmount,
   type BindingLiquidSdk
 } from '@breeztech/breez-sdk-liquid'
@@ -39,7 +40,8 @@ const examplePrepareSendPaymentAsset = async (sdk: BindingLiquidSdk) => {
   const optionalAmount: PayAmount = {
     type: 'asset',
     assetId: usdtAssetId,
-    receiverAmount: 1.5
+    receiverAmount: 1.5,
+    estimateAssetFees: false
   }
 
   const prepareResponse = await sdk.prepareSendPayment({
@@ -51,6 +53,45 @@ const examplePrepareSendPaymentAsset = async (sdk: BindingLiquidSdk) => {
   const sendFeesSat = prepareResponse.feesSat
   console.log(`Fees: ${sendFeesSat} sats`)
   // ANCHOR_END: prepare-send-payment-asset
+}
+
+const examplePrepareSendPaymentAssetFees = async (sdk: BindingLiquidSdk) => {
+  // ANCHOR: prepare-send-payment-asset-fees
+  const destination = '<Liquid BIP21 or address>'
+  const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
+  // Set the optional estimate asset fees param to true
+  const optionalAmount: PayAmount = {
+    type: 'asset',
+    assetId: usdtAssetId,
+    receiverAmount: 1.50,
+    estimateAssetFees: true
+  }
+
+  const prepareResponse = await sdk.prepareSendPayment({
+    destination,
+    amount: optionalAmount
+  })
+
+  // If the asset fees are set, you can use these fees to pay to send the asset
+  const sendAssetFees = prepareResponse.estimatedAssetFees
+  console.log(`Estimated Fees: ~${sendAssetFees}`)
+
+  // If the asset fess are not set, you can use the sats fees to pay to send the asset
+  const sendFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${sendFeesSat} sats`)
+  // ANCHOR_END: prepare-send-payment-asset-fees
+}
+
+const exampleSendPaymentFees = async (sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) => {
+  // ANCHOR: send-payment-fees
+  // Set the use asset fees param to true
+  const sendResponse = await sdk.sendPayment({
+    prepareResponse,
+    useAssetFees: true
+  })
+  const payment = sendResponse.payment
+  // ANCHOR_END: send-payment-fees
+  console.log(payment)
 }
 
 const configureAssetMetadata = async (sdk: BindingLiquidSdk) => {
