@@ -4,7 +4,7 @@ import {
   type SdkEvent,
   setLogger,
   type BindingLiquidSdk,
-  LogEntry
+  type LogEntry
 } from '@breeztech/breez-sdk-liquid'
 
 // Init stub
@@ -21,10 +21,10 @@ const exampleGettingStarted = async () => {
   await init()
 
   // Create the default config, providing your Breez API key
-  let config = defaultConfig('mainnet', '<your-Breez-API-key>')
+  const config = defaultConfig('mainnet', '<your-Breez-API-key>')
 
   // The `workingDir` does not need to be set in a web environment
-  config.workingDir = "path to writable directory"
+  config.workingDir = 'path to writable directory'
 
   const sdk = await connect({ mnemonic, config })
   // ANCHOR_END: init-sdk
