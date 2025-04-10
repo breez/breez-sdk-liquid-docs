@@ -188,13 +188,13 @@ def receive_payment(params):
     try:
         # Prepare the receive request to get fees
         receive_amount = parse_receive_amount(params)
-        prepare_req = breez_sdk_liquid.PrepareReceiveRequest(getattr(breez_sdk_liquid.PaymentMethod, params.method), receive_amount)
+        prepare_req = breez_sdk_liquid.PrepareReceiveRequest(payment_method=getattr(breez_sdk_liquid.PaymentMethod, params.method), amount=receive_amount)
         prepare_res = sdk.instance.prepare_receive_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (y/N)? : ")
         if accepted in ["Y", "y"]:
             # Receive payment
-            req = breez_sdk_liquid.ReceivePaymentRequest(prepare_res)
+            req = breez_sdk_liquid.ReceivePaymentRequest(prepare_response=prepare_res)
             res = sdk.instance.receive_payment(req)
             if res.destination:
                 print_qr(res.destination)
@@ -229,13 +229,13 @@ def send_payment(params):
     try:
         # Prepare the send request to get fees
         pay_amount = parse_pay_amount(params)
-        prepare_req = breez_sdk_liquid.PrepareSendRequest(params.destination, pay_amount)
+        prepare_req = breez_sdk_liquid.PrepareSendRequest(destination=params.destination, amount=pay_amount)
         prepare_res = sdk.instance.prepare_send_payment(prepare_req)
         # Prompt to accept fees
         accepted = input(f"Fees: {prepare_res.fees_sat} sat. Are the fees acceptable? (Y/n)? : ")
         if accepted == "Y":
             # Send payment
-            req = breez_sdk_liquid.SendPaymentRequest(prepare_res)
+            req = breez_sdk_liquid.SendPaymentRequest(prepare_response=prepare_res)
             res = sdk.instance.send_payment(req)
             if res.payment.destination:
                 print('Sending payment:', res.payment.destination)

@@ -16,11 +16,13 @@ def prepare_pay(sdk: BindingLiquidSdk):
             optional_comment = "<comment>"
             optional_validate_success_action_url = True
 
-            req = PrepareLnUrlPayRequest(parsed_input.data,
-                                         amount,
-                                         parsed_input.bip353_address,
-                                         optional_comment,
-                                         optional_validate_success_action_url)
+            req = PrepareLnUrlPayRequest(
+                data=parsed_input.data,
+                amount=amount,
+                bip353_address=parsed_input.bip353_address,
+                comment=optional_comment,
+                validate_success_action_url=optional_validate_success_action_url
+            )
             prepare_response = sdk.prepare_lnurl_pay(req)
 
             # If the fees are acceptable, continue to create the LNURL Pay
@@ -39,10 +41,12 @@ def prepare_pay_drain(sdk: BindingLiquidSdk, data: LnUrlPayRequestData):
         optional_comment = "<comment>"
         optional_validate_success_action_url = True
 
-        req = PrepareLnUrlPayRequest(data,
-                                     amount, 
-                                     optional_comment, 
-                                     optional_validate_success_action_url)
+        req = PrepareLnUrlPayRequest(
+            data=data,
+            amount=amount,
+            comment=optional_comment,
+            validate_success_action_url=optional_validate_success_action_url
+        )
         prepare_response = sdk.prepare_lnurl_pay(req)
         return prepare_response
     except Exception as error:

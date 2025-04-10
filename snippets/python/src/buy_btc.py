@@ -5,8 +5,14 @@ def fetch_onchain_limits(sdk: BindingLiquidSdk):
     # ANCHOR: onchain-limits
     try:
         current_limits = sdk.fetch_onchain_limits()
-        logging.debug("Minimum amount, in sats ", current_limits.receive.min_sat)
-        logging.debug("Maximum amount, in sats ", current_limits.receive.max_sat)
+        logging.debug(
+            "Minimum amount, in sats ",
+            current_limits.receive.min_sat
+        )
+        logging.debug(
+            "Maximum amount, in sats ",
+            current_limits.receive.max_sat
+        )
         return current_limits
     except Exception as error:
         logging.error(error)
@@ -16,7 +22,10 @@ def fetch_onchain_limits(sdk: BindingLiquidSdk):
 def prepare_buy_btc(sdk: BindingLiquidSdk, current_limits: OnchainPaymentLimitsResponse):
     # ANCHOR: prepare-buy-btc
     try:
-        req = PrepareBuyBitcoinRequest(BuyBitcoinProvider.MOONPAY, current_limits.receive.min_sat)
+        req = PrepareBuyBitcoinRequest(
+            provider=BuyBitcoinProvider.MOONPAY,
+            amount_sat=current_limits.receive.min_sat
+        )
         prepare_response = sdk.prepare_buy_bitcoin(req)
 
         # Check the fees are acceptable before proceeding
@@ -28,10 +37,10 @@ def prepare_buy_btc(sdk: BindingLiquidSdk, current_limits: OnchainPaymentLimitsR
         raise
     # ANCHOR_END: prepare-buy-btc
 
-def buy_btc(sdk: BindingLiquidSdk, prepareResponse: PrepareBuyBitcoinResponse):
+def buy_btc(sdk: BindingLiquidSdk, prepare_response: PrepareBuyBitcoinResponse):
     # ANCHOR: buy-btc
     try:
-        req = BuyBitcoinRequest(prepareResponse)
+        req = BuyBitcoinRequest(prepare_response=prepare_response)
         url = sdk.buy_bitcoin(req)
     except Exception as error:
         logging.error(error)

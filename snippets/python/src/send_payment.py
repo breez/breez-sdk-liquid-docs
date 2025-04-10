@@ -7,7 +7,11 @@ def prepare_send_payment_lightning_bolt11(sdk: BindingLiquidSdk):
     # Set the bolt11 invoice you wish to pay
     destination = "<bolt11 invoice>"
     try:
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination))
+        prepare_response = sdk.prepare_send_payment(
+            PrepareSendRequest(
+                destination=destination
+            )
+        )
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
@@ -25,7 +29,12 @@ def prepare_send_payment_lightning_bolt12(sdk: BindingLiquidSdk):
     try:
         optional_amount = PayAmount.BITCOIN(5_000)
 
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+        prepare_response = sdk.prepare_send_payment(
+            PrepareSendRequest(
+                destination=destination,
+                amount=optional_amount
+            )
+        )
 
         return prepare_response
     except Exception as error:
@@ -39,7 +48,12 @@ def prepare_send_payment_liquid(sdk: BindingLiquidSdk):
     destination = "<Liquid BIP21 or address>"
     try:
         optional_amount = PayAmount.BITCOIN(5_000)
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+        prepare_response = sdk.prepare_send_payment(
+            PrepareSendRequest(
+                destination=destination,
+                amount=optional_amount
+            )
+        )
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
@@ -56,7 +70,12 @@ def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
     destination = "<Liquid BIP21 or address>"
     try:
         optional_amount = PayAmount.DRAIN
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+        prepare_response = sdk.prepare_send_payment(
+            PrepareSendRequest(
+                destination=destination,
+                amount=optional_amount
+            )
+        )
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
@@ -70,7 +89,11 @@ def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
 def send_payment(sdk: BindingLiquidSdk, prepare_response: PrepareSendResponse):
     # ANCHOR: send-payment
     try:
-        send_response = sdk.send_payment(SendPaymentRequest(prepare_response))
+        send_response = sdk.send_payment(
+            SendPaymentRequest(
+                prepare_response=prepare_response
+            )
+        )
         payment = send_response.payment
     except Exception as error:
         logging.error(error)
