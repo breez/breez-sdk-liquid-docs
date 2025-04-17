@@ -14,7 +14,7 @@ def prepare_receive_asset(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Receive Payment
         receive_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", receive_fees_sat, " sats")
+        logging.debug(f"Fees: {receive_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -34,7 +34,7 @@ def prepare_send_payment_asset(sdk: BindingLiquidSdk):
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", send_fees_sat, " sats")
+        logging.debug(f"Fees: {send_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
@@ -52,11 +52,11 @@ def prepare_send_payment_asset_fees(sdk: BindingLiquidSdk):
 
         # If the asset fees are set, you can use these fees to pay to send the asset
         send_asset_fees = prepare_response.estimated_asset_fees
-        logging.debug("Estimated Fees: ~", send_asset_fees)
+        logging.debug(f"Estimated Fees: ~{send_asset_fees}")
 
         # If the asset fess are not set, you can use the sats fees to pay to send the asset
         send_fees_sat = prepare_response.fees_sat
-        logging.debug("Fees: ", send_fees_sat, " sats")
+        logging.debug(f"Fees: {send_fees_sat} sats")
         return prepare_response
     except Exception as error:
         logging.error(error)
