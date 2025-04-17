@@ -312,3 +312,153 @@ In the example below we are using the [Mainnet Tether USD](https://assets.blocks
 ```
 </section>
 </custom-tabs>
+
+<h2 id="paying-fees-with-a-non-bitcoin-asset">
+    <a class="header" href="#sending-a-non-bitcoin-asset">Paying fees with a non-Bitcoin asset</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_send_payment">API docs</a>
+</h2>
+
+For some assets, like [Tether USD](https://assets.blockstream.info/ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2.json), you can pay the sending transaction fees with the asset. 
+
+<div class="warning">
+<h4>Developer note</h4>
+
+When adding additional [asset metadata](#adding-asset-metadata), the optional **fiat ID** has to be set and the Payjoin provider has to support paying fees for this asset. When the asset is not supported, the **asset fees** in the prepare send payment response will be not set.
+
+</div>
+
+In the prepare send payment step, set the **estimate asset fees** param to `true` to validate and calculate the **asset fees**.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/non_bitcoin_asset.rs:prepare-send-payment-asset-fees}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NonBitcoinAsset.swift:prepare-send-payment-asset-fees}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NonBitcoinAsset.kt:prepare-send-payment-asset-fees}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/non_bitcoin_asset.ts:prepare-send-payment-asset-fees}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/non_bitcoin_asset.dart:prepare-send-payment-asset-fees}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/non_bitcoin_asset.py:prepare-send-payment-asset-fees}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/non_bitcoin_asset.go:prepare-send-payment-asset-fees}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/NonBitcoinAsset.cs:prepare-send-payment-asset-fees}}
+```
+</section>
+</custom-tabs>
+
+If the **asset fees** are set in the response, then set the **use asset fees** to `true` to pay fees with the asset. You can still pay fees in satoshi if you set the **use asset fees** to `false` (default).
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/non_bitcoin_asset.rs:send-payment-fees}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NonBitcoinAsset.swift:send-payment-fees}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NonBitcoinAsset.kt:send-payment-fees}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/non_bitcoin_asset.ts:send-payment-fees}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/non_bitcoin_asset.dart:send-payment-fees}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/non_bitcoin_asset.py:send-payment-fees}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/non_bitcoin_asset.go:send-payment-fees}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/NonBitcoinAsset.cs:send-payment-fees}}
+```
+</section>
+</custom-tabs>
