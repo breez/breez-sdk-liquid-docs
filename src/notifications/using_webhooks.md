@@ -32,6 +32,14 @@ Once your vendor [NDS is set up](setup_nds.md) and can accept POST requests from
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/webhook.ts:register-webook}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -104,6 +112,14 @@ When a webhook is no longer needed you can unregister the webhook as follows:
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Webhook.kt:unregister-webook}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/webhook.ts:unregister-webook}}
 ```
 </section>
 

@@ -39,6 +39,14 @@ When sending an onchain payment, the swap limits for sending onchain need to be 
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/pay_onchain.ts:get-current-pay-onchain-limits}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -118,6 +126,14 @@ When you want the payment receipient to receive a specific amount.
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/pay_onchain.ts:prepare-pay-onchain}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -183,6 +199,14 @@ If you want to set a custom fee rate when the Bitcoin transaction is claimed:
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/PayOnchain.kt:prepare-pay-onchain-fee-rate}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/pay_onchain.ts:prepare-pay-onchain-fee-rate}}
 ```
 </section>
 
@@ -252,6 +276,14 @@ When you want send all funds from your wallet to another address.
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/PayOnchain.kt:prepare-pay-onchain-drain}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/pay_onchain.ts:prepare-pay-onchain-drain}}
 ```
 </section>
 
@@ -327,6 +359,14 @@ Note that one of the arguments will be the result from the `prepare` call above.
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/PayOnchain.kt:start-reverse-swap}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/pay_onchain.ts:start-reverse-swap}}
 ```
 </section>
 
