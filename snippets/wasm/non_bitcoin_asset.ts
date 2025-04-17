@@ -34,7 +34,7 @@ const examplePrepareSendPaymentAsset = async (sdk: BindingLiquidSdk) => {
   // Set the Liquid BIP21 or Liquid address you wish to pay
   const destination = '<Liquid BIP21 or address>'
   // If the destination is an address or an amountless BIP21 URI,
-  // you must specifiy an asset amount
+  // you must specify an asset amount
 
   const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
   const optionalAmount: PayAmount = {
