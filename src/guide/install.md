@@ -103,7 +103,7 @@ Check https://github.com/breez/breez-sdk-liquid/releases for the latest version.
 
 ```toml
 [dependencies]
-breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.7.2" }
+breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.8.0" }
 
 [patch.crates-io]
 secp256k1-zkp = { git = "https://github.com/breez/rust-secp256k1-zkp.git", rev = "eac2e479255a6e32b5588bc25ee53c642fdd8395" }
