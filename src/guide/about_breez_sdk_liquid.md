@@ -48,7 +48,7 @@ When receiving a payment, the SDK performs a reverse submarine swap, converting 
 | Trust profile is with the Liquid sidechain | Pure Lightning Network implementation |
 | No channel management or LSP required | Uses Lightning Service Providers (LSPs) for liquidity |
 | No setup fees for end-users | Channel opening and closing fees |
-| Minimum payment size of 1,000 sats | No minimum limit for transactions (after channel opening) |
+| Minimum 100 sats to receive, 21 sats to send | No minimum limit for transactions (after channel opening) |
 | Static low fees | Setup costs are correlated to Bitcoin mining fees |
 | Bitcoin, USDT & multi-asset support | Bitcoin only |
 
