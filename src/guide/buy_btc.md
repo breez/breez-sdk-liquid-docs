@@ -35,6 +35,14 @@ Fetch the current onchain limits to check the minimum and maximum allowed to pur
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/buy_btc.ts:onchain-limits}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -109,6 +117,14 @@ Using the current onchain limits, select a provider and amount to purchase.
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/buy_btc.ts:prepare-buy-btc}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -180,6 +196,14 @@ Generate a URL to the provider with a Bitcoin address to receive the purchase to
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/BuyBtc.kt:buy-btc}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/buy_btc.ts:buy-btc}}
 ```
 </section>
 

@@ -9,7 +9,7 @@ Future<PrepareSendResponse> prepareSendPaymentLightningBolt11() async {
   );
 
   // If the fees are acceptable, continue to create the Send Payment
-  BigInt sendFeesSat = prepareSendResponse.feesSat;
+  BigInt? sendFeesSat = prepareSendResponse.feesSat;
   print("Fees: $sendFeesSat sats");
   // ANCHOR_END: prepare-send-payment-lightning-bolt11
   return prepareSendResponse;
@@ -40,7 +40,7 @@ Future<PrepareSendResponse> prepareSendPaymentLiquid() async {
   );
 
   // If the fees are acceptable, continue to create the Send Payment
-  BigInt sendFeesSat = prepareSendResponse.feesSat;
+  BigInt? sendFeesSat = prepareSendResponse.feesSat;
   print("Fees: $sendFeesSat sats");
   // ANCHOR_END: prepare-send-payment-liquid
   return prepareSendResponse;
@@ -60,7 +60,7 @@ Future<PrepareSendResponse> prepareSendPaymentLiquidDrain() async {
   );
 
   // If the fees are acceptable, continue to create the Send Payment
-  BigInt sendFeesSat = prepareSendResponse.feesSat;
+  BigInt? sendFeesSat = prepareSendResponse.feesSat;
   print("Fees: $sendFeesSat sats");
   // ANCHOR_END: prepare-send-payment-liquid-drain
   return prepareSendResponse;

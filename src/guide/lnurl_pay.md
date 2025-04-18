@@ -39,6 +39,14 @@ The SDK will also validate that the amount is within the sendable limits of the 
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/lnurl_pay.ts:prepare-lnurl-pay}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 
@@ -105,6 +113,14 @@ When you want to send all funds from your wallet to the payment recipient.
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/LnurlPay.kt:prepare-lnurl-pay-drain}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/lnurl_pay.ts:prepare-lnurl-pay-drain}}
 ```
 </section>
 
@@ -179,6 +195,14 @@ LNURL pay method.
 
 ```kotlin,ignore
 {{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/LnurlPay.kt:lnurl-pay}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/lnurl_pay.ts:lnurl-pay}}
 ```
 </section>
 

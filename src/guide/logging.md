@@ -30,6 +30,14 @@ The SDK implements detailed logging via a streaming interface you can manage wit
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/getting_started.ts:logging}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 

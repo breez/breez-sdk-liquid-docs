@@ -6,14 +6,8 @@ def fetch_pay_onchain_limits(sdk: BindingLiquidSdk):
     # ANCHOR: get-current-pay-onchain-limits
     try:
         current_limits = sdk.fetch_onchain_limits()
-        logging.debug(
-            "Minimum amount, in sats ",
-            current_limits.send.min_sat
-        )
-        logging.debug(
-            "Maximum amount, in sats ",
-            current_limits.send.max_sat
-        )
+        logging.debug(f"Minimum amount, in sats {current_limits.send.min_sat}")
+        logging.debug(f"Maximum amount, in sats {current_limits.send.max_sat}")
         return current_limits
     except Exception as error:
         logging.error(error)

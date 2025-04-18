@@ -56,6 +56,18 @@ dependencies {
 }
 ```
 
+## Javascript/Typescript (Wasm)
+
+We recommend using the official npm package: [@breeztech/breez-sdk-liquid](https://www.npmjs.com/package/@breeztech/breez-sdk-liquid).
+
+```console
+npm install @breeztech/breez-sdk-liquid
+```
+or
+```console
+yarn add @breeztech/breez-sdk-liquid
+```
+
 ## React Native
 
 We recommend using the official npm package: [@breeztech/react-native-breez-sdk-liquid](https://www.npmjs.com/package/@breeztech/react-native-breez-sdk-liquid).
@@ -91,10 +103,10 @@ Check https://github.com/breez/breez-sdk-liquid/releases for the latest version.
 
 ```toml
 [dependencies]
-breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.7.2" }
+breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.8.0" }
 
 [patch.crates-io]
-secp256k1-zkp = {git = "https://github.com/sanket1729/rust-secp256k1-zkp.git", rev = "60e631c24588a0c9e271badd61959294848c665d"}
+secp256k1-zkp = { git = "https://github.com/breez/rust-secp256k1-zkp.git", rev = "eac2e479255a6e32b5588bc25ee53c642fdd8395" }
 ```
 
 ## Flutter/Dart

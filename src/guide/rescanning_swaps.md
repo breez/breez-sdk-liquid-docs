@@ -32,6 +32,14 @@ However, if users inadvertently send additional funds to a swap address that was
 ```
 </section>
 
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_onchain.ts:rescan-swaps}}
+```
+</section>
+
 <div slot="title">React Native</div>
 <section>
 

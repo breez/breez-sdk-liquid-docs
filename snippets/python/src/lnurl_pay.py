@@ -27,7 +27,7 @@ def prepare_pay(sdk: BindingLiquidSdk):
 
             # If the fees are acceptable, continue to create the LNURL Pay
             fees_sat = prepare_response.fees_sat
-            logging.debug("Fees: ", fees_sat, " sats")
+            logging.debug(f"Fees: {fees_sat} sats")
             return prepare_response
     except Exception as error:
         logging.error(error)
