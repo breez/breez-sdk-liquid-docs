@@ -55,19 +55,20 @@ When receiving a payment, the SDK performs a reverse submarine swap, converting 
 ## Pricing
 
 The Breez SDK is **free** for developers. 
-See [this](https://sdk-doc-liquid.breez.technology/guide/end-user_fees.html) for end user fees.
-
+See [this](https://sdk-doc-liquid.breez.technology/guide/end-user_fees.html) for end-user fees.
 
 
 ## Support
 
 Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or email us at <contact@breez.technology>.
 
+
 ## Repository
 
 Head over to the [Breez SDK - Nodeless *(Liquid Implementation)* repo](https://github.com/breez/breez-sdk-liquid).
 
 
-### Ready to light up your app? 
+## Ready to Light Up Your App? 
+### → [Get Started](https://sdk-doc-liquid.breez.technology/guide/getting_started.html) 
 
-[Get Started](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)!
+
