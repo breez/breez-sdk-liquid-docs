@@ -69,6 +69,6 @@ Head over to the [Breez SDK - Nodeless *(Liquid Implementation)* repo](https://g
 
 
 ## Ready to Light Up Your App? 
-### → [Get Started](https://sdk-doc-liquid.breez.technology/guide/getting_started.html) 
+**→ [Get Started](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)** 
 
 
