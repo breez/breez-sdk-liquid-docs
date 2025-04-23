@@ -175,7 +175,8 @@ When parsing an input that isn't recognized as one of the native input types, th
 * [**PicknPay QRs**](https://www.pnp.co.za/)
   * Maintainer: [MoneyBadger](https://www.moneybadger.co.za/)
   * Regex: `(.*)(za.co.electrum.picknpay)(.*)`
-  * URL: `https://staging.cryptoqr.net/.well-known/lnurlp/<input>`
+  * URL: `https://cryptoqr.net/.well-known/lnurlp/<input>`
+  * More info: [support+breezsdk@moneybadger.co.za](mailto:support+breezsdk@moneybadger.co.za)
 
 ### Default external parsers
 
