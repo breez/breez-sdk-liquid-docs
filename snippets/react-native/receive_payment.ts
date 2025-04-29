@@ -25,7 +25,7 @@ const examplePrepareLightningPayment = async () => {
   }
 
   const prepareResponse = await prepareReceivePayment({
-    paymentMethod: PaymentMethod.LIGHTNING,
+    paymentMethod: PaymentMethod.BOLT11_INVOICE,
     amount: optionalAmount
   })
 

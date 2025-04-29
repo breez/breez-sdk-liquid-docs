@@ -13,7 +13,7 @@ def prepare_receive_lightning(sdk: BindingLiquidSdk):
         # Set the invoice amount you wish the payer to send, which should be within the above limits
         optional_amount = ReceiveAmount.BITCOIN(5_000)
         prepare_request = PrepareReceiveRequest(
-            payment_method=PaymentMethod.LIGHTNING,
+            payment_method=PaymentMethod.BOLT11_INVOICE,
             amount=optional_amount
         )
         prepare_response = sdk.prepare_receive_payment(prepare_request)

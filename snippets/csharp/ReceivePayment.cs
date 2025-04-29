@@ -14,7 +14,7 @@ public class ReceivePaymentSnippets
 
             // Set the invoice amount you wish the payer to send, which should be within the above limits
             var optionalAmount = new ReceiveAmount.Bitcoin(5000);
-            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.Lightning, optionalAmount);
+            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.Bolt11Invoice, optionalAmount);
             var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
 
             // If the fees are acceptable, continue to create the Receive Payment

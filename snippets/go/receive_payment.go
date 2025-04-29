@@ -19,7 +19,7 @@ func PrepareReceiveLightning(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		PayerAmountSat: uint64(5_000),
 	}
 	prepareRequest := breez_sdk_liquid.PrepareReceiveRequest{
-		PaymentMethod: breez_sdk_liquid.PaymentMethodLightning,
+		PaymentMethod: breez_sdk_liquid.PaymentMethodBolt11Invoice,
 		Amount:        &optionalAmount,
 	}
 	if prepareResponse, err := sdk.PrepareReceivePayment(prepareRequest); err == nil {

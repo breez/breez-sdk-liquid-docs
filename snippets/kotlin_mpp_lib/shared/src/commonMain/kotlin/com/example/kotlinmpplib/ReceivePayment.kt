@@ -12,7 +12,7 @@ class ReceivePayment {
 
             // Set the invoice amount you wish the payer to send, which should be within the above limits
             val optionalAmount = ReceiveAmount.Bitcoin(5_000.toULong())
-            val prepareRequest = PrepareReceiveRequest(PaymentMethod.LIGHTNING, optionalAmount)
+            val prepareRequest = PrepareReceiveRequest(PaymentMethod.BOLT11_INVOICE, optionalAmount)
             val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
 
             // If the fees are acceptable, continue to create the Receive Payment

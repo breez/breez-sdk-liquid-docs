@@ -13,7 +13,7 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
   ReceiveAmount_Bitcoin optionalAmount = ReceiveAmount_Bitcoin(payerAmountSat: 5000 as BigInt);
   PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
-      paymentMethod: PaymentMethod.lightning,
+      paymentMethod: PaymentMethod.bolt11Invoice,
       amount: optionalAmount,
     ),
   );

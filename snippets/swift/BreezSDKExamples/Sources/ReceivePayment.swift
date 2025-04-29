@@ -11,7 +11,7 @@ func prepareReceiveLightning(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     let optionalAmount = ReceiveAmount.bitcoin(payerAmountSat: 5_000)
     let prepareResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
-            paymentMethod: PaymentMethod.lightning,
+            paymentMethod: PaymentMethod.bolt11Invoice,
             amount: optionalAmount
         ));
 

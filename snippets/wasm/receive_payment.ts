@@ -18,7 +18,7 @@ const examplePrepareLightningPayment = async (sdk: BindingLiquidSdk) => {
   }
 
   const prepareResponse = await sdk.prepareReceivePayment({
-    paymentMethod: 'lightning',
+    paymentMethod: 'bolt11Invoice',
     amount: optionalAmount
   })
 

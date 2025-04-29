@@ -17,7 +17,7 @@ async fn prepare_receive_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
     });
     let prepare_response = sdk
         .prepare_receive_payment(&PrepareReceiveRequest {
-            payment_method: PaymentMethod::Lightning,
+            payment_method: PaymentMethod::Bolt11Invoice,
             amount: optional_amount,
         })
         .await?;
