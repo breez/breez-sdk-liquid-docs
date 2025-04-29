@@ -1,6 +1,4 @@
-# Receiving payments using LNURL-Pay
-
-Breez SDK - Nodeless *(Liquid Implementation)* users have the ability to receive Lightning payments using [LNURL-Pay](https://github.com/lnurl/luds/blob/luds/06.md) and [BOLT12 offers](receive_payment.html#bolt12-offer).
+# LNURL-Pay and BIP353 registration
 
 #### LNURL-Pay
 
@@ -19,16 +17,16 @@ The following workflow is application specific and the steps detailed below refe
 
 ![pay](https://github.com/breez/breez-sdk-docs/assets/5394889/ef0a3111-3604-4789-89c6-23adbd7e5d52)
 
-### Step 1: Registering with the service
+### Registering with the service
 Use a POST request to the service endpoint ```https://app.domain/lnurlpay/[pubkey]``` with the following payload to register:
 
 ```json
 {
- "time": 1231006505, // Current UNIX timestamp
- "webhook_url": "[notification service webhook URL]",
- "username": "[optional username]",
- "offer": "[optional offer]",
- "signature": "[signed message]"
+    "time": 1231006505, // Current UNIX timestamp
+    "webhook_url": "[notification service webhook URL]",
+    "username": "[optional username]",
+    "offer": "[optional BOLT12 offer]",
+    "signature": "[signed message]"
 }
 ```
 
@@ -50,12 +48,13 @@ where `time`, `webhook_url`, `username` and `offer` are the payload fields.
 The service responds with following payload: 
 ```json
 {
- "lnurl": "[LNURL-pay encoded endpoint]", 
- "lightning_address": "username@app.domain" // Only set when username is included
+    "lnurl": "[LNURL-pay encoded endpoint]", 
+    "lightning_address": "username@app.domain", // Only set when username is included
+    "bip353_address": "username@app.domain" // Only set when username and offer is included
 }
 ```
 
-When registering with both `username` and `offer` the resulting `lightning_address` is both BIP353 and LNURL-Pay compatible, meaning it can be paid to via both BOLT12 offer/invoice or LNURL-Pay depending how the payer's client chooses to parse it.
+After registering with both `username` and `offer` the resulting `lightning_address` and `bip353_address` are the same internet identifier, meaning it is both BIP353 and LNURL-Pay compatible and can be paid to via both BOLT12 offer/invoice or LNURL-Pay depending how the payer's client chooses to parse it.
 
 <div class="warning">
 <h4>Developer note</h4>
@@ -64,49 +63,45 @@ When a user changes their already registered username, this previous username is
 
 </div>
 
-### Step 2: Processing an LNURL-Pay request (LNURL-Pay only)
+### Lifecycle of an LNURL-Pay payment
+
+#### Processing an LNURL-Pay request
 When an LNURL-Pay GET request is received at ```https://app.domain/lnurlp/[identifier]``` (or ```https://app.domain/.well-known/lnurlp/[identifier]``` for lightning addresses) the service then sends a push notification to the app with the LNURL-Pay request and a callback URL. The payload may look like the following:
 
 ```json
 {
- "template": "lnurlpay_info",
- "data": {  
-  "reply_url": "https://app.domain/respond/[request_id]"
-  "callback_url": "https://app.domain/lnurlpay/[identifier]/invoice"
-  }
+    "template": "lnurlpay_info",
+    "data": {  
+        "reply_url": "https://app.domain/respond/[request_id]",
+        "callback_url": "https://app.domain/lnurlpay/[identifier]/invoice"
+    }
 }
 ```
 
 The ```reply_url``` is used by the app to respond to the LNURL-Pay request.
 The ```callback_url``` is the LNURL-Pay callback URL, used by the payer to fetch the invoice.
 
-### Step 3: Responding to the callback URL  (LNURL-Pay only)
+#### Responding to the callback URL
 When the app receives the push notification, it parses the payload and then uses the ```reply_url``` to respond with the required data, for example:
 
 ```json
 {
- "callback": "https://app.domain/lnurlpay/[identifier]/invoice",
- "maxSendable": 10000,
- "minSendable": 1000,
- "metadata": "[[\"text/plain\",\"Pay to Breez\"]]",
- "tag": "payRequest"
+    "callback": "https://app.domain/lnurlpay/[identifier]/invoice",
+    "maxSendable": 10000,
+    "minSendable": 1000,
+    "metadata": "[[\"text/plain\",\"Pay to Breez\"]]",
+    "tag": "payRequest"
 }
 ```
 
 The service receives the response from the app and forwards it to the sender.
 
-### Step 4: Fetching a BOLT11 invoice (LNURL-Pay only)
-
+#### Fetching a BOLT11 invoice
 The sender fetches a BOLT11 invoice by invoking a GET request to the ```callback``` URL when a specific amount is added as a query parameter. For example: 
 ```
 https://app.domain/lnurlpay/[identifier]/invoice?amount=1000
 ```
 An additional push notification is triggered to send the invoice request to the app. Then the app responds with the BOLT11 invoice data.
 
-### Step 5: Paying the invoice
+#### Paying the invoice
 In the last step, the payer pays the received invoice. Follow the steps [here](/notifications/getting_started.md) to receive payments via push notifications.
-
-## Reference implementation
-For a complete reference implementation, see:
-* [Breez's NotificationService](https://github.com/breez/misty-breez/blob/main/ios/NotificationService/NotificationService.swift)
-* [Breez's LNURL-Pay service](https://github.com/breez/breez-lnurl)
