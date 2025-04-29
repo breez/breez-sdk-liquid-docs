@@ -23,6 +23,22 @@ class ReceivePayment {
         }
         // ANCHOR_END: prepare-receive-payment-lightning
     }
+    
+    fun prepareReceiveLightningBolt12(sdk: BindingLiquidSdk) {
+        // ANCHOR: prepare-receive-payment-lightning-bolt12
+        try {
+            val prepareRequest = PrepareReceiveRequest(PaymentMethod.BOLT12_OFFER)
+            val prepareResponse = sdk.prepareReceivePayment(prepareRequest)
+
+            // If the fees are acceptable, continue to create the Receive Payment
+            val minReceiveFeesSat = prepareResponse.feesSat;
+            val swapperFeerate = prepareResponse.swapperFeerate;
+            // Log.v("Breez", "Fees: ${minReceiveFeesSat} sats + ${swapperFeerate}% of the sent amount")
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: prepare-receive-payment-lightning-bolt12
+    }
 
     fun prepareReceiveOnchain(sdk: BindingLiquidSdk) {
         // ANCHOR: prepare-receive-payment-onchain

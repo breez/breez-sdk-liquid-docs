@@ -30,6 +30,20 @@ func PrepareReceiveLightning(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR_END: prepare-receive-payment-lightning
 }
 
+func PrepareReceiveLightningBolt12(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: prepare-receive-payment-lightning-bolt12
+	prepareRequest := breez_sdk_liquid.PrepareReceiveRequest{
+		PaymentMethod: breez_sdk_liquid.PaymentMethodBolt12Offer,
+	}
+	if prepareResponse, err := sdk.PrepareReceivePayment(prepareRequest); err == nil {
+		// If the fees are acceptable, continue to create the Receive Payment
+		minReceiveFeesSat := prepareResponse.FeesSat
+		swapperFeerate := prepareResponse.SwapperFeerate
+		log.Printf("Fees: %v sats + %v%% of the sent amount", minReceiveFeesSat, swapperFeerate)
+	}
+	// ANCHOR_END: prepare-receive-payment-lightning-bolt12
+}
+
 func PrepareReceiveOnchain(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: prepare-receive-payment-onchain
 	// Fetch the onchain Receive limits

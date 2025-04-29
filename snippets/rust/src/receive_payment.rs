@@ -29,6 +29,23 @@ async fn prepare_receive_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
     Ok(())
 }
 
+async fn prepare_receive_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: prepare-receive-payment-lightning-bolt12
+    let prepare_response = sdk
+        .prepare_receive_payment(&PrepareReceiveRequest {
+            payment_method: PaymentMethod::Bolt12Offer,
+            amount: None,
+        })
+        .await?;
+
+    // If the fees are acceptable, continue to create the Receive Payment
+    let min_receive_fees_sat = prepare_response.fees_sat;
+    let swapper_feerate = prepare_response.swapper_feerate;
+    info!("Fees: {} sats + {:?}% of the sent amount", min_receive_fees_sat, swapper_feerate);
+    // ANCHOR_END: prepare-receive-payment-lightning-bolt12
+    Ok(())
+}
+
 async fn prepare_receive_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-receive-payment-onchain
     // Fetch the Receive onchain limits

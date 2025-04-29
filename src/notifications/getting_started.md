@@ -27,7 +27,7 @@ The structure and fields of this data can be changed by [customising the push me
 
 The Notification Plugin handles several use cases by default to automatically process push notifications sent via the NDS when an SDK service calls the registered webhook. If your use case isn't covered by the Notification Plugin, you can extend the plugin to [handle custom notifications](custom_notifications.md).
 
-#### Updating a swap
+### Updating a swap
 
 When making a payment via lightning or a Bitcoin onchain address, the SDK uses a swap service to convert between the Liquid sidechain and Bitcoin onchain or Lightning. A swap service is used to monitor changes to the swap status and send push notifications to wake the device to progress the swap. When the Notification Plugin receives this notification from the NDS, it will start the SDK and let the SDK complete the swap or progress it to the next state. 
 
@@ -49,9 +49,38 @@ The `swap_updated` notification type will be received by the webhook in the foll
 
 _* Depending if a zero-conf swap is accepted_
 
-#### Handling LNURL pay requests
+### Handling pay requests
 
-Having the ability to process push notifications when the application is in the background or closed also opens up the ability to handle payment requests from a static LNURL or Lightning address. To do this, the application also needs to register a webhook with an [LNURL-pay service](/guide/lnurl_pay_service.md), then when the LNURL service receives a request on the static LNURL address, it will forward it via the NDS to the application. The Notification Plugin handles the two-step flow for fulfilling these requests.
+Having the ability to process push notifications when the application is in the background or closed also opens up the ability to handle payment requests from a static BOLT12 offer, LNURL or Lightning address. 
+
+#### BOLT12 invoice requests
+
+When [creating a BOLT12 offer](/guide/receive_payment.html#bolt12-offer) the SDK uses a swap service to register the BOLT12 offer with. When the swap service receives an invoice request for this BOLT12 offer, it will send a webhook request to the [registered webhook](using_webhooks.md) to fetch an invoice from the SDK. The NDS then forwards this request via push notification to the Notification Plugin. Once the Notification Plugin receives this notification from the NDS, it will start the SDK and create a new BOLT12 invoice for this request. 
+
+If you also want to have the BOLT12 offer accessable with a Lightning address, it needs to be registered alongside the webhook URL and username with the [LNURL-pay service](/guide/lnurl_pay_service.md).
+
+The `invoice_request` notification type will be received by the webhook in the following format:
+```json
+{
+    "event": "invoice.request",
+    "data": {  
+        "offer": "",         // The BOLT12 offer
+        "invoiceRequest": "" // The invoice request
+    }
+}
+```
+The NDS then adds a reply URL for the response to be returned to. The final data received by the Notification Plugin is in the following format:
+```json
+{
+    "offer": "",           // The BOLT12 offer
+    "invoice_request": "", // The invoice request
+    "reply_url": ""        // The URL to reply to this request
+}
+```
+
+#### LNURL-pay requests
+
+To do this, the application also needs to register a webhook with an [LNURL-pay service](/guide/lnurl_pay_service.md), then when the LNURL service receives a request on the static LNURL address, it will forward it via the NDS to the application. The Notification Plugin handles the two-step flow for fulfilling these requests.
 
 Firstly the LNURL service receives a request for LNURL-pay information to get the min/max amount that can be received. The LNURL service calls the registered webhook, and upon receiving this notification, the Notification Plugin will connect to the Breez SDK and send a response back to the LNURL service based on the swap service limits. 
 

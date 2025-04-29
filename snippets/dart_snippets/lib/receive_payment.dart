@@ -25,6 +25,20 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
   return prepareResponse;
 }
 
+Future<PrepareReceiveResponse> prepareReceivePaymentLightningBolt12() async {
+  // ANCHOR: prepare-receive-payment-lightning-bolt12
+  PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
+    req: PrepareReceiveRequest(paymentMethod: PaymentMethod.bolt12Offer),
+  );
+
+  // If the fees are acceptable, continue to create the Receive Payment
+  BigInt minReceiveFeesSat = prepareResponse.feesSat;
+  double? swapperFeerate = prepareResponse.swapperFeerate;
+  print("Fees: $minReceiveFeesSat sats + $swapperFeerate% of the sent amount");
+  // ANCHOR_END: prepare-receive-payment-lightning-bolt12
+  return prepareResponse;
+}
+
 Future<PrepareReceiveResponse> prepareReceivePaymentOnchain() async {
   // ANCHOR: prepare-receive-payment-onchain
   // Fetch the Receive onchain limits

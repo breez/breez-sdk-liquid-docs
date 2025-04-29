@@ -35,6 +35,19 @@ const examplePrepareLightningPayment = async () => {
   // ANCHOR_END: prepare-receive-payment-lightning
 }
 
+const examplePrepareLightningBolt12Payment = async () => {
+  // ANCHOR: prepare-receive-payment-lightning-bolt12
+  const prepareResponse = await prepareReceivePayment({
+    paymentMethod: PaymentMethod.BOLT12_OFFER
+  })
+
+  // If the fees are acceptable, continue to create the Receive Payment
+  const minReceiveFeesSat = prepareResponse.feesSat
+  const swapperFeerate = prepareResponse.swapperFeerate
+  console.log(`Fees: ${minReceiveFeesSat} sats + ${swapperFeerate}% of the sent amount`)
+  // ANCHOR_END: prepare-receive-payment-lightning-bolt12
+}
+
 const examplePrepareOnchainPayment = async () => {
   // ANCHOR: prepare-receive-payment-onchain
   // Fetch the Onchain lightning limits

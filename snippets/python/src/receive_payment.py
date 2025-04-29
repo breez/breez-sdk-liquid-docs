@@ -27,6 +27,24 @@ def prepare_receive_lightning(sdk: BindingLiquidSdk):
         raise
     # ANCHOR_END: prepare-receive-payment-lightning
 
+def prepare_receive_lightning_bolt12(sdk: BindingLiquidSdk):
+    # ANCHOR: prepare-receive-payment-lightning-bolt12
+    try:
+        prepare_request = PrepareReceiveRequest(
+            payment_method=PaymentMethod.BOLT12_OFFER
+        )
+        prepare_response = sdk.prepare_receive_payment(prepare_request)
+
+        # If the fees are acceptable, continue to create the Receive Payment
+        min_receive_fees_sat = prepare_response.fees_sat
+        swapper_feerate = prepare_response.swapper_feerate
+        logging.debug(f"Fees: {min_receive_fees_sat} sats + {swapper_feerate}% of the sent amount")
+        return prepare_response
+    except Exception as error:
+        logging.error(error)
+        raise
+    # ANCHOR_END: prepare-receive-payment-lightning-bolt12
+
 def prepare_receive_onchain(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-receive-payment-onchain
     try:
