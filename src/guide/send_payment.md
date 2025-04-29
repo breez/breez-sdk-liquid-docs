@@ -22,6 +22,8 @@ The `destination` field of the payment request supports Liquid BIP21, Liquid add
 ### Lightning
 Two types of Lightning destinations are possible: BOLT11 invoices and BOLT12 offers.
 
+#### BOLT11 invoice
+
 For BOLT11 invoices, the amount **must** be set. If the optional prepare request amount is also set, the SDK will make sure the two values match, else an error will be thrown. 
 
 The SDK will also validate that the amount is within the send lightning limits of the swap service.
@@ -99,6 +101,8 @@ The SDK will also validate that the amount is within the send lightning limits o
 ```
 </section>
 </custom-tabs>
+
+#### BOLT12 offer
 
 Payments to a BOLT12 offer can be done in a similar way. However, when paying to a BOLT12 offer, the SDK's prepare request **must** include an amount.
 

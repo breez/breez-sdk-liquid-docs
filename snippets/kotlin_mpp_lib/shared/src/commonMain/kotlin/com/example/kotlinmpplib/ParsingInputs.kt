@@ -16,6 +16,9 @@ class ParsingInputs {
                     val amountStr = inputType.invoice.amountMsat?.toString() ?: "unknown"
                     println("Input is BOLT11 invoice for $amountStr msats")
                 }
+                is InputType.Bolt12Offer -> {
+                    println("Input is BOLT12 offer for min ${inputType.offer.minAmount} msats - BIP353 was used: ${inputType.bip353Address != null}")
+                }
                 is InputType.LnUrlPay -> {
                     println("Input is LNURL-Pay/Lightning address accepting min/max " +
                            "${inputType.data.minSendable}/${inputType.data.maxSendable} msats - BIP353 was used: ${inputType.bip353Address != null}")

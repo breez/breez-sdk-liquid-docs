@@ -21,9 +21,15 @@ const parseInputs = async () => {
       console.log(
         `Input is BOLT11 invoice for ${
           parsed.invoice.amountMsat != null
-            ? parsed.invoice.amountMsat.toString()
+            ? JSON.stringify(parsed.invoice.amountMsat)
             : 'unknown'
         } msats`
+      )
+      break
+
+    case InputTypeVariant.BOLT12_OFFER:
+      console.log(
+        `Input is BOLT12 offer for min ${JSON.stringify(parsed.offer.minAmount)} msats - BIP353 was used: ${parsed.bip353Address != null}`
       )
       break
 

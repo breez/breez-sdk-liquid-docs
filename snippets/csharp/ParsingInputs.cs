@@ -24,6 +24,10 @@ public class ParsingInputsSnippets
                     Console.WriteLine($"Input is BOLT11 invoice for {amount} msats");
                     break;
 
+                case InputType.Bolt12Offer bolt12:
+                    Console.WriteLine($"Input is BOLT12 offer for min {bolt12.offer.minAmount} msats - BIP353 was used: {bolt12.bip353Address != null}");
+                    break;
+
                 case InputType.LnUrlPay lnUrlPay:
                     Console.WriteLine(
                         $"Input is LNURL-Pay/Lightning address accepting min/max {lnUrlPay.data.minSendable}/{lnUrlPay.data.maxSendable} msats - BIP353 was used: {lnUrlPay.bip353Address != null}"

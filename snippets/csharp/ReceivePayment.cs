@@ -14,7 +14,7 @@ public class ReceivePaymentSnippets
 
             // Set the invoice amount you wish the payer to send, which should be within the above limits
             var optionalAmount = new ReceiveAmount.Bitcoin(5000);
-            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.Lightning, optionalAmount);
+            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.Bolt11Invoice, optionalAmount);
             var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
 
             // If the fees are acceptable, continue to create the Receive Payment
@@ -26,6 +26,26 @@ public class ReceivePaymentSnippets
             // Handle error
         }
         // ANCHOR_END: prepare-receive-payment-lightning
+    }
+
+    public void PrepareReceiveLightningBolt12(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: prepare-receive-payment-lightning-bolt12
+        try
+        {
+            var prepareRequest = new PrepareReceiveRequest(PaymentMethod.Bolt12Offer);
+            var prepareResponse = sdk.PrepareReceivePayment(prepareRequest);
+
+            // If the fees are acceptable, continue to create the Receive Payment
+            var minReceiveFeesSat = prepareResponse.feesSat;
+            var swapperFeerate = prepareResponse.swapperFeerate;
+            Console.WriteLine($"Fees: {minReceiveFeesSat} sats + {swapperFeerate}% of the sent amount");
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: prepare-receive-payment-lightning-bolt12
     }
 
     public void PrepareReceiveOnchain(BindingLiquidSdk sdk)
