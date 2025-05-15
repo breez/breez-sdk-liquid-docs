@@ -96,13 +96,31 @@ The `lnurlpay_info` notification type will be received by the webhook in the fol
 ```
 Secondly the LNURL service receives a request for an invoice based on the selected payment amount. The LNURL service calls the registered webhook, and upon receiving this notification, the Notification Plugin will start the SDK and call receive payment for the requested amount. The resulting invoice is then returned to the LNURL service. 
 
+The LNURL service also implements [LUD-21 verify base spec](https://github.com/lnurl/luds/blob/luds/21.md) which allows the initiator to verify the payment has been made. The Notification Plugin then replaces the `{payment_hash}` with the payment hash of the invoice and returns the verify URL in the response.
+
 The `lnurlpay_invoice` notification type will be received by the webhook in the following format:
 ```json
 {
     "template": "lnurlpay_invoice",
     "data": {  
         "amount": 0,    // The amount in millisatoshis within the min/max sendable range
-        "reply_url": "" // The URL to reply to this request
+        "reply_url": "https://app.domain/response/[response_id]", // The URL to reply to this request
+        "verify_url": "https://app.domain/lnurlpay/[identifier]/{payment_hash}" // The optional verify URL
+    }
+}
+```
+
+#### LNURL-verify requests
+
+When the verify URL is used to query if the LNURL-pay payment has been made, the LNURL service forwards it via the NDS to the application, where the Notification Plugin handles the response.
+
+The `lnurlpay_verify` notification type will be received by the webhook in the following format:
+```json
+{
+    "template": "lnurlpay_verify",
+    "data": {  
+        "payment_hash": "", // The payment hash from the verify URL
+        "reply_url": ""     // The URL to reply to this request
     }
 }
 ```
