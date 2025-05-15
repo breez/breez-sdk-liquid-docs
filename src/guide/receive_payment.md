@@ -110,7 +110,7 @@ When receiving via Lightning, we can generate a BOLT11 invoice to be paid.  Note
 
 A BOLT12 offer is a static payment code that can be paid to multiple times. When a payer wishes to pay the BOLT12 offer, the SDK is communicated with via a Web Socket stream when active, or when offline via a [registered webhook](using_webhooks.md).
 
-**Note:** The amount field should **not** be set.
+**Note:** The BOLT12 offer minimum amount will be set to the minimum receivable amount.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -381,7 +381,8 @@ Once the payment has been prepared, all you have to do is pass the prepare respo
 receive method, optionally specifying a description.
 
 **Note:** The description field will be used differently, depending on the payment method:
-- For Lightning payments, it will be encoded in the invoice
+- For BOLT11 invoices, it will be encoded in the invoice.
+- For BOLT12 offers, it will be encodes in the offer.
 - For Bitcoin/Liquid BIP21 payments, it will be encoded in the URI as the `message` field.
 - For plain Liquid payments, the description has no effect.
 
