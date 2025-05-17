@@ -23,6 +23,10 @@ func ParseInput(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 			}
 			log.Printf("Input is BOLT11 invoice for %s msats", amount)
 
+		case breez_sdk_liquid.InputTypeBolt12Offer:
+			log.Printf("Input is BOLT12 offer for min %v msats - BIP353 was used: %t",
+				inputType.Offer.MinAmount, inputType.Bip353Address != nil)
+
 		case breez_sdk_liquid.InputTypeLnUrlPay:
 			log.Printf("Input is LNURL-Pay/Lightning address accepting min/max %d/%d msats - BIP353 was used: %t",
 				inputType.Data.MinSendable, inputType.Data.MaxSendable, inputType.Bip353Address != nil)

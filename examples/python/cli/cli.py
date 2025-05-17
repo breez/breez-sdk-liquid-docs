@@ -176,8 +176,8 @@ def receive_payment(params):
 
     Args:
         params (argparse.Namespace): Command-line arguments containing:
-            - method (str): The payment method (e.g., 'LIGHTNING', 'BITCOIN_ADDRESS', 'LIQUID_ADDRESS')
-            - amount_sat (int): The amount to receive in satoshis
+            - method (str): The payment method (e.g., 'LIGHTNING', 'BOLT12_OFFER', 'BITCOIN_ADDRESS', 'LIQUID_ADDRESS')
+            - amount_sat (int): The optional amount to receive in satoshis
             - asset_id (str): The optional id of the asset to receive
             - amount (float): The optional amount to receive of the asset
 
@@ -311,7 +311,7 @@ def main():
     # receive
     receive_parser = subparser.add_parser('receive', help='Receive a payment')
     receive_parser.add_argument('-m', '--method', 
-                                choices=['LIGHTNING', 'BITCOIN_ADDRESS', 'LIQUID_ADDRESS'], 
+                                choices=['LIGHTNING', 'BOLT12_OFFER', 'BITCOIN_ADDRESS', 'LIQUID_ADDRESS'], 
                                 help='The payment method', 
                                 required=True)
     receive_parser.add_argument('-a', '--amount_sat', 

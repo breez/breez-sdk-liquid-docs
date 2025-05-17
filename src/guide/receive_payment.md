@@ -20,11 +20,15 @@ During the prepare step, the SDK ensures that the inputs are valid with respect 
 and also returns the relative fees related to the payment so they can be confirmed.
 
 
-The SDK currently supports three methods of receiving: Lightning, Bitcoin and Liquid:
+The SDK currently supports three methods of receiving: Lightning, Bitcoin and Liquid.
 
 ### Lightning
-When receiving via Lightning, we generate an invoice to be paid.  Note that the payment may fallback to a direct Liquid payment (if the payer's client supports this).
 
+Two types of Lightning destinations are possible: BOLT11 invoices and BOLT12 offers.
+
+#### BOLT11 invoice
+
+When receiving via Lightning, we can generate a BOLT11 invoice to be paid.  Note that the payment may fallback to a direct Liquid payment (if the payer's client supports this).
 
 **Note:** The amount field is currently mandatory when paying via Lightning.
 
@@ -101,6 +105,96 @@ When receiving via Lightning, we generate an invoice to be paid.  Note that the 
 ```
 </section>
 </custom-tabs>
+
+#### BOLT12 offer
+
+A BOLT12 offer is a static payment code that can be paid to multiple times. When a payer wishes to pay the BOLT12 offer, the SDK is communicated with via a Web Socket stream when active, or when offline via a [registered webhook](using_webhooks.md).
+
+**Note:** The BOLT12 offer minimum amount will be set to the minimum receivable amount.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/receive_payment.rs:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/ReceivePayment.swift:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ReceivePayment.kt:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/receive_payment.ts:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/receive_payment.ts:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/receive_payment.dart:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/receive_payment.py:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/receive_payment.go:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/ReceivePayment.cs:prepare-receive-payment-lightning-bolt12}}
+```
+</section>
+</custom-tabs>
+
+<div class="warning">
+<h4>Developer note</h4>
+A webhook URL <b>must</b> be registered to receive BOLT12 invoice requests when the SDK is offline.
+</div>
+
+<div class="warning">
+<h4>Developer note</h4>
+Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the BOLT12 invoice request in the background.
+</div>
 
 ### Bitcoin
 When receiving via Bitcoin, we generate a Bitcoin BIP21 URI to be paid.
@@ -287,7 +381,8 @@ Once the payment has been prepared, all you have to do is pass the prepare respo
 receive method, optionally specifying a description.
 
 **Note:** The description field will be used differently, depending on the payment method:
-- For Lightning payments, it will be encoded in the invoice
+- For BOLT11 invoices, it will be encoded in the invoice.
+- For BOLT12 offers, it will be encoded in the offer.
 - For Bitcoin/Liquid BIP21 payments, it will be encoded in the URI as the `message` field.
 - For plain Liquid payments, the description has no effect.
 

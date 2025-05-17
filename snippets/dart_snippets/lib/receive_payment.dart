@@ -13,7 +13,7 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
   ReceiveAmount_Bitcoin optionalAmount = ReceiveAmount_Bitcoin(payerAmountSat: 5000 as BigInt);
   PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
     req: PrepareReceiveRequest(
-      paymentMethod: PaymentMethod.lightning,
+      paymentMethod: PaymentMethod.bolt11Invoice,
       amount: optionalAmount,
     ),
   );
@@ -22,6 +22,20 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
   BigInt receiveFeesSat = prepareResponse.feesSat;
   print("Fees: $receiveFeesSat sats");
   // ANCHOR_END: prepare-receive-payment-lightning
+  return prepareResponse;
+}
+
+Future<PrepareReceiveResponse> prepareReceivePaymentLightningBolt12() async {
+  // ANCHOR: prepare-receive-payment-lightning-bolt12
+  PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
+    req: PrepareReceiveRequest(paymentMethod: PaymentMethod.bolt12Offer),
+  );
+
+  // If the fees are acceptable, continue to create the Receive Payment
+  BigInt minReceiveFeesSat = prepareResponse.feesSat;
+  double? swapperFeerate = prepareResponse.swapperFeerate;
+  print("Fees: $minReceiveFeesSat sats + $swapperFeerate% of the sent amount");
+  // ANCHOR_END: prepare-receive-payment-lightning-bolt12
   return prepareResponse;
 }
 
