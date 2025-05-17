@@ -10,7 +10,7 @@ To interact with the SDK, the service uses a simple protocol over push notificat
 
 #### BOLT12 offer
 
-Unlike LNURL-Pay, BOLT12 offers do not require a web service that serves requests. Instead when someone wants to pay a BOLT12 offer they use the Lightning network to request a BOLT12 invoice. That BOLT12 offer can also be made available via a DNS TXT lookup using [BIP353](https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki). You can do this in the workflow below by registering both a `username` and `offer`.
+Unlike LNURL-Pay, BOLT12 offers do not require a web service that serves requests. Instead when someone wants to pay a BOLT12 offer, they use the Lightning network to request a BOLT12 invoice. That BOLT12 offer can also be made available via a DNS TXT lookup using [BIP353](https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki). You can do this in the workflow below by registering both a `username` and an `offer`.
 
 ## General workflow
 The following workflow is application specific and the steps detailed below refer to the misty-breez wallet implementation which requires running <b>[breez-lnurl](https://github.com/breez/breez-lnurl) </b>service.
@@ -54,7 +54,7 @@ The service responds with following payload:
 }
 ```
 
-After registering with both `username` and `offer` the resulting `lightning_address` and `bip353_address` are the same internet identifier, meaning it is both BIP353 and LNURL-Pay compatible and can be paid to via both BOLT12 offer/invoice or LNURL-Pay depending how the payer's client chooses to parse it.
+After registering with both a `username` and an `offer`, the resulting `lightning_address` and `bip353_address` are the same internet identifier, meaning it is both BIP353 and LNURL-Pay compatible and can be paid to via both BOLT12 offer/invoice or LNURL-Pay, depending how the payer's client chooses to parse it.
 
 <div class="warning">
 <h4>Developer note</h4>

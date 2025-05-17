@@ -382,7 +382,7 @@ receive method, optionally specifying a description.
 
 **Note:** The description field will be used differently, depending on the payment method:
 - For BOLT11 invoices, it will be encoded in the invoice.
-- For BOLT12 offers, it will be encodes in the offer.
+- For BOLT12 offers, it will be encoded in the offer.
 - For Bitcoin/Liquid BIP21 payments, it will be encoded in the URI as the `message` field.
 - For plain Liquid payments, the description has no effect.
 
