@@ -2,6 +2,8 @@
 
 Unlike LNURL-Pay, BOLT12 offers do not require a web service that serves requests. Instead when someone wants to pay a BOLT12 offer, they use the Lightning network to request a BOLT12 invoice. That BOLT12 offer can also be made available via a DNS TXT lookup using [BIP353](https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki). You can do this in the workflow below by registering both a `username` and an `offer`.
 
+The following workflow is application specific and the steps detailed below refer to the [Misty Breez](https://github.com/breez/misty-breez) implementation which requires running an [LNURL service](https://github.com/breez/breez-lnurl) to register the BOLT12 offer as a BIP353 address.
+
 ### Registering with the service
 Use a POST request to the service endpoint ```https://app.domain/bolt12offer/[pubkey]``` with the following payload to register:
 
@@ -34,3 +36,8 @@ The service responds with following payload:
 When a user changes their already registered username, this previous username becomes freely available to be registered by another user.
 
 </div>
+
+## Reference implementation
+For a complete reference implementation, see:
+* [Misty Breez's NotificationService](https://github.com/breez/misty-breez/blob/main/ios/NotificationService/NotificationService.swift)
+* [Breez's LNURL service](https://github.com/breez/breez-lnurl)

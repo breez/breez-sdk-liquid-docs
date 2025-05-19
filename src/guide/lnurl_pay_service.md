@@ -13,7 +13,7 @@ To interact with the SDK, the service uses a simple protocol over push notificat
 Unlike LNURL-Pay, BOLT12 offers do not require a web service that serves requests. Instead when someone wants to pay a BOLT12 offer, they use the Lightning network to request a BOLT12 invoice. That BOLT12 offer can also be made available via a DNS TXT lookup using [BIP353](https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki). You can do this in the workflow below by registering both a `username` and an `offer`.
 
 ## General workflow
-The following workflow is application specific and the steps detailed below refer to the misty-breez wallet implementation which requires running <b>[breez-lnurl](https://github.com/breez/breez-lnurl) </b>service.
+The following workflow is application specific and the steps detailed below refer to the [Misty Breez](https://github.com/breez/misty-breez) implementation which requires running an [LNURL service](https://github.com/breez/breez-lnurl) to register and receive LNURL-Pay requests.
 
 ![pay](https://github.com/breez/breez-sdk-docs/assets/5394889/ef0a3111-3604-4789-89c6-23adbd7e5d52)
 
@@ -105,3 +105,8 @@ An additional push notification is triggered to send the invoice request to the 
 
 #### Paying the invoice
 In the last step, the payer pays the received invoice. Follow the steps [here](/notifications/getting_started.md) to receive payments via push notifications.
+
+## Reference implementation
+For a complete reference implementation, see:
+* [Misty Breez's NotificationService](https://github.com/breez/misty-breez/blob/main/ios/NotificationService/NotificationService.swift)
+* [Breez's LNURL service](https://github.com/breez/breez-lnurl)
