@@ -14,6 +14,8 @@ def parse_input(sdk: BindingLiquidSdk):
             if parsed_input.invoice.amount_msat:
                 amount = str(parsed_input.invoice.amount_msat)
             logging.debug(f"Input is BOLT11 invoice for {amount} msats")
+        elif isinstance(parsed_input, InputType.BOLT12_OFFER):
+            logging.debug(f"Input is BOLT12 offer for min {parsed_input.offer.min_amount} msats - BIP353 was used: {parsed_input.bip353_address is not None}")
         elif isinstance(parsed_input, InputType.LN_URL_PAY):
             logging.debug(f"Input is LNURL-Pay/Lightning address accepting min/max {parsed_input.data.min_sendable}/{parsed_input.data.max_sendable} msats - BIP353 was used: {parsed_input.bip353_address is not None}")
         elif isinstance(parsed_input, InputType.LN_URL_WITHDRAW):

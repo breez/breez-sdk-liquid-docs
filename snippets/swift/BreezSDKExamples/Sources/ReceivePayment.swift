@@ -11,7 +11,7 @@ func prepareReceiveLightning(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     let optionalAmount = ReceiveAmount.bitcoin(payerAmountSat: 5_000)
     let prepareResponse = try? sdk
         .prepareReceivePayment(req: PrepareReceiveRequest(
-            paymentMethod: PaymentMethod.lightning,
+            paymentMethod: PaymentMethod.bolt11Invoice,
             amount: optionalAmount
         ));
 
@@ -19,6 +19,22 @@ func prepareReceiveLightning(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
     let receiveFeesSat = prepareResponse!.feesSat;
     print("Fees: {} sats", receiveFeesSat);
     // ANCHOR_END: prepare-receive-payment-lightning
+
+    return prepareResponse
+}
+
+func prepareReceiveLightningBolt12(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
+    // ANCHOR: prepare-receive-payment-lightning-bolt12
+    let prepareResponse = try? sdk
+        .prepareReceivePayment(req: PrepareReceiveRequest(
+            paymentMethod: PaymentMethod.bolt12Offer
+        ));
+
+    // If the fees are acceptable, continue to create the Receive Payment
+    let minReceiveFeesSat = prepareResponse!.feesSat;
+    let swapperFeerate = prepareResponse!.swapperFeerate;
+    print("Fees: {} sats + {}% of the sent amount", minReceiveFeesSat, swapperFeerate);
+    // ANCHOR_END: prepare-receive-payment-lightning-bolt12
 
     return prepareResponse
 }

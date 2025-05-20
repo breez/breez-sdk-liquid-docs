@@ -21,6 +21,13 @@ async fn parse_input(sdk: Arc<LiquidSdk>) -> Result<()> {
                     .map_or("unknown".to_string(), |a| a.to_string())
             );
         }
+        InputType::Bolt12Offer { offer, bip353_address } => {
+            println!(
+                "Input is BOLT12 offer for min {:?} msats - BIP353 was used: {}",
+                offer.min_amount,
+                bip353_address.is_some()
+            );
+        }
         InputType::LnUrlPay { data, bip353_address } => {
             println!(
                 "Input is LNURL-Pay/Lightning address accepting min/max {}/{} msats - BIP353 was used: {}",

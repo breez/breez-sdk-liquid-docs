@@ -12,6 +12,8 @@ Future<void> parseInput() async {
     String amountStr =
         inputType.invoice.amountMsat != null ? inputType.invoice.amountMsat.toString() : "unknown";
     print("Input is BOLT11 invoice for $amountStr msats");
+  } else if (inputType is InputType_Bolt12Offer) {
+    print("Input is BOLT12 offer for min ${inputType.offer.minAmount} msats - BIP353 was used: ${inputType.bip353Address != null}");
   } else if (inputType is InputType_LnUrlPay) {
     print(
         "Input is LNURL-Pay/Lightning address accepting min/max ${inputType.data.minSendable}/${inputType.data.maxSendable} msats - BIP353 was used: ${inputType.bip353Address != null}");
