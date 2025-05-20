@@ -20,7 +20,7 @@ It’s a nodeless integration that offers a self-custodial, end-to-end solution 
 
 - [x] Send and receive Lightning payments 
 - [x] On-chain interoperability
-- [x] Complete LNURL functionality
+- [x] Complete LNURL & BOLT12 functionality
 - [x] Multi-app support
 - [x] Multi-device support
 - [x] Real-time state backup
