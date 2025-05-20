@@ -19,6 +19,12 @@ const parseInputs = async (sdk: BindingLiquidSdk) => {
       )
       break
 
+    case 'bolt12Offer':
+      console.log(
+        `Input is BOLT12 offer for min ${JSON.stringify(parsed.offer.minAmount)} msats - BIP353 was used: ${parsed.bip353Address != null}`
+      )
+      break
+
     case 'lnUrlPay':
       console.log(
         `Input is LNURL-Pay/Lightning address accepting min/max ${parsed.data.minSendable}/${

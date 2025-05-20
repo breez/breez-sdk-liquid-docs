@@ -15,6 +15,9 @@ func parseInput(sdk: BindingLiquidSdk) {
             let amount = invoice.amountMsat.map { String($0) } ?? "unknown"
             print("Input is BOLT11 invoice for \(amount) msats")
 
+        case .bolt12Offer(let offer, let bip353Address):
+            print("Input is BOLT12 offer for min \(offer.minAmount) msats - BIP353 was used: \(bip353Address != nil)")
+
         case .lnUrlPay(let data, let bip353Address):
             print(
                 "Input is LNURL-Pay/Lightning address accepting min/max \(data.minSendable)/\(data.maxSendable) msats - BIP353 was used: \(bip353Address != nil)"
