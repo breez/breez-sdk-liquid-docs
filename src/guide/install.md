@@ -60,6 +60,8 @@ dependencies {
 
 We recommend using the official npm package: [@breeztech/breez-sdk-liquid](https://www.npmjs.com/package/@breeztech/breez-sdk-liquid).
 
+> **Note:** If using Node.js, the minimum supported version is v22.
+
 ```console
 npm install @breeztech/breez-sdk-liquid
 ```
