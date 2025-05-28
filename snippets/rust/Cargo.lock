@@ -637,7 +637,7 @@ checksum = "829a082bd3761fde7476dc2ed85ca56c11628948460ece621e4f56fef5046567"
 [[package]]
 name = "boltz-client"
 version = "0.3.0"
-source = "git+https://github.com/hydra-yse/boltz-rust?rev=b54f181e218d#b54f181e218d6c7d44d7bfd3eabda3681006fbc0"
+source = "git+https://github.com/breez/boltz-rust?rev=d44295fa20da9c665a1f5580d16e387ff7245339#d44295fa20da9c665a1f5580d16e387ff7245339"
 dependencies = [
  "async-trait",
  "bip39",
@@ -663,8 +663,8 @@ dependencies = [
 
 [[package]]
 name = "breez-sdk-liquid"
-version = "0.8.0"
-source = "git+https://github.com/breez/breez-sdk-liquid?tag=0.8.0#90cec4b18ed4019027d15cbbe92f7234df3caade"
+version = "0.9.0"
+source = "git+https://github.com/breez/breez-sdk-liquid?tag=0.9.0#95e301e95d574c324733bc5aee83fe42936d2573"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -2621,7 +2621,7 @@ dependencies = [
 [[package]]
 name = "lwk_wollet"
 version = "0.9.0"
-source = "git+https://github.com/breez/lwk?rev=21082d6a1b99a4030f47386bff9d352410bcdc1a#21082d6a1b99a4030f47386bff9d352410bcdc1a"
+source = "git+https://github.com/breez/lwk?rev=9946a62ea8f7b5ff936f09c77ec597552c44c2bf#9946a62ea8f7b5ff936f09c77ec597552c44c2bf"
 dependencies = [
  "aes-gcm-siv",
  "age",
@@ -2652,7 +2652,7 @@ dependencies = [
 [[package]]
 name = "macros"
 version = "0.0.0"
-source = "git+https://github.com/hydra-yse/boltz-rust?rev=b54f181e218d#b54f181e218d6c7d44d7bfd3eabda3681006fbc0"
+source = "git+https://github.com/breez/boltz-rust?rev=d44295fa20da9c665a1f5580d16e387ff7245339#d44295fa20da9c665a1f5580d16e387ff7245339"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3954,7 +3954,7 @@ dependencies = [
 [[package]]
 name = "sdk-common"
 version = "0.6.2"
-source = "git+https://github.com/breez/breez-sdk?rev=223002e47a3b1be8306f68e9b8094ee2884c9568#223002e47a3b1be8306f68e9b8094ee2884c9568"
+source = "git+https://github.com/breez/breez-sdk?rev=247343395d02563087bade9aeb319ee6d9cdd549#247343395d02563087bade9aeb319ee6d9cdd549"
 dependencies = [
  "aes",
  "anyhow",
@@ -3999,7 +3999,7 @@ dependencies = [
 [[package]]
 name = "sdk-macros"
 version = "0.6.2"
-source = "git+https://github.com/breez/breez-sdk?rev=223002e47a3b1be8306f68e9b8094ee2884c9568#223002e47a3b1be8306f68e9b8094ee2884c9568"
+source = "git+https://github.com/breez/breez-sdk?rev=247343395d02563087bade9aeb319ee6d9cdd549#247343395d02563087bade9aeb319ee6d9cdd549"
 dependencies = [
  "proc-macro2",
  "quote",
