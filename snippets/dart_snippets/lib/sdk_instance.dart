@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:breez_liquid/breez_liquid.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart' as liquid_sdk;
 import 'package:rxdart/rxdart.dart';
 
@@ -178,8 +179,8 @@ class PaymentException {
 
 extension ConfigCopyWith on liquid_sdk.Config {
   liquid_sdk.Config copyWith({
-    String? liquidElectrumUrl,
-    String? bitcoinElectrumUrl,
+    BlockchainExplorer? liquidExplorer,
+    BlockchainExplorer? bitcoinExplorer,
     String? mempoolspaceUrl,
     String? workingDir,
     liquid_sdk.LiquidNetwork? network,
@@ -191,9 +192,8 @@ extension ConfigCopyWith on liquid_sdk.Config {
     List<liquid_sdk.AssetMetadata>? assetMetadata,
   }) {
     return liquid_sdk.Config(
-      liquidElectrumUrl: liquidElectrumUrl ?? this.liquidElectrumUrl,
-      bitcoinElectrumUrl: bitcoinElectrumUrl ?? this.bitcoinElectrumUrl,
-      mempoolspaceUrl: mempoolspaceUrl ?? this.mempoolspaceUrl,
+      liquidExplorer: liquidExplorer ?? this.liquidExplorer,
+      bitcoinExplorer: bitcoinExplorer ?? this.bitcoinExplorer,
       workingDir: workingDir ?? this.workingDir,
       network: network ?? this.network,
       paymentTimeoutSec: paymentTimeoutSec ?? this.paymentTimeoutSec,
