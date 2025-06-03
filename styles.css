@@ -39,7 +39,7 @@ a.tag:hover {
     text-decoration: none;
 }
 
-// Hide mdbook-help-container even if ? was pressed
+/* Hide mdbook-help-container even if ? was pressed */
 #mdbook-help-container {
   height: 0;
   width: 0;
