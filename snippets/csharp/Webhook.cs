@@ -7,7 +7,7 @@ public class ServiceStatusSnippets
         // ANCHOR: register-webook
         try
         {
-            sdk.RegisterWebhook("https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>");
+            sdk.RegisterWebhook("https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>");
         }
         catch (Exception)
         {

@@ -8,7 +8,7 @@ import (
 
 func RegisterWebhook(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: register-webook
-	if err := sdk.RegisterWebhook("https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>"); err != nil {
+	if err := sdk.RegisterWebhook("https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>"); err != nil {
 		log.Printf("Webhook register failed: %v", err)
 	}
 	// ANCHOR_END: register-webook

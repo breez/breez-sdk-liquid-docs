@@ -6,7 +6,7 @@ use breez_sdk_liquid::prelude::*;
 async fn register_webhook(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: register-webook
     sdk.register_webhook(
-        "https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>".to_string(),
+        "https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>".to_string(),
     )
     .await?;
     // ANCHOR_END: register-webook

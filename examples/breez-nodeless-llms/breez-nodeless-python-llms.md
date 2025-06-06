@@ -857,7 +857,7 @@ def list_payments_details_destination(sdk: BindingLiquidSdk):
 ```python
 def register_webhook(sdk: BindingLiquidSdk):
     try:
-        sdk.register_webhook("https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>")
+        sdk.register_webhook("https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>")
     except Exception as error:
         logging.error(error)
         raise
