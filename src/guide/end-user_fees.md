@@ -11,7 +11,7 @@
 
 ## Sending Lightning Payments
 
-There are two fee structures when sending Lightning payments depending if the Lightning invoice contains a <a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">Magic Routing Hint</a>. The Magic Routing Hint a way to associate a Liquid address to the invoice and when set will be paid with a direct Liquid transaction instead of a swap.
+There are two fee structures when sending Lightning payments, depending on whether the Lightning invoice contains a <a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">Magic Routing Hint</a>. The Magic Routing Hint is a way to associate a Liquid address with the invoice, and when set, will be paid with a direct Liquid transaction instead of a swap.
 
 ### Submarine swap
 Sending Lightning payments involves a submarine swap and two Liquid on-chain transactions. The process is as follows:
@@ -36,7 +36,7 @@ Sending payments when the Magic Routing Hint is set involves one Liquid on-chain
 
 1. User broadcasts an L-BTC transaction to the Liquid address of the Magic Routing Hint.
 
-The fee a user pays to send a payment is composed of one parts:
+The fee a user pays to send a payment is composed of one part:
 
 1. **Transaction Fee:** ~26 sats (0.1&nbsp;sat/discount&nbsp;vbyte).
 
@@ -68,9 +68,7 @@ Receiving payments when the Magic Routing Hint is used involves one Liquid on-ch
 
 1. Sender broadcasts an L-BTC transaction to the Liquid address of the Magic Routing Hint.
 
-The fee a user pays to receive a payment is composed of one part:
-
-1. **Transaction Fee:** 0 sats (0.1&nbsp;sat/discount&nbsp;vbyte).
+The user receiving the payment doesn't pay any fees.
 
 ## Sending to a BTC Address
 
