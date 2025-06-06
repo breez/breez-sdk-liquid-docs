@@ -9,7 +9,7 @@ import BreezSDKLiquid
 
 func registerWebhook(sdk: BindingLiquidSdk) throws {
     // ANCHOR: register-webook
-    try sdk.registerWebhook(webhookUrl: "https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>")  
+    try sdk.registerWebhook(webhookUrl: "https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>")  
     // ANCHOR_END: register-webook
 }
 

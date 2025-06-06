@@ -3,7 +3,7 @@ import { registerWebhook, unregisterWebhook } from '@breeztech/react-native-bree
 const _registerWebhook = async () => {
   // ANCHOR: register-webook
   try {
-    await registerWebhook('https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>')
+    await registerWebhook('https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>')
   } catch (err) {
     console.error(err)
   }

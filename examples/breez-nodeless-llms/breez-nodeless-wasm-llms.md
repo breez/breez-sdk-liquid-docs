@@ -863,7 +863,7 @@ const listPaymentsDetailsDestination = async (sdk) => {
 ```typescript
 const registerWebhook = async (sdk) => {
   try {
-    await sdk.registerWebhook('https://your-nds-service.com/notify?platform=web&token=<PUSH_TOKEN>');
+    await sdk.registerWebhook('https://your-nds-service.com/api/v1/notify?platform=web&token=<PUSH_TOKEN>');
   } catch (err) {
     console.error(err);
   }
