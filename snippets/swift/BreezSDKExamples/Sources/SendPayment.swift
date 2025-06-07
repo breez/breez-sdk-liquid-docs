@@ -19,10 +19,12 @@ func prepareSendPaymentLightningBolt12(sdk: BindingLiquidSdk) -> PrepareSendResp
     // ANCHOR: prepare-send-payment-lightning-bolt12
     // Set the bolt12 offer you wish to pay
     let optionalAmount = PayAmount.bitcoin(receiverAmountSat: 5_000)
+    let optionalComment = "<comment>"
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
             destination: "<bolt12 offer>",
-            amount: optionalAmount
+            amount: optionalAmount,
+            comment: optionalComment
         ))
     // ANCHOR_END: prepare-send-payment-lightning-bolt12
     return prepareResponse

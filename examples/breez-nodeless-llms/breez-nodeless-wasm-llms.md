@@ -247,10 +247,12 @@ const prepareSendPaymentLightningBolt12 = async (sdk) => {
     type: 'bitcoin',
     receiverAmountSat: 5_000
   };
+  const optionalComment = '<comment>'
 
   const prepareResponse = await sdk.prepareSendPayment({
     destination: '<bolt12 offer>',
-    amount: optionalAmount
+    amount: optionalAmount,
+    comment: optionalComment
   });
   
   return prepareResponse;

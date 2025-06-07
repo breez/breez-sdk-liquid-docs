@@ -25,7 +25,9 @@ class SendPayment {
         val destination = "<bolt12 offer>"
         try {
             val optionalAmount = PayAmount.Bitcoin(5_000.toULong())
-            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
+            val optionalComment = "<comment>"
+            val prepareRequest = PrepareSendRequest(destination, optionalAmount, optionalComment)
+            val prepareResponse = sdk.prepareSendPayment(prepareRequest)
         } catch (e: Exception) {
             // handle error
         }

@@ -24,10 +24,12 @@ const examplePrepareSendPaymentLightningBolt12 = async (sdk: BindingLiquidSdk) =
     type: 'bitcoin',
     receiverAmountSat: 5_000
   }
+  const optionalComment = '<comment>'
 
   const prepareResponse = await sdk.prepareSendPayment({
     destination: '<bolt12 offer>',
-    amount: optionalAmount
+    amount: optionalAmount,
+    comment: optionalComment
   })
   // ANCHOR_END: prepare-send-payment-lightning-bolt12
 }

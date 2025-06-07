@@ -28,11 +28,13 @@ def prepare_send_payment_lightning_bolt12(sdk: BindingLiquidSdk):
     destination = "<bolt12 offer>"
     try:
         optional_amount = PayAmount.BITCOIN(5_000)
+        optional_comment = "<comment>"
 
         prepare_response = sdk.prepare_send_payment(
             PrepareSendRequest(
                 destination=destination,
-                amount=optional_amount
+                amount=optional_amount,
+                comment=optional_comment
             )
         )
 
