@@ -43,6 +43,7 @@ async fn prepare_send_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination,
             amount: optional_amount,
+            comment: None,
         })
         .await?;
 
@@ -67,6 +68,7 @@ async fn prepare_send_payment_asset_fees(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination,
             amount: optional_amount,
+            comment: None,
         })
         .await?;
 
