@@ -5,3 +5,4 @@ In order to add the Notification Plugin to your iOS application, first you need 
 ## Next steps
 - **[Setting up the Notification Service Extension](ios_service.md)**
 - **[Adding the Notification Plugin](ios_plugin.md)**
+- **[Configuring the main application](ios_connect.md)**
