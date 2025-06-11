@@ -1,4 +1,5 @@
 import BreezSDKLiquid
+import Foundation
 
 // ANCHOR: init-sdk-app-group
 import KeychainAccess
@@ -10,7 +11,7 @@ fileprivate let MNEMONIC_KEY = "BREEZ_SDK_LIQUID_SEED_MNEMONIC"
 func initSdk() throws -> BindingLiquidSdk? {
     // Read the mnemonic from secure storage using the app group
     let keychain = Keychain(service: SERVICE, accessGroup: APP_GROUP)
-    guard let mnemonic = keychain.getString(MNEMONIC_KEY) else {
+    guard let mnemonic = try? keychain.getString(MNEMONIC_KEY) else {
         return nil
     }
 

@@ -7,6 +7,7 @@ let package = Package(
     name: "BreezSDKDocs",
     platforms: [.macOS("15.0")],
     dependencies: [
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.2.2"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.3"),
         .package(url: "https://github.com/breez/breez-sdk-liquid-swift", exact: "0.9.0")
         // To use a local version of breez-sdk-liquid, comment-out the above and un-comment:
@@ -18,6 +19,7 @@ let package = Package(
         .executableTarget(
             name: "BreezSDKDocs",
             dependencies: [
+                .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "BreezSDKLiquid", package: "breez-sdk-liquid-swift"),
                 // To use a local version of breez-sdk-liquid, comment-out the above and un-comment:
                 // .product(name: "BreezSDKLiquid", package: "bindings-swift"),

@@ -5,24 +5,30 @@ publish_to: 'none'
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.27.0"
 
 dependencies:
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^6.0.0
+  app_group_directory: ^2.0.0
+  path_provider: ^2.0.0
   breez_liquid:
     git:
       url: https://github.com/breez/breez-sdk-liquid-dart
-      tag: 0.9.0
+      ref: v0.9.1
   flutter_breez_liquid:
     git:
       url: https://github.com/breez/breez-sdk-liquid-flutter
-      tag: 0.9.0
+      ref: v0.9.1
   rxdart: ^0.28.0  
 
 dependency_overrides:
   # Comment out to use published packages
-  breez_liquid:
-    path: ./packages/breez-sdk-liquid-dart
-  flutter_breez_liquid:
-    path: ./packages/breez-sdk-liquid-flutter
+  #breez_liquid:
+  #  path: ./packages/breez-sdk-liquid-dart
+  #flutter_breez_liquid:
+  #  path: ./packages/breez-sdk-liquid-flutter
   # Enable overrides below to work with Liquid SDK packages locally
   #breez_liquid:
   #  path: ../../../breez-sdk-liquid/packages/dart

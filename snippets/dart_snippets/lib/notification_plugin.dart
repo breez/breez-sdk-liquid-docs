@@ -1,24 +1,26 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
+import 'package:flutter/foundation.dart';
 // ANCHOR: init-sdk-app-group
 import 'package:app_group_directory/app_group_directory.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
-const String APP_GROUP = 'group.com.example.application';
-const String MNEMONIC_KEY = 'BREEZ_SDK_LIQUID_SEED_MNEMONIC';
+const String appGroup = 'group.com.example.application';
+const String mnemonicKey = 'BREEZ_SDK_LIQUID_SEED_MNEMONIC';
 
 Future<void> initSdk() async {
   // Read the mnemonic from secure storage using the app group
   final FlutterSecureStorage storage = const FlutterSecureStorage(
     iOptions: IOSOptions(
       accessibility: KeychainAccessibility.first_unlock,
-      groupId: APP_GROUP,
+      groupId: appGroup,
     ),
   );
-  final String? mnemonic = await storage.read(key: MNEMONIC_KEY);
+  final String? mnemonic = await storage.read(key: mnemonicKey);
   if (mnemonic == null) {
     throw Exception('Mnemonic not found');
   }
@@ -34,14 +36,14 @@ Future<void> initSdk() async {
   await breezSDKLiquid.connect(req: connectRequest);
 }
 
-static Future<String> getWorkingDir() async {
+Future<String> getWorkingDir() async {
   String path = '';
   if (defaultTargetPlatform == TargetPlatform.android) {
     final Directory documentsDir = await getApplicationDocumentsDirectory();
     path = documentsDir.path;
   } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-    final Directory? sharedDirectory = await AppGroupDirectory().getAppGroupDirectory(
-      APP_GROUP,
+    final Directory? sharedDirectory = await AppGroupDirectory.getAppGroupDirectory(
+      appGroup,
     );
     if (sharedDirectory == null) {
       throw Exception('Could not get shared directory');
