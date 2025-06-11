@@ -21,7 +21,7 @@ This Swift file should implement the Notification Plugin's `SDKNotificationServi
 
 <div class="warning">
 <h4>Developer note</h4>
-When using the Notification Plugin on iOS, it is important to note that the <code>Config</code> <code>workingDir</code> needs to be set to the app group's shared directory in both the <code>NotificationService</code> target and in the main application target, whether that is a Swift, Flutter or React Native based application.
+When using the Notification Plugin on iOS, it is important to note that the <code>Config</code> <code>workingDir</code> needs to be set to the app group's shared directory in both the <code>NotificationService</code> target and in the main application target, whether that is a Swift, Flutter or React Native based application. See <a href="ios_connect.html">Configuring the main application</a>.
 </div>
 <div class="warning">
 <h4>Developer note</h4>
@@ -73,4 +73,4 @@ class NotificationService: SDKNotificationService {
 ```
 
 ## Reference implementation
-For a complete reference, see how we implemented it in misty-breez wallet: [NotificationService.swift](https://github.com/breez/misty-breez/blob/main/ios/NotificationService/NotificationService.swift).
+For a complete reference, see how we implemented it in Misty Breez: [NotificationService.swift](https://github.com/breez/misty-breez/blob/main/ios/NotificationService/NotificationService.swift).
