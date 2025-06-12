@@ -16,7 +16,7 @@
   - [Listing payments](guide/list_payments.md)
   - [Refunding payments](guide/refund_payment.md)
   - [Rescanning swaps](guide/rescanning_swaps.md)
-- [Sending an on-chain transaction](guide/pay_onchain.md)
+- [Sending an on-chain payment](guide/pay_onchain.md)
 - [Using LNURL, Lightning and BIP353 addresses](guide/lnurl.md)
   - [Sending payments using LNURL-Pay/Lightning address](guide/lnurl_pay.md)
   - [Receiving payments using LNURL-Pay, Lightning and BIP353 addresses](guide/pay_service.md)

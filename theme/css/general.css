@@ -272,3 +272,12 @@ sup {
     color: var(--sidebar-bg);
     width: 0;
 }
+
+/* Fix the code block */
+section pre {
+    margin: 0;
+
+    > code {
+        padding: 1.5rem 1rem;
+    }
+}
