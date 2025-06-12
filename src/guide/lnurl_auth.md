@@ -1,5 +1,5 @@
 <h1 id="lnurl-auth">
-    <a class="header" href="#lnurl-auth">LNURL-Auth</a>
+    <a class="header" href="#lnurl-auth">Authenticating using LNURL-Auth</a>
     <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.lnurl_auth">API docs</a>
 </h1>
 

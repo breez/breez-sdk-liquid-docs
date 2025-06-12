@@ -1,5 +1,5 @@
 <h1 id="lnurl-withdraw">
-    <a class="header" href="#lnurl-withdraw">LNURL-Withdraw</a>
+    <a class="header" href="#lnurl-withdraw">Receiving payments using LNURL-Withdraw</a>
     <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.lnurl_withdraw">API docs</a>
 </h1>
 

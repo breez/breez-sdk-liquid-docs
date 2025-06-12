@@ -1,4 +1,4 @@
-# Sending an on-chain transaction
+# Sending an on-chain payment
 
 You can send funds from the Breez SDK wallet to an on-chain address as follows.
 
