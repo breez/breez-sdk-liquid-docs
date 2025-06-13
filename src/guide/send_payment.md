@@ -104,7 +104,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 
 #### BOLT12 offer
 
-Payments to a BOLT12 offer can be done in a similar way. However, when paying to a BOLT12 offer, the SDK's prepare request **must** include an amount.
+Payments to a BOLT12 offer can be done in a similar way. However, when paying to a BOLT12 offer, the SDK's prepare request **must** include an amount. The payment can also include an optional `comment`, which will be included in the invoice as a payer note.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>

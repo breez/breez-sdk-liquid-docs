@@ -230,6 +230,7 @@ async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt11 invoice>".to_string(),
             amount: None,
+            comment: None,
         })
         .await?;
 
@@ -245,10 +246,12 @@ async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()
     let optional_amount = Some(PayAmount::Bitcoin {
         receiver_amount_sat: 5_000,
     });
+    let optional_comment = Some("<comment>".to_string());
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt12 offer>".to_string(),
             amount: optional_amount,
+            comment: optional_comment,
         })
         .await?;
         
@@ -268,6 +271,7 @@ async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
+            comment: None,
         })
         .await?;
 
@@ -285,6 +289,7 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
+            comment: None,
         })
         .await?;
 
@@ -723,6 +728,7 @@ async fn prepare_send_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
+            comment: None,
         })
         .await?;
 
@@ -1084,6 +1090,7 @@ async fn main() -> Result<()> {
             let prepare_response = sdk.prepare_send_payment(&PrepareSendRequest {
                 destination,
                 amount,
+                comment: None,
             }).await?;
             
             // Send payment
@@ -1304,6 +1311,7 @@ async fn safe_payment(sdk: Arc<LiquidSdk>, destination: String, amount_sat: u64,
     let prepare_response = sdk.prepare_send_payment(&PrepareSendRequest {
         destination,
         amount: Some(PayAmount::Bitcoin { receiver_amount_sat: amount_sat }),
+        comment: None,
     }).await?;
     
     // Check if fees are acceptable

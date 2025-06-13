@@ -11,6 +11,7 @@ async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt11 invoice>".to_string(),
             amount: None,
+            comment: None,
         })
         .await?;
 
@@ -27,10 +28,12 @@ async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()
     let optional_amount = Some(PayAmount::Bitcoin {
         receiver_amount_sat: 5_000,
     });
+    let optional_comment = Some("<comment>".to_string());
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt12 offer>".to_string(),
             amount: optional_amount,
+            comment: optional_comment,
         })
         .await?;
     // ANCHOR_END: prepare-send-payment-lightning-bolt12
