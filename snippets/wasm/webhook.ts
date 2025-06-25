@@ -3,7 +3,7 @@ import { type BindingLiquidSdk } from '@breeztech/breez-sdk-liquid'
 const _registerWebhook = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: register-webook
   try {
-    await sdk.registerWebhook('https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>')
+    await sdk.registerWebhook('https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>')
   } catch (err) {
     console.error(err)
   }

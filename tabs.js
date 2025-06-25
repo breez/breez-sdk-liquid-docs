@@ -19,9 +19,6 @@
               border-radius: 8px;
               width: 100%;
             }
-            #panels {
-              padding: 10px;
-            }
             #tabs {
               border-bottom: 1px solid var(--quote-border);
               background-color: var(--sidebar-bg);

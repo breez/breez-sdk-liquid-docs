@@ -5,7 +5,7 @@ class Webhooks {
     fun registerWebhook(sdk: BindingLiquidSdk) {
         // ANCHOR: register-webook
         try {
-            sdk.registerWebhook("https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>")
+            sdk.registerWebhook("https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>")
         } catch (e: Exception) {
             // Handle error
         }

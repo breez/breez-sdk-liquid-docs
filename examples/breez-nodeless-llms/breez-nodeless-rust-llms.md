@@ -885,7 +885,7 @@ async fn list_payments_details_destination(sdk: Arc<LiquidSdk>) -> Result<Vec<Pa
 ```rust
 async fn register_webhook(sdk: Arc<LiquidSdk>) -> Result<()> {
     sdk.register_webhook(
-        "https://your-nds-service.com/notify?platform=ios&token=<PUSH_TOKEN>".to_string(),
+        "https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>".to_string(),
     )
     .await?;
     

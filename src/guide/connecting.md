@@ -96,7 +96,7 @@ By default, the config working directory is set to the directory where the SDK i
 </div>
 
 <h2 id="disconnecting">
-    <a class="header" href="#disconnecting">Disonnecting</a>
+    <a class="header" href="#disconnecting">Disconnecting</a>
     <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.disconnect">API docs</a>
 </h2>
 
