@@ -467,7 +467,7 @@ To receive a Bitcoin payment that does not specify an amount, it may be necessar
 
 Alternatively, if the fees are considered too high, the user can either choose to wait for them to come down or outright refund the payment. To learn more about refunds, see the [Refunding payments](./refund_payment.md#refunding-payments) section.
 
-To reduce the likelihood of this extra fee review step being necessary, you can configure a fee rate leeway in the SDK's configuration that will automatically accept slightly higher fees within the specified tolerance.
+To reduce the likelihood of this extra fee review step being necessary, you can configure a fee leeway in the SDK's configuration that will automatically accept slightly higher fees within the specified tolerance. By default, the SDK uses the leeway defined [here](https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/model/constant.DEFAULT_ONCHAIN_FEE_RATE_LEEWAY_SAT.html).
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
