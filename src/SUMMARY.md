@@ -28,6 +28,8 @@
 - [Supporting fiat currencies](guide/fiat_currencies.md)
 - [Buying Bitcoin](guide/buy_btc.md)
 - [End-user fees](guide/end-user_fees.md)
+  - [Base fees](guide/base_fees.md)
+  - [Partner fees](guide/partner_fees.md)
 - [Connecting an external signer](guide/self_signer.md)
 - [Handling multiple assets](guide/assets.md)
 - [Moving to production](guide/production.md)
