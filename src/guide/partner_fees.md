@@ -1,24 +1,24 @@
-# **Partner Fees**
+# Partner Fees
 
-**Partners can configure additional fees for revenue sharing on swap-based payments.**
+**Partners can configure additional fees for revenue sharing.**
 
-## **Overview**
+## Overview
 
-In addition to the base fees charged by the SDK, partners can configure an additional fee percentage that applies to all swap-based payments processed through their integration. This enables revenue sharing opportunities for partners building applications with the Breez SDK.
+In addition to the base fees charged by the SDK, partners can configure an additional fee percentage for Bitcoin on-chain and Lightning transactions processed through their integration.
 
-**Important:** Partner fees only apply to swap-based payments (Lightning payments, BTC address payments). Payments resolved purely using Liquid are not affected by partner fees.
+**Important:** Transactions between Liquid addresses are excluded.
 
-## **Partners Portal**
+## Partners Portal
 
 The <a target="_blank" href="https://partners.breez.technology/">Partners Portal</a> is used to configure fee percentages and view analytics on collected fees.
 
-### **Authentication**
+### Authentication
 
 Access to the Partners Portal is authenticated using the email address that was originally used to request the SDK API key. Authentication is handled via magic link sent to this email address.
 
-**Note:** If you need multiple team members to access the portal, consider using a shared or group email address when requesting your API key, as access is tied to the original email used for the API key request.
+**Note:** If you need multiple team members to access the portal, consider using a shared or group email address when requesting your API key. To change the email address, you can request a new API key.
 
-### **Configuring Fees**
+### Configuring Fees
 
 When setting up a partner fee percentage through the portal:
 
@@ -29,18 +29,18 @@ When setting up a partner fee percentage through the portal:
 
 The Lightning address will be used for all fee payouts, so ensure it's an address you control and can receive payments on.
 
-### **Analytics**
+### Analytics
 
 The Partners Portal provides analytics on:
 
 - Total fees collected
 - Historical fee data (monthly)
 
-**Note:** Analytics data is not real-time and is updated periodically throughout the day. There may be delays between when transactions occur and when they appear in the analytics dashboard.
+**Note:** Analytics data is not real-time and is updated hourly, so a delay between when transactions occur and when they appear in the analytics dashboard are to be expected.
 
-## **Fee Calculation**
+## Fee Calculation
 
-When a partner fee is configured, it's calculated as a percentage of the payment amount and added to the base fees.
+When a partner fee is configured, it's calculated as a percentage of the transaction amount and added to the base fees.
 
 > **Example**: If a partner has configured a 0.5% fee and a user sends 10k sats via Lightning:
 >

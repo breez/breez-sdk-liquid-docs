@@ -1,4 +1,4 @@
-# **Base Fees**
+# Base Fees
 
 **The Breez SDK charges small base fees for end-users to send and receive payments.**
 
