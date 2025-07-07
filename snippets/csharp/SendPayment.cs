@@ -30,8 +30,7 @@ public class SendPaymentSnippets
         try
         {
             var optionalAmount = new PayAmount.Bitcoin(5000);
-            var optionalComment = "<comment>";
-            var prepareRequest = new PrepareSendRequest(destination, optionalAmount, optionalComment);
+            var prepareRequest = new PrepareSendRequest(destination, optionalAmount);
             var prepareResponse = sdk.PrepareSendPayment(prepareRequest);
         }
         catch (Exception)

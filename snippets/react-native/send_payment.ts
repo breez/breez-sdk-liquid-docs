@@ -26,12 +26,10 @@ const examplePrepareSendPaymentLightningBolt12 = async () => {
     type: PayAmountVariant.BITCOIN,
     receiverAmountSat: 5_000
   }
-  const optionalComment = '<comment>'
 
   const prepareResponse = await prepareSendPayment({
     destination: '<bolt12 offer>',
-    amount: optionalAmount,
-    comment: optionalComment
+    amount: optionalAmount
   })
   // ANCHOR_END: prepare-send-payment-lightning-bolt12
 }

@@ -11,13 +11,12 @@ async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt11 invoice>".to_string(),
             amount: None,
-            comment: None,
         })
         .await?;
 
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {:?} sats", send_fees_sat);
+    info!("Fees: {send_fees_sat:?} sats");
     // ANCHOR_END: prepare-send-payment-lightning-bolt11
     Ok(())
 }
@@ -28,12 +27,10 @@ async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()
     let optional_amount = Some(PayAmount::Bitcoin {
         receiver_amount_sat: 5_000,
     });
-    let optional_comment = Some("<comment>".to_string());
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt12 offer>".to_string(),
             amount: optional_amount,
-            comment: optional_comment,
         })
         .await?;
     // ANCHOR_END: prepare-send-payment-lightning-bolt12
@@ -55,7 +52,7 @@ async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {:?} sats", send_fees_sat);
+    info!("Fees: {send_fees_sat:?} sats");
     // ANCHOR_END: prepare-send-payment-liquid
     Ok(())
 }
@@ -73,7 +70,7 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Send Payment
     let send_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {:?} sats", send_fees_sat);
+    info!("Fees: {send_fees_sat:?} sats");
     // ANCHOR_END: prepare-send-payment-liquid-drain
     Ok(())
 }
@@ -84,6 +81,7 @@ async fn send_payment(sdk: Arc<LiquidSdk>, prepare_response: PrepareSendResponse
         .send_payment(&SendPaymentRequest {
             prepare_response,
             use_asset_fees: None,
+            payer_note: None,
         })
         .await?;
     let payment = send_response.payment;

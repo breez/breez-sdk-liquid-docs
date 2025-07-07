@@ -31,11 +31,9 @@ func PrepareSendPaymentLightningBolt12(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountBitcoin{
 		ReceiverAmountSat: uint64(5_000),
 	}
-	optionalComment := "<comment>"
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
 		Destination: destination,
 		Amount:      &optionalAmount,
-		Comment:     &optionalComment,
 	}
 	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
 	if err != nil {
