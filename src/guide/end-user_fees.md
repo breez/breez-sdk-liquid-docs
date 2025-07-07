@@ -4,5 +4,5 @@
 
 This section covers the fee structure and configuration options:
 
-- **[Base Fees](/guide/base_fees.md)** - Base fees for different payment types
-- **[Partner Fees](/guide/partner_fees.md)** - Additional fees (optional) to be set by the integration partner
+- **[Base fees](/guide/base_fees.md)** - Base fees for different payment types
+- **[Partner fees](/guide/partner_fees.md)** - Additional fees (optional) to be set by the integration partner
