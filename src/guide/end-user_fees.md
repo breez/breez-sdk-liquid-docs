@@ -4,5 +4,5 @@
 
 This section covers the fee structure and configuration options:
 
-- **[Base Fees](/guide/base_fees.md)** - Core fees charged by the SDK for different payment types
-- **[Partner Fees](/guide/partner_fees.md)** - Optional additional fees for revenue sharing
+- **[Base Fees](/guide/base_fees.md)** - Base fees for different payment types
+- **[Partner Fees](/guide/partner_fees.md)** - Additional fees (optional) to be set by the integration partner
