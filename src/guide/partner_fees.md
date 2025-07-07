@@ -1,6 +1,6 @@
 # Partner Fees
 
-Partners have the option to set additional fees, which will be used for revenue sharing. In addition to the base fees charged by the SDK, partners can configure an additional fee percentage for Bitcoin on-chain and Lightning transactions processed through their integration.
+Partners have the option to set additional fees, which will be used for revenue sharing. In addition to the [base fees](/guide/base_fees.md) charged by the SDK, partners can configure an additional fee percentage for Bitcoin on-chain and Lightning transactions processed through their integration.
 
 **Note:** Transactions between Liquid addresses are excluded.
 
