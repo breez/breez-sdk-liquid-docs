@@ -1,12 +1,8 @@
 # Partner Fees
 
-**Partners can configure additional fees for revenue sharing.**
+Partners have the option to set additional fees, which will be used for revenue sharing. In addition to the base fees charged by the SDK, partners can configure an additional fee percentage for Bitcoin on-chain and Lightning transactions processed through their integration.
 
-## Overview
-
-In addition to the base fees charged by the SDK, partners can configure an additional fee percentage for Bitcoin on-chain and Lightning transactions processed through their integration.
-
-**Important:** Transactions between Liquid addresses are excluded.
+**Note:** Transactions between Liquid addresses are excluded.
 
 ## Partners Portal
 
@@ -22,12 +18,12 @@ Access to the Partners Portal is authenticated using the email address that was 
 
 When setting up a partner fee percentage through the portal:
 
-1. Navigate to the Settings page
-2. In Fee Settings review the terms and set your desired "Additional Fee Percentage"
-3. Provide a Lightning address for fee payouts
-4. Save your configuration by pressing "Save"
+1. Navigate to the **Settings** page.
+2. In **Fee Settings** review the terms and set your desired **Additional Fee Percentage**.
+3. Provide a Lightning address for fee payouts.
+4. Save your configuration by pressing **Save**.
 
-The Lightning address will be used for all fee payouts, so ensure it's an address you control and can receive payments on.
+All fee payouts will be sent to the configured Lightning address, so make sure it's one you control and can receive payments on.
 
 ### Analytics
 
@@ -36,7 +32,7 @@ The Partners Portal provides analytics on:
 - Total fees collected
 - Historical fee data (monthly)
 
-**Note:** Analytics data is not real-time and is updated hourly, so a delay between when transactions occur and when they appear in the analytics dashboard are to be expected.
+**Note:** Analytics data is updated hourly rather than in real-time, so some delay between transaction activity and its appearance in the dashboard is expected.
 
 ## Fee Calculation
 
