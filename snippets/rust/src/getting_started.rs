@@ -58,7 +58,7 @@ async fn getting_started_logging(data_dir: String) -> Result<()> {
 struct CliEventListener {}
 impl EventListener for CliEventListener {
     fn on_event(&self, e: SdkEvent) {
-        info!("Received event: {:?}", e);
+        info!("Received event: {e:?}");
     }
 }
 

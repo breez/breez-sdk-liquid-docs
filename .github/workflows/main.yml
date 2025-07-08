@@ -11,10 +11,10 @@ on:
   workflow_dispatch:
     inputs:
       sdk-ref:
-        description: 'sdk commit/tag/branch reference. Defaults to 0.9.0'
+        description: 'sdk commit/tag/branch reference. Defaults to 0.10.1'
         required: false
         type: string
-        default: 0.9.0
+        default: 0.10.1
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -26,9 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # Used only for Rust snippets
-      sdk-ref: ${{ inputs.sdk-ref || '0.9.0' }}
+      sdk-ref: ${{ inputs.sdk-ref || '0.10.1' }}
       # Used for RN and Flutter snippets
-      package-version: '0.9.0'
+      package-version: '0.10.1'
     steps:
       - run: echo "set pre-setup output variables"
 
@@ -95,7 +95,7 @@ jobs:
           cargo clippy -- --allow dead_code --allow unused_variables --deny warnings
 
   check-csharp:
-    needs: 
+    needs:
       - setup
       - build-packages
     name: Check C# snippets
@@ -128,7 +128,7 @@ jobs:
         run: |
           mkdir packages
           nuget add ../../Breez.Sdk.Liquid.${{ needs.setup.outputs.package-version }}.nupkg -Source ./packages
-      
+
       - name: Add nuget dependency
         working-directory: snippets/csharp
         run: |
@@ -139,7 +139,7 @@ jobs:
         run: dotnet build
 
   check-dart:
-    needs: 
+    needs:
       - setup
       - build-packages
     name: Check dart snippets
@@ -228,13 +228,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.8'
-  
+
       - name: Download archived package
         uses: actions/download-artifact@v4
         with:
           name: python-wheel-3.8-manylinux_2_31_x86_64
           path: snippets/python/packages
-    
+
       - name: Install dependencies
         working-directory: snippets/python
         run: |
@@ -245,14 +245,14 @@ jobs:
 
       - name: Check python formatting
         working-directory: snippets/python/src
-        run: ruff check  --ignore F841 --ignore F401 --add-noqa . 
+        run: ruff check  --ignore F841 --ignore F401 --add-noqa .
 
       - name: Check python syntax
         working-directory: snippets/python
         run: python3 -m compileall src
 
   check-react-native:
-    needs: 
+    needs:
       - setup
       - build-packages
     name: Check react native snippets
@@ -281,11 +281,11 @@ jobs:
         run: tsc
 
       - name: Check formatting
-        working-directory: snippets/react-native 
+        working-directory: snippets/react-native
         run: yarn run lint
 
   check-wasm:
-    needs: 
+    needs:
       - setup
       - build-packages
     name: Check wasm snippets
@@ -314,7 +314,7 @@ jobs:
         run: tsc
 
       - name: Check formatting
-        working-directory: snippets/wasm 
+        working-directory: snippets/wasm
         run: yarn run lint
 
   check-swift:
@@ -352,7 +352,7 @@ jobs:
         run: |
           ./gradlew build
 
-      
+
   build:
     name: Build mdbook
     runs-on: ubuntu-latest
@@ -376,7 +376,7 @@ jobs:
           cargo install mdbook --vers "^0.4" --locked
           cargo install --path ./snippets-processor
           cargo install mdbook-variables --vers "^0.2" --locked
-      
+
       - name: Build mdbook
         run: mdbook build
 
@@ -387,7 +387,7 @@ jobs:
           path: book
 
       - name: Push book to main-generated branch
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} 
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: |
           git config --global user.name "Generator"
           git config --global user.email "no-reply@breez.technology"

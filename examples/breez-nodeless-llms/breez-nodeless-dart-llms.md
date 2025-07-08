@@ -292,8 +292,9 @@ Future<PrepareSendResponse> prepareSendPaymentLightningBolt12() async {
   
   try {
     PayAmount_Bitcoin optionalAmount = PayAmount_Bitcoin(receiverAmountSat: BigInt.from(5000));
+    String optionalComment = "<comment>";
     PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
-      req: PrepareSendRequest(destination: destination, amount: optionalAmount),
+      req: PrepareSendRequest(destination: destination, amount: optionalAmount, comment: optionalComment),
     );
     return prepareSendResponse;
   } catch (error) {

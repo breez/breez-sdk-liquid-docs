@@ -32,7 +32,7 @@ def prepare_send_payment_lightning_bolt12(sdk: BindingLiquidSdk):
         prepare_response = sdk.prepare_send_payment(
             PrepareSendRequest(
                 destination=destination,
-                amount=optional_amount
+                amount=optional_amount,
             )
         )
 

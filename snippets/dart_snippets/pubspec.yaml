@@ -1,10 +1,10 @@
 name: dart_snippets
 description: A sample command-line application.
 version: 1.0.0
-publish_to: 'none'
+publish_to: "none"
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
   flutter: ">=3.27.0"
 
 dependencies:
@@ -16,12 +16,12 @@ dependencies:
   breez_liquid:
     git:
       url: https://github.com/breez/breez-sdk-liquid-dart
-      ref: v0.9.1
+      ref: v0.10.1
   flutter_breez_liquid:
     git:
       url: https://github.com/breez/breez-sdk-liquid-flutter
-      ref: v0.9.1
-  rxdart: ^0.28.0  
+      ref: v0.10.1
+  rxdart: ^0.28.0
 
 dependency_overrides:
   # Comment out to use published packages
