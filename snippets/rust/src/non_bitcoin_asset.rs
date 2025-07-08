@@ -90,6 +90,7 @@ async fn send_payment_fees(sdk: Arc<LiquidSdk>, prepare_response: PrepareSendRes
         .send_payment(&SendPaymentRequest {
             prepare_response,
             use_asset_fees: Some(true),
+            payer_note: None,
         })
         .await?;
     let payment = send_response.payment;

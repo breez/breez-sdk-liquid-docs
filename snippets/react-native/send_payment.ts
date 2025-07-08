@@ -73,8 +73,10 @@ const examplePrepareSendPaymentLiquidDrain = async () => {
 
 const exampleSendPayment = async (prepareResponse: PrepareSendResponse) => {
   // ANCHOR: send-payment
+  const optionalPayerNote = '<payer note>'
   const sendResponse = await sendPayment({
-    prepareResponse
+    prepareResponse,
+    payerNote: optionalPayerNote
   })
   const payment = sendResponse.payment
   // ANCHOR_END: send-payment

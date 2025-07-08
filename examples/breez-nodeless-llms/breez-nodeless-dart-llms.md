@@ -292,9 +292,8 @@ Future<PrepareSendResponse> prepareSendPaymentLightningBolt12() async {
   
   try {
     PayAmount_Bitcoin optionalAmount = PayAmount_Bitcoin(receiverAmountSat: BigInt.from(5000));
-    String optionalComment = "<comment>";
     PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
-      req: PrepareSendRequest(destination: destination, amount: optionalAmount, comment: optionalComment),
+      req: PrepareSendRequest(destination: destination, amount: optionalAmount),
     );
     return prepareSendResponse;
   } catch (error) {
@@ -359,13 +358,17 @@ Future<PrepareSendResponse> prepareSendPaymentLiquidDrain() async {
 ```
 
 #### Execute Payment
+
+For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
+
 - **always make sure the sdk instance is synced before performing any actions**
 
 ```dart
 Future<SendPaymentResponse> sendPayment({required PrepareSendResponse prepareResponse}) async {
   try {
+    String optionalPayerNote = "<payer note>";
     SendPaymentResponse sendPaymentResponse = await breezSDKLiquid.instance!.sendPayment(
-      req: SendPaymentRequest(prepareResponse: prepareResponse),
+      req: SendPaymentRequest(prepareResponse: prepareResponse, payerNote: optionalPayerNote),
     );
     Payment payment = sendPaymentResponse.payment;
     return sendPaymentResponse;

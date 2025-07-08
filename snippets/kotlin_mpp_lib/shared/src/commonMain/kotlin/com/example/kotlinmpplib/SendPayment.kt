@@ -69,7 +69,8 @@ class SendPayment {
     fun sendPayment(sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) {
         // ANCHOR: send-payment
         try {
-            val sendResponse = sdk.sendPayment(SendPaymentRequest(prepareResponse))
+            val optionalPayerNote = "<payer note>"
+            val sendResponse = sdk.sendPayment(SendPaymentRequest(prepareResponse, null, optionalPayerNote))
             val payment = sendResponse.payment
         } catch (e: Exception) {
             // handle error

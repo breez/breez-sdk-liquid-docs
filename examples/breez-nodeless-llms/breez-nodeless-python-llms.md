@@ -260,13 +260,11 @@ def prepare_send_payment_lightning_bolt12(sdk: BindingLiquidSdk):
     destination = "<bolt12 offer>"
     try:
         optional_amount = PayAmount.BITCOIN(5_000)
-        optional_comment = "<comment>"
 
         prepare_response = sdk.prepare_send_payment(
             PrepareSendRequest(
                 destination=destination,
-                amount=optional_amount,
-                comment=optional_comment
+                amount=optional_amount
             )
         )
 
@@ -321,14 +319,19 @@ def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
 ```
 
 #### Execute Payment
+
+For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
+
 - **always make sure the sdk instance is synced before performing any actions**
 
 ```python
 def send_payment(sdk: BindingLiquidSdk, prepare_response: PrepareSendResponse):
     try:
+        optional_payer_note = "<payer note>"
         send_response = sdk.send_payment(
             SendPaymentRequest(
-                prepare_response=prepare_response
+                prepare_response=prepare_response,
+                payer_note=optional_payer_note
             )
         )
         payment = send_response.payment
