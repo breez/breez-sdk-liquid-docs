@@ -11,7 +11,7 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -29,7 +29,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation("technology.breez.liquid:breez-sdk-liquid-kmp:0.9.0")
+                implementation("technology.breez.liquid:breez-sdk-liquid-kmp:0.10.1")
             }
         }
     }

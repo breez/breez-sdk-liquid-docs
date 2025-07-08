@@ -24,7 +24,7 @@ async fn prepare_receive_lightning(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Receive Payment
     let receive_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {} sats", receive_fees_sat);
+    info!("Fees: {receive_fees_sat} sats");
     // ANCHOR_END: prepare-receive-payment-lightning
     Ok(())
 }
@@ -41,7 +41,7 @@ async fn prepare_receive_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()> {
     // If the fees are acceptable, continue to create the Receive Payment
     let min_receive_fees_sat = prepare_response.fees_sat;
     let swapper_feerate = prepare_response.swapper_feerate;
-    info!("Fees: {} sats + {:?}% of the sent amount", min_receive_fees_sat, swapper_feerate);
+    info!("Fees: {min_receive_fees_sat} sats + {swapper_feerate:?}% of the sent amount");
     // ANCHOR_END: prepare-receive-payment-lightning-bolt12
     Ok(())
 }
@@ -66,7 +66,7 @@ async fn prepare_receive_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Receive Payment
     let receive_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {} sats", receive_fees_sat);
+    info!("Fees: {receive_fees_sat} sats");
     // ANCHOR_END: prepare-receive-payment-onchain
     Ok(())
 }
@@ -88,7 +88,7 @@ async fn prepare_receive_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
 
     // If the fees are acceptable, continue to create the Receive Payment
     let receive_fees_sat = prepare_response.fees_sat;
-    info!("Fees: {} sats", receive_fees_sat);
+    info!("Fees: {receive_fees_sat} sats");
     // ANCHOR_END: prepare-receive-payment-liquid
     Ok(())
 }
@@ -104,6 +104,7 @@ async fn receive_payment(
             prepare_response,
             description: optional_description,
             use_description_hash: None,
+            payer_note: None,
         })
         .await?;
 
