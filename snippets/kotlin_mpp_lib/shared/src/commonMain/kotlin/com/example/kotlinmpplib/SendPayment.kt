@@ -70,7 +70,7 @@ class SendPayment {
         // ANCHOR: send-payment
         try {
             val optionalPayerNote = "<payer note>"
-            val sendResponse = sdk.sendPayment(SendPaymentRequest(prepareResponse, null, optionalComment))
+            val sendResponse = sdk.sendPayment(SendPaymentRequest(prepareResponse, null, optionalPayerNote))
             val payment = sendResponse.payment
         } catch (e: Exception) {
             // handle error
