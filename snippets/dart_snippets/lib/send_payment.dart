@@ -71,8 +71,12 @@ Future<PrepareSendResponse> prepareSendPaymentLiquidDrain() async {
 
 Future<SendPaymentResponse> sendPayment({required PrepareSendResponse prepareResponse}) async {
   // ANCHOR: send-payment
+  String optionalPayerNote = "<payer note>";
   SendPaymentResponse sendPaymentResponse = await breezSDKLiquid.instance!.sendPayment(
-    req: SendPaymentRequest(prepareResponse: prepareResponse),
+    req: SendPaymentRequest(
+      prepareResponse: prepareResponse,
+      payerNote: optionalPayerNote,
+    ),
   );
   Payment payment = sendPaymentResponse.payment;
   // ANCHOR_END: send-payment

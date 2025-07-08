@@ -87,7 +87,8 @@ public class SendPaymentSnippets
         // ANCHOR: send-payment
         try
         {
-            var sendResponse = sdk.SendPayment(new SendPaymentRequest(prepareResponse));
+            var optionalPayerNote = "<payer note>";
+            var sendResponse = sdk.SendPayment(new SendPaymentRequest(prepareResponse, null, optionalPayerNote));
             var payment = sendResponse.payment;
         }
         catch (Exception)

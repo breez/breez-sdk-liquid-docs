@@ -64,8 +64,10 @@ func prepareSendPaymentLiquidDrain(sdk: BindingLiquidSdk) -> PrepareSendResponse
 
 func sendPayment(sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) -> SendPaymentResponse? {
     // ANCHOR: send-payment
+    let optionalPayerNote = "<payer note>"
     let sendResponse = try? sdk.sendPayment(req: SendPaymentRequest (
-        prepareResponse: prepareResponse
+        prepareResponse: prepareResponse,
+        payerNote: optionalPayerNote
     ))
     let payment = sendResponse!.payment
     // ANCHOR_END: send-payment

@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/breez/breez-sdk-liquid-go/breez_sdk_liquid"
+	"google.golang.org/api/option"
 )
 
 func PrepareSendPaymentLightningBolt11(sdk *breez_sdk_liquid.BindingLiquidSdk) {
@@ -89,8 +90,10 @@ func PrepareSendPaymentLiquidDrain(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 
 func SendPayment(sdk *breez_sdk_liquid.BindingLiquidSdk, prepareResponse breez_sdk_liquid.PrepareSendResponse) {
 	// ANCHOR: send-payment
+	optionalPayerNote := "<payer note>"
 	req := breez_sdk_liquid.SendPaymentRequest{
 		PrepareResponse: prepareResponse,
+		PayerNote:       &optionalPayerNote,
 	}
 	if response, err := sdk.SendPayment(req); err == nil {
 		payment := response.Payment

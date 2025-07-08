@@ -104,7 +104,7 @@ The SDK will also validate that the amount is within the send lightning limits o
 
 #### BOLT12 offer
 
-Payments to a BOLT12 offer can be done in a similar way. However, when paying to a BOLT12 offer, the SDK's prepare request **must** include an amount. The payment can also include an optional `comment`, which will be included in the invoice as a payer note.
+Payments to a BOLT12 offer can be done in a similar way. However, when paying to a BOLT12 offer, the SDK's prepare request **must** include an amount.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -365,8 +365,9 @@ When you want send all funds from your wallet to another address.
     <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.send_payment">API docs</a>
 </h2>
 
-Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the
-send method.
+Once the payment has been prepared, all you have to do is pass the prepare response as an argument to the send method.
+
+For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>

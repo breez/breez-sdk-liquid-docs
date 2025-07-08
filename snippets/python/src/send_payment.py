@@ -88,10 +88,12 @@ def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
 
 def send_payment(sdk: BindingLiquidSdk, prepare_response: PrepareSendResponse):
     # ANCHOR: send-payment
+    optional_payer_note = "<payer note>"
     try:
         send_response = sdk.send_payment(
             SendPaymentRequest(
-                prepare_response=prepare_response
+                prepare_response=prepare_response,
+                payer_note=optional_payer_note
             )
         )
         payment = send_response.payment

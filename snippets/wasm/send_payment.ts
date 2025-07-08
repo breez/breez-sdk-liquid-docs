@@ -71,8 +71,10 @@ const examplePrepareSendPaymentLiquidDrain = async (sdk: BindingLiquidSdk) => {
 
 const exampleSendPayment = async (sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) => {
   // ANCHOR: send-payment
+  const optionalPayerNote = '<payer note>'
   const sendResponse = await sdk.sendPayment({
-    prepareResponse
+    prepareResponse,
+    payerNote: optionalPayerNote
   })
   const payment = sendResponse.payment
   // ANCHOR_END: send-payment

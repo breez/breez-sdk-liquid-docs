@@ -246,12 +246,10 @@ async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()
     let optional_amount = Some(PayAmount::Bitcoin {
         receiver_amount_sat: 5_000,
     });
-    let optional_comment = Some("<comment>".to_string());
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt12 offer>".to_string(),
             amount: optional_amount,
-            comment: optional_comment,
         })
         .await?;
         
@@ -302,12 +300,20 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
 ```
 
 #### Execute Payment
+
+For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
+
 - **Always make sure the SDK instance is synced before performing any actions**
 
 ```rust
 async fn send_payment(sdk: Arc<LiquidSdk>, prepare_response: PrepareSendResponse) -> Result<()> {
+    let optional_payer_note = Some("<payer note>".to_string());
     let send_response = sdk
-        .send_payment(&SendPaymentRequest { prepare_response })
+        .send_payment(&SendPaymentRequest {
+            prepare_response,
+            use_asset_fees: None,
+            payer_note: optional_payer_note,
+        })
         .await?;
     let payment = send_response.payment;
     
