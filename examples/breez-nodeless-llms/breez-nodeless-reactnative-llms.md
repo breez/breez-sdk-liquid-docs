@@ -1205,12 +1205,10 @@ const prepareSendPaymentLightningBolt12 = async () => {
       type: PayAmountVariant.BITCOIN,
       receiverAmountSat: 5_000
     }
-    const optionalComment = '<comment>'
 
     const prepareResponse = await prepareSendPayment({
       destination: '<bolt12 offer>',
-      amount: optionalAmount,
-      comment: optionalComment
+      amount: optionalAmount
     })
     
     return prepareResponse
@@ -1269,11 +1267,16 @@ const prepareSendPaymentLiquidDrain = async () => {
 
 #### Execute Payment
 
+For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
+
 ```javascript
 const sendPayment = async (prepareResponse: PrepareSendResponse) => {
   try {
+    const optionalPayerNote = '<payer note>'
+
     const sendResponse = await sendPayment({
-      prepareResponse
+      prepareResponse,
+      payerNote: optionalPayerNote
     })
     const payment = sendResponse.payment
     return payment
