@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/breez/breez-sdk-liquid-go/breez_sdk_liquid"
-	"google.golang.org/api/option"
 )
 
 func PrepareSendPaymentLightningBolt11(sdk *breez_sdk_liquid.BindingLiquidSdk) {
