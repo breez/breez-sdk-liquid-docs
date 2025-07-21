@@ -54,7 +54,7 @@ For detailed instructions on setting up this service, see the <a target="_blank"
 
 ### Register your LNURL-pay service
 
-For the application to use an LNURL-pay service and to receive webook requests, it needs to register it's webhook and other details with the LNURL-pay service.
+For the application to use an LNURL-pay service and to receive webhook requests, it needs to register its webhook and other details with the LNURL-pay service.
 
 For detailed instructions on registering, see [LNURL-Pay registration](/notifications/lnurl_pay_registration.md).
 
@@ -72,7 +72,7 @@ For detailed instructions on registering, see [LNURL-Pay registration](/notifica
 
 ## Using BOLT12 offers for offline payments
 
-BOLT12 offers are static payment codes that can be paid to multiple times. The BOLT12 offer can be displayed a QR code or combined with BIP353 to form a human readable address. When an invoice is requested through the Lightning Network the swap service sends a webhook request to fetch an invoice.
+BOLT12 offers are static payment codes that can be paid to multiple times. The BOLT12 offer can be displayed as a QR code or combined with BIP353 to form a human readable address. When an invoice is requested through the Lightning Network the swap service sends a webhook request to fetch an invoice.
 
 ### Create a BOLT12 offer
 
