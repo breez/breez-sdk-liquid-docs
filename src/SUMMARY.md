@@ -12,6 +12,7 @@
 - [Payment fundamentals](guide/payments.md)
   - [Parsing inputs](guide/parse.md)
   - [Receiving payments](guide/receive_payment.md)
+    - [Receiving payments offline](guide/receiving_payments_offline.md)
   - [Sending payments](guide/send_payment.md)
   - [Listing payments](guide/list_payments.md)
   - [Refunding payments](guide/refund_payment.md)

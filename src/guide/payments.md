@@ -4,6 +4,7 @@ How to send, receive and manage payments using the Breez SDK - Nodeless *(Liquid
 
 - **[Parsing inputs]** to determine the payment type
 - **[Receiving payments]** via a Lightning invoice, Liquid/Bitcoin BIP21 or plain Liquid address
+  - **[Receiving payments offline]** via LNURL-pay or BOLT12 with notifications
 - **[Sending payments]** via a Lightning invoice or Liquid/Bitcoin BIP21
 - **[Listing payments]** that have been sent or received in the past
 - **[Refunding payments]** that have failed
@@ -11,6 +12,7 @@ How to send, receive and manage payments using the Breez SDK - Nodeless *(Liquid
 
 [Parsing inputs]: parse.md
 [Receiving payments]: receive_payment.md
+[Receiving payments offline]: receiving_payments_offline.md
 [Sending payments]: send_payment.md
 [Listing payments]: list_payments.md
 [Refunding payments]: refund_payment.md
@@ -20,3 +22,4 @@ How to send, receive and manage payments using the Breez SDK - Nodeless *(Liquid
 
 - **[Sending an on-chain payment](pay_onchain.md)**
 - **[Using LNURL, Lightning and BIP353 addresses](lnurl.md)**
+- **[Receiving payments offline](receiving_payments_offline.md)**

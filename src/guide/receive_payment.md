@@ -6,10 +6,7 @@ Once the SDK is initialized, you can directly begin receiving payments. The rece
 1. [Preparing the Payment](receive_payment.md#preparing-payments)
 1. [Receiving the Payment](receive_payment.md#receiving-payments-1)
 
-<div class="warning">
-<h4>Developer note</h4>
-Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
-</div>
+For more information on how to receive payments when the application is closed or in the background, see [Receiving payments offline](receiving_payments_offline.md).
 
 <h2 id="preparing-payments">
     <a class="header" href="#preparing-payments">Preparing Payments</a>
@@ -189,11 +186,6 @@ A BOLT12 offer is a static payment code that can be paid to multiple times. When
 <div class="warning">
 <h4>Developer note</h4>
 A webhook URL <b>must</b> be registered to receive BOLT12 invoice requests when the SDK is offline.
-</div>
-
-<div class="warning">
-<h4>Developer note</h4>
-Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the BOLT12 invoice request in the background.
 </div>
 
 ### Bitcoin
@@ -460,6 +452,11 @@ receive method, optionally specifying a description.
 ```
 </section>
 </custom-tabs>
+
+<div class="warning">
+<h4>Developer note</h4>
+Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the BOLT12 invoice request in the background.
+</div>
 
 ### Amountless Bitcoin Payments
 
