@@ -36,25 +36,25 @@ For more information about setting up webhooks, see [Using webhooks](/notificati
 
 ### Integrate the Notification Plugin
 
-The Notification Plugin receives push notifications from the NDS and automatically processes incoming requests. It is designed to be integrated into Android or iOS mobile applications with minimum effort. To integrate it:
+The Notification Plugin receives push notifications from the NDS and automatically processes incoming requests. It's designed for seamless integration into Android or iOS apps. To integrate it:
 
 - **For Android**: Follow the [Android setup guide](/notifications/android_setup.md)
 - **For iOS**: Follow the [iOS setup guide](/notifications/ios_setup.md)
 
 ## Using LNURL-pay for offline payments
 
-LNURL-pay provides a static Lightning payment identifier that can be shared as a QR code or Lightning address. To receive offline payments via LNURL-pay:
+LNURL-pay provides a static Lightning payment identifier that can be shared as a QR code or Lightning address. To receive payments offline via LNURL-pay:
 
 ### Set up an LNURL-pay service
 
-An LNURL-pay web service is needed if your application wants to support receiving payments using LNURL-pay. This service handles all LNURL-pay requests according to the [LNURL spec](https://github.com/lnurl/luds) and forwards them as webhook requests to the webhook service.
+An LNURL-pay web service is needed if your application wants to support receiving payments using LNURL-pay. This service handles all LNURL-pay requests per the [LNURL spec](https://github.com/lnurl/luds) and forwards them as webhook requests to your service.
 
 For detailed instructions on setting up this service, see the <a target="_blank" href="https://github.com/breez/breez-lnurl">LNURL service</a> repository.
 
 
 ### Register your LNURL-pay service
 
-For the application to use an LNURL-pay service and to receive webhook requests, it needs to register its webhook and other details with the LNURL-pay service.
+Your application must register its webhook and other required details with the LNURL-pay service to start receiving webhook requests.
 
 For detailed instructions on registering, see [LNURL-Pay registration](/notifications/lnurl_pay_registration.md).
 
@@ -62,7 +62,7 @@ For detailed instructions on registering, see [LNURL-Pay registration](/notifica
 #### Flow for LNURL-pay offline payments
 
 1. A user initiates payment to your LNURL or Lightning address
-2. The LNURL service receives the request and calls your registered webhook
+2. The LNURL service receives the request and triggers your registered webhook
 3. The NDS sends a push notification to your application
 4. The Notification Plugin processes the notification and handles the two-step flow:
    - First responds with payment information (min/max amounts)
@@ -72,7 +72,7 @@ For detailed instructions on registering, see [LNURL-Pay registration](/notifica
 
 ## Using BOLT12 offers for offline payments
 
-BOLT12 offers are static payment codes that can be paid to multiple times. The BOLT12 offer can be displayed as a QR code or combined with BIP353 to form a human readable address. When an invoice is requested through the Lightning Network the swap service sends a webhook request to fetch an invoice.
+BOLT12 offers are static payment codes that can be reused for multiple payments. The BOLT12 offer can be shared as a QR code or combined with BIP353 to form a human-readable address. When an invoice is requested via the Lightning Network, the swap service sends a webhook request to your application to generate the invoice.
 
 ### Create a BOLT12 offer
 
@@ -82,7 +82,7 @@ For more details on creating the BOLT12 offer, see [BOLT12 offer](receive_paymen
 
 ### Register a BIP353 address
 
-Once you have a BOLT12 offer it can be registered as a DNS record according to [BIP353](https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki), associating a selected username to the BOLT12 offer to form a human readable address.
+Once you have a BOLT12 offer, it can be registered as a DNS record per [BIP353](https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki), associating a selected username to the BOLT12 offer to form a human readable address.
 
 For more details on registering this BIP353 address, see [LNURL-Pay and BIP353 registration](lnurl_pay_service.md). If you do not plan to use LNURL-pay, see [BIP353 registration](bip353_pay_service.md).
 
@@ -96,5 +96,5 @@ For more details on registering this BIP353 address, see [LNURL-Pay and BIP353 r
    - Starts the SDK
    - Creates a new invoice for the request
    - Returns it to the swap service
-6. The swap service delivers the invoice to the payer
+6. The swap service returns the invoice to the payer
 7. Once paid, another notification confirms receipt
