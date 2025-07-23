@@ -1,6 +1,6 @@
 # Receiving payments offline
 
-With Breez SDK - Nodeless *(Liquid Implementation)*, you can set up your application to receive payments even when it's not actively running. This is particularly useful for applications that need to accept payments in the background without requiring constant user interaction.
+With the Breez SDK, you can configure your application to receive payments even when it isn't actively running. This is especially useful for apps that need to accept background payments without constant user interaction.
 
 ## Offline payment methods
 
@@ -13,30 +13,30 @@ Both methods require:
 - Setting up a service to handle webhook requests
 - Registering a webhook URL with the SDK
 
-If you are serving a mobile application you will also require:
+If you're serving a mobile application, you'll also need:
 - Integrating the Notification Plugin
 
 ## Setting up for offline payments
 
-### Setup a service to handle webhook requests
+### Set up a service to handle webhook requests
 
 To receive payments offline, you need to set up a web service that can handle webhook requests when your application isn't actively running. This service acts as a bridge between the Lightning Network and your application, ensuring that payment requests are properly processed. 
 
 It **must** be a publicly accessible endpoint that can receive HTTP POST requests. 
 
-For mobile applications a Notification Delivery Service (NDS) can be used that acts as an intermediary between the webhook requests and your application. When a webhook request comes in, the NDS dispatches a push notification to wake your application and process the request.
+For mobile apps, you can use a Notification Delivery Service (NDS) as an intermediary between the webhook requests and your application. When a webhook request comes in, the NDS dispatches a push notification to wake your application and process the request.
 
-For detailed instructions on setting up an NDS, see [Setting up an NDS](/notifications/setup_nds.md).
+For step-by-step instructions, see [Setting up an NDS](/notifications/setup_nds.md).
 
 ### Register a webhook
 
-You need to register a webhook URL that will be called when someone tries to make a payment to your application while it's offline. This webhook should point to your service that handles webhook requests, for example, a Notification Delivery Service (NDS) if you serve mobile applications.
+Register a webhook URL to be called when someone attempts to make a payment while your app is offline. This webhook should point to your service that handles webhook requests, for example, a Notification Delivery Service (NDS) if you serve mobile applications.
 
 For more information about setting up webhooks, see [Using webhooks](/notifications/using_webhooks.md).
 
 ### Integrate the Notification Plugin
 
-The Notification Plugin handles push notifications sent from the Notification Delivery Service (NDS) and automatically processes incoming requests. It is designed to be integrated into Android or iOS mobile applications with minimum effort. To integrate it:
+The Notification Plugin receives push notifications from the NDS and automatically processes incoming requests. It is designed to be integrated into Android or iOS mobile applications with minimum effort. To integrate it:
 
 - **For Android**: Follow the [Android setup guide](/notifications/android_setup.md)
 - **For iOS**: Follow the [iOS setup guide](/notifications/ios_setup.md)
