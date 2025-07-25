@@ -6,6 +6,11 @@ Natively supported formats include: BOLT11 invoices, BOLT12 offers, LNURLs of di
 
 BIP353 addresses are also supported, in which case they will be parsed into a BOLT12 offer or an LNURL-Pay. In these cases, the BIP353 address is also returned to indicate BIP353 was used.
 
+<div class="warning">
+<h4>Developer note</h4>
+The amounts returned from calling parse on Lightning based inputs (BOLT11, BOLT12, LNURL) are denominated in millisatoshi.
+</div>
+
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>
