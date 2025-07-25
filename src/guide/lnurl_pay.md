@@ -16,6 +16,11 @@ When you want the payment receipient to receive a specific amount.
 
 The SDK will also validate that the amount is within the sendable limits of the LNURL-pay request.
 
+<div class="warning">
+<h4>Developer note</h4>
+The minimum and maximum sendable amount returned from calling parse is denominated in millisatoshi.
+</div>
+
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>

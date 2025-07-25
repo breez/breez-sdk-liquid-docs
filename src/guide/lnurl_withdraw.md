@@ -3,6 +3,11 @@
     <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.lnurl_withdraw">API docs</a>
 </h1>
 
+<div class="warning">
+<h4>Developer note</h4>
+The minimum and maximum withdrawable amount returned from calling parse is denominated in millisatoshi.
+</div>
+
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>
