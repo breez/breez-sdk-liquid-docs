@@ -30,7 +30,13 @@ In the `proguard-rules.pro` file make sure that the Flutter and JNA classes are 
 
 ## Adding the SDK dependency
 
+Some of the steps are **not** required for Flutter.
+
 Add the maven `jitpack` repository to your project `build.gradle` file.
+
+<custom-tabs category="lang">
+<div slot="title">Android</div>
+<section>
 
 ```gradle
 allprojects {
@@ -40,16 +46,19 @@ allprojects {
 }
 ```
 
+</section>
+<div slot="title">Flutter</div>
+<section></section>
+</custom-tabs>
+
 Add the `breez-sdk-liquid` dependency to your application's `build.gradle` file in the `app` directory.
+
+<custom-tabs category="lang">
+<div slot="title">Android</div>
+<section>
 
 ```gradle
 android {
-    defaultConfig {
-        // Add a build config field to read the Breez API key 
-        // from a git ignored `gradle.properties` file 
-        buildConfigField "String", "BREEZ_SDK_API_KEY", project.property('BREEZ_SDK_API_KEY')
-    }
-
     // This might help building if duplicate libraries are found
     packagingOptions {
         pickFirst "lib/armeabi-v7a/libc++_shared.so"
@@ -65,6 +74,59 @@ dependencies {
     implementation "com.github.breez:breez-sdk-liquid"
 }
 ```
+
+</section>
+<div slot="title">Flutter</div>
+<section></section>
+</custom-tabs>
+
+Add the Breez SDK API key as a build config parameter to your application's `build.gradle` file in the `app` directory.
+
+<custom-tabs category="lang">
+<div slot="title">Android</div>
+<section>
+
+```gradle
+android {
+    defaultConfig {
+        // Add a build config field to read the Breez API key 
+        // from a git ignored `gradle.properties` file 
+        buildConfigField "String", "BREEZ_SDK_API_KEY", project.property('BREEZ_SDK_API_KEY')
+    }
+}
+```
+
+</section>
+<div slot="title">Flutter</div>
+<section>
+
+```gradle
+def dartDefines = [:]
+if (project.hasProperty('dart-defines')) {
+    // Decode dart-defines (comma-separated, Base64-encoded) and store them
+    dartDefines = dartDefines + project.property('dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+                def pair = new String(entry.decodeBase64(), 'UTF-8').split('=', 2)
+                [(pair.first()): pair.last()]
+            }
+}
+
+def envVariables = [
+        BREEZ_SDK_API_KEY: project.hasProperty('BREEZ_SDK_API_KEY') ? BREEZ_SDK_API_KEY : "${dartDefines.BREEZ_SDK_API_KEY}"
+]
+
+android {
+    defaultConfig {
+        // Add a build config field to read the Breez API key 
+        // from a git ignored `gradle.properties` file 
+        buildConfigField "String", "BREEZ_SDK_API_KEY", envVariables.BREEZ_SDK_API_KEY
+    }
+}
+```
+
+</section>
+</custom-tabs>
 
 ## Integrate the Notification Plugin
 
