@@ -3,6 +3,18 @@ package com.example.kotlinmpplib
 import breez_sdk_liquid.*
 
 class SendPayment {
+    fun getCurrentLightningLimits(sdk: BindingLiquidSdk) {
+        // ANCHOR: get-current-pay-lightning-limits
+        try {
+            val currentLimits = sdk.fetchLightningLimits()
+            // Log.v("Breez", "Minimum amount, in sats: ${currentLimits.send.minSat}")
+            // Log.v("Breez", "Maximum amount, in sats: ${currentLimits.send.maxSat}")
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: get-current-pay-lightning-limits
+    }
+
     fun prepareSendPaymentLightningBolt11(sdk: BindingLiquidSdk) {
         // ANCHOR: prepare-send-payment-lightning-bolt11
         // Set the bolt11 you wish to pay

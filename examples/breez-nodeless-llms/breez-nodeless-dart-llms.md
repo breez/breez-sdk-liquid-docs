@@ -267,6 +267,18 @@ Note: swap service fee is dynamic and can change. Currently, it is 0.1%.
 > - 34 sats [Lockup Transaction Fee] + 19 sats [Claim Transaction Fee] + 10 sats [Swapper Service Fee] = 63 sats
 
 ```dart
+Future<LightningPaymentLimitsResponse> getLightningLimits() async {
+  try {
+    LightningPaymentLimitsResponse currentLimits = await breezSDKLiquid.instance!.fetchLightningLimits();
+    print("Minimum amount: ${currentLimits.send.minSat} sats");
+    print("Maximum amount: ${currentLimits.send.maxSat} sats");
+    return currentLimits;
+  } catch (error) {
+    print(error);
+    rethrow;
+  }
+}
+
 Future<PrepareSendResponse> prepareSendPaymentLightningBolt11() async {
   // Set the bolt11 invoice you wish to pay
   String destination = "<bolt11 invoice>";
@@ -621,7 +633,7 @@ Future<void> lnurlWithdraw() async {
 #### Pay Onchain
 
 ```dart
-Future<OnchainPaymentLimitsResponse> getCurrentLimits() async {
+Future<OnchainPaymentLimitsResponse> getOnchainLimits() async {
   try {
     OnchainPaymentLimitsResponse currentLimits = await breezSDKLiquid.instance!.fetchOnchainLimits();
     print("Minimum amount: ${currentLimits.send.minSat} sats");
