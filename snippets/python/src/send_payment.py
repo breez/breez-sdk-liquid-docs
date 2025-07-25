@@ -1,6 +1,17 @@
 import logging
 from breez_sdk_liquid import BindingLiquidSdk, PayAmount, PrepareSendRequest, SendPaymentRequest, PrepareSendResponse
 
+def fetch_pay_lightning_limits(sdk: BindingLiquidSdk):
+    # ANCHOR: get-current-pay-lightning-limits
+    try:
+        current_limits = sdk.fetch_lightning_limits()
+        logging.debug(f"Minimum amount, in sats {current_limits.send.min_sat}")
+        logging.debug(f"Maximum amount, in sats {current_limits.send.max_sat}")
+        return current_limits
+    except Exception as error:
+        logging.error(error)
+        raise
+    # ANCHOR_END: get-current-pay-lightning-limits
 
 def prepare_send_payment_lightning_bolt11(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-send-payment-lightning-bolt11

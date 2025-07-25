@@ -1,5 +1,16 @@
 import BreezSDKLiquid
 
+func getCurrentLightningLimits(sdk: BindingLiquidSdk) -> LightningPaymentLimitsResponse?? {
+    //  ANCHOR: get-current-pay-lightning-limits
+    let currentLimits = try? sdk.fetchLightningLimits()
+    if let limits = currentLimits {
+        print("Minimum amount, in sats: \(limits.send.minSat)")
+        print("Maximum amount, in sats: \(limits.send.maxSat)")
+    }
+    // ANCHOR_END: get-current-pay-lightning-limits
+    return currentLimits
+}
+
 func prepareSendPaymentLightningBolt11(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
     // ANCHOR: prepare-send-payment-lightning-bolt11
     // Set the bolt11 invoice you wish to pay

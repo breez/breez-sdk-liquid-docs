@@ -4,6 +4,17 @@ use anyhow::Result;
 use breez_sdk_liquid::prelude::*;
 use log::info;
 
+async fn get_current_lightning_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
+    // ANCHOR: get-current-pay-lightning-limits
+    let current_limits = sdk.fetch_lightning_limits().await?;
+
+    info!("Minimum amount: {} sats", current_limits.send.min_sat);
+    info!("Maximum amount: {} sats", current_limits.send.max_sat);
+    // ANCHOR_END: get-current-pay-lightning-limits
+
+    Ok(())
+}
+
 async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: prepare-send-payment-lightning-bolt11
     // Set the bolt11 invoice you wish to pay

@@ -1,6 +1,15 @@
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
+Future<LightningPaymentLimitsResponse> getCurrentLightningLimits() async {
+  // ANCHOR: get-current-pay-lightning-limits
+  LightningPaymentLimitsResponse currentLimits = await breezSDKLiquid.instance!.fetchLightningLimits();
+  print("Minimum amount: ${currentLimits.send.minSat} sats");
+  print("Maximum amount: ${currentLimits.send.maxSat} sats");
+  // ANCHOR_END: get-current-pay-lightning-limits
+  return currentLimits;
+}
+
 Future<PrepareSendResponse> prepareSendPaymentLightningBolt11() async {
   // ANCHOR: prepare-send-payment-lightning-bolt11
   // Set the bolt11 invoice you wish to pay
