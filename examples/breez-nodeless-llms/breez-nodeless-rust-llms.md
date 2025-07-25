@@ -224,6 +224,15 @@ Note: swap service fee is dynamic and can change. Currently, it is 0.1%.
 > - 34 sats [Lockup Transaction Fee] + 19 sats [Claim Transaction Fee] + 10 sats [Swapper Service Fee] = 63 sats
 
 ```rust
+async fn get_lightning_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
+    let current_limits = sdk.fetch_lightning_limits().await?;
+
+    info!("Minimum amount: {} sats", current_limits.send.min_sat);
+    info!("Maximum amount: {} sats", current_limits.send.max_sat);
+
+    Ok(())
+}
+
 async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()> {
     // Set the bolt11 invoice you wish to pay
     let prepare_response = sdk
@@ -539,7 +548,7 @@ async fn withdraw(sdk: Arc<LiquidSdk>) -> Result<()> {
 #### Pay Onchain
 
 ```rust
-async fn get_current_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
+async fn get_onchain_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
     let current_limits = sdk.fetch_onchain_limits().await?;
 
     info!("Minimum amount: {} sats", current_limits.send.min_sat);

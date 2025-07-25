@@ -1,10 +1,24 @@
 import {
+  fetchLightningLimits,
   prepareSendPayment,
   sendPayment,
   type PayAmount,
   PayAmountVariant,
   type PrepareSendResponse
 } from '@breeztech/react-native-breez-sdk-liquid'
+
+const exampleGetCurrentLightningLimits = async () => {
+  // ANCHOR: get-current-pay-lightning-limits
+  try {
+    const currentLimits = await fetchLightningLimits()
+
+    console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`)
+    console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`)
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: get-current-pay-lightning-limits
+}
 
 const examplePrepareSendPaymentLightningBolt11 = async () => {
   // ANCHOR: prepare-send-payment-lightning-bolt11
