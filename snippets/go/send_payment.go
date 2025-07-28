@@ -6,6 +6,15 @@ import (
 	"github.com/breez/breez-sdk-liquid-go/breez_sdk_liquid"
 )
 
+func GetCurrentLightningLimits(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: get-current-pay-lightning-limits
+	if currentLimits, err := sdk.FetchLightningLimits(); err == nil {
+		log.Printf("Minimum amount, in sats: %v", currentLimits.Send.MinSat)
+		log.Printf("Maximum amount, in sats: %v", currentLimits.Send.MaxSat)
+	}
+	// ANCHOR_END: get-current-pay-lightning-limits
+}
+
 func PrepareSendPaymentLightningBolt11(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: prepare-send-payment-lightning-bolt11
 	// Set the bolt11 invoice you wish to pay

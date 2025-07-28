@@ -17,10 +17,93 @@ Consider implementing the <a href="/notifications/getting_started.md">Notificati
 During the prepare step, the SDK ensures that the inputs are valid with respect to the destination,
 and also returns the relative fees related to the payment so they can be confirmed. 
 
-The `destination` field of the payment request supports Liquid BIP21, Liquid addresses and Lightning invoices
+The `destination` field of the payment request supports Liquid BIP21, Liquid addresses and Lightning invoices.
 
 ### Lightning
 Two types of Lightning destinations are possible: BOLT11 invoices and BOLT12 offers.
+
+When sending a Lightning payment, the swap limits for sending need to be first checked.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/send_payment.rs:get-current-pay-lightning-limits}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/SendPayment.swift:get-current-pay-lightning-limits}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/SendPayment.kt:get-current-pay-lightning-limits}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/send_payment.ts:get-current-pay-lightning-limits}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/send_payment.ts:get-current-pay-lightning-limits}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/send_payment.dart:get-current-pay-lightning-limits}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/send_payment.py:get-current-pay-lightning-limits}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/send_payment.go:get-current-pay-lightning-limits}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/SendPayment.cs:get-current-pay-lightning-limits}}
+```
+</section>
+</custom-tabs>
+
+This represents the range of valid amounts that can be sent at this point in time. The range may change depending on the swap service parameters or mempool feerate fluctuations.
+
+<div class="warning">
+<h4>Developer note</h4>
+To reduce invalid payments or errors, fetch these limits right before displaying the Pay Lightning UI and use them to validate user input.
+</div>
 
 #### BOLT11 invoice
 

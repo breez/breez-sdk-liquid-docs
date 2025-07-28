@@ -229,6 +229,17 @@ The fee components:
 - Swap Service Fee: 0.1% of the amount sent (dynamic)
 
 ```typescript
+const getLightningLimits = async (sdk) => {
+  try {
+    const currentLimits = await sdk.fetchLightningLimits();
+    console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`);
+    console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`);
+    return currentLimits;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const prepareSendPaymentLightningBolt11 = async (sdk) => {
   // Set the bolt11 invoice you wish to pay
   const prepareResponse = await sdk.prepareSendPayment({
