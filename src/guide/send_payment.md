@@ -102,7 +102,7 @@ This represents the range of valid amounts that can be sent at this point in tim
 
 <div class="warning">
 <h4>Developer note</h4>
-It is best to fetch these limits just before your app shows the Pay Lightning UI. You can then use these limits to validate the user input.
+To reduce invalid payments or errors, fetch these limits right before displaying the Pay Lightning UI and use them to validate user input.
 </div>
 
 #### BOLT11 invoice
