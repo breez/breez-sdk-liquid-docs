@@ -1,3 +1,4 @@
+mod configuration;
 mod fiat_currencies;
 mod getting_started;
 mod list_payments;

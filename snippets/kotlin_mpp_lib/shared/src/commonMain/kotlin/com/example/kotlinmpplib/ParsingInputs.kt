@@ -36,34 +36,4 @@ class ParsingInputs {
         }
         // ANCHOR_END: parse-inputs
     }
-
-    fun configureParsers() {
-        // ANCHOR: configure-external-parser
-        val mnemonic = "<mnemonic words>"
-
-        // Create the default config, providing your Breez API key
-        val config : Config = defaultConfig(LiquidNetwork.MAINNET, "<your Breez API key>")
-
-        // Configure external parsers
-        config.externalInputParsers = listOf(
-            ExternalInputParser(
-                providerId = "provider_a",
-                inputRegex = "^provider_a",
-                parserUrl = "https://parser-domain.com/parser?input=<input>"
-            ),
-            ExternalInputParser(
-                providerId = "provider_b", 
-                inputRegex = "^provider_b",
-                parserUrl = "https://parser-domain.com/parser?input=<input>"
-            )
-        )
-
-        try {
-            val connectRequest = ConnectRequest(config, mnemonic)
-            val sdk = connect(connectRequest)
-        } catch (e: Exception) {
-            // handle error
-        }
-        // ANCHOR_END: configure-external-parser
-    }
 }

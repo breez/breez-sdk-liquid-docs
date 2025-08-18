@@ -6,6 +6,7 @@ Integrating Breez SDK - Nodeless *(Liquid Implementation)* into your application
 - **[Fetching the balance](/guide/wallet_state.md)**
 - **[Listening to events](/guide/events.md)**
 - **[Adding logging](/guide/logging.md)**
+- **[Custom configuration](/guide/configuration.md)**
 
 ## API Key
 

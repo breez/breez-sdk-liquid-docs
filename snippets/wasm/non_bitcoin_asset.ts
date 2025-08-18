@@ -1,5 +1,4 @@
 import {
-  defaultConfig,
   type PayAmount,
   type PrepareSendResponse,
   type ReceiveAmount,
@@ -92,23 +91,6 @@ const exampleSendPaymentFees = async (sdk: BindingLiquidSdk, prepareResponse: Pr
   const payment = sendResponse.payment
   // ANCHOR_END: send-payment-fees
   console.log(payment)
-}
-
-const configureAssetMetadata = async (sdk: BindingLiquidSdk) => {
-  // ANCHOR: configure-asset-metadata
-  // Create the default config
-  const config = defaultConfig('mainnet', '<your-Breez-API-key>')
-
-  // Configure asset metadata
-  config.assetMetadata = [
-    {
-      assetId: '18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec',
-      name: 'PEGx EUR',
-      ticker: 'EURx',
-      precision: 8
-    }
-  ]
-  // ANCHOR_END: configure-asset-metadata
 }
 
 const exampleFetchAssetBalance = async (sdk: BindingLiquidSdk) => {
