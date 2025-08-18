@@ -15,7 +15,7 @@ The SDK can be configured in several ways to handle custom behaviour. When [Conn
 
 ## Magic Routing Hints
 
-By default the SDK uses <a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">Magic Routing Hints (MRH)</a> in order to bypass using swaps when both sender and receiver use Liquid. A side effect of this is that when sending using the Magic Routing Hint, you don't receive the payment preimage from the receiver when the payment is complete. You can disable this behavour and always use swaps in the config.
+By default the SDK uses <a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">Magic Routing Hints (MRH)</a> in order to bypass using swaps when both sender and receiver use Liquid. A side effect of this is when sending using the Magic Routing Hint, you don't receive the payment preimage from the receiver when the payment is complete. You can disable this behaviour and always use swaps in the config.
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
