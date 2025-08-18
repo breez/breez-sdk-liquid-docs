@@ -29,7 +29,7 @@ class NonBitcoinAsset {
             // Create a Liquid BIP21 URI/address to receive an asset payment to.
             // Note: Not setting the amount will generate an amountless BIP21 URI.
             val usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
-            val optionalAmount = PayAmount.Asset(usdtAssetId, 1.50, false)
+            val optionalAmount = PayAmount.Asset(usdtAssetId, 1.50, false, null)
             val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
 
             // If the fees are acceptable, continue to create the Send Payment
@@ -47,7 +47,7 @@ class NonBitcoinAsset {
         try {
             val usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
             // Set the optional estimate asset fees param to true
-            val optionalAmount = PayAmount.Asset(usdtAssetId, 1.50, true)
+            val optionalAmount = PayAmount.Asset(usdtAssetId, 1.50, true, null)
             val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
 
             // If the asset fees are set, you can use these fees to pay to send the asset
@@ -103,5 +103,35 @@ class NonBitcoinAsset {
             // handle error
         }
         // ANCHOR_END: fetch-asset-balance
+    }
+
+    fun sendSelfPaymentAsset(sdk: BindingLiquidSdk) {
+        // ANCHOR: send-self-payment-asset
+        try {
+            // Create a Liquid address to receive to
+            val prepareReceiveRes = sdk.prepareReceivePayment(PrepareReceiveRequest(PaymentMethod.LIQUID_ADDRESS, null))
+            val receiveRes = sdk.receivePayment(ReceivePaymentRequest(prepareReceiveRes, null, null, null))
+
+            // Swap your funds to the address we've created
+            val usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
+            val btcAssetId = "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d"
+            val prepareSendRes = sdk.prepareSendPayment(
+                PrepareSendRequest(
+                    receiveRes.destination,
+                    PayAmount.Asset(
+                        usdtAssetId,
+                        // We want to receive 1.5 USDt
+                        1.5,
+                        null,
+                        btcAssetId
+                    )
+                )
+            )
+            val sendRes = sdk.sendPayment(SendPaymentRequest(prepareSendRes, null))
+            val payment = sendRes.payment
+        } catch (e: Exception) {
+            // handle error
+        }
+        // ANCHOR_END: send-self-payment-asset
     }
 }

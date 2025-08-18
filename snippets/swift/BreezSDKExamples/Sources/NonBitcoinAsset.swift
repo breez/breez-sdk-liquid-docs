@@ -13,8 +13,8 @@ func prepareReceiveAsset(sdk: BindingLiquidSdk) -> PrepareReceiveResponse? {
         ))
 
     // If the fees are acceptable, continue to create the Receive Payment
-    let receiveFeesSat = prepareResponse!.feesSat;
-    print("Fees: {} sats", receiveFeesSat);
+    let receiveFeesSat = prepareResponse!.feesSat
+    print("Fees: \(receiveFeesSat) sats")
     // ANCHOR_END: prepare-receive-payment-asset
 
     return prepareResponse
@@ -28,9 +28,10 @@ func prepareSendPaymentAsset(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
     // you must specify an asset amount
     let usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
     let optionalAmount = PayAmount.asset(
-        assetId: usdtAssetId,
+        toAsset: usdtAssetId,
         receiverAmount: 1.50,
-        estimateAssetFees: false
+        estimateAssetFees: false,
+        fromAsset: Optional.none
     )
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
@@ -40,7 +41,7 @@ func prepareSendPaymentAsset(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
 
     // If the fees are acceptable, continue to create the Send Payment
     let sendFeesSat = prepareResponse!.feesSat
-    print("Fees: {} sats", sendFeesSat);
+    print("Fees: \(sendFeesSat) sats")
     // ANCHOR_END: prepare-send-payment-asset
     return prepareResponse
 }
@@ -51,9 +52,10 @@ func prepareSendPaymentAssetFees(sdk: BindingLiquidSdk) -> PrepareSendResponse? 
     let usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
     // Set the optional estimate asset fees param to true
     let optionalAmount = PayAmount.asset(
-        assetId: usdtAssetId,
+        toAsset: usdtAssetId,
         receiverAmount: 1.50,
-        estimateAssetFees: true
+        estimateAssetFees: true,
+        fromAsset: Optional.none
     )
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
@@ -63,14 +65,51 @@ func prepareSendPaymentAssetFees(sdk: BindingLiquidSdk) -> PrepareSendResponse? 
 
     // If the asset fees are set, you can use these fees to pay to send the asset
     let sendAssetFees = prepareResponse!.estimatedAssetFees
-    print("Estimated Fees: ~{}", sendAssetFees);
+    print("Estimated Fees: ~\(String(describing: sendAssetFees))")
 
     // If the asset fess are not set, you can use the sats fees to pay to send the asset
     let sendFeesSat = prepareResponse!.feesSat
-    print("Fees: {} sats", sendFeesSat);
+    print("Fees: \(sendFeesSat) sats")
     // ANCHOR_END: prepare-send-payment-asset-fees
     return prepareResponse
 }
+
+func sendSelfPaymentAsset(sdk: BindingLiquidSdk) -> SendPaymentResponse? {
+    // ANCHOR: send-self-payment-asset
+    // Create a Liquid address to receive to
+    let prepareReceiveRes = try? sdk.prepareReceivePayment(req: PrepareReceiveRequest (
+        paymentMethod: PaymentMethod.liquidAddress,
+        amount: Optional.none
+    ))
+    let receiveRes = try? sdk.receivePayment(req: ReceivePaymentRequest(
+        prepareResponse: prepareReceiveRes!,
+        description: Optional.none,
+        useDescriptionHash: Optional.none,
+        payerNote: Optional.none
+    ))
+
+    // Swap your funds to the address we've created
+    let usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
+    let btcAssetId = "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d";
+
+    let prepareSendRes = try? sdk.prepareSendPayment(req: PrepareSendRequest (
+        destination: receiveRes!.destination,
+        amount: PayAmount.asset (
+            toAsset: usdtAssetId,
+            // We want to receive 1.5 USDt
+            receiverAmount: 1.50,
+            estimateAssetFees: Optional.none,
+            fromAsset: btcAssetId
+        )
+    ))
+    let sendRes = try? sdk.sendPayment(req: SendPaymentRequest(
+        prepareResponse: prepareSendRes!,
+        useAssetFees: Optional.none
+    ))
+    // ANCHOR_END: send-self-payment-asset
+    return sendRes
+}
+
 
 func sendPaymentFees(sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) -> SendPaymentResponse? {
     // ANCHOR: send-payment-fees

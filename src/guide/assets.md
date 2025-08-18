@@ -269,6 +269,8 @@ In the example below we are using the [Mainnet Tether USD](https://assets.blocks
 
 When sending an asset via Liquid, a BIP21 URI or Liquid address can be used as the destination. If a Liquid address is used, the optional prepare request amount **must** be set. If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request amount **must** be set. When both amounts are set, the SDK will prioritize the **request amount** over the BIP21 amount. 
 
+It is also possible to execute the payment even when you do not own the receiver asset, by manually providing the asset you intend to pay with via the `from_asset` field. This will instruct the SDK to swap your funds (if possible) for the target asset in-flight for that payment. Please note that the asset must be present in the SDK's [Asset Metadata](#adding-asset-metadata) in order for the payment to succeed. For futher information on how this works and which assets are supported, check out the [SideSwap guide](https://sideswap.io/guides/).
+
 In the example below we are using the [Mainnet Tether USD](https://assets.blockstream.info/ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2.json) asset. 
 
 <custom-tabs category="lang">
@@ -344,6 +346,88 @@ In the example below we are using the [Mainnet Tether USD](https://assets.blocks
 ```
 </section>
 </custom-tabs>
+
+<h3 id="exchanging-assets-for-bitcoin">
+    <a class="header" href="#exchanging-assets-for-bitcoin">Exchanging assets for Bitcoin</a>
+    <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.prepare_send_payment">API docs</a>
+</h2>
+
+The `from_asset` field also allows for asset exchange, by means of self-payment. All you have to do is create a receive address and then pay to it. This is the same as swapping your asset balance (if sufficient) for the requested asset amount.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/non_bitcoin_asset.rs:send-self-payment-asset}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NonBitcoinAsset.swift:send-self-payment-asset}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NonBitcoinAsset.kt:send-self-payment-asset}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/non_bitcoin_asset.ts:send-self-payment-asset}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/non_bitcoin_asset.ts:send-self-payment-asset}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/non_bitcoin_asset.dart:send-self-payment-asset}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/non_bitcoin_asset.py:send-self-payment-asset}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/non_bitcoin_asset.go:send-self-payment-asset}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/NonBitcoinAsset.cs:send-self-payment-asset}}
+```
+</section>
+</custom-tabs>
+
 
 <h2 id="paying-fees-with-a-non-bitcoin-asset">
     <a class="header" href="#sending-a-non-bitcoin-asset">Paying fees with a non-Bitcoin asset</a>

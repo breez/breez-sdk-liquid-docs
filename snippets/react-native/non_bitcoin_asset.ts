@@ -6,6 +6,7 @@ import {
   type PayAmount,
   PayAmountVariant,
   prepareReceivePayment,
+  receivePayment,
   prepareSendPayment,
   type PrepareSendResponse,
   type ReceiveAmount,
@@ -46,7 +47,7 @@ const examplePrepareSendPaymentAsset = async () => {
   const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
   const optionalAmount: PayAmount = {
     type: PayAmountVariant.ASSET,
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.50,
     estimateAssetFees: false
   }
@@ -69,7 +70,7 @@ const examplePrepareSendPaymentAssetFees = async () => {
   // Set the optional estimate asset fees param to true
   const optionalAmount: PayAmount = {
     type: PayAmountVariant.ASSET,
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.50,
     estimateAssetFees: true
   }
@@ -128,4 +129,40 @@ const exampleFetchAssetBalance = async () => {
   const info = await getInfo()
   const assetBalances = info.walletInfo.assetBalances
   // ANCHOR_END: fetch-asset-balance
+}
+
+const exampleSendSelfPaymentAsset = async () => {
+  // ANCHOR: send-self-payment-asset
+  // Create a Liquid address to receive to
+  const prepareReceiveRes = await prepareReceivePayment({
+    paymentMethod: PaymentMethod.LIQUID_ADDRESS,
+    amount: undefined
+  })
+  const receiveRes = await receivePayment({
+    prepareResponse: prepareReceiveRes,
+    description: undefined,
+    useDescriptionHash: undefined,
+    payerNote: undefined
+  })
+
+  // Swap your funds to the address we've created
+  const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
+  const btcAssetId = '6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d'
+  const prepareSendRes = await prepareSendPayment({
+    destination: receiveRes.destination,
+    amount: {
+      type: PayAmountVariant.ASSET,
+      toAsset: usdtAssetId,
+      // We want to receive 1.5 USDt
+      receiverAmount: 1.5,
+      fromAsset: btcAssetId
+    }
+  })
+  const sendRes = await sendPayment({
+    prepareResponse: prepareSendRes,
+    useAssetFees: undefined
+  })
+  const payment = sendRes.payment
+  // ANCHOR_END: send-self-payment-asset
+  console.log(payment)
 }

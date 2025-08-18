@@ -191,6 +191,7 @@ extension ConfigCopyWith on liquid_sdk.Config {
     bool? useDefaultExternalInputParsers,
     List<liquid_sdk.AssetMetadata>? assetMetadata,
     String? breezApiKey,
+    bool? useMagicRoutingHints,
   }) {
     return liquid_sdk.Config(
       liquidExplorer: liquidExplorer ?? this.liquidExplorer,
@@ -203,6 +204,7 @@ extension ConfigCopyWith on liquid_sdk.Config {
       externalInputParsers: externalInputParsers ?? this.externalInputParsers,
       assetMetadata: assetMetadata ?? this.assetMetadata,
       breezApiKey: breezApiKey ?? this.breezApiKey,
+      useMagicRoutingHints: useMagicRoutingHints ?? this.useMagicRoutingHints,
     );
   }
 }

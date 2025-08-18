@@ -9,7 +9,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.2.2"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.3"),
-        .package(url: "https://github.com/breez/breez-sdk-liquid-swift", exact: "0.10.1")
+        .package(url: "https://github.com/breez/breez-sdk-liquid-swift", exact: "0.11.2")
         // To use a local version of breez-sdk-liquid, comment-out the above and un-comment:
         // .package(name: "bindings-swift", path: "/local-path/breez-sdk-liquid/lib/bindings/langs/swift")
     ],

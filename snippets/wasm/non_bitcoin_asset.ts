@@ -39,7 +39,7 @@ const examplePrepareSendPaymentAsset = async (sdk: BindingLiquidSdk) => {
   const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
   const optionalAmount: PayAmount = {
     type: 'asset',
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.5,
     estimateAssetFees: false
   }
@@ -62,7 +62,7 @@ const examplePrepareSendPaymentAssetFees = async (sdk: BindingLiquidSdk) => {
   // Set the optional estimate asset fees param to true
   const optionalAmount: PayAmount = {
     type: 'asset',
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.50,
     estimateAssetFees: true
   }
@@ -116,4 +116,40 @@ const exampleFetchAssetBalance = async (sdk: BindingLiquidSdk) => {
   const info = await sdk.getInfo()
   const assetBalances = info.walletInfo.assetBalances
   // ANCHOR_END: fetch-asset-balance
+}
+
+const exampleSendSelfPaymentAsset = async (sdk: BindingLiquidSdk) => {
+  // ANCHOR: send-self-payment-asset
+  // Create a Liquid address to receive to
+  const prepareReceiveRes = await sdk.prepareReceivePayment({
+    paymentMethod: 'liquidAddress',
+    amount: undefined
+  })
+  const receiveRes = await sdk.receivePayment({
+    prepareResponse: prepareReceiveRes,
+    description: undefined,
+    useDescriptionHash: undefined,
+    payerNote: undefined
+  })
+
+  // Swap your funds to the address we've created
+  const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
+  const btcAssetId = '6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d'
+  const prepareSendRes = await sdk.prepareSendPayment({
+    destination: receiveRes.destination,
+    amount: {
+      type: 'asset',
+      toAsset: usdtAssetId,
+      // We want to receive 1.5 USDt
+      receiverAmount: 1.5,
+      fromAsset: btcAssetId
+    }
+  })
+  const sendRes = await sdk.sendPayment({
+    prepareResponse: prepareSendRes,
+    useAssetFees: undefined
+  })
+  const payment = sendRes.payment
+  // ANCHOR_END: send-self-payment-asset
+  console.log(payment)
 }
