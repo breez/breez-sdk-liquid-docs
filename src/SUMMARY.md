@@ -9,6 +9,7 @@
   - [Fetching the balance](guide/wallet_state.md)
   - [Listening to events](guide/events.md)
   - [Adding logging](guide/logging.md)
+  - [Custom configuration](guide/configuration.md)
 - [Payment fundamentals](guide/payments.md)
   - [Parsing inputs](guide/parse.md)
   - [Receiving payments](guide/receive_payment.md)

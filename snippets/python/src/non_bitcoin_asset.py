@@ -77,27 +77,6 @@ def send_payment_fees(sdk: BindingLiquidSdk, prepare_response: PrepareSendRespon
         raise
     # ANCHOR_END: send-payment-fees
 
-def configure_asset_metadata():
-    # ANCHOR: configure-asset-metadata
-    # Create the default config
-    config = default_config(
-        network=LiquidNetwork.MAINNET,
-        breez_api_key="<your-Breez-API-key>"
-    )
-
-    # Configure asset metadata. Setting the optional fiat ID will enable
-    # paying fees using the asset (if available).
-    config.asset_metadata = [
-        AssetMetadata(
-            asset_id="18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec",
-            name="PEGx EUR",
-            ticker="EURx",
-            precision=8,
-            fiat_id="EUR"
-        )
-    ]
-    # ANCHOR_END: configure-asset-metadata
-
 def fetch_asset_balance(sdk: BindingLiquidSdk):
     # ANCHOR: fetch-asset-balance
     try:

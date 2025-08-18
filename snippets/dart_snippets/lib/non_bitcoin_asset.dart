@@ -93,27 +93,6 @@ Future<SendPaymentResponse> sendPaymentFees({required PrepareSendResponse prepar
   return sendPaymentResponse;
 }
 
-Future<void> configureAssetMatedata() async {
-  // ANCHOR: configure-asset-metadata
-  // Create the default config
-  Config config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>");
-
-  // Configure asset metadata. Setting the optional fiat ID will enable
-  // paying fees using the asset (if available).
-  config = config.copyWith(
-    assetMetadata: [
-      AssetMetadata(
-        assetId: "18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec",
-        name: "PEGx EUR",
-        ticker: "EURx",
-        precision: 8,
-        fiatId: "EUR",
-      ),
-    ],
-  );
-  // ANCHOR_END: configure-asset-metadata
-}
-
 Future<void> fetchAssetBalance() async {
   // ANCHOR: fetch-asset-balance
   GetInfoResponse? info = await breezSDKLiquid.instance!.getInfo();

@@ -1,4 +1,4 @@
-import { defaultConfig, connect, type BindingLiquidSdk } from '@breeztech/breez-sdk-liquid'
+import { type BindingLiquidSdk } from '@breeztech/breez-sdk-liquid'
 
 const parseInputs = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: parse-inputs
@@ -44,29 +44,4 @@ const parseInputs = async (sdk: BindingLiquidSdk) => {
       break
   }
   // ANCHOR_END: parse-inputs
-}
-
-const configureParsers = async () => {
-  // ANCHOR: configure-external-parser
-  const mnemonic = '<mnemonics words>'
-
-  // Create the default config, providing your Breez API key
-  const config = defaultConfig('mainnet', '<your-Breez-API-key>')
-
-  // Configure external parsers
-  config.externalInputParsers = [
-    {
-      providerId: 'provider_a',
-      inputRegex: '^provider_a',
-      parserUrl: 'https://parser-domain.com/parser?input=<input>'
-    },
-    {
-      providerId: 'provider_b',
-      inputRegex: '^provider_b',
-      parserUrl: 'https://parser-domain.com/parser?input=<input>'
-    }
-  ]
-
-  await connect({ mnemonic, config })
-  // ANCHOR_END: configure-external-parser
 }

@@ -127,31 +127,6 @@ public class NonBitcoinAssetSnippets
         // ANCHOR_END: send-self-payment-asset
     }
 
-    public void ConfigureAssetMetadata()
-    {
-        // ANCHOR: configure-asset-metadata
-        // Create the default config
-        var config = BreezSdkLiquidMethods.DefaultConfig(
-            LiquidNetwork.Mainnet,
-            "<your-Breez-API-key>"
-        ) with
-        {
-            // Configure asset metadata. Setting the optional fiat ID will enable
-            // paying fees using the asset (if available).
-            assetMetadata = new List<AssetMetadata>
-            {
-                new(
-                    assetId: "18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec",
-                    name: "PEGx EUR",
-                    ticker: "EURx",
-                    precision: 8,
-                    fiatId: "EUR"
-                )
-            }
-        };
-        // ANCHOR_END: configure-asset-metadata
-    }
-
     public void FetchAssetBalance(BindingLiquidSdk sdk)
     {
         // ANCHOR: fetch-asset-balance

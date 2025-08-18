@@ -50,43 +50,4 @@ public class ParsingInputsSnippets
         }
         // ANCHOR_END: parse-inputs
     }
-
-    public void ConfigureParsers()
-    {
-        // ANCHOR: configure-external-parser
-        var mnemonic = "<mnemonic words>";
-
-        // Create the default config, providing your Breez API key
-        var config = BreezSdkLiquidMethods.DefaultConfig(
-            LiquidNetwork.Mainnet,
-            "<your-Breez-API-key>"
-        ) with
-        {
-            // Configure external parsers
-            externalInputParsers = new List<ExternalInputParser>
-            {
-                new(
-                    providerId: "provider_a",
-                    inputRegex: "^provider_a",
-                    parserUrl: "https://parser-domain.com/parser?input=<input>"
-                ),
-                new(
-                    providerId: "provider_b",
-                    inputRegex: "^provider_b",
-                    parserUrl: "https://parser-domain.com/parser?input=<input>"
-                )
-            }
-        };
-
-        try
-        {
-            var connectRequest = new ConnectRequest(config, mnemonic);
-            var sdk = BreezSdkLiquidMethods.Connect(connectRequest);
-        }
-        catch (Exception)
-        {
-            // Handle error
-        }
-        // ANCHOR_END: configure-external-parser
-    }
 }

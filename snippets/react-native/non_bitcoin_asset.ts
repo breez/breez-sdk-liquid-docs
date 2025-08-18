@@ -1,7 +1,5 @@
 import {
-  defaultConfig,
   getInfo,
-  LiquidNetwork,
   PaymentMethod,
   type PayAmount,
   PayAmountVariant,
@@ -100,28 +98,6 @@ const exampleSendPaymentFees = async (prepareResponse: PrepareSendResponse) => {
   const payment = sendResponse.payment
   // ANCHOR_END: send-payment-fees
   console.log(payment)
-}
-
-const configureAssetMetadata = async () => {
-  // ANCHOR: configure-asset-metadata
-  // Create the default config
-  const config = await defaultConfig(
-    LiquidNetwork.MAINNET,
-    '<your-Breez-API-key>'
-  )
-
-  // Configure asset metadata. Setting the optional fiat ID will enable
-  // paying fees using the asset (if available).
-  config.assetMetadata = [
-    {
-      assetId: '18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec',
-      name: 'PEGx EUR',
-      ticker: 'EURx',
-      precision: 8,
-      fiatId: 'EUR'
-    }
-  ]
-  // ANCHOR_END: configure-asset-metadata
 }
 
 const exampleFetchAssetBalance = async () => {

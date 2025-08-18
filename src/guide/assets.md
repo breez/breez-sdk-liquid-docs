@@ -15,7 +15,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```rust,ignore
-{{#include ../../snippets/rust/src/non_bitcoin_asset.rs:configure-asset-metadata}}
+{{#include ../../snippets/rust/src/configuration.rs:configure-asset-metadata}}
 ```
 </section>
 
@@ -23,7 +23,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/NonBitcoinAsset.swift:configure-asset-metadata}}
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/Configuration.swift:configure-asset-metadata}}
 ```
 </section>
 
@@ -31,7 +31,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NonBitcoinAsset.kt:configure-asset-metadata}}
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Configuration.kt:configure-asset-metadata}}
 ```
 </section>
 
@@ -39,7 +39,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```typescript
-{{#include ../../snippets/wasm/non_bitcoin_asset.ts:configure-asset-metadata}}
+{{#include ../../snippets/wasm/configuration.ts:configure-asset-metadata}}
 ```
 </section>
 
@@ -47,7 +47,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```typescript
-{{#include ../../snippets/react-native/non_bitcoin_asset.ts:configure-asset-metadata}}
+{{#include ../../snippets/react-native/configuration.ts:configure-asset-metadata}}
 ```
 </section>
 
@@ -55,7 +55,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/non_bitcoin_asset.dart:configure-asset-metadata}}
+{{#include ../../snippets/dart_snippets/lib/configuration.dart:configure-asset-metadata}}
 ```
 </section>
 
@@ -63,7 +63,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```python,ignore 
-{{#include ../../snippets/python/src/non_bitcoin_asset.py:configure-asset-metadata}}
+{{#include ../../snippets/python/src/configuration.py:configure-asset-metadata}}
 ```
 </section>
 
@@ -71,7 +71,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```go,ignore
-{{#include ../../snippets/go/non_bitcoin_asset.go:configure-asset-metadata}}
+{{#include ../../snippets/go/configuration.go:configure-asset-metadata}}
 ```
 </section>
 
@@ -79,7 +79,7 @@ You can find the asset metadata for other assets in the Mainnet [Liquid Asset Re
 <section>
 
 ```cs,ignore
-{{#include ../../snippets/csharp/NonBitcoinAsset.cs:configure-asset-metadata}}
+{{#include ../../snippets/csharp/Configuration.cs:configure-asset-metadata}}
 ```
 </section>
 </custom-tabs>

@@ -108,32 +108,6 @@ func SendPaymentFees(sdk *breez_sdk_liquid.BindingLiquidSdk, prepareResponse bre
 	// ANCHOR_END: send-payment-fees
 }
 
-func ConfigureAssetMetadata() error {
-	// ANCHOR: configure-asset-metadata
-	// Create the default config
-	breezApiKey := "<your-Breez-API-key>"
-	config, err := breez_sdk_liquid.DefaultConfig(breez_sdk_liquid.LiquidNetworkMainnet, &breezApiKey)
-	if err != nil {
-		return err
-	}
-
-	// Configure asset metadata. Setting the optional fiat ID will enable
-	// paying fees using the asset (if available).
-	fiatId := "EUR"
-	assetMetadata := []breez_sdk_liquid.AssetMetadata{
-		{
-			AssetId:   "18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec",
-			Name:      "PEGx EUR",
-			Ticker:    "EURx",
-			Precision: 8,
-			FiatId:    &fiatId,
-		},
-	}
-	config.AssetMetadata = &assetMetadata
-	// ANCHOR_END: configure-asset-metadata
-	return nil
-}
-
 func FetchAssetBalance(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// ANCHOR: fetch-asset-balance
 	if info, err := sdk.GetInfo(); err == nil {

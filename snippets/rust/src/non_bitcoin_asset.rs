@@ -152,27 +152,6 @@ async fn send_payment_fees(
     Ok(())
 }
 
-async fn configure_asset_metadata() -> Result<()> {
-    // ANCHOR: configure-asset-metadata
-    // Create the default config
-    let mut config = LiquidSdk::default_config(
-        LiquidNetwork::Mainnet,
-        Some("<your-Breez-API-key>".to_string()),
-    )?;
-
-    // Configure asset metadata. Setting the optional fiat ID will enable
-    // paying fees using the asset (if available).
-    config.asset_metadata = Some(vec![AssetMetadata {
-        asset_id: "18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec".to_string(),
-        name: "PEGx EUR".to_string(),
-        ticker: "EURx".to_string(),
-        precision: 8,
-        fiat_id: Some("EUR".to_string()),
-    }]);
-    // ANCHOR_END: configure-asset-metadata
-    Ok(())
-}
-
 async fn fetch_asset_balance(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: fetch-asset-balance
     let info = sdk.get_info().await?;
