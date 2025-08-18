@@ -269,7 +269,7 @@ In the example below we are using the [Mainnet Tether USD](https://assets.blocks
 
 When sending an asset via Liquid, a BIP21 URI or Liquid address can be used as the destination. If a Liquid address is used, the optional prepare request amount **must** be set. If a BIP21 URI is used, either the BIP21 URI amount or optional prepare request amount **must** be set. When both amounts are set, the SDK will prioritize the **request amount** over the BIP21 amount. 
 
-It is also possible to execute the payment even when you do not own the receiver asset, by manually providing the asset you intend to pay with via the `from_asset` field. This will instruct the SDK to swap your funds (if possible) for the target asset in-flight for that payment. Please note that the asset must be present in the SDK's [Asset Metadata](#adding-asset-metadata) in order for the payment to succeed. For futher information on how this works and which assets are supported, check out the [SideSwap guide](https://sideswap.io/guides/).
+It is also possible to execute the payment even when you do not own the receiver asset by manually providing the asset you intend to pay with via the `from_asset` field. This will instruct the SDK to swap your funds (if possible) for the target in-flight asset for that payment. Please note that the asset must be present in the SDK's [Asset Metadata](#adding-asset-metadata) in order for the payment to succeed. For further information on how this works and which assets are supported, check out the [SideSwap guide](https://sideswap.io/guides/).
 
 In the example below we are using the [Mainnet Tether USD](https://assets.blockstream.info/ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2.json) asset. 
 
