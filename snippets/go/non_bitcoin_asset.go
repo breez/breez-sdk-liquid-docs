@@ -38,9 +38,10 @@ func PrepareSendPaymentAsset(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	receiverAmount := float64(1.50)
 	estimateAssetFees := false
 	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountAsset{
-		AssetId:           usdtAssetId,
+		ToAsset:           usdtAssetId,
 		ReceiverAmount:    receiverAmount,
 		EstimateAssetFees: &estimateAssetFees,
+		FromAsset:         nil,
 	}
 
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
@@ -66,9 +67,10 @@ func PrepareSendPaymentAssetFees(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// Set the optional estimate asset fees param to true
 	estimateAssetFees := true
 	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountAsset{
-		AssetId:           usdtAssetId,
+		ToAsset:           usdtAssetId,
 		ReceiverAmount:    receiverAmount,
 		EstimateAssetFees: &estimateAssetFees,
+		FromAsset:         nil,
 	}
 
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
@@ -139,4 +141,54 @@ func FetchAssetBalance(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		log.Printf("Asset balances: %#v", assetBalances)
 	}
 	// ANCHOR_END: fetch-asset-balance
+}
+
+func SendSelfPaymentAsset(sdk *breez_sdk_liquid.BindingLiquidSdk) {
+	// ANCHOR: send-self-payment-asset
+	// Create a Liquid address to receive to
+	prepareReceiveReq := breez_sdk_liquid.PrepareReceiveRequest{
+		PaymentMethod: breez_sdk_liquid.PaymentMethodLiquidAddress,
+		Amount:        nil,
+	}
+	prepareReceiveRes, err := sdk.PrepareReceivePayment(prepareReceiveReq)
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+	receiveRes, err := sdk.ReceivePayment(breez_sdk_liquid.ReceivePaymentRequest{
+		PrepareResponse:    prepareReceiveRes,
+		Description:        nil,
+		UseDescriptionHash: nil,
+		PayerNote:          nil,
+	})
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+
+	// Swap your funds to the address we've created
+	usdtAssetId := "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
+	btcAssetId := "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d"
+	var amount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountAsset{
+		ToAsset: usdtAssetId,
+		// We want to receive 1.5 USDt
+		ReceiverAmount: 1.5,
+		FromAsset:      &btcAssetId,
+	}
+	prepareSendRes, err := sdk.PrepareSendPayment(breez_sdk_liquid.PrepareSendRequest{
+		Destination: receiveRes.Destination,
+		Amount:      &amount,
+	})
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+	sendRes, err := sdk.SendPayment(breez_sdk_liquid.SendPaymentRequest{PrepareResponse: prepareSendRes})
+	if err != nil {
+		log.Printf("Error: %#v", err)
+		return
+	}
+	payment := sendRes.Payment
+	// ANCHOR_END: send-self-payment-asset
+	log.Printf("Payment: %#v", payment)
 }

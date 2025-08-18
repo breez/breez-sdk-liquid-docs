@@ -29,9 +29,10 @@ Future<PrepareSendResponse> prepareSendPaymentAsset() async {
   // you must specify an asset amount
   String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
   PayAmount_Asset optionalAmount = PayAmount_Asset(
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.50,
     estimateAssetFees: false,
+    fromAsset: null,
   );
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: destination,
@@ -55,9 +56,10 @@ Future<PrepareSendResponse> prepareSendPaymentAssetFees() async {
   String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
   // Set the optional estimate asset fees param to true
   PayAmount_Asset optionalAmount = PayAmount_Asset(
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.50,
     estimateAssetFees: true,
+    fromAsset: null,
   );
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: destination,
@@ -118,5 +120,51 @@ Future<void> fetchAssetBalance() async {
   List<AssetBalance> assetBalances = info.walletInfo.assetBalances;
   // ANCHOR_END: fetch-asset-balance
   print(assetBalances);
+}
+
+Future<SendPaymentResponse> sendSelfPaymentAsset() async {
+  // ANCHOR: send-self-payment-asset
+  // Create a Liquid address to receive to
+  PrepareReceiveResponse prepareReceiveRes = await breezSDKLiquid.instance!.prepareReceivePayment(
+    req: PrepareReceiveRequest(
+      paymentMethod: PaymentMethod.liquidAddress,
+      amount: null,
+    ),
+  );
+  ReceivePaymentResponse receiveRes = await breezSDKLiquid.instance!.receivePayment(
+    req: ReceivePaymentRequest(
+      prepareResponse: prepareReceiveRes,
+      description: null,
+      useDescriptionHash: null,
+      payerNote: null,
+    ),
+  );
+
+  // Swap your funds to the address we've created
+  String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
+  String btcAssetId = "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d";
+  PrepareSendResponse prepareSendRes = await breezSDKLiquid.instance!.prepareSendPayment(
+    req: PrepareSendRequest(
+      destination: receiveRes.destination,
+      amount: PayAmount_Asset(
+        toAsset: usdtAssetId,
+        // We want to receive 1.5 USDt
+        receiverAmount: 1.5,
+        estimateAssetFees: null,
+        fromAsset: btcAssetId,
+      ),
+    ),
+  );
+
+  SendPaymentResponse sendRes = await breezSDKLiquid.instance!.sendPayment(
+    req: SendPaymentRequest(
+      prepareResponse: prepareSendRes,
+      useAssetFees: null,
+    ),
+  );
+  Payment payment = sendRes.payment;
+  // ANCHOR_END: send-self-payment-asset
+  print(payment);
+  return sendRes;
 }
 
