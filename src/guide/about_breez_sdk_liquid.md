@@ -24,6 +24,7 @@ It’s a nodeless integration that offers a self-custodial, end-to-end solution 
 - [x] Multi-app support
 - [x] Multi-device support
 - [x] Real-time state backup
+- [x] WebAssembly support 
 - [x] Keys are only held by users
 - [x] USDT and multi-asset support on Liquid
 - [x] Built-in fiat on-ramp
