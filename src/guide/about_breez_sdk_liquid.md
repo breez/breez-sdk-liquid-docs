@@ -19,14 +19,14 @@ It’s a nodeless integration that offers a self-custodial, end-to-end solution 
 **Key Features**
 
 - [x] Send and receive Lightning payments 
-- [x] On-chain interoperability
+- [x] Send and receive on-chain transactions 
 - [x] Complete LNURL & BOLT12 functionality
+- [x] USDT and multi-asset support on Liquid
 - [x] Multi-app support
 - [x] Multi-device support
 - [x] Real-time state backup
 - [x] WebAssembly support 
 - [x] Keys are only held by users
-- [x] USDT and multi-asset support on Liquid
 - [x] Built-in fiat on-ramp
 - [x] Free open-source solution
 
