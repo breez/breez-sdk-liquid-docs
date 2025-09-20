@@ -7,6 +7,7 @@ These guidelines describe how to integrate the Breez SDK to create a consistent 
 - **Transparency without jargon** — Show limits, fees, and conditions up front in plain language.
 - **Progressive disclosure** — Keep advanced details available but tucked away by default.
 
+## Guidelines
 - **[Sending Payments]** 
 - **[Receiving Payments]**
 - **[Displaying Payments]** 
