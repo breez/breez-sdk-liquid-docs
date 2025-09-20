@@ -54,5 +54,12 @@
 - [Advanced](notifications/advanced.md)
   - [Adding logging](notifications/logging.md)
   - [Changing default strings](notifications/changing_strings.md)
+
+---
+
+# User Experience
+
+- [UX Guidelines](guide/uxguide.md)
+
   - [Customising push messages](notifications/custom_messages.md)
   - [Handling custom notifications](notifications/custom_notifications.md)
