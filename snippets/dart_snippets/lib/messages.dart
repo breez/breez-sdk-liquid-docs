@@ -6,6 +6,7 @@ Future<SignMessageResponse> signMessage() async {
   SignMessageRequest signMessageRequest = SignMessageRequest(
     message: "<message to sign>",
   );
+
   SignMessageResponse signMessageResponse = breezSDKLiquid.instance!.signMessage(
     req: signMessageRequest,
   );
@@ -29,6 +30,7 @@ Future<CheckMessageResponse> checkMessage() async {
     pubkey: "<pubkey of signer>",
     signature: "<message signature>",
   );
+
   CheckMessageResponse checkMessageResponse = breezSDKLiquid.instance!.checkMessage(
     req: checkMessageRequest,
   );

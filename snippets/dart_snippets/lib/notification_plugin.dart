@@ -27,7 +27,7 @@ Future<void> initSdk() async {
 
   // Create the default config, providing your Breez API key
   Config config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>");
-  
+
   // Set the working directory to the app group path
   config = config.copyWith(workingDir: await getWorkingDir());
 
