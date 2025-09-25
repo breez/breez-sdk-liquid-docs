@@ -15,6 +15,7 @@ Future<PreparePayOnchainResponse> preparePayOnchain() async {
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
     amount: PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt),
   );
+
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,
   );
@@ -31,6 +32,7 @@ Future<PreparePayOnchainResponse> preparePayOnchainDrain() async {
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
     amount: PayAmount_Drain(),
   );
+
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,
   );
@@ -45,11 +47,11 @@ Future<PreparePayOnchainResponse> preparePayOnchainDrain() async {
 Future<PreparePayOnchainResponse> preparePayOnchainFeeRate() async {
   // ANCHOR: prepare-pay-onchain-fee-rate
   int optionalSatPerVbyte = 21;
-
   PreparePayOnchainRequest preparePayOnchainRequest = PreparePayOnchainRequest(
     amount: PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt),
     feeRateSatPerVbyte: optionalSatPerVbyte,
   );
+
   PreparePayOnchainResponse prepareRes = await breezSDKLiquid.instance!.preparePayOnchain(
     req: preparePayOnchainRequest,
   );
@@ -68,11 +70,11 @@ Future<SendPaymentResponse> startReverseSwap({
 }) async {
   // ANCHOR: start-reverse-swap
   String destinationAddress = "bc1..";
-
   PayOnchainRequest req = PayOnchainRequest(
     address: destinationAddress,
     prepareResponse: prepareRes,
   );
+
   SendPaymentResponse res = await breezSDKLiquid.instance!.payOnchain(req: req);
   // ANCHOR_END: start-reverse-swap
   return res;

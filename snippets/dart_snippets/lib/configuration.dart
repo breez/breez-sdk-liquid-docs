@@ -48,7 +48,10 @@ Future<void> configureParsers() async {
 Future<void> configureMagicRoutingHints() async {
   // ANCHOR: configure-magic-routing-hints
   // Create the default config
-  Config config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>");
+  Config config = defaultConfig(
+    network: LiquidNetwork.mainnet,
+    breezApiKey: "<your-Breez-API-key>",
+  );
 
   // Configure magic routing hints
   config = config.copyWith(

@@ -7,11 +7,13 @@ Future<PrepareReceiveResponse> prepareReceivePaymentAsset() async {
   // Note: Not setting the amount will generate an amountless BIP21 URI.
   String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
   ReceiveAmount_Asset optionalAmount = ReceiveAmount_Asset(assetId: usdtAssetId, payerAmount: 1.50);
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.liquidAddress,
+    amount: optionalAmount,
+  );
+
   PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
-    req: PrepareReceiveRequest(
-      paymentMethod: PaymentMethod.liquidAddress,
-      amount: optionalAmount,
-    ),
+    req: prepareReceiveRequest,
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -84,8 +86,13 @@ Future<PrepareSendResponse> prepareSendPaymentAssetFees() async {
 Future<SendPaymentResponse> sendPaymentFees({required PrepareSendResponse prepareResponse}) async {
   // ANCHOR: send-payment-fees
   // Set the use asset fees param to true
+  SendPaymentRequest sendPaymentRequest = SendPaymentRequest(
+    prepareResponse: prepareResponse,
+    useAssetFees: true,
+  );
+
   SendPaymentResponse sendPaymentResponse = await breezSDKLiquid.instance!.sendPayment(
-    req: SendPaymentRequest(prepareResponse: prepareResponse, useAssetFees: true),
+    req: sendPaymentRequest,
   );
   Payment payment = sendPaymentResponse.payment;
   // ANCHOR_END: send-payment-fees
@@ -104,46 +111,54 @@ Future<void> fetchAssetBalance() async {
 Future<SendPaymentResponse> sendSelfPaymentAsset() async {
   // ANCHOR: send-self-payment-asset
   // Create a Liquid address to receive to
-  PrepareReceiveResponse prepareReceiveRes = await breezSDKLiquid.instance!.prepareReceivePayment(
-    req: PrepareReceiveRequest(
-      paymentMethod: PaymentMethod.liquidAddress,
-      amount: null,
-    ),
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.liquidAddress,
+    amount: null,
   );
+
+  PrepareReceiveResponse prepareReceiveRes = await breezSDKLiquid.instance!.prepareReceivePayment(
+    req: prepareReceiveRequest,
+  );
+
+  ReceivePaymentRequest receivePaymentRequest = ReceivePaymentRequest(
+    prepareResponse: prepareReceiveRes,
+    description: null,
+    useDescriptionHash: null,
+    payerNote: null,
+  );
+
   ReceivePaymentResponse receiveRes = await breezSDKLiquid.instance!.receivePayment(
-    req: ReceivePaymentRequest(
-      prepareResponse: prepareReceiveRes,
-      description: null,
-      useDescriptionHash: null,
-      payerNote: null,
-    ),
+    req: receivePaymentRequest,
   );
 
   // Swap your funds to the address we've created
   String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
   String btcAssetId = "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d";
-  PrepareSendResponse prepareSendRes = await breezSDKLiquid.instance!.prepareSendPayment(
-    req: PrepareSendRequest(
-      destination: receiveRes.destination,
-      amount: PayAmount_Asset(
-        toAsset: usdtAssetId,
-        // We want to receive 1.5 USDt
-        receiverAmount: 1.5,
-        estimateAssetFees: null,
-        fromAsset: btcAssetId,
-      ),
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(
+    destination: receiveRes.destination,
+    amount: PayAmount_Asset(
+      toAsset: usdtAssetId,
+      // We want to receive 1.5 USDt
+      receiverAmount: 1.5,
+      estimateAssetFees: null,
+      fromAsset: btcAssetId,
     ),
   );
 
+  PrepareSendResponse prepareSendRes = await breezSDKLiquid.instance!.prepareSendPayment(
+    req: prepareSendRequest,
+  );
+
+  SendPaymentRequest sendPaymentRequest = SendPaymentRequest(
+    prepareResponse: prepareSendRes,
+    useAssetFees: null,
+  );
+
   SendPaymentResponse sendRes = await breezSDKLiquid.instance!.sendPayment(
-    req: SendPaymentRequest(
-      prepareResponse: prepareSendRes,
-      useAssetFees: null,
-    ),
+    req: sendPaymentRequest,
   );
   Payment payment = sendRes.payment;
   // ANCHOR_END: send-self-payment-asset
   print(payment);
   return sendRes;
 }
-

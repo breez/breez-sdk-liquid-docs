@@ -15,12 +15,12 @@ Future<RefundResponse> executeRefund({
   // ANCHOR: execute-refund
   String destinationAddress = "...";
   int feeRateSatPerVbyte = refundTxFeeRate;
-
   RefundRequest req = RefundRequest(
     swapAddress: refundable.swapAddress,
     refundAddress: destinationAddress,
     feeRateSatPerVbyte: feeRateSatPerVbyte,
   );
+
   RefundResponse resp = await breezSDKLiquid.instance!.refund(req: req);
   print(resp.refundTxId);
   // ANCHOR_END: execute-refund
@@ -43,10 +43,12 @@ Future recommendedFees() async {
 Future<void> handlePaymentsWaitingFeeAcceptance() async {
   // ANCHOR: handle-payments-waiting-fee-acceptance
   // Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+  ListPaymentsRequest listPaymentsRequest = ListPaymentsRequest(
+    states: [PaymentState.waitingFeeAcceptance],
+  );
+
   List<Payment> paymentsWaitingFeeAcceptance = await breezSDKLiquid.instance!.listPayments(
-    req: ListPaymentsRequest(
-      states: [PaymentState.waitingFeeAcceptance],
-    ),
+    req: listPaymentsRequest,
   );
 
   for (Payment payment in paymentsWaitingFeeAcceptance) {
@@ -56,11 +58,13 @@ Future<void> handlePaymentsWaitingFeeAcceptance() async {
     }
 
     PaymentDetails_Bitcoin details = payment.details as PaymentDetails_Bitcoin;
+    FetchPaymentProposedFeesRequest fetchPaymentProposedFeesRequest = FetchPaymentProposedFeesRequest(
+      swapId: details.swapId,
+    );
+
     FetchPaymentProposedFeesResponse fetchFeesResponse =
         await breezSDKLiquid.instance!.fetchPaymentProposedFees(
-      req: FetchPaymentProposedFeesRequest(
-        swapId: details.swapId,
-      ),
+      req: fetchPaymentProposedFeesRequest,
     );
 
     print(
@@ -68,10 +72,12 @@ Future<void> handlePaymentsWaitingFeeAcceptance() async {
     );
 
     // If the user is ok with the fees, accept them, allowing the payment to proceed
+    AcceptPaymentProposedFeesRequest acceptPaymentProposedFeesRequest = AcceptPaymentProposedFeesRequest(
+      response: fetchFeesResponse,
+    );
+
     await breezSDKLiquid.instance!.acceptPaymentProposedFees(
-      req: AcceptPaymentProposedFeesRequest(
-        response: fetchFeesResponse,
-      ),
+      req: acceptPaymentProposedFeesRequest,
     );
   }
   // ANCHOR_END: handle-payments-waiting-fee-acceptance

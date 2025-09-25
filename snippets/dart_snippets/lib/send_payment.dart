@@ -13,8 +13,10 @@ Future<LightningPaymentLimitsResponse> getCurrentLightningLimits() async {
 Future<PrepareSendResponse> prepareSendPaymentLightningBolt11() async {
   // ANCHOR: prepare-send-payment-lightning-bolt11
   // Set the bolt11 invoice you wish to pay
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(destination: "<bolt11 invoice>");
+
   PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
-    req: PrepareSendRequest(destination: "<bolt11 invoice>"),
+    req: prepareSendRequest,
   );
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -28,11 +30,13 @@ Future<PrepareSendResponse> prepareSendPaymentLightningBolt12() async {
   // ANCHOR: prepare-send-payment-lightning-bolt12
   // Set the bolt12 offer you wish to pay
   PayAmount_Bitcoin optionalAmount = PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt);
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(
+    destination: "<bolt12 offer>",
+    amount: optionalAmount,
+  );
+
   PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
-    req: PrepareSendRequest(
-      destination: "<bolt12 offer>",
-      amount: optionalAmount,
-    ),
+    req: prepareSendRequest,
   );
   // ANCHOR_END: prepare-send-payment-lightning-bolt12
   return prepareSendResponse;
@@ -81,11 +85,13 @@ Future<PrepareSendResponse> prepareSendPaymentLiquidDrain() async {
 Future<SendPaymentResponse> sendPayment({required PrepareSendResponse prepareResponse}) async {
   // ANCHOR: send-payment
   String optionalPayerNote = "<payer note>";
+  SendPaymentRequest sendPaymentRequest = SendPaymentRequest(
+    prepareResponse: prepareResponse,
+    payerNote: optionalPayerNote,
+  );
+
   SendPaymentResponse sendPaymentResponse = await breezSDKLiquid.instance!.sendPayment(
-    req: SendPaymentRequest(
-      prepareResponse: prepareResponse,
-      payerNote: optionalPayerNote,
-    ),
+    req: sendPaymentRequest,
   );
   Payment payment = sendPaymentResponse.payment;
   // ANCHOR_END: send-payment

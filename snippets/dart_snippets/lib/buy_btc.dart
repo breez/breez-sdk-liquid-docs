@@ -13,8 +13,11 @@ Future<OnchainPaymentLimitsResponse> fetchOnchainLimits() async {
 
 Future<PrepareBuyBitcoinResponse> prepareBuyBitcoin(OnchainPaymentLimitsResponse currentLimits) async {
   // ANCHOR: prepare-buy-btc
-  PrepareBuyBitcoinRequest req =
-      PrepareBuyBitcoinRequest(provider: BuyBitcoinProvider.moonpay, amountSat: currentLimits.receive.minSat);
+  PrepareBuyBitcoinRequest req = PrepareBuyBitcoinRequest(
+    provider: BuyBitcoinProvider.moonpay,
+    amountSat: currentLimits.receive.minSat,
+  );
+
   PrepareBuyBitcoinResponse prepareRes = await breezSDKLiquid.instance!.prepareBuyBitcoin(req: req);
 
   // Check the fees are acceptable before proceeding
@@ -27,6 +30,7 @@ Future<PrepareBuyBitcoinResponse> prepareBuyBitcoin(OnchainPaymentLimitsResponse
 Future<String> buyBitcoin(PrepareBuyBitcoinResponse prepareResponse) async {
   // ANCHOR: buy-btc
   BuyBitcoinRequest req = BuyBitcoinRequest(prepareResponse: prepareResponse);
+
   String url = await breezSDKLiquid.instance!.buyBitcoin(req: req);
   // ANCHOR_END: buy-btc
   return url;

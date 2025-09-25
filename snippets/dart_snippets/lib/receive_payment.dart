@@ -11,11 +11,13 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
 
   // Create an invoice and set the amount you wish the payer to send
   ReceiveAmount_Bitcoin optionalAmount = ReceiveAmount_Bitcoin(payerAmountSat: 5000 as BigInt);
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.bolt11Invoice,
+    amount: optionalAmount,
+  );
+
   PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
-    req: PrepareReceiveRequest(
-      paymentMethod: PaymentMethod.bolt11Invoice,
-      amount: optionalAmount,
-    ),
+    req: prepareReceiveRequest,
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -27,8 +29,12 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLightning() async {
 
 Future<PrepareReceiveResponse> prepareReceivePaymentLightningBolt12() async {
   // ANCHOR: prepare-receive-payment-lightning-bolt12
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.bolt12Offer,
+  );
+
   PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
-    req: PrepareReceiveRequest(paymentMethod: PaymentMethod.bolt12Offer),
+    req: prepareReceiveRequest,
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -48,11 +54,13 @@ Future<PrepareReceiveResponse> prepareReceivePaymentOnchain() async {
 
   // Or create a cross-chain transfer (Liquid to Bitcoin) via chain swap
   ReceiveAmount_Bitcoin optionalAmount = ReceiveAmount_Bitcoin(payerAmountSat: 5000 as BigInt);
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.bitcoinAddress,
+    amount: optionalAmount,
+  );
+
   PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
-    req: PrepareReceiveRequest(
-      paymentMethod: PaymentMethod.bitcoinAddress,
-      amount: optionalAmount,
-    ),
+    req: prepareReceiveRequest,
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -68,11 +76,13 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLiquid() async {
   // There are no limits, but the payer amount should be greater than broadcast fees when specified
   // Note: Not setting the amount will generate a plain Liquid address
   ReceiveAmount_Bitcoin optionalAmount = ReceiveAmount_Bitcoin(payerAmountSat: 5000 as BigInt);
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.liquidAddress,
+    amount: optionalAmount,
+  );
+
   PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
-    req: PrepareReceiveRequest(
-      paymentMethod: PaymentMethod.liquidAddress,
-      amount: optionalAmount,
-    ),
+    req: prepareReceiveRequest,
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -85,11 +95,13 @@ Future<PrepareReceiveResponse> prepareReceivePaymentLiquid() async {
 Future<ReceivePaymentResponse> receivePayment(PrepareReceiveResponse prepareResponse) async {
   // ANCHOR: receive-payment
   String optionalDescription = "<description>";
+  ReceivePaymentRequest receivePaymentRequest = ReceivePaymentRequest(
+    description: optionalDescription,
+    prepareResponse: prepareResponse,
+  );
+
   ReceivePaymentResponse res = await breezSDKLiquid.instance!.receivePayment(
-    req: ReceivePaymentRequest(
-      description: optionalDescription,
-      prepareResponse: prepareResponse,
-    ),
+    req: receivePaymentRequest,
   );
 
   String destination = res.destination;
