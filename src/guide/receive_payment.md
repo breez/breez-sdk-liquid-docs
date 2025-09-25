@@ -551,6 +551,10 @@ Once a receive payment is initiated, you can follow and react to the different p
 | **PaymentSucceeded** | The claim transaction or direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) is confirmed. | Show payment as complete. |
 | **PaymentFailed** | The swap has failed from one of several reasons. Either the swap/invoice has expired or the lockup transaction failed to broadcast. |  |
 
+> ⚠️ **Caution**  
+> The SDK does not verify the transaction amount for direct Liquid transactions. Implement validation in your own code if required, rather than relying solely on the **PaymentSucceeded** event.
+
+
 ### Bitcoin
 | Event                           | Description                                                                                                                                                                                                                                                                                                                           | UX Suggestion                                   |
 |---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
