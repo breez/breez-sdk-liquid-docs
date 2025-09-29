@@ -3,7 +3,7 @@
 ## Production checklist
 There are some use cases where you need to verify that they are implemented correctly. Here is a checklist you can use to verify that your application is production ready.
 
-- **Add logging**: Add sufficient logging into your application to diagnose any issues users are having. For more information: [Adding logging](logging.md).
+- **Add logging**: Add sufficient logging into your application to diagnose any issues users are having. Include log entries from the Breez SDK upto and including **DEBUG** level. For more information: [Adding logging](logging.md).
 
 - **Display pending payments**: Payments always contain a status field that can be used to determine if the payment was completed or not. Make sure you handle the case where the payment is still pending by showing the correct status to the user.
 
