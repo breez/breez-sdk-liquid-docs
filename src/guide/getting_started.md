@@ -14,6 +14,12 @@ The _Nodeless_ Breez API key must be set for the SDK to work. You can request on
 
 **Note:** This is not the same as the _Native_ (Greenlight) Breez API key, so it can't be reused.
 
+## UX Guidelines
+
+When implementing the Breez SDK, we recommend reading through our [UX Guidelines](/guide/uxguide.md) to provide a consistent and intuitive experience for your end-users.
+
+Many of the guidelines are implemented in [Misty Breez](https://github.com/breez/misty-breez/), which you can use as the primary UX reference during SDK implementation.
+
 ## Tutorials
 
 **How to Add Bitcoin Payments to React Native & Expo Apps** 
