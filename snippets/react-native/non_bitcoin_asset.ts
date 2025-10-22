@@ -10,7 +10,7 @@ import {
   type ReceiveAmount,
   ReceiveAmountVariant,
   sendPayment
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const examplePrepareAssetPayment = async () => {
   // ANCHOR: prepare-receive-payment-asset

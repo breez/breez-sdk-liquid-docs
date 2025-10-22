@@ -1,7 +1,7 @@
 import {
   listFiatCurrencies,
   fetchFiatRates
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleListCurrencies = async () => {
   // ANCHOR: list-fiat-currencies

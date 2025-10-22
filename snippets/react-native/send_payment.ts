@@ -5,7 +5,7 @@ import {
   type PayAmount,
   PayAmountVariant,
   type PrepareSendResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleGetCurrentLightningLimits = async () => {
   // ANCHOR: get-current-pay-lightning-limits

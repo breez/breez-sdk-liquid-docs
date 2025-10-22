@@ -21,7 +21,7 @@ Key capabilities include:
 ### Installation
 
 ```bash
-yarn add @breeztech/react-native-breez-sdk-liquid
+yarn add @breeztech/breez-sdk-liquid-react-native
 ```
 
 ### Guidelines
@@ -47,7 +47,7 @@ import {
   disconnect,
   type SdkEvent,
   setLogger
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const initializeSDK = async () => {
   // Your mnemonic seed phrase for wallet recovery
@@ -108,7 +108,7 @@ import {
   checkMessage,
   getInfo,
   signMessage
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const signMessageExample = async () => {
   try {
@@ -156,7 +156,7 @@ import {
   ListPaymentDetailsVariant,
   listPayments,
   PaymentType
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const getPaymentExample = async () => {
   try {
@@ -234,7 +234,7 @@ const listPaymentsDetailsDestination = async () => {
 ### Webhook Integration
 
 ```javascript
-import { registerWebhook, unregisterWebhook } from '@breeztech/react-native-breez-sdk-liquid'
+import { registerWebhook, unregisterWebhook } from '@breeztech/breez-sdk-liquid-react-native'
 
 const registerWebhookExample = async () => {
   try {
@@ -259,7 +259,7 @@ const unregisterWebhookExample = async () => {
 import {
   InputTypeVariant,
   parse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const parseInputExample = async () => {
   const input = 'an input to be parsed...'
@@ -358,7 +358,7 @@ import {
   PayAmountVariant,
   addEventListener,
   removeEventListener
-} from '@breeztech/react-native-breez-sdk-liquid';
+} from '@breeztech/breez-sdk-liquid-react-native';
 
 const WalletApp = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -778,7 +778,7 @@ Note: swapper service fee is dynamic and can change. Currently, it is 0.1%.
 **Always make sure the SDK instance is synced before performing any actions:**
 
 ```javascript
-import { addEventListener, SdkEventType } from '@breeztech/react-native-breez-sdk-liquid';
+import { addEventListener, SdkEventType } from '@breeztech/breez-sdk-liquid-react-native';
 
 // In a React component using the useEffect hook
 useEffect(() => {
@@ -832,7 +832,7 @@ Manage the connection lifecycle properly:
 
 ```javascript
 import React, { useEffect } from 'react';
-import { connect, disconnect } from '@breeztech/react-native-breez-sdk-liquid';
+import { connect, disconnect } from '@breeztech/breez-sdk-liquid-react-native';
 
 const WalletScreen = () => {
   useEffect(() => {
@@ -911,7 +911,7 @@ import { useEffect, useState } from 'react';
 import { 
   addEventListener, 
   removeEventListener
-} from '@breeztech/react-native-breez-sdk-liquid';
+} from '@breeztech/breez-sdk-liquid-react-native';
 
 function useSdkEvents() {
   const [paymentEvents, setPaymentEvents] = useState([]);
@@ -981,7 +981,7 @@ function useSdkEvents() {
 Use the SDK's built-in logging system:
 
 ```javascript
-import { setLogger } from '@breeztech/react-native-breez-sdk-liquid';
+import { setLogger } from '@breeztech/breez-sdk-liquid-react-native';
 
 const setupLogging = async () => {
   try {
@@ -1082,7 +1082,7 @@ import {
   type OnchainPaymentLimitsResponse,
   type PrepareBuyBitcoinResponse,
   prepareBuyBitcoin
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const fetchOnchainLimits = async () => {
   try {
@@ -1130,7 +1130,7 @@ const buyBtc = async (prepareResponse: PrepareBuyBitcoinResponse) => {
 import {
   listFiatCurrencies,
   fetchFiatRates
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const getFiatCurrencies = async () => {
   try {
@@ -1181,7 +1181,7 @@ import {
   type PayAmount,
   PayAmountVariant,
   type PrepareSendResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const getLightningLimits = async () => {
   try {
@@ -1331,7 +1331,7 @@ import {
   type ReceiveAmount,
   ReceiveAmountVariant,
   receivePayment
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const prepareReceiveLightning = async () => {
   try {
@@ -1449,7 +1449,7 @@ import {
   lnurlAuth,
   LnUrlCallbackStatusVariant,
   parse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const lnurlAuthenticate = async () => {
   // Endpoint can also be of the form:
@@ -1485,7 +1485,7 @@ import {
   PayAmountVariant,
   prepareLnurlPay,
   type PrepareLnUrlPayResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const prepareLnurlPayment = async () => {
   // Endpoint can also be of the
@@ -1540,7 +1540,7 @@ import {
   InputTypeVariant,
   lnurlWithdraw,
   parse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const executeLnurlWithdraw = async () => {
   // Endpoint can also be of the form:
@@ -1576,7 +1576,7 @@ import {
   preparePayOnchain,
   payOnchain,
   PayAmountVariant
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const getOnchainLimits = async () => {
   try {
@@ -1680,7 +1680,7 @@ import {
   acceptPaymentProposedFees,
   PaymentState,
   PaymentDetailsVariant
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const getRefundables = async () => {
   try {
@@ -1774,7 +1774,7 @@ import {
   prepareReceivePayment,
   type ReceiveAmount,
   ReceiveAmountVariant
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const prepareAssetPayment = async () => {
   try {

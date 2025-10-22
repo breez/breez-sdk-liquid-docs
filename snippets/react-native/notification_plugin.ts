@@ -2,7 +2,7 @@ import {
   defaultConfig,
   connect,
   LiquidNetwork
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 import { Platform } from 'react-native'
 
 // ANCHOR: init-sdk-app-group

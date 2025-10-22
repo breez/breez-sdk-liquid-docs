@@ -4,7 +4,7 @@ import {
   ListPaymentDetailsVariant,
   listPayments,
   PaymentType
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleGetPayment = async () => {
   // ANCHOR: get-payment

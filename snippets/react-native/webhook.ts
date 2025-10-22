@@ -1,4 +1,4 @@
-import { registerWebhook, unregisterWebhook } from '@breeztech/react-native-breez-sdk-liquid'
+import { registerWebhook, unregisterWebhook } from '@breeztech/breez-sdk-liquid-react-native'
 
 const _registerWebhook = async () => {
   // ANCHOR: register-webook

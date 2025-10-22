@@ -12,7 +12,7 @@ The NWC implementation currently handles three NIP-47 commands:
 
 ## Setup and Configuration
 
-The NWC plugin is configured using the `NwcConfig` struct, which provides several optional parameters for customization:
+The NWC plugin is configured using `NwcConfig`, which provides several optional parameters for customization:
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -99,9 +99,13 @@ The NWC plugin is configured using the `NwcConfig` struct, which provides severa
 
 ### Configuration Options
 
-1. **relay_urls** (Optional): `Option<Vec<String>>` - Custom Nostr relay URLs to use for communication. If None, uses default relay: "wss://relay.getalbypro.com/breez". Can specify multiple relays for redundancy.
+1. **Relay URLs**
 
-2. **secret_key_hex** (Optional): `Option<String>` - Custom Nostr secret key in hex format. If None, a new key is generated and persisted. Useful for using a specific Nostr identity.
+   An optional list of custom Nostr relay URLs to use for communication. By default uses relay: "wss://relay.getalbypro.com/breez". You can specify multiple relays for redundancy.
+
+2. **Secret Key**
+
+   An optional custom Nostr secret key in hex format. If not provided, a new key will be generated and persisted automatically. This is useful when you want to use a specific Nostr identity.
 
 ## Managing Connections
 
@@ -364,7 +368,7 @@ The NWC service allows you to create, list, and remove connection strings that e
 
 ## Event Handling
 
-The NWC service provides real-time event notifications through the `NwcEventListener` trait. You can listen for various events to monitor the service status and handle incoming requests.
+The NWC service provides real-time event notifications through an event listener. You can listen for various events to monitor the service status and handle incoming requests.
 
 ### Event Types
 
@@ -548,7 +552,7 @@ The NWC service emits the following event types:
 
 ## Error Handling
 
-The NWC plugin uses `NwcResult<T>` which can return `NwcError` variants:
+The NWC plugin may throw errors during operations. Common error types include:
 
 1. **Generic**: General errors (parsing, network, etc.)
 2. **Persist**: Data persistence errors

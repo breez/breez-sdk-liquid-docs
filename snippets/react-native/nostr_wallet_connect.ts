@@ -6,7 +6,7 @@ import {
   NwcEvent,
   NwcEventDetails,
   NwcError
-} from '@breeztech/react-native-breez-sdk-liquid';
+} from '@breeztech/breez-sdk-liquid-react-native';
 
 async function nostrWalletConnect() {
     // ANCHOR: nwc-config
