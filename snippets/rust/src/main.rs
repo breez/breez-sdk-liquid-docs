@@ -1,9 +1,11 @@
+mod configuration;
 mod fiat_currencies;
 mod getting_started;
 mod list_payments;
 mod lnurl_auth;
 mod lnurl_pay;
 mod lnurl_withdraw;
+mod non_bitcoin_asset;
 mod parsing_inputs;
 mod pay_onchain;
 mod receive_onchain;

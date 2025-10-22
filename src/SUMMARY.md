@@ -9,9 +9,11 @@
   - [Fetching the balance](guide/wallet_state.md)
   - [Listening to events](guide/events.md)
   - [Adding logging](guide/logging.md)
+  - [Custom configuration](guide/configuration.md)
 - [Payment fundamentals](guide/payments.md)
   - [Parsing inputs](guide/parse.md)
   - [Receiving payments](guide/receive_payment.md)
+    - [Receiving payments offline](guide/receiving_payments_offline.md)
   - [Sending payments](guide/send_payment.md)
   - [Listing payments](guide/list_payments.md)
   - [Refunding payments](guide/refund_payment.md)
@@ -30,6 +32,8 @@
 - [Supporting fiat currencies](guide/fiat_currencies.md)
 - [Buying Bitcoin](guide/buy_btc.md)
 - [End-user fees](guide/end-user_fees.md)
+  - [Base fees](guide/base_fees.md)
+  - [Partner fees](guide/partner_fees.md)
 - [Connecting an external signer](guide/self_signer.md)
 - [Handling multiple assets](guide/assets.md)
 - [Moving to production](guide/production.md)
@@ -54,3 +58,13 @@
   - [Changing default strings](notifications/changing_strings.md)
   - [Customising push messages](notifications/custom_messages.md)
   - [Handling custom notifications](notifications/custom_notifications.md)
+    
+---
+
+# UX Guidelines
+
+- [Overview](guide/uxguide.md)
+- [Receiving Payments](guide/uxguide_receive.md)
+- [Sending Payments](guide/uxguide_send.md)
+- [Displaying Payments](guide/uxguide_display.md)
+- [Seed & Key Management](guide/uxguide_seed.md)

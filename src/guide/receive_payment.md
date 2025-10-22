@@ -6,10 +6,7 @@ Once the SDK is initialized, you can directly begin receiving payments. The rece
 1. [Preparing the Payment](receive_payment.md#preparing-payments)
 1. [Receiving the Payment](receive_payment.md#receiving-payments-1)
 
-<div class="warning">
-<h4>Developer note</h4>
-Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the payment in the background.
-</div>
+For more information on how to receive payments when the application is closed or in the background, see [Receiving payments offline](receiving_payments_offline.md).
 
 <h2 id="preparing-payments">
     <a class="header" href="#preparing-payments">Preparing Payments</a>
@@ -189,11 +186,6 @@ A BOLT12 offer is a static payment code that can be paid to multiple times. When
 <div class="warning">
 <h4>Developer note</h4>
 A webhook URL <b>must</b> be registered to receive BOLT12 invoice requests when the SDK is offline.
-</div>
-
-<div class="warning">
-<h4>Developer note</h4>
-Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the BOLT12 invoice request in the background.
 </div>
 
 ### Bitcoin
@@ -461,13 +453,18 @@ receive method, optionally specifying a description.
 </section>
 </custom-tabs>
 
+<div class="warning">
+<h4>Developer note</h4>
+Consider implementing the <a href="/notifications/getting_started.md">Notification Plugin</a> when using the Breez SDK in a mobile application. By registering a webhook the application can receive notifications to process the BOLT12 invoice request in the background.
+</div>
+
 ### Amountless Bitcoin Payments
 
 To receive a Bitcoin payment that does not specify an amount, it may be necessary to explicitly accept the associated fees. This will be the case when the onchain fee rate increases between preparation and payment time.
 
 Alternatively, if the fees are considered too high, the user can either choose to wait for them to come down or outright refund the payment. To learn more about refunds, see the [Refunding payments](./refund_payment.md#refunding-payments) section.
 
-To reduce the likelihood of this extra fee review step being necessary, you can configure a fee rate leeway in the SDK's configuration that will automatically accept slightly higher fees within the specified tolerance.
+To reduce the likelihood of this extra fee review step being necessary, you can configure a fee leeway in the SDK's configuration that will automatically accept slightly higher fees within the specified tolerance. By default, the SDK uses the leeway defined [here](https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/model/constant.DEFAULT_ONCHAIN_FEE_RATE_LEEWAY_SAT.html).
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -553,6 +550,9 @@ Once a receive payment is initiated, you can follow and react to the different p
 | **PaymentWaitingConfirmation** | The claim transaction has been broadcast or a direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) has been seen. | Display successful payment feedback. |
 | **PaymentSucceeded** | The claim transaction or direct Liquid transaction (<a target="_blank" href="https://docs.boltz.exchange/v/api/magic-routing-hints">MRH</a>) is confirmed. | Show payment as complete. |
 | **PaymentFailed** | The swap has failed from one of several reasons. Either the swap/invoice has expired or the lockup transaction failed to broadcast. |  |
+
+> ⚠️ **Caution**  
+> Before v0.11.3, the SDK did not verify the transaction amount for direct Liquid transactions. Upgrade to v0.11.3 or later, or implement validation in your own code if required, rather than relying solely on the **PaymentSucceeded** event.
 
 ### Bitcoin
 | Event                           | Description                                                                                                                                                                                                                                                                                                                           | UX Suggestion                                   |

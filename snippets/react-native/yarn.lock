@@ -670,10 +670,10 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@breeztech/react-native-breez-sdk-liquid@^0.9.0":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@breeztech/react-native-breez-sdk-liquid/-/react-native-breez-sdk-liquid-0.9.1.tgz#c5c406f475267f607587f7713bda64fa8ca7ac16"
-  integrity sha512-A0HtzoOsV3PXo8uv2/NI1czyCRd/EznreyaCOlGTtt6WOIbACB7K7ZEWQO0O/1N3AP3pcdB39x/4a4vUgbsnyA==
+"@breeztech/react-native-breez-sdk-liquid@^0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@breeztech/react-native-breez-sdk-liquid/-/react-native-breez-sdk-liquid-0.11.2.tgz#4b428515921923904d2342cb6e13a0ae40105ebd"
+  integrity sha512-RfJOk+o6RIKmWKtUL/cLCp3ajjzNXqwdF+4Xax7vEUq6y/hzGb/VEO7EIfS0BM8lVvS8+cE3BaDb18hsefpONw==
 
 "@esbuild/android-arm64@0.18.20":
   version "0.18.20"

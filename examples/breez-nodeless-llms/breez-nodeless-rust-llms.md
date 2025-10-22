@@ -224,12 +224,22 @@ Note: swap service fee is dynamic and can change. Currently, it is 0.1%.
 > - 34 sats [Lockup Transaction Fee] + 19 sats [Claim Transaction Fee] + 10 sats [Swapper Service Fee] = 63 sats
 
 ```rust
+async fn get_lightning_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
+    let current_limits = sdk.fetch_lightning_limits().await?;
+
+    info!("Minimum amount: {} sats", current_limits.send.min_sat);
+    info!("Maximum amount: {} sats", current_limits.send.max_sat);
+
+    Ok(())
+}
+
 async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()> {
     // Set the bolt11 invoice you wish to pay
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt11 invoice>".to_string(),
             amount: None,
+            comment: None,
         })
         .await?;
 
@@ -268,6 +278,7 @@ async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
+            comment: None,
         })
         .await?;
 
@@ -285,6 +296,7 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
+            comment: None,
         })
         .await?;
 
@@ -297,12 +309,20 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
 ```
 
 #### Execute Payment
+
+For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
+
 - **Always make sure the SDK instance is synced before performing any actions**
 
 ```rust
 async fn send_payment(sdk: Arc<LiquidSdk>, prepare_response: PrepareSendResponse) -> Result<()> {
+    let optional_payer_note = Some("<payer note>".to_string());
     let send_response = sdk
-        .send_payment(&SendPaymentRequest { prepare_response })
+        .send_payment(&SendPaymentRequest {
+            prepare_response,
+            use_asset_fees: None,
+            payer_note: optional_payer_note,
+        })
         .await?;
     let payment = send_response.payment;
     
@@ -528,7 +548,7 @@ async fn withdraw(sdk: Arc<LiquidSdk>) -> Result<()> {
 #### Pay Onchain
 
 ```rust
-async fn get_current_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
+async fn get_onchain_limits(sdk: Arc<LiquidSdk>) -> Result<()> {
     let current_limits = sdk.fetch_onchain_limits().await?;
 
     info!("Minimum amount: {} sats", current_limits.send.min_sat);
@@ -723,6 +743,7 @@ async fn prepare_send_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
+            comment: None,
         })
         .await?;
 
@@ -1084,6 +1105,7 @@ async fn main() -> Result<()> {
             let prepare_response = sdk.prepare_send_payment(&PrepareSendRequest {
                 destination,
                 amount,
+                comment: None,
             }).await?;
             
             // Send payment
@@ -1304,6 +1326,7 @@ async fn safe_payment(sdk: Arc<LiquidSdk>, destination: String, amount_sat: u64,
     let prepare_response = sdk.prepare_send_payment(&PrepareSendRequest {
         destination,
         amount: Some(PayAmount::Bitcoin { receiver_amount_sat: amount_sat }),
+        comment: None,
     }).await?;
     
     // Check if fees are acceptable

@@ -237,6 +237,22 @@ Note: swap service fee is dynamic and can change. Currently, it is 0.1%.
 > 
 > - 34 sats [Lockup Transaction Fee] + 19 sats [Claim Transaction Fee] + 10 sats [Swapper Service Fee] = 63 sats
 ```python
+def get_lightning_limits(sdk: BindingLiquidSdk):
+    try:
+        current_limits = sdk.fetch_lightning_limits()
+        logging.debug(
+            "Minimum amount, in sats ",
+            current_limits.send.min_sat
+        )
+        logging.debug(
+            "Maximum amount, in sats ",
+            current_limits.send.max_sat
+        )
+        return current_limits
+    except Exception as error:
+        logging.error(error)
+        raise
+
 def prepare_send_payment_lightning_bolt11(sdk: BindingLiquidSdk):
     # Set the bolt11 invoice you wish to pay
     destination = "<bolt11 invoice>"
@@ -319,14 +335,19 @@ def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
 ```
 
 #### Execute Payment
+
+For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
+
 - **always make sure the sdk instance is synced before performing any actions**
 
 ```python
 def send_payment(sdk: BindingLiquidSdk, prepare_response: PrepareSendResponse):
     try:
+        optional_payer_note = "<payer note>"
         send_response = sdk.send_payment(
             SendPaymentRequest(
-                prepare_response=prepare_response
+                prepare_response=prepare_response,
+                payer_note=optional_payer_note
             )
         )
         payment = send_response.payment
@@ -536,7 +557,7 @@ def withdraw(sdk: BindingLiquidSdk):
 #### Pay Onchain
 
 ```python
-def fetch_pay_onchain_limits(sdk: BindingLiquidSdk):
+def get_onchain_limits(sdk: BindingLiquidSdk):
     try:
         current_limits = sdk.fetch_onchain_limits()
         logging.debug(

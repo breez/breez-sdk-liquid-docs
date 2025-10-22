@@ -7,11 +7,13 @@ Future<PrepareReceiveResponse> prepareReceivePaymentAsset() async {
   // Note: Not setting the amount will generate an amountless BIP21 URI.
   String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
   ReceiveAmount_Asset optionalAmount = ReceiveAmount_Asset(assetId: usdtAssetId, payerAmount: 1.50);
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.liquidAddress,
+    amount: optionalAmount,
+  );
+
   PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
-    req: PrepareReceiveRequest(
-      paymentMethod: PaymentMethod.liquidAddress,
-      amount: optionalAmount,
-    ),
+    req: prepareReceiveRequest,
   );
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -29,9 +31,10 @@ Future<PrepareSendResponse> prepareSendPaymentAsset() async {
   // you must specify an asset amount
   String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
   PayAmount_Asset optionalAmount = PayAmount_Asset(
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.50,
     estimateAssetFees: false,
+    fromAsset: null,
   );
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: destination,
@@ -55,9 +58,10 @@ Future<PrepareSendResponse> prepareSendPaymentAssetFees() async {
   String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
   // Set the optional estimate asset fees param to true
   PayAmount_Asset optionalAmount = PayAmount_Asset(
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.50,
     estimateAssetFees: true,
+    fromAsset: null,
   );
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: destination,
@@ -82,34 +86,18 @@ Future<PrepareSendResponse> prepareSendPaymentAssetFees() async {
 Future<SendPaymentResponse> sendPaymentFees({required PrepareSendResponse prepareResponse}) async {
   // ANCHOR: send-payment-fees
   // Set the use asset fees param to true
+  SendPaymentRequest sendPaymentRequest = SendPaymentRequest(
+    prepareResponse: prepareResponse,
+    useAssetFees: true,
+  );
+
   SendPaymentResponse sendPaymentResponse = await breezSDKLiquid.instance!.sendPayment(
-    req: SendPaymentRequest(prepareResponse: prepareResponse, useAssetFees: true),
+    req: sendPaymentRequest,
   );
   Payment payment = sendPaymentResponse.payment;
   // ANCHOR_END: send-payment-fees
   print(payment);
   return sendPaymentResponse;
-}
-
-Future<void> configureAssetMatedata() async {
-  // ANCHOR: configure-asset-metadata
-  // Create the default config
-  Config config = defaultConfig(network: LiquidNetwork.mainnet, breezApiKey: "<your-Breez-API-key>");
-
-  // Configure asset metadata. Setting the optional fiat ID will enable
-  // paying fees using the asset (if available).
-  config = config.copyWith(
-    assetMetadata: [
-      AssetMetadata(
-        assetId: "18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec",
-        name: "PEGx EUR",
-        ticker: "EURx",
-        precision: 8,
-        fiatId: "EUR",
-      ),
-    ],
-  );
-  // ANCHOR_END: configure-asset-metadata
 }
 
 Future<void> fetchAssetBalance() async {
@@ -120,3 +108,57 @@ Future<void> fetchAssetBalance() async {
   print(assetBalances);
 }
 
+Future<SendPaymentResponse> sendSelfPaymentAsset() async {
+  // ANCHOR: send-self-payment-asset
+  // Create a Liquid address to receive to
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.liquidAddress,
+    amount: null,
+  );
+
+  PrepareReceiveResponse prepareReceiveRes = await breezSDKLiquid.instance!.prepareReceivePayment(
+    req: prepareReceiveRequest,
+  );
+
+  ReceivePaymentRequest receivePaymentRequest = ReceivePaymentRequest(
+    prepareResponse: prepareReceiveRes,
+    description: null,
+    useDescriptionHash: null,
+    payerNote: null,
+  );
+
+  ReceivePaymentResponse receiveRes = await breezSDKLiquid.instance!.receivePayment(
+    req: receivePaymentRequest,
+  );
+
+  // Swap your funds to the address we've created
+  String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
+  String btcAssetId = "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d";
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(
+    destination: receiveRes.destination,
+    amount: PayAmount_Asset(
+      toAsset: usdtAssetId,
+      // We want to receive 1.5 USDt
+      receiverAmount: 1.5,
+      estimateAssetFees: null,
+      fromAsset: btcAssetId,
+    ),
+  );
+
+  PrepareSendResponse prepareSendRes = await breezSDKLiquid.instance!.prepareSendPayment(
+    req: prepareSendRequest,
+  );
+
+  SendPaymentRequest sendPaymentRequest = SendPaymentRequest(
+    prepareResponse: prepareSendRes,
+    useAssetFees: null,
+  );
+
+  SendPaymentResponse sendRes = await breezSDKLiquid.instance!.sendPayment(
+    req: sendPaymentRequest,
+  );
+  Payment payment = sendRes.payment;
+  // ANCHOR_END: send-self-payment-asset
+  print(payment);
+  return sendRes;
+}

@@ -30,7 +30,7 @@ async fn prepare_pay(sdk: Arc<LiquidSdk>) -> Result<()> {
 
         // If the fees are acceptable, continue to create the LNURL Pay
         let fees_sat = prepare_response.fees_sat;
-        info!("Fees: {} sats", fees_sat);
+        info!("Fees: {fees_sat} sats");
     }
     // ANCHOR_END: prepare-lnurl-pay
     Ok(())

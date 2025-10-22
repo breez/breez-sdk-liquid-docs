@@ -1175,12 +1175,25 @@ Note: swap service fee is dynamic and can change. Currently, it is 0.1%.
 
 ```javascript
 import {
+  fetchLightningLimits,
   prepareSendPayment,
   sendPayment,
   type PayAmount,
   PayAmountVariant,
   type PrepareSendResponse
 } from '@breeztech/react-native-breez-sdk-liquid'
+
+const getLightningLimits = async () => {
+  try {
+    const currentLimits = await fetchLightningLimits()
+
+    console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`)
+    console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`)
+    return currentLimits
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 const prepareSendPaymentLightningBolt11 = async () => {
   // Set the bolt11 invoice you wish to pay
@@ -1267,11 +1280,16 @@ const prepareSendPaymentLiquidDrain = async () => {
 
 #### Execute Payment
 
+For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
+
 ```javascript
 const sendPayment = async (prepareResponse: PrepareSendResponse) => {
   try {
+    const optionalPayerNote = '<payer note>'
+
     const sendResponse = await sendPayment({
-      prepareResponse
+      prepareResponse,
+      payerNote: optionalPayerNote
     })
     const payment = sendResponse.payment
     return payment
@@ -1560,7 +1578,7 @@ import {
   PayAmountVariant
 } from '@breeztech/react-native-breez-sdk-liquid'
 
-const checkPayOnchainLimits = async () => {
+const getOnchainLimits = async () => {
   try {
     const currentLimits = await fetchOnchainLimits()
 

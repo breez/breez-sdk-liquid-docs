@@ -1,8 +1,6 @@
 use anyhow::Result;
-use bip39::{Language, Mnemonic};
-use breez_sdk_liquid::model::{ConnectRequest, LiquidNetwork};
 use breez_sdk_liquid::prelude::LiquidSdk;
-use breez_sdk_liquid::{ExternalInputParser, InputType};
+use breez_sdk_liquid::InputType;
 use std::sync::Arc;
 
 async fn parse_input(sdk: Arc<LiquidSdk>) -> Result<()> {
@@ -45,39 +43,4 @@ async fn parse_input(sdk: Arc<LiquidSdk>) -> Result<()> {
     }
     // ANCHOR_END: parse-inputs
     Ok(())
-}
-
-async fn configure_parsers() -> Result<Arc<LiquidSdk>> {
-    // ANCHOR: configure-external-parser
-    let mnemonic = Mnemonic::generate_in(Language::English, 12)?;
-
-    // Create the default config, providing your Breez API key
-    let mut config = LiquidSdk::default_config(
-        LiquidNetwork::Mainnet,
-        Some("<your-Breez-API-key>".to_string()),
-    )?;
-
-    // Configure external parsers
-    config.external_input_parsers = Some(vec![
-        ExternalInputParser {
-            provider_id: "provider_a".to_string(),
-            input_regex: "^provider_a".to_string(),
-            parser_url: "https://parser-domain.com/parser?input=<input>".to_string(),
-        },
-        ExternalInputParser {
-            provider_id: "provider_b".to_string(),
-            input_regex: "^provider_b".to_string(),
-            parser_url: "https://parser-domain.com/parser?input=<input>".to_string(),
-        },
-    ]);
-
-    let connect_request = ConnectRequest {
-        config,
-        mnemonic: Some(mnemonic.to_string()),
-        passphrase: None,
-        seed: None,
-    };
-    let sdk = LiquidSdk::connect(connect_request).await?;
-    // ANCHOR_END: configure-external-parser
-    Ok(sdk)
 }

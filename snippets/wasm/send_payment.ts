@@ -4,6 +4,19 @@ import {
   type BindingLiquidSdk
 } from '@breeztech/breez-sdk-liquid'
 
+const exampleGetCurrentLightningLimits = async (sdk: BindingLiquidSdk) => {
+  // ANCHOR: get-current-pay-lightning-limits
+  try {
+    const currentLimits = await sdk.fetchLightningLimits()
+
+    console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`)
+    console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`)
+  } catch (err) {
+    console.error(err)
+  }
+  // ANCHOR_END: get-current-pay-lightning-limits
+}
+
 const examplePrepareSendPaymentLightningBolt11 = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-send-payment-lightning-bolt11
   // Set the bolt11 invoice you wish to pay
@@ -71,8 +84,10 @@ const examplePrepareSendPaymentLiquidDrain = async (sdk: BindingLiquidSdk) => {
 
 const exampleSendPayment = async (sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) => {
   // ANCHOR: send-payment
+  const optionalPayerNote = '<payer note>'
   const sendResponse = await sdk.sendPayment({
-    prepareResponse
+    prepareResponse,
+    payerNote: optionalPayerNote
   })
   const payment = sendResponse.payment
   // ANCHOR_END: send-payment

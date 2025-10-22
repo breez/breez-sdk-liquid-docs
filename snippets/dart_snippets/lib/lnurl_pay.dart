@@ -42,6 +42,7 @@ Future<void> prepareLnurlPayDrain({required LnUrlPayRequestData data}) async {
     comment: optionalComment,
     validateSuccessActionUrl: optionalValidateSuccessActionUrl,
   );
+
   PrepareLnUrlPayResponse prepareResponse = await breezSDKLiquid.instance!.prepareLnurlPay(req: req);
   // ANCHOR_END: prepare-lnurl-pay-drain
   print(prepareResponse);
@@ -49,8 +50,10 @@ Future<void> prepareLnurlPayDrain({required LnUrlPayRequestData data}) async {
 
 Future<void> lnurlPay({required PrepareLnUrlPayResponse prepareResponse}) async {
   // ANCHOR: lnurl-pay
+  LnUrlPayRequest lnUrlPayRequest = LnUrlPayRequest(prepareResponse: prepareResponse);
+
   LnUrlPayResult result = await breezSDKLiquid.instance!.lnurlPay(
-    req: LnUrlPayRequest(prepareResponse: prepareResponse),
+    req: lnUrlPayRequest,
   );
   // ANCHOR_END: lnurl-pay
   print(result);

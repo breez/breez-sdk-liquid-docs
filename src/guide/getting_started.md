@@ -6,12 +6,19 @@ Integrating Breez SDK - Nodeless *(Liquid Implementation)* into your application
 - **[Fetching the balance](/guide/wallet_state.md)**
 - **[Listening to events](/guide/events.md)**
 - **[Adding logging](/guide/logging.md)**
+- **[Custom configuration](/guide/configuration.md)**
 
 ## API Key
 
 The _Nodeless_ Breez API key must be set for the SDK to work. You can request one for free by filling our form <a target="_blank" href="{{api_key_form_uri}}">here</a>.
 
 **Note:** This is not the same as the _Native_ (Greenlight) Breez API key, so it can't be reused.
+
+## UX Guidelines
+
+When implementing the Breez SDK, we recommend reading through our [UX Guidelines](/guide/uxguide.md) to provide a consistent and intuitive experience for your end-users.
+
+Many of the guidelines are implemented in [Misty Breez](https://github.com/breez/misty-breez/), which you can use as the primary UX reference during SDK implementation.
 
 ## Tutorials
 

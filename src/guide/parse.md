@@ -6,6 +6,11 @@ Natively supported formats include: BOLT11 invoices, BOLT12 offers, LNURLs of di
 
 BIP353 addresses are also supported, in which case they will be parsed into a BOLT12 offer or an LNURL-Pay. In these cases, the BIP353 address is also returned to indicate BIP353 was used.
 
+<div class="warning">
+<h4>Developer note</h4>
+The amounts returned from calling parse on Lightning based inputs (BOLT11, BOLT12, LNURL) are denominated in millisatoshi.
+</div>
+
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>
@@ -102,14 +107,14 @@ When parsing an input that isn't recognized as one of the native input types, th
 <section>
 
 ```rust,ignore
-{{#include ../../snippets/rust/src/parsing_inputs.rs:configure-external-parser}}
+{{#include ../../snippets/rust/src/configuration.rs:configure-external-parser}}
 ```
 </section>
  <div slot="title">Swift</div>
 <section>
 
 ```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/ParsingInputs.swift:configure-external-parser}}
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/Configuration.swift:configure-external-parser}}
 ```
 </section>
 
@@ -117,7 +122,7 @@ When parsing an input that isn't recognized as one of the native input types, th
 <section>
 
 ```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/ParsingInputs.kt:configure-external-parser}}
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Configuration.kt:configure-external-parser}}
 ```
 </section>
 
@@ -125,7 +130,7 @@ When parsing an input that isn't recognized as one of the native input types, th
 <section>
 
 ```typescript
-{{#include ../../snippets/wasm/parsing_inputs.ts:configure-external-parser}}
+{{#include ../../snippets/wasm/configuration.ts:configure-external-parser}}
 ```
 </section>
 
@@ -133,7 +138,7 @@ When parsing an input that isn't recognized as one of the native input types, th
 <section>
 
 ```typescript
-{{#include ../../snippets/react-native/parsing_inputs.ts:configure-external-parser}}
+{{#include ../../snippets/react-native/configuration.ts:configure-external-parser}}
 ```
 </section>
 
@@ -141,7 +146,7 @@ When parsing an input that isn't recognized as one of the native input types, th
 <section>
 
 ```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/parsing_inputs.dart:configure-external-parser}}
+{{#include ../../snippets/dart_snippets/lib/configuration.dart:configure-external-parser}}
 ```
 </section>
 
@@ -149,7 +154,7 @@ When parsing an input that isn't recognized as one of the native input types, th
 <section>
 
 ```python,ignore 
-{{#include ../../snippets/python/src/parsing_inputs.py:configure-external-parser}}
+{{#include ../../snippets/python/src/configuration.py:configure-external-parser}}
 ```
 </section>
 
@@ -157,7 +162,7 @@ When parsing an input that isn't recognized as one of the native input types, th
 <section>
 
 ```go,ignore
-{{#include ../../snippets/go/parsing_inputs.go:configure-external-parser}}
+{{#include ../../snippets/go/configuration.go:configure-external-parser}}
 ```
 </section>
 
@@ -165,7 +170,7 @@ When parsing an input that isn't recognized as one of the native input types, th
 <section>
 
 ```cs,ignore
-{{#include ../../snippets/csharp/ParsingInputs.cs:configure-external-parser}}
+{{#include ../../snippets/csharp/configuration.cs:configure-external-parser}}
 ```
 </section>
 </custom-tabs>

@@ -32,7 +32,7 @@ def prepare_send_payment_asset(sdk: BindingLiquidSdk):
         # If the destination is an address or an amountless BIP21 URI,
         # you must specify an asset amount
         usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
-        optional_amount = PayAmount.ASSET(usdt_asset_id, 1.50, False)
+        optional_amount = PayAmount.ASSET(usdt_asset_id, 1.50, False, None)
         prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
 
         # If the fees are acceptable, continue to create the Send Payment
@@ -50,7 +50,7 @@ def prepare_send_payment_asset_fees(sdk: BindingLiquidSdk):
     try:
         usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
         # Set the optional estimate asset fees param to true
-        optional_amount = PayAmount.ASSET(usdt_asset_id, 1.50, True)
+        optional_amount = PayAmount.ASSET(usdt_asset_id, 1.50, True, None)
         prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
 
         # If the asset fees are set, you can use these fees to pay to send the asset
@@ -77,27 +77,6 @@ def send_payment_fees(sdk: BindingLiquidSdk, prepare_response: PrepareSendRespon
         raise
     # ANCHOR_END: send-payment-fees
 
-def configure_asset_metadata():
-    # ANCHOR: configure-asset-metadata
-    # Create the default config
-    config = default_config(
-        network=LiquidNetwork.MAINNET,
-        breez_api_key="<your-Breez-API-key>"
-    )
-
-    # Configure asset metadata. Setting the optional fiat ID will enable
-    # paying fees using the asset (if available).
-    config.asset_metadata = [
-        AssetMetadata(
-            asset_id="18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec",
-            name="PEGx EUR",
-            ticker="EURx",
-            precision=8,
-            fiat_id="EUR"
-        )
-    ]
-    # ANCHOR_END: configure-asset-metadata
-
 def fetch_asset_balance(sdk: BindingLiquidSdk):
     # ANCHOR: fetch-asset-balance
     try:
@@ -107,3 +86,45 @@ def fetch_asset_balance(sdk: BindingLiquidSdk):
         logging.error(error)
         raise
     # ANCHOR_END: fetch-asset-balance
+
+
+def send_self_payment_asset(sdk: BindingLiquidSdk):
+    # ANCHOR: send-self-payment-asset
+    try:
+        # Create a Liquid address to receive to
+        prepare_receive_res = sdk.prepare_receive_payment(
+            PrepareReceiveRequest(
+                payment_method=PaymentMethod.LIQUID_ADDRESS,
+                amount=None,
+            )
+        )
+        receive_res = sdk.receive_payment(
+            ReceivePaymentRequest(
+                prepare_receive_res,
+                None,
+                None,
+                None,
+            )
+        )
+
+        # Swap your funds to the address we've created
+        usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
+        btc_asset_id = "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d"
+        prepare_send_res = sdk.prepare_send_payment(
+            PrepareSendRequest(
+                receive_res.destination,
+                # We want to receive 1.5 USDt
+                PayAmount.ASSET(usdt_asset_id, 1.5, None, btc_asset_id),
+            )
+        )
+        send_response = sdk.send_payment(
+            SendPaymentRequest(
+                prepare_send_res,
+                None,
+            )
+        )
+        payment = send_response.payment
+    except Exception as error:
+        logging.error(error)
+        raise
+    # ANCHOR_END: send-self-payment-asset

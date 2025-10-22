@@ -2,6 +2,22 @@ using Breez.Sdk.Liquid;
 
 public class SendPaymentSnippets
 {
+    public void GetCurrentLightningLimits(BindingLiquidSdk sdk)
+    {
+        // ANCHOR: get-current-pay-lightning-limits
+        try
+        {
+            var currentLimits = sdk.FetchLightningLimits();
+            Console.WriteLine($"Minimum amount, in sats: {currentLimits.send.minSat}");
+            Console.WriteLine($"Maximum amount, in sats: {currentLimits.send.maxSat}");
+        }
+        catch (Exception)
+        {
+            // Handle error
+        }
+        // ANCHOR_END: get-current-pay-lightning-limits
+    }
+
     public void PrepareSendPaymentLightningBolt11(BindingLiquidSdk sdk)
     {
         // ANCHOR: prepare-send-payment-lightning-bolt11
@@ -30,7 +46,8 @@ public class SendPaymentSnippets
         try
         {
             var optionalAmount = new PayAmount.Bitcoin(5000);
-            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
+            var prepareRequest = new PrepareSendRequest(destination, optionalAmount);
+            var prepareResponse = sdk.PrepareSendPayment(prepareRequest);
         }
         catch (Exception)
         {
@@ -86,7 +103,8 @@ public class SendPaymentSnippets
         // ANCHOR: send-payment
         try
         {
-            var sendResponse = sdk.SendPayment(new SendPaymentRequest(prepareResponse));
+            var optionalPayerNote = "<payer note>";
+            var sendResponse = sdk.SendPayment(new SendPaymentRequest(prepareResponse, null, optionalPayerNote));
             var payment = sendResponse.payment;
         }
         catch (Exception)

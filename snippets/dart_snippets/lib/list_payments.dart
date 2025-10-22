@@ -17,6 +17,7 @@ Future<(Payment?, Payment?)> getPayment() async {
 Future<List<Payment>> listPayments() async {
   // ANCHOR: list-payments
   ListPaymentsRequest req = ListPaymentsRequest();
+
   List<Payment> paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
   // ANCHOR_END: list-payments
   return paymentsList;
@@ -31,6 +32,7 @@ Future<List<Payment>> listPaymentsFiltered() async {
     offset: 0,
     limit: 50,
   );
+
   List<Payment> paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
   // ANCHOR_END: list-payments-filtered
   return paymentsList;
@@ -42,6 +44,7 @@ Future<List<Payment>> listPaymentsDetailsAddress() async {
   ListPaymentsRequest req = ListPaymentsRequest(
     details: ListPaymentDetails_Bitcoin(address: address),
   );
+
   List<Payment> paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
   // ANCHOR_END: list-payments-details-address
   return paymentsList;
@@ -53,6 +56,7 @@ Future<List<Payment>> listPaymentsDetailsDestination() async {
   ListPaymentsRequest req = ListPaymentsRequest(
     details: ListPaymentDetails_Liquid(destination: destination),
   );
+
   List<Payment> paymentsList = await breezSDKLiquid.instance!.listPayments(req: req);
   // ANCHOR_END: list-payments-details-destination
   return paymentsList;
