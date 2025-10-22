@@ -1,22 +1,34 @@
 # Nostr Wallet Connect
 
-This is integrated to Breez SDK as an optional boolean flag inside `Config` Struct. This feature can only be enabled at the time of SDK Initialization. By default it is set to `false`.
-### To Enable it -
+Nostr Wallet Connect (NWC) is a plugin integrated into the Breez SDK that enables remote wallet control through the Nostr protocol. This allows external applications to interact with your wallet by connecting via Nostr relays, providing a secure way to manage payments and wallet operations from third-party applications.
+
+## Supported Commands
+
+The NWC implementation currently handles three NIP-47 commands:
+
+1. <a href="https://github.com/nostr-protocol/nips/blob/master/47.md#pay_invoice" target="_blank">pay_invoice</a> - Execute Lightning payments
+2. <a href="https://github.com/nostr-protocol/nips/blob/master/47.md#list_transactions" target="_blank">list_transactions</a> - Retrieve transaction history
+3. <a href="https://github.com/nostr-protocol/nips/blob/master/47.md#get_balance" target="_blank">get_balance</a> - Get wallet balance
+
+## Setup and Configuration
+
+The NWC plugin is configured using the `NwcConfig` struct, which provides several optional parameters for customization:
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>
 
 ```rust,ignore
-{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:init-nwc}}
+{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:nwc-config}}
 ```
+
 </section>
 
 <div slot="title">Swift</div>
 <section>
 
 ```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:init-nwc}}
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:nwc-config}}
 ```
 
 </section>
@@ -25,7 +37,7 @@ This is integrated to Breez SDK as an optional boolean flag inside `Config` Stru
 <section>
 
 ```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:init-nwc}}
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:nwc-config}}
 ```
 
 </section>
@@ -34,7 +46,7 @@ This is integrated to Breez SDK as an optional boolean flag inside `Config` Stru
 <section>
 
 ```typescript
-{{#include ../../snippets/wasm/nostr_wallet_connect.ts:init-nwc}}
+{{#include ../../snippets/wasm/nostr_wallet_connect.ts:nwc-config}}
 ```
 
 </section>
@@ -43,7 +55,7 @@ This is integrated to Breez SDK as an optional boolean flag inside `Config` Stru
 <section>
 
 ```typescript
-{{#include ../../snippets/react-native/nostr_wallet_connect.ts:init-nwc}}
+{{#include ../../snippets/react-native/nostr_wallet_connect.ts:nwc-config}}
 ```
 
 </section>
@@ -52,54 +64,66 @@ This is integrated to Breez SDK as an optional boolean flag inside `Config` Stru
 <section>
 
 ```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:init-nwc}}
+{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:nwc-config}}
 ```
+
 </section>
 
 <div slot="title">Python</div>
 <section>
 
 ```python,ignore 
-{{#include ../../snippets/python/src/nostr_wallet_connect.py:init-nwc}}
+{{#include ../../snippets/python/src/nostr_wallet_connect.py:nwc-config}}
 ```
+
 </section>
 
 <div slot="title">Go</div>
 <section>
 
 ```go,ignore
-{{#include ../../snippets/go/nostr_wallet_connect.go:init-nwc}}
+{{#include ../../snippets/go/nostr_wallet_connect.go:nwc-config}}
 ```
+
 </section>
 
 <div slot="title">C#</div>
 <section>
 
 ```cs,ignore
-{{#include ../../snippets/csharp/NostrWalletConnect.cs:init-nwc}}
+{{#include ../../snippets/csharp/NostrWalletConnect.cs:nwc-config}}
 ```
+
 </section>
 </custom-tabs>
 
-Enabling this while configuring SDK starts NWC Services when SDK is started.
-### To get NWC Connection URI -
+### Configuration Options
 
-You just need to call `get_nwc_uri()` from `Liquid SDK` instance which will return your String.
+1. **relay_urls** (Optional): `Option<Vec<String>>` - Custom Nostr relay URLs to use for communication. If None, uses default relay: "wss://relay.getalbypro.com/breez". Can specify multiple relays for redundancy.
+
+2. **secret_key_hex** (Optional): `Option<String>` - Custom Nostr secret key in hex format. If None, a new key is generated and persisted. Useful for using a specific Nostr identity.
+
+## Managing Connections
+
+The NWC service allows you to create, list, and remove connection strings that external applications can use to connect to your wallet.
+
+### Creating Connections
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
 <section>
 
 ```rust,ignore
-{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:create-connection-string}}
+{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:add-connection}}
 ```
+
 </section>
 
 <div slot="title">Swift</div>
 <section>
 
 ```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:create-connection-string}}
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:add-connection}}
 ```
 
 </section>
@@ -108,7 +132,7 @@ You just need to call `get_nwc_uri()` from `Liquid SDK` instance which will retu
 <section>
 
 ```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:create-connection-string}}
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:add-connection}}
 ```
 
 </section>
@@ -117,7 +141,7 @@ You just need to call `get_nwc_uri()` from `Liquid SDK` instance which will retu
 <section>
 
 ```typescript
-{{#include ../../snippets/wasm/nostr_wallet_connect.ts:create-connection-string}}
+{{#include ../../snippets/wasm/nostr_wallet_connect.ts:add-connection}}
 ```
 
 </section>
@@ -126,7 +150,7 @@ You just need to call `get_nwc_uri()` from `Liquid SDK` instance which will retu
 <section>
 
 ```typescript
-{{#include ../../snippets/react-native/nostr_wallet_connect.ts:create-connection-string}}
+{{#include ../../snippets/react-native/nostr_wallet_connect.ts:add-connection}}
 ```
 
 </section>
@@ -135,36 +159,481 @@ You just need to call `get_nwc_uri()` from `Liquid SDK` instance which will retu
 <section>
 
 ```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:create-connection-string}}
+{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:add-connection}}
 ```
+
 </section>
 
 <div slot="title">Python</div>
 <section>
 
 ```python,ignore 
-{{#include ../../snippets/python/src/nostr_wallet_connect.py:create-connection-string}}
+{{#include ../../snippets/python/src/nostr_wallet_connect.py:add-connection}}
 ```
+
 </section>
 
 <div slot="title">Go</div>
 <section>
 
 ```go,ignore
-{{#include ../../snippets/go/nostr_wallet_connect.go:create-connection-string}}
+{{#include ../../snippets/go/nostr_wallet_connect.go:add-connection}}
 ```
+
 </section>
 
 <div slot="title">C#</div>
 <section>
 
 ```cs,ignore
-{{#include ../../snippets/csharp/NostrWalletConnect.cs:create-connection-string}}
+{{#include ../../snippets/csharp/NostrWalletConnect.cs:add-connection}}
 ```
+
 </section>
 </custom-tabs>
 
-Current NWC Implementation handles three commands -
-1. <a target="_blank" href="https://github.com/nostr-protocol/nips/blob/master/47.md#pay_invoice">pay_invoice</a>
-2. <a target="_blank" href="https://github.com/nostr-protocol/nips/blob/master/47.md#list_transactions">list_transactions</a>
-3. <a target="_blank" href="https://github.com/nostr-protocol/nips/blob/master/47.md#get_balance">get_balance</a>
+### Listing Connections
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:list-connections}}
+```
+
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:list-connections}}
+```
+
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:list-connections}}
+```
+
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nostr_wallet_connect.ts:list-connections}}
+```
+
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nostr_wallet_connect.ts:list-connections}}
+```
+
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:list-connections}}
+```
+
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/nostr_wallet_connect.py:list-connections}}
+```
+
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nostr_wallet_connect.go:list-connections}}
+```
+
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/NostrWalletConnect.cs:list-connections}}
+```
+
+</section>
+</custom-tabs>
+
+### Removing Connections
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:remove-connection}}
+```
+
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:remove-connection}}
+```
+
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:remove-connection}}
+```
+
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nostr_wallet_connect.ts:remove-connection}}
+```
+
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nostr_wallet_connect.ts:remove-connection}}
+```
+
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:remove-connection}}
+```
+
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/nostr_wallet_connect.py:remove-connection}}
+```
+
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nostr_wallet_connect.go:remove-connection}}
+```
+
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/NostrWalletConnect.cs:remove-connection}}
+```
+
+</section>
+</custom-tabs>
+
+## Event Handling
+
+The NWC service provides real-time event notifications through the `NwcEventListener` trait. You can listen for various events to monitor the service status and handle incoming requests.
+
+### Event Types
+
+The NWC service emits the following event types:
+
+1. **Connected**: NWC service connected to relays
+2. **Disconnected**: NWC service disconnected from relays  
+3. **PayInvoice**: Payment request handled (success/failure with details) - includes `success` (whether the payment was successful), `preimage` (payment preimage if successful), `fees_sat` (fees paid in satoshis if successful), and `error` (error message if failed)
+4. **ListTransactions**: Transaction list requested
+5. **GetBalance**: Balance requested
+
+### Event Listener Implementation
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:event-listener}}
+```
+
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:event-listener}}
+```
+
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:event-listener}}
+```
+
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nostr_wallet_connect.ts:event-listener}}
+```
+
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nostr_wallet_connect.ts:event-listener}}
+```
+
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:event-listener}}
+```
+
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/nostr_wallet_connect.py:event-listener}}
+```
+
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nostr_wallet_connect.go:event-listener}}
+```
+
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/NostrWalletConnect.cs:event-listener}}
+```
+
+</section>
+</custom-tabs>
+
+### Adding and Removing Event Listeners
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:event-management}}
+```
+
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:event-management}}
+```
+
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:event-management}}
+```
+
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nostr_wallet_connect.ts:event-management}}
+```
+
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nostr_wallet_connect.ts:event-management}}
+```
+
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:event-management}}
+```
+
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/nostr_wallet_connect.py:event-management}}
+```
+
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nostr_wallet_connect.go:event-management}}
+```
+
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/NostrWalletConnect.cs:event-management}}
+```
+
+</section>
+</custom-tabs>
+
+## Error Handling
+
+The NWC plugin uses `NwcResult<T>` which can return `NwcError` variants:
+
+1. **Generic**: General errors (parsing, network, etc.)
+2. **Persist**: Data persistence errors
+
+Always handle these errors appropriately in your application:
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nostr_wallet_connect.rs:error-handling}}
+```
+
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/NostrWalletConnect.swift:error-handling}}
+```
+
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/NostrWalletConnect.kt:error-handling}}
+```
+
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nostr_wallet_connect.ts:error-handling}}
+```
+
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nostr_wallet_connect.ts:error-handling}}
+```
+
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nostr_wallet_connect.dart:error-handling}}
+```
+
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore 
+{{#include ../../snippets/python/src/nostr_wallet_connect.py:error-handling}}
+```
+
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nostr_wallet_connect.go:error-handling}}
+```
+
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/NostrWalletConnect.cs:error-handling}}
+```
+
+</section>
+</custom-tabs>

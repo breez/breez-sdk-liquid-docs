@@ -1,23 +1,89 @@
 using Breez.Sdk.Liquid;
 
-public class NostrWalletConnectSnippets
+// ANCHOR: event-listener
+public class MyNwcEventListener : NwcEventListener
 {
-  public void NostrWalletConnect()
-  {
-    // ANCHOR: init-nwc
-    var config = BreezSdkLiquidMethods.DefaultConfig(
-      LiquidNetwork.Mainnet,
-      "<your-Breez-API-key>"
-    );
+    public async Task OnEvent(NwcEvent event)
+    {
+        switch (event.Details)
+        {
+            case NwcEventDetails.Connected:
+                Console.WriteLine("NWC connected");
+                break;
+            case NwcEventDetails.Disconnected:
+                Console.WriteLine("NWC disconnected");
+                break;
+            case NwcEventDetails.PayInvoice payInvoice:
+                Console.WriteLine($"Payment {(payInvoice.Success ? "successful" : "failed")}");
+                break;
+            case NwcEventDetails.ListTransactions:
+                Console.WriteLine("Transactions requested");
+                break;
+            case NwcEventDetails.GetBalance:
+                Console.WriteLine("Balance requested");
+                break;
+        }
+    }
+}
+// ANCHOR_END: event-listener
 
-    config = config with { enableNwc = true };
+public class NostrWalletConnect
+{
+    public static async Task NostrWalletConnectAsync()
+    {
+        // ANCHOR: nwc-config
+        var nwcConfig = new NwcConfig
+        {
+            RelayUrls = new[] { "<your-relay-url-1>" },       // Optional: Custom relay URLs (uses default if null)
+            SecretKeyHex = "your-nostr-secret-key-hex"        // Optional: Custom Nostr secret key
+        };
+        
+        var nwcService = new SdkNwcService(nwcConfig);
+        
+        // Add the plugin to your SDK
+        var plugins = new Plugin[] { nwcService };
+        // ANCHOR_END: nwc-config
 
-    // Optional: You can specify your own Relay URLs
-    config = config with { nwcRelayUrls = new List<string> { "<your-relay-url-1>" } };
-    // ANCHOR_END: init-nwc
-    
-    // ANCHOR: create-connection-string
-    var nwcConnectionUri = await sdk.GetNwcUri();
-    // ANCHOR_END: create-connection-string
-  }
-} 
+        // ANCHOR: add-connection
+        var connectionName = "my-app-connection";
+        var connectionString = await nwcService.AddConnectionString(connectionName);
+        // ANCHOR_END: add-connection
+
+        // ANCHOR: list-connections
+        var connections = await nwcService.ListConnectionStrings();
+        // ANCHOR_END: list-connections
+
+        // ANCHOR: remove-connection
+        await nwcService.RemoveConnectionString(connectionName);
+        // ANCHOR_END: remove-connection
+
+        // ANCHOR: event-listener
+        // Event listener class is defined above
+        // ANCHOR_END: event-listener
+
+        // ANCHOR: event-management
+        // Add event listener
+        var listener = new MyNwcEventListener();
+        var listenerId = await nwcService.AddEventListener(listener);
+
+        // Remove event listener when no longer needed
+        await nwcService.RemoveEventListener(listenerId);
+        // ANCHOR_END: event-management
+
+        // ANCHOR: error-handling
+        try
+        {
+            var connectionString = await nwcService.AddConnectionString("test");
+            Console.WriteLine($"Connection created: {connectionString}");
+        }
+        catch (NwcErrorGeneric e)
+        {
+            Console.WriteLine($"Generic error: {e.Message}");
+        }
+        catch (NwcErrorPersist e)
+        {
+            Console.WriteLine($"Persistence error: {e.Message}");
+        }
+        // ANCHOR_END: error-handling
+    }
+}
