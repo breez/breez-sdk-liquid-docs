@@ -97,6 +97,12 @@ The NWC plugin is configured using `NwcConfig`, which provides several optional 
 </section>
 </custom-tabs>
 
+<div class="warning">
+<h4>Developer note</h4>
+
+To connect to Breez SDK with Plugins, Refer to [Plugins page](plugins.md).
+</div>
+
 ### Configuration Options
 
 1. **Relay URLs**

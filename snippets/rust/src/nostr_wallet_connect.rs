@@ -1,26 +1,26 @@
-use breez_sdk_liquid::{
-    LiquidNetwork,
-    plugin::Plugin,
-};
+use breez_sdk_liquid::prelude::*;
 use breez_sdk_liquid_nwc::{
     NwcConfig,
     SdkNwcService,
-    error::{NwcError, NwcResult},
+    error::NwcError,
     event::{NwcEvent, NwcEventDetails, NwcEventListener},
+    NwcService,
 };
+use std::sync::Arc;
+use anyhow::Result;
 use async_trait::async_trait;
 
-async fn nostr_wallet_connect(network: LiquidNetwork, breez_api_key: Option<String>) -> Result<(), SdkError> {
+async fn nostr_wallet_connect() -> Result<()> {
     // ANCHOR: nwc-config
     let nwc_config = NwcConfig {
-        relay_urls: vec!["<your-relay-url-1>".to_string(),],               // Optional: Custom relay URLs (uses default if None)
+        relay_urls: Some(vec!["<your-relay-url-1>".to_string()]),          // Optional: Custom relay URLs (uses default if None)
         secret_key_hex: Some("your-nostr-secret-key-hex".to_string()),     // Optional: Custom Nostr secret key
     };
     
     let nwc_service = Arc::new(SdkNwcService::new(nwc_config));
     
     // Add the plugin to your SDK
-    let plugins: Vec<Arc<dyn Plugin>> = vec![nwc_service];
+    let plugins: Vec<Arc<dyn Plugin>> = vec![nwc_service.clone()];
     // ANCHOR_END: nwc-config
 
     // ANCHOR: add-connection
@@ -67,8 +67,8 @@ async fn nostr_wallet_connect(network: LiquidNetwork, breez_api_key: Option<Stri
     // ANCHOR: error-handling
     match nwc_service.add_connection_string("test".to_string()).await {
         Ok(connection_string) => println!("Connection created: {}", connection_string),
-        Err(NwcError::Generic(msg)) => eprintln!("Generic error: {}", msg),
-        Err(NwcError::Persist(msg)) => eprintln!("Persistence error: {}", msg),
+        Err(NwcError::Generic { err }) => eprintln!("Generic error: {}", err),
+        Err(NwcError::Persist { err }) => eprintln!("Persistence error: {}", err),
     }
     // ANCHOR_END: error-handling
     

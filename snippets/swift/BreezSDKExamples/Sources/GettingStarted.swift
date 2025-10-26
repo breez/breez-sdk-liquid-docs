@@ -12,7 +12,7 @@ func gettingStarted() throws -> BindingLiquidSdk? {
     config.workingDir = "path to an existing directory"
 
     let connectRequest = ConnectRequest(config: config, mnemonic: mnemonic)
-    let sdk = try? connect(req: connectRequest)
+    let sdk = try? connect(req: connectRequest, plugins: nil)
     // ANCHOR_END: init-sdk
 
     return sdk

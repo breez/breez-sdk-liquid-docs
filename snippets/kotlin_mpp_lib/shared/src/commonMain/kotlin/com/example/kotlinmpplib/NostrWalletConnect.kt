@@ -9,7 +9,7 @@ class NostrWalletConnect {
             secretKeyHex = "your-nostr-secret-key-hex"        // Optional: Custom Nostr secret key
         )
         
-        val nwcService = SdkNwcService(nwcConfig)
+        val nwcService = BindingNwcService(nwcConfig)
         
         // Add the plugin to your SDK
         val plugins: List<Plugin> = listOf(nwcService)
@@ -58,10 +58,10 @@ class NostrWalletConnect {
         try {
             val connectionString = nwcService.addConnectionString("test")
             println("Connection created: $connectionString")
-        } catch (e: NwcError.Generic) {
-            println("Generic error: ${e.message}")
-        } catch (e: NwcError.Persist) {
-            println("Persistence error: ${e.message}")
+        } catch (e: NwcErrorGeneric) {
+            println("Generic error: ${e.err}")
+        } catch (e: NwcErrorPersist) {
+            println("Persistence error: ${e.err}")
         }
         // ANCHOR_END: error-handling
     }

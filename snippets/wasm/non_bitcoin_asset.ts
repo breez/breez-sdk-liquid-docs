@@ -45,7 +45,9 @@ const examplePrepareSendPaymentAsset = async (sdk: BindingLiquidSdk) => {
 
   const prepareResponse = await sdk.prepareSendPayment({
     destination,
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -68,7 +70,9 @@ const examplePrepareSendPaymentAssetFees = async (sdk: BindingLiquidSdk) => {
 
   const prepareResponse = await sdk.prepareSendPayment({
     destination,
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the asset fees are set, you can use these fees to pay to send the asset
@@ -125,7 +129,9 @@ const exampleSendSelfPaymentAsset = async (sdk: BindingLiquidSdk) => {
       // We want to receive 1.5 USDt
       receiverAmount: 1.5,
       fromAsset: btcAssetId
-    }
+    },
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
   const sendRes = await sdk.sendPayment({
     prepareResponse: prepareSendRes,

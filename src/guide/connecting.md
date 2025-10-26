@@ -95,6 +95,12 @@ By default, the config working directory is set to the directory where the SDK i
 
 </div>
 
+<div class="warning">
+<h4>Developer note</h4>
+
+To connect to Breez SDK with Plugins, Refer to [Plugins page](plugins.md).
+</div>
+
 <h2 id="disconnecting">
     <a class="header" href="#disconnecting">Disconnecting</a>
     <a class="tag" target="_blank" href="https://breez.github.io/breez-sdk-liquid/breez_sdk_liquid/sdk/struct.LiquidSdk.html#method.disconnect">API docs</a>

@@ -5,7 +5,8 @@ import {
   NwcEventListener,
   NwcEvent,
   NwcEventDetails,
-  NwcError
+  NwcErrorGeneric,
+  NwcErrorPersist
 } from '@breeztech/breez-sdk-liquid-react-native';
 
 async function nostrWalletConnect() {
@@ -74,9 +75,9 @@ async function nostrWalletConnect() {
         console.log(`Connection created: ${connectionString}`);
     } catch (error: any) {
         if (error.type === 'Generic') {
-            console.log(`Generic error: ${error.message}`);
+            console.log(`Generic error: ${error.err}`);
         } else if (error.type === 'Persist') {
-            console.log(`Persistence error: ${error.message}`);
+            console.log(`Persistence error: ${error.err}`);
         }
     }
     // ANCHOR_END: error-handling

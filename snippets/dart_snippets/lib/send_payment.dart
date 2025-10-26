@@ -3,7 +3,8 @@ import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<LightningPaymentLimitsResponse> getCurrentLightningLimits() async {
   // ANCHOR: get-current-pay-lightning-limits
-  LightningPaymentLimitsResponse currentLimits = await breezSDKLiquid.instance!.fetchLightningLimits();
+  LightningPaymentLimitsResponse currentLimits =
+      await breezSDKLiquid.instance!.fetchLightningLimits();
   print("Minimum amount: ${currentLimits.send.minSat} sats");
   print("Maximum amount: ${currentLimits.send.maxSat} sats");
   // ANCHOR_END: get-current-pay-lightning-limits
@@ -13,9 +14,15 @@ Future<LightningPaymentLimitsResponse> getCurrentLightningLimits() async {
 Future<PrepareSendResponse> prepareSendPaymentLightningBolt11() async {
   // ANCHOR: prepare-send-payment-lightning-bolt11
   // Set the bolt11 invoice you wish to pay
-  PrepareSendRequest prepareSendRequest = PrepareSendRequest(destination: "<bolt11 invoice>");
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(
+    destination: "<bolt11 invoice>",
+    amount: null,
+    disableMrh: null,
+    paymentTimeoutSec: null,
+  );
 
-  PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
+  PrepareSendResponse prepareSendResponse =
+      await breezSDKLiquid.instance!.prepareSendPayment(
     req: prepareSendRequest,
   );
 
@@ -29,13 +36,17 @@ Future<PrepareSendResponse> prepareSendPaymentLightningBolt11() async {
 Future<PrepareSendResponse> prepareSendPaymentLightningBolt12() async {
   // ANCHOR: prepare-send-payment-lightning-bolt12
   // Set the bolt12 offer you wish to pay
-  PayAmount_Bitcoin optionalAmount = PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt);
+  PayAmount_Bitcoin optionalAmount =
+      PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt);
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: "<bolt12 offer>",
     amount: optionalAmount,
+    disableMrh: null,
+    paymentTimeoutSec: null,
   );
 
-  PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
+  PrepareSendResponse prepareSendResponse =
+      await breezSDKLiquid.instance!.prepareSendPayment(
     req: prepareSendRequest,
   );
   // ANCHOR_END: prepare-send-payment-lightning-bolt12
@@ -45,13 +56,17 @@ Future<PrepareSendResponse> prepareSendPaymentLightningBolt12() async {
 Future<PrepareSendResponse> prepareSendPaymentLiquid() async {
   // ANCHOR: prepare-send-payment-liquid
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  PayAmount_Bitcoin optionalAmount = PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt);
+  PayAmount_Bitcoin optionalAmount =
+      PayAmount_Bitcoin(receiverAmountSat: 5000 as BigInt);
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: "<Liquid BIP21 or address>",
     amount: optionalAmount,
+    disableMrh: null,
+    paymentTimeoutSec: null,
   );
 
-  PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
+  PrepareSendResponse prepareSendResponse =
+      await breezSDKLiquid.instance!.prepareSendPayment(
     req: prepareSendRequest,
   );
 
@@ -69,9 +84,12 @@ Future<PrepareSendResponse> prepareSendPaymentLiquidDrain() async {
   PrepareSendRequest prepareSendRequest = PrepareSendRequest(
     destination: "<Liquid BIP21 or address>",
     amount: optionalAmount,
+    disableMrh: null,
+    paymentTimeoutSec: null,
   );
 
-  PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
+  PrepareSendResponse prepareSendResponse =
+      await breezSDKLiquid.instance!.prepareSendPayment(
     req: prepareSendRequest,
   );
 
@@ -82,7 +100,8 @@ Future<PrepareSendResponse> prepareSendPaymentLiquidDrain() async {
   return prepareSendResponse;
 }
 
-Future<SendPaymentResponse> sendPayment({required PrepareSendResponse prepareResponse}) async {
+Future<SendPaymentResponse> sendPayment(
+    {required PrepareSendResponse prepareResponse}) async {
   // ANCHOR: send-payment
   String optionalPayerNote = "<payer note>";
   SendPaymentRequest sendPaymentRequest = SendPaymentRequest(
@@ -90,7 +109,8 @@ Future<SendPaymentResponse> sendPayment({required PrepareSendResponse prepareRes
     payerNote: optionalPayerNote,
   );
 
-  SendPaymentResponse sendPaymentResponse = await breezSDKLiquid.instance!.sendPayment(
+  SendPaymentResponse sendPaymentResponse =
+      await breezSDKLiquid.instance!.sendPayment(
     req: sendPaymentRequest,
   );
   Payment payment = sendPaymentResponse.payment;

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	breez_sdk_liquid "github.com/breez/breez-sdk-liquid-go"
+	breez_sdk_liquid "github.com/breez/breez-sdk-liquid-go/breez_sdk_liquid"
 )
 
 // ANCHOR: event-listener
@@ -40,11 +40,12 @@ func nostrWalletConnect() error {
 		SecretKeyHex: "your-nostr-secret-key-hex",    // Optional: Custom Nostr secret key
 	}
 
-	nwcService := breez_sdk_liquid.NewSdkNwcService(nwcConfig)
+	nwcService := breez_sdk_liquid.NewBindingNwcService(nwcConfig)
 
 	// Add the plugin to your SDK
 	plugins := []breez_sdk_liquid.Plugin{nwcService}
 	// ANCHOR_END: nwc-config
+	_ = plugins
 
 	// ANCHOR: add-connection
 	connectionName := "my-app-connection"
@@ -60,6 +61,7 @@ func nostrWalletConnect() error {
 		return err
 	}
 	// ANCHOR_END: list-connections
+	_ = connections
 
 	// ANCHOR: remove-connection
 	err = nwcService.RemoveConnectionString(connectionName)
@@ -67,10 +69,6 @@ func nostrWalletConnect() error {
 		return err
 	}
 	// ANCHOR_END: remove-connection
-
-	// ANCHOR: event-listener
-	// Event listener type is defined above
-	// ANCHOR_END: event-listener
 
 	// ANCHOR: event-management
 	// Add event listener

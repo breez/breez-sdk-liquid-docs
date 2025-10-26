@@ -33,7 +33,7 @@ def prepare_send_payment_asset(sdk: BindingLiquidSdk):
         # you must specify an asset amount
         usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
         optional_amount = PayAmount.ASSET(usdt_asset_id, 1.50, False, None)
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount, None, None))
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
@@ -51,7 +51,7 @@ def prepare_send_payment_asset_fees(sdk: BindingLiquidSdk):
         usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
         # Set the optional estimate asset fees param to true
         optional_amount = PayAmount.ASSET(usdt_asset_id, 1.50, True, None)
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount, None, None))
 
         # If the asset fees are set, you can use these fees to pay to send the asset
         send_asset_fees = prepare_response.estimated_asset_fees
@@ -115,6 +115,8 @@ def send_self_payment_asset(sdk: BindingLiquidSdk):
                 receive_res.destination,
                 # We want to receive 1.5 USDt
                 PayAmount.ASSET(usdt_asset_id, 1.5, None, btc_asset_id),
+                None,
+                None
             )
         )
         send_response = sdk.send_payment(

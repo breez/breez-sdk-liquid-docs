@@ -36,7 +36,9 @@ func prepareSendPaymentAsset(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
             destination: destination,
-            amount: optionalAmount
+            amount: optionalAmount,
+            disableMrh: nil,
+            paymentTimeoutSec: nil
         ))
 
     // If the fees are acceptable, continue to create the Send Payment
@@ -60,7 +62,9 @@ func prepareSendPaymentAssetFees(sdk: BindingLiquidSdk) -> PrepareSendResponse? 
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
             destination: destination,
-            amount: optionalAmount
+            amount: optionalAmount,
+            disableMrh: nil,
+            paymentTimeoutSec: nil
         ))
 
     // If the asset fees are set, you can use these fees to pay to send the asset
@@ -100,7 +104,9 @@ func sendSelfPaymentAsset(sdk: BindingLiquidSdk) -> SendPaymentResponse? {
             receiverAmount: 1.50,
             estimateAssetFees: Optional.none,
             fromAsset: btcAssetId
-        )
+        ),
+        disableMrh: nil,
+        paymentTimeoutSec: nil
     ))
     let sendRes = try? sdk.sendPayment(req: SendPaymentRequest(
         prepareResponse: prepareSendRes!,

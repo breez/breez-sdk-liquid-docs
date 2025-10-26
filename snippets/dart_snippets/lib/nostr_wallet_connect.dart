@@ -13,11 +13,11 @@ class MyNwcEventListener implements NwcEventListener {
         print("NWC disconnected");
         break;
       case NwcEventDetails.payInvoice(
-        success: final success,
-        preimage: _,
-        feesSat: _,
-        error: _,
-      ):
+          success: final success,
+          preimage: _,
+          feesSat: _,
+          error: _,
+        ):
         print("Payment ${success ? "successful" : "failed"}");
         break;
       case NwcEventDetails.listTransactions():
@@ -59,10 +59,6 @@ Future<void> nostrWalletConnect() async {
   // ANCHOR: remove-connection
   await nwcService.removeConnectionString(connectionName);
   // ANCHOR_END: remove-connection
-
-  // ANCHOR: event-listener
-  // Event listener class is defined above
-  // ANCHOR_END: event-listener
 
   // ANCHOR: event-management
   // Add event listener
