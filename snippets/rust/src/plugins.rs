@@ -37,8 +37,7 @@ pub async fn connect_with_nwc_plugin() -> Result<Arc<LiquidSdk>, SdkError> {
   
   // Create SDK Config
   let config = create_sdk_config()?;
-  let mut plugins: Vec<Arc<dyn Plugin>> = vec![];
-  plugins.push(Arc::new(nwc_service));
+  let plugins: Vec<Arc<dyn Plugin>> = vec![Arc::new(nwc_service)];
   
   // Create Connect Request
   let connect_request = create_connect_request(config);

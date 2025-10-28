@@ -6,8 +6,8 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 bip39 = { version = "2", features = ["rand"] }
-breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.11.2" }
-breez-sdk-liquid-nwc = { git = "https://github.com/breez/breez-sdk-liquid/tree/main/lib/plugins/nwc" }
+breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", rev = "4d442c4007710e4dbfe18b6714067384c084695a" }
+breez-sdk-liquid-nwc = { git = "https://github.com/breez/breez-sdk-liquid", rev = "4d442c4007710e4dbfe18b6714067384c084695a" }
 async-trait = "0.1"
 log = "0.4"
 tokio = "1.42.0"
