@@ -13,7 +13,7 @@ class SelfSigner {
 
         try {
             val connectRequest = ConnectWithSignerRequest(config)
-            val sdk = connectWithSigner(connectRequest, signer)
+            val sdk = connectWithSigner(connectRequest, signer, null)
         } catch (e: Exception) {
             // handle error
         }

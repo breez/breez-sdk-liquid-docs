@@ -58,10 +58,12 @@ class NostrWalletConnect {
         try {
             val connectionString = nwcService.addConnectionString("test")
             println("Connection created: $connectionString")
-        } catch (e: NwcErrorGeneric) {
-            println("Generic error: ${e.err}")
-        } catch (e: NwcErrorPersist) {
-            println("Persistence error: ${e.err}")
+        } catch (e: NwcException.Generic) {
+            println("Generic error: ${e.message}")
+        } catch (e: NwcException.Persist) {
+            println("Persistence error: ${e.message}")
+        } catch (e: Exception) {
+            println("Unknown error: $e")
         }
         // ANCHOR_END: error-handling
     }

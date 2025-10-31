@@ -31,6 +31,6 @@ const initSdk = async () => {
     config.workingDir = `${groupPath}/breezSdkLiquid`
   }
 
-  await connect({ mnemonic, config })
+  await connect({ mnemonic, config }, null)
 }
 // ANCHOR_END: init-sdk-app-group

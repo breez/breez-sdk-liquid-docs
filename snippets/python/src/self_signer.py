@@ -16,7 +16,7 @@ def connect_with_self_signer(signer: Signer):
 
     try:
         connect_request = ConnectWithSignerRequest(config=config)
-        sdk = connect_with_signer(connect_request, signer)
+        sdk = connect_with_signer(connect_request, signer, None)
         return sdk
     except Exception as error:
         logging.error(error)

@@ -25,7 +25,7 @@ func initSdk() throws -> BindingLiquidSdk? {
         .path
 
     let connectRequest = ConnectRequest(config: config, mnemonic: mnemonic)
-    let sdk = try? connect(req: connectRequest)
+    let sdk = try? connect(req: connectRequest, plugins: nil)
 
     return sdk
 }

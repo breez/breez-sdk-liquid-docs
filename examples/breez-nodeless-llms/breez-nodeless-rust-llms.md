@@ -62,7 +62,7 @@ async fn getting_started() -> Result<Arc<LiquidSdk>> {
         passphrase: None,
         seed: None,
     };
-    let sdk = LiquidSdk::connect(connect_request).await?;
+    let sdk = LiquidSdk::connect(connect_request, None).await?;
     
     Ok(sdk)
 }
@@ -87,7 +87,7 @@ async fn connect_with_self_signer(signer: Signer) -> Result<Arc<LiquidSdk>> {
     let connect_request = ConnectWithSignerRequest {      
         config,
     };
-    let sdk = LiquidSdk::connect_with_signer(connect_request, signer).await?;
+    let sdk = LiquidSdk::connect_with_signer(connect_request, signer, None).await?;
 
     Ok(sdk)
 }
@@ -986,7 +986,7 @@ async fn configure_parsers() -> Result<Arc<LiquidSdk>> {
         passphrase: None,
         seed: None,
     };
-    let sdk = LiquidSdk::connect(connect_request).await?;
+    let sdk = LiquidSdk::connect(connect_request, None).await?;
     
     Ok(sdk)
 }
@@ -1071,7 +1071,7 @@ async fn initialize_sdk() -> Result<Arc<LiquidSdk>> {
         mnemonic: Some(mnemonic.to_string()),
         passphrase: None,
         seed: None,
-    }).await?;
+    }, None).await?;
     
     // Add event listener
     let listener = Box::new(AppEventListener {

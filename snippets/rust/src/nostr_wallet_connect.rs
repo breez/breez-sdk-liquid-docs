@@ -1,4 +1,4 @@
-use breez_sdk_liquid::prelude::*;
+use breez_sdk_liquid::plugin::Plugin;
 use breez_sdk_liquid_nwc::{
     NwcConfig,
     SdkNwcService,

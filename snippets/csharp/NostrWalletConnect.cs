@@ -80,6 +80,10 @@ public class NostrWalletConnect
         {
             Console.WriteLine($"Persistence error: {e.Err}");
         }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Unknown error: {e}");
+        }
         // ANCHOR_END: error-handling
     }
 }

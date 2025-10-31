@@ -77,6 +77,8 @@ Future<void> nostrWalletConnect() async {
     print("Generic error: ${e.message}");
   } on NwcErrorPersist catch (e) {
     print("Persistence error: ${e.message}");
+  } catch (e) {
+    print("Unknown error: $e");
   }
   // ANCHOR_END: error-handling
 }

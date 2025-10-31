@@ -59,7 +59,7 @@ Future<void> initializeSDK() async {
   ConnectRequest connectRequest = ConnectRequest(mnemonic: mnemonic, config: config);
 
   try {
-    await breezSDKLiquid.connect(req: connectRequest);
+    await breezSDKLiquid.connect(req: connectRequest, plugins: null);
   } catch (error) {
     print(error);
     rethrow;
@@ -96,7 +96,7 @@ Future<void> connectWithCustomSigner() async {
 
   try {
     ConnectWithSignerRequest request = ConnectWithSignerRequest(config: config);
-    await breezSDKLiquid.connectWithSigner(req: request, signer: signer);
+    await breezSDKLiquid.connectWithSigner(req: request, signer: signer, plugins: null);
   } catch (error) {
     print(error);
     rethrow;

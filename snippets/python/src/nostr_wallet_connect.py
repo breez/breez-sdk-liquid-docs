@@ -61,4 +61,6 @@ def nostr_wallet_connect():
         print(f"Generic error: {e.err}")
     except NwcErrorPersist as e:
         print(f"Persistence error: {e.err}")
+    except Exception as e:
+        print(f"Unknown error: {e}")
     # ANCHOR_END: error-handling

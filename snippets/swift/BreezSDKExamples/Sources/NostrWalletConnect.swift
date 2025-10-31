@@ -59,9 +59,9 @@ func nostrWalletConnect() throws {
     do {
         let connectionString = try nwcService.addConnectionString(name: "test")
         print("Connection created: \(connectionString)")
-    } catch NwcErrorGeneric(let err) {
+    } catch NwcError.Generic(let err) {
         print("Generic error: \(err)")
-    } catch NwcErrorPersist(let err) {
+    } catch NwcError.Persist(let err) {
         print("Persistence error: \(err)")
     } catch {
         print("Unknown error: \(error)")

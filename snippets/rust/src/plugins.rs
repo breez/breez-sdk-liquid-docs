@@ -1,5 +1,6 @@
 use breez_sdk_liquid::prelude::*;
 use breez_sdk_liquid::error::SdkError;
+use breez_sdk_liquid::plugin::{Plugin, PluginStorage};
 use breez_sdk_liquid_nwc::{NwcConfig, SdkNwcService};
 use std::sync::Arc;
 use std::sync::Weak;

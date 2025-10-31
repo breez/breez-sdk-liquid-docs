@@ -78,6 +78,8 @@ async function nostrWalletConnect() {
             console.log(`Generic error: ${error.err}`);
         } else if (error.type === 'Persist') {
             console.log(`Persistence error: ${error.err}`);
+        } else {
+            console.log(`Unknown error: ${error}`);
         }
     }
     // ANCHOR_END: error-handling

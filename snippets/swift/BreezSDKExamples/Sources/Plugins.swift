@@ -1,5 +1,7 @@
 import BreezSDKLiquid
 
+extension BindingNwcService: Plugin {}
+
 func createNwcConfig() -> NwcConfig {
     return NwcConfig(
         relayUrls: ["<your-relay-url-1>"],

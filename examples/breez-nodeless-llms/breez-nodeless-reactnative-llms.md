@@ -66,7 +66,7 @@ const initializeSDK = async () => {
   console.log(`Working directory: ${config.workingDir}`)
   // config.workingDir = "path to writable directory"
 
-  await connect({ mnemonic, config })
+  await connect({ mnemonic, config }, null)
 }
 ```
 
@@ -329,7 +329,7 @@ const configureParsers = async () => {
       }
     ]
 
-    await connect({ mnemonic, config })
+    await connect({ mnemonic, config }, null)
   } catch (err) {
     console.error(err)
   }
@@ -390,7 +390,7 @@ const WalletApp = () => {
       // Use a sample mnemonic for testing - in production you'd want to get this securely
       const mnemonic = 'sample mnemonic words here for testing only';
       
-      await connect({ mnemonic, config });
+      await connect({ mnemonic, config }, null);
       
       // Set up event listener
       const onEvent = (e) => {
