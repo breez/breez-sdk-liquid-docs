@@ -20,7 +20,7 @@ def start():
             config=config,
             mnemonic=mnemonic
         )
-        sdk = connect(connect_request)
+        sdk = connect(connect_request, None)
         return sdk
     except Exception as error:
         logging.error(error)

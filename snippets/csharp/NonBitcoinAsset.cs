@@ -37,7 +37,7 @@ public class NonBitcoinAssetSnippets
             // you must specify an asset amount
             var usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
             var optionalAmount = new PayAmount.Asset(usdtAssetId, 1.50, false, null);
-            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
+            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount, null, null));
 
             // If the fees are acceptable, continue to create the Send Payment
             var sendFeesSat = prepareResponse.feesSat;
@@ -59,7 +59,7 @@ public class NonBitcoinAssetSnippets
             var usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
             // Set the optional estimate asset fees param to true
             var optionalAmount = new PayAmount.Asset(usdtAssetId, 1.50, true, null);
-            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
+            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount, null, null));
 
             // If the asset fees are set, you can use these fees to pay to send the asset
             var sendAssetFees = prepareResponse.estimatedAssetFees;
@@ -114,7 +114,9 @@ public class NonBitcoinAssetSnippets
                         1.5,
                         null,
                         btcAssetId
-                    )
+                    ),
+                    null,
+                    null
                 )
             );
             var sendRes = sdk.SendPayment(new SendPaymentRequest(prepareSendRes, null));

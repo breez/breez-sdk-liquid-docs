@@ -22,6 +22,8 @@ async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt11 invoice>".to_string(),
             amount: None,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
 
@@ -42,6 +44,8 @@ async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt12 offer>".to_string(),
             amount: optional_amount,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
     // ANCHOR_END: prepare-send-payment-lightning-bolt12
@@ -58,6 +62,8 @@ async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
 
@@ -76,6 +82,8 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
 

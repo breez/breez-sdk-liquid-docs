@@ -26,6 +26,8 @@
     - [BIP353 registration](guide/bip353_pay_service.md)
   - [Receiving payments using LNURL-Withdraw](guide/lnurl_withdraw.md)
   - [Authenticating using LNURL-Auth](guide/lnurl_auth.md)
+- [Plugins](guide/plugins.md)
+  - [Nostr Wallet Connect](guide/nostr_wallet_connect.md)
 - [Signing and verifying messages](guide/messages.md)
 - [Supporting fiat currencies](guide/fiat_currencies.md)
 - [Buying Bitcoin](guide/buy_btc.md)

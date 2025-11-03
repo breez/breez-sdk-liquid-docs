@@ -7,7 +7,7 @@ import {
   PayAmountVariant,
   prepareLnurlPay,
   type PrepareLnUrlPayResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const examplePrepareLnurlPay = async () => {
   // ANCHOR: prepare-lnurl-pay

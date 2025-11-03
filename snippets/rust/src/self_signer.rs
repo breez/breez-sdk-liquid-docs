@@ -18,7 +18,7 @@ async fn connect_with_self_signer(signer: Signer) -> Result<Arc<LiquidSdk>> {
   let connect_request = ConnectWithSignerRequest {      
       config,
   };
-  let sdk = LiquidSdk::connect_with_signer(connect_request, signer).await?;
+  let sdk = LiquidSdk::connect_with_signer(connect_request, signer, None).await?;
 
   Ok(sdk)
 }

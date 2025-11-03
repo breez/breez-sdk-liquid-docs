@@ -1,7 +1,7 @@
 import {
   defaultConfig,
   LiquidNetwork
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const configureAssetMetadata = async () => {
   // ANCHOR: configure-asset-metadata

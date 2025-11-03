@@ -9,7 +9,7 @@ import {
   type ReceiveAmount,
   ReceiveAmountVariant,
   receivePayment
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const examplePrepareLightningPayment = async () => {
   // ANCHOR: prepare-receive-payment-lightning
