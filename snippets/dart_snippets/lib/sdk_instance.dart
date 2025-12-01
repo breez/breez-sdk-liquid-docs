@@ -191,6 +191,8 @@ extension ConfigCopyWith on liquid_sdk.Config {
     List<liquid_sdk.AssetMetadata>? assetMetadata,
     String? sideswapApiKey,
     bool? useMagicRoutingHints,
+    int? onchainSyncPeriodSec,
+    int? onchainSyncRequestTimeoutSec,
   }) {
     return liquid_sdk.Config(
       liquidExplorer: liquidExplorer ?? this.liquidExplorer,
@@ -206,6 +208,8 @@ extension ConfigCopyWith on liquid_sdk.Config {
       assetMetadata: assetMetadata ?? this.assetMetadata,
       sideswapApiKey: sideswapApiKey ?? this.sideswapApiKey,
       useMagicRoutingHints: useMagicRoutingHints ?? this.useMagicRoutingHints,
+      onchainSyncPeriodSec: onchainSyncPeriodSec ?? this.onchainSyncPeriodSec,
+      onchainSyncRequestTimeoutSec: onchainSyncRequestTimeoutSec ?? this.onchainSyncRequestTimeoutSec,
     );
   }
 }
