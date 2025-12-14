@@ -84,7 +84,7 @@ func sendSelfPaymentAsset(sdk: BindingLiquidSdk) -> SendPaymentResponse? {
     let receiveRes = try? sdk.receivePayment(req: ReceivePaymentRequest(
         prepareResponse: prepareReceiveRes!,
         description: Optional.none,
-        useDescriptionHash: Optional.none,
+        descriptionHash: Optional.none,
         payerNote: Optional.none
     ))
 

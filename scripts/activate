@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+SCRIPT_DIR=$(dirname "$0")
+SNIPPETS=${SCRIPT_DIR}/../snippets
+
+export LOCAL_DEV=1
+
+if [ -d "${SNIPPETS}/python/.venv" ] && [ -z "${VIRTUAL_ENV}" ]; then
+	source ${SNIPPETS}/python/.venv/bin/activate
+fi
+
+deactivate_all() {	
+	deactivate # Python
+	export LOCAL_DEV=""
+}

@@ -1,5 +1,4 @@
 import logging
-import breez_sdk_liquid
 from breez_sdk_liquid import connect_with_signer, default_config, LiquidNetwork, Signer, ConnectWithSignerRequest
  
  # ANCHOR: self-signer

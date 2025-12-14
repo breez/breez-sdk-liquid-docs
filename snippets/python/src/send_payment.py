@@ -62,7 +62,7 @@ def prepare_send_payment_liquid(sdk: BindingLiquidSdk):
         prepare_response = sdk.prepare_send_payment(
             PrepareSendRequest(
                 destination=destination,
-                amount=optional_amount
+                amount=optional_amount,
             )
         )
 
@@ -80,11 +80,11 @@ def prepare_send_payment_liquid_drain(sdk: BindingLiquidSdk):
     # Set the Liquid BIP21 or Liquid address you wish to pay
     destination = "<Liquid BIP21 or address>"
     try:
-        optional_amount = PayAmount.DRAIN
+        optional_amount = PayAmount.DRAIN()
         prepare_response = sdk.prepare_send_payment(
             PrepareSendRequest(
                 destination=destination,
-                amount=optional_amount
+                amount=optional_amount,
             )
         )
 

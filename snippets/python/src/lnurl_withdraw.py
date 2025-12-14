@@ -1,7 +1,5 @@
-import breez_sdk_liquid
 import logging
-from breez_sdk_liquid import BindingLiquidSdk, InputType
-
+from breez_sdk_liquid import BindingLiquidSdk, InputType, LnUrlWithdrawRequest
 
 def withdraw(sdk: BindingLiquidSdk):
     # ANCHOR: lnurl-withdraw
@@ -13,7 +11,7 @@ def withdraw(sdk: BindingLiquidSdk):
         parsed_input = sdk.parse(lnurl_withdraw_url)
         if isinstance(parsed_input, InputType.LN_URL_WITHDRAW):
             amount_msat = parsed_input.data.min_withdrawable
-            result = sdk.lnurl_withdraw(parsed_input.data, amount_msat, "comment")
+            result = sdk.lnurl_withdraw(LnUrlWithdrawRequest(data=parsed_input.data, amount_msat=amount_msat, description="comment"))
             return result
     except Exception as error:
         logging.error(error)

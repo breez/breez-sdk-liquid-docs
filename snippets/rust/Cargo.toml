@@ -6,9 +6,12 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 bip39 = { version = "2", features = ["rand"] }
-breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.11.2" }
+breez-sdk-liquid = { git = "https://github.com/breez/breez-sdk-liquid", tag = "0.11.7" }
 log = "0.4"
 tokio = "1.42.0"
 
 [patch.crates-io]
 secp256k1-zkp = { git = "https://github.com/breez/rust-secp256k1-zkp.git", rev = "eac2e479255a6e32b5588bc25ee53c642fdd8395" }
+
+# [patch.'https://github.com/breez/breez-sdk-liquid']
+# breez-sdk-liquid = { path = "../../../breez-sdk-liquid/lib/core" }

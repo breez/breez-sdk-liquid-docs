@@ -9,7 +9,7 @@ def get_payment(sdk: BindingLiquidSdk):
         sdk.get_payment(GetPaymentRequest.PAYMENT_HASH(payment_hash))
 
         swap_id = "<swap id>"
-        sdk.get_payment(GetPaymentRequest.SWAP_ID(swap_id))
+        sdk.get_payment(GetPaymentRequest.SWAP_ID(swap_id=swap_id))
         # ANCHOR_END: get-payment
     except Exception as error:
         logging.error(error)
@@ -44,7 +44,7 @@ def list_payments_details_address(sdk: BindingLiquidSdk):
         # ANCHOR: list-payments-details-address
         address = "<Bitcoin address>"
         req = ListPaymentsRequest(
-            details = ListPaymentDetails.BITCOIN(address))
+            details = ListPaymentDetails.BITCOIN(address=address))
         sdk.list_payments(req)
         # ANCHOR_END: list-payments-details-address
     except Exception as error:
@@ -56,7 +56,7 @@ def list_payments_details_destination(sdk: BindingLiquidSdk):
         # ANCHOR: list-payments-details-destination
         destination = "<Liquid BIP21 or address>"
         req = ListPaymentsRequest(
-            details = ListPaymentDetails.LIQUID(destination=destination))
+            details = ListPaymentDetails.LIQUID(destination=destination,asset_id=None))
         sdk.list_payments(req)
         # ANCHOR_END: list-payments-details-destination
     except Exception as error:
