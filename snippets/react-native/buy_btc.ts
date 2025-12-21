@@ -5,7 +5,7 @@ import {
   type OnchainPaymentLimitsResponse,
   type PrepareBuyBitcoinResponse,
   prepareBuyBitcoin
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleFetchOnchainLimits = async () => {
   // ANCHOR: onchain-limits

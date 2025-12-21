@@ -16,7 +16,10 @@ func prepareSendPaymentLightningBolt11(sdk: BindingLiquidSdk) -> PrepareSendResp
     // Set the bolt11 invoice you wish to pay
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
-            destination: "<bolt11 invoice>"
+            destination: "<bolt11 invoice>",
+            amount: nil,
+            disableMrh: nil,
+            paymentTimeoutSec: nil
         ))
 
     // If the fees are acceptable, continue to create the Send Payment
@@ -33,7 +36,9 @@ func prepareSendPaymentLightningBolt12(sdk: BindingLiquidSdk) -> PrepareSendResp
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
             destination: "<bolt12 offer>",
-            amount: optionalAmount
+            amount: optionalAmount,
+            disableMrh: nil,
+            paymentTimeoutSec: nil
         ))
     // ANCHOR_END: prepare-send-payment-lightning-bolt12
     return prepareResponse
@@ -46,7 +51,9 @@ func prepareSendPaymentLiquid(sdk: BindingLiquidSdk) -> PrepareSendResponse? {
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
             destination: "<Liquid BIP21 or address>",
-            amount: optionalAmount
+            amount: optionalAmount,
+            disableMrh: nil,
+            paymentTimeoutSec: nil
         ))
 
     // If the fees are acceptable, continue to create the Send Payment
@@ -63,7 +70,9 @@ func prepareSendPaymentLiquidDrain(sdk: BindingLiquidSdk) -> PrepareSendResponse
     let prepareResponse = try? sdk
         .prepareSendPayment(req: PrepareSendRequest (
             destination: "<Liquid BIP21 or address>",
-            amount: optionalAmount
+            amount: optionalAmount,
+            disableMrh: nil,
+            paymentTimeoutSec: nil
         ))
 
     // If the fees are acceptable, continue to create the Send Payment

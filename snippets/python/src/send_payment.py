@@ -20,7 +20,10 @@ def prepare_send_payment_lightning_bolt11(sdk: BindingLiquidSdk):
     try:
         prepare_response = sdk.prepare_send_payment(
             PrepareSendRequest(
-                destination=destination
+                destination=destination,
+                amount=None,
+                disable_mrh=None,
+                payment_timeout_sec=None
             )
         )
 
@@ -44,6 +47,8 @@ def prepare_send_payment_lightning_bolt12(sdk: BindingLiquidSdk):
             PrepareSendRequest(
                 destination=destination,
                 amount=optional_amount,
+                disable_mrh=None,
+                payment_timeout_sec=None
             )
         )
 

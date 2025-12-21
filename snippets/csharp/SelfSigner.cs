@@ -19,7 +19,7 @@ public class SelfSignerSnippets
         try
         {
             var connectRequest = new ConnectWithSignerRequest(config);
-            var sdk = BreezSdkLiquidMethods.ConnectWithSigner(connectRequest, signer);
+            var sdk = BreezSdkLiquidMethods.ConnectWithSigner(connectRequest, signer, null);
         }
         catch (Exception)
         {

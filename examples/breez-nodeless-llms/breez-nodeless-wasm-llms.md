@@ -49,7 +49,7 @@ const initWallet = async () => {
     const sdk = await connect({ 
       config, 
       mnemonic 
-    });
+    }, null);
     return sdk;
   } catch (error) {
     console.error(error);
@@ -83,7 +83,7 @@ const connectWithCustomSigner = async () => {
   // Create the default config, providing your Breez API key
   const config = defaultConfig('mainnet', '<your-Breez-API-key>');
 
-  const sdk = await connectWithSigner({ config }, signer);
+  const sdk = await connectWithSigner({ config }, signer, null);
 
   return sdk;
 };
@@ -955,7 +955,7 @@ const configureExternalParsers = async () => {
     }
   ];
 
-  await connect({ mnemonic, config });
+  await connect({ mnemonic, config }, null);
 };
 ```
 
@@ -995,7 +995,7 @@ function WalletComponent() {
         const sdkInstance = await connect({
           config,
           mnemonic,
-        });
+        }, null);
         
         // Save mnemonic if new
         if (!savedMnemonic) {
@@ -1289,7 +1289,7 @@ Manage the connection lifecycle properly:
 
 ```typescript
 // Initialize only once per session
-const sdk = await connect(connectRequest);
+const sdk = await connect(connectRequest, null);
 
 // Use SDK
 // ...
