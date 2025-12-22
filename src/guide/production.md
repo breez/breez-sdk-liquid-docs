@@ -4,6 +4,7 @@
 There are some use cases where you need to verify that they are implemented correctly. Here is a checklist you can use to verify that your application is production ready.
 
 - **Add logging**: Add sufficient logging into your application to diagnose any issues users are having. Include log entries from the Breez SDK upto and including **DEBUG** level. For more information: [Adding logging](logging.md).
+  > ⚠️ Proper logging is a prerequisite for troubleshooting. If logging is not implemented (or is implemented incorrectly), the Breez team will not be able to assist in diagnosing or resolving reported issues.
 
 - **Display pending payments**: Payments always contain a status field that can be used to determine if the payment was completed or not. Make sure you handle the case where the payment is still pending by showing the correct status to the user.
 
