@@ -5,3 +5,4 @@ packages/
 .flutter-version
 .flutter-plugins
 .flutter-plugins-dependencies
+pubspec_overrides.yaml

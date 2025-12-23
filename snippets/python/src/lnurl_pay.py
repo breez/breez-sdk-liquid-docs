@@ -1,4 +1,3 @@
-import breez_sdk_liquid
 import logging
 from breez_sdk_liquid import BindingLiquidSdk, InputType, LnUrlPayRequest, LnUrlPayRequestData, PayAmount, PrepareLnUrlPayRequest, PrepareLnUrlPayResponse
 
@@ -37,7 +36,7 @@ def prepare_pay(sdk: BindingLiquidSdk):
 def prepare_pay_drain(sdk: BindingLiquidSdk, data: LnUrlPayRequestData):
     # ANCHOR: prepare-lnurl-pay-drain
     try: 
-        amount = PayAmount.DRAIN
+        amount = PayAmount.DRAIN()
         optional_comment = "<comment>"
         optional_validate_success_action_url = True
 
@@ -57,7 +56,7 @@ def prepare_pay_drain(sdk: BindingLiquidSdk, data: LnUrlPayRequestData):
 def pay(sdk: BindingLiquidSdk, prepare_response: PrepareLnUrlPayResponse):
     # ANCHOR: lnurl-pay
     try:
-        result = sdk.lnurl_pay(LnUrlPayRequest(prepare_response))
+        result = sdk.lnurl_pay(LnUrlPayRequest(prepare_response=prepare_response))
     except Exception as error:
         logging.error(error)
         raise

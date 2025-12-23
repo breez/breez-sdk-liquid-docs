@@ -19,6 +19,7 @@
 
 # Go workspace file
 go.work
+go.work.sum
 
 # Ignore Go binaries
 go.sum
@@ -28,3 +29,4 @@ go.sum
 
 packages
 vendor
+breez-sdk-liquid-go/
