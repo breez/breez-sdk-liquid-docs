@@ -21,7 +21,7 @@ func ConnectWithSelfSigner(signer breez_sdk_liquid.Signer) (*breez_sdk_liquid.Bi
 		Config: config,
 	}
 
-	sdk, err := breez_sdk_liquid.ConnectWithSigner(connectRequest, signer)
+	sdk, err := breez_sdk_liquid.ConnectWithSigner(connectRequest, signer, nil)
 
 	return sdk, err
 }

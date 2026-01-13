@@ -30,7 +30,7 @@ class NonBitcoinAsset {
             // Note: Not setting the amount will generate an amountless BIP21 URI.
             val usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
             val optionalAmount = PayAmount.Asset(usdtAssetId, 1.50, false, null)
-            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount, null, null))
 
             // If the fees are acceptable, continue to create the Send Payment
             val sendFeesSat = prepareResponse.feesSat;
@@ -48,7 +48,7 @@ class NonBitcoinAsset {
             val usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
             // Set the optional estimate asset fees param to true
             val optionalAmount = PayAmount.Asset(usdtAssetId, 1.50, true, null)
-            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount, null, null))
 
             // If the asset fees are set, you can use these fees to pay to send the asset
             val sendAssetFees = prepareResponse.estimatedAssetFees;
@@ -105,7 +105,9 @@ class NonBitcoinAsset {
                         1.5,
                         null,
                         btcAssetId
-                    )
+                    ),
+                    null,
+                    null
                 )
             )
             val sendRes = sdk.sendPayment(SendPaymentRequest(prepareSendRes, null))

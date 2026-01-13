@@ -45,8 +45,10 @@ func PrepareSendPaymentAsset(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	}
 
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
-		Destination: destination,
-		Amount:      &optionalAmount,
+		Destination:       destination,
+		Amount:            &optionalAmount,
+		DisableMrh:        nil,
+		PaymentTimeoutSec: nil,
 	}
 	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
 	if err != nil {
@@ -74,8 +76,10 @@ func PrepareSendPaymentAssetFees(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	}
 
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
-		Destination: destination,
-		Amount:      &optionalAmount,
+		Destination:       destination,
+		Amount:            &optionalAmount,
+		DisableMrh:        nil,
+		PaymentTimeoutSec: nil,
 	}
 	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
 	if err != nil {
@@ -150,8 +154,10 @@ func SendSelfPaymentAsset(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		FromAsset:      &btcAssetId,
 	}
 	prepareSendRes, err := sdk.PrepareSendPayment(breez_sdk_liquid.PrepareSendRequest{
-		Destination: receiveRes.Destination,
-		Amount:      &amount,
+		Destination:       receiveRes.Destination,
+		Amount:            &amount,
+		DisableMrh:        nil,
+		PaymentTimeoutSec: nil,
 	})
 	if err != nil {
 		log.Printf("Error: %#v", err)

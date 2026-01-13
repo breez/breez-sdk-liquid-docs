@@ -14,7 +14,7 @@ class GettingStarted {
 
         try {
             val connectRequest = ConnectRequest(config, mnemonic)
-            val sdk = connect(connectRequest)
+            val sdk = connect(connectRequest, null)
         } catch (e: Exception) {
             // handle error
         }

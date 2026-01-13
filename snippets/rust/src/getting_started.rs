@@ -6,6 +6,7 @@ use anyhow::Result;
 use bip39::{Language, Mnemonic};
 use breez_sdk_liquid::prelude::*;
 use log::info;
+use async_trait::async_trait;
 
 async fn getting_started() -> Result<Arc<LiquidSdk>> {
     // ANCHOR: init-sdk
@@ -26,7 +27,7 @@ async fn getting_started() -> Result<Arc<LiquidSdk>> {
         passphrase: None,
         seed: None,
     };
-    let sdk = LiquidSdk::connect(connect_request).await?;
+    let sdk = LiquidSdk::connect(connect_request, None).await?;
     // ANCHOR_END: init-sdk
 
     Ok(sdk)
@@ -56,8 +57,10 @@ async fn getting_started_logging(data_dir: String) -> Result<()> {
 
 // ANCHOR: add-event-listener
 struct CliEventListener {}
+
+#[async_trait]
 impl EventListener for CliEventListener {
-    fn on_event(&self, e: SdkEvent) {
+    async fn on_event(&self, e: SdkEvent) {
         info!("Received event: {e:?}");
     }
 }

@@ -25,7 +25,7 @@ func Start() (*breez_sdk_liquid.BindingLiquidSdk, error) {
 		Mnemonic: &mnemonic,
 	}
 
-	sdk, err := breez_sdk_liquid.Connect(connectRequest)
+	sdk, err := breez_sdk_liquid.Connect(connectRequest, nil)
 
 	return sdk, err
 	// ANCHOR_END: init-sdk

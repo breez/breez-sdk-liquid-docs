@@ -10,7 +10,7 @@ import {
   type ReceiveAmount,
   ReceiveAmountVariant,
   sendPayment
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const examplePrepareAssetPayment = async () => {
   // ANCHOR: prepare-receive-payment-asset
@@ -52,7 +52,9 @@ const examplePrepareSendPaymentAsset = async () => {
 
   const prepareResponse = await prepareSendPayment({
     destination,
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -75,7 +77,9 @@ const examplePrepareSendPaymentAssetFees = async () => {
 
   const prepareResponse = await prepareSendPayment({
     destination,
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the asset fees are set, you can use these fees to pay to send the asset
@@ -132,7 +136,9 @@ const exampleSendSelfPaymentAsset = async () => {
       // We want to receive 1.5 USDt
       receiverAmount: 1.5,
       fromAsset: btcAssetId
-    }
+    },
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
   const sendRes = await sendPayment({
     prepareResponse: prepareSendRes,

@@ -12,7 +12,7 @@ func connectWithSelfSigner(signer: Signer) throws -> BindingLiquidSdk? {
     config.workingDir = "path to an existing directory"
 
     let connectRequest = ConnectWithSignerRequest(config: config)
-    let sdk = try? connectWithSigner(req: connectRequest, signer: signer)
+    let sdk = try? connectWithSigner(req: connectRequest, signer: signer, plugins: nil)
 
     return sdk
 }

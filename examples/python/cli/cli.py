@@ -34,7 +34,7 @@ class Sdk:
         mnemonic = self.read_mnemonic()
         config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET, api_key)
         connect_request = breez_sdk_liquid.ConnectRequest(config=config, mnemonic=mnemonic)
-        self.instance = breez_sdk_liquid.connect(connect_request)
+        self.instance = breez_sdk_liquid.connect(connect_request, None)
         self.listener = SdkListener()
         self.instance.add_event_listener(self.listener)
 

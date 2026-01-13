@@ -19,7 +19,7 @@ const exmapleConnectWithSigner = async (): Promise<BindingLiquidSdk> => {
   // Create the default config, providing your Breez API key
   const config = defaultConfig('mainnet', '<your-Breez-API-key>')
 
-  const sdk = await connectWithSigner({ config }, signer)
+  const sdk = await connectWithSigner({ config }, signer, null)
 
   return sdk
   // ANCHOR_END: self-signer
