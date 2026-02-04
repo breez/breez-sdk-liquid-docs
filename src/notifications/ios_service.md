@@ -55,3 +55,23 @@ Then add a Keychain Sharing capability still in the `Signing & Capabilities` tab
 1. Click `+ Capability` to add a capability
 2. Select `Keychain Sharing` from the list
 3. In the capability with the title `Keychain Sharing`, add a name for the Keychain Group, like `com.example.SharedKeychain`
+
+## Configure On-Demand Resources
+
+The Breez SDK Liquid plugin uses [On-Demand Resources](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/On_Demand_Resources_Guide/) to optimize app binary size.
+
+### Build Settings
+
+For each target (main app and NotificationService), configure the following in `Build Settings > Assets`:
+
+1. **Embed Asset Packs In Product Bundle**: Set to `No`
+2. **Enable On Demand Resources**: Set to `No`
+
+### Build Phases
+
+For the NotificationService target, ensure the BreezSDKLiquid Swift source files are added to both build phases:
+
+1. Select the `NotificationService` target
+2. Go to `Build Phases` tab
+3. Add the BreezSDKLiquid Swift source files to `Compile Sources`
+4. Add the BreezSDKLiquid Swift source files to `Copy Bundle Resources`
