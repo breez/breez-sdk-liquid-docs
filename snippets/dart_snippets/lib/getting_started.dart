@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:dart_snippets/sdk_instance.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
 
 Future<void> initializeSDK() async {
@@ -60,13 +58,7 @@ class BreezSDKLiquid {
   //
   // Call once on your Dart entrypoint file, e.g.; `lib/main.dart`.
   void initializeLogStream() {
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      _breezLogStream ??= const EventChannel('breez_sdk_liquid_logs').receiveBroadcastStream().map(
-            (dynamic log) => LogEntry(line: log['line'], level: log['level']),
-          );
-    } else {
-      _breezLogStream ??= breezLogStream().asBroadcastStream();
-    }
+    _breezLogStream ??= breezLogStream().asBroadcastStream();
   }
 
   final StreamController<LogEntry> _logStreamController = StreamController<LogEntry>.broadcast();
