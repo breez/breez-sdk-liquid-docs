@@ -46,6 +46,8 @@ async fn prepare_send_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination,
             amount: optional_amount,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
 
@@ -72,6 +74,8 @@ async fn prepare_send_payment_asset_fees(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination,
             amount: optional_amount,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
 
@@ -119,6 +123,8 @@ async fn send_self_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
                 estimate_asset_fees: None,
                 from_asset: Some(btc_asset_id),
             }),
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
     let payment = sdk

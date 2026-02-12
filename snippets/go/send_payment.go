@@ -20,7 +20,10 @@ func PrepareSendPaymentLightningBolt11(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	// Set the bolt11 invoice you wish to pay
 	destination := "<bolt11 invoice>"
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
-		Destination: destination,
+		Destination:       destination,
+		Amount:            nil,
+		DisableMrh:        nil,
+		PaymentTimeoutSec: nil,
 	}
 	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
 	if err != nil {
@@ -41,8 +44,10 @@ func PrepareSendPaymentLightningBolt12(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		ReceiverAmountSat: uint64(5_000),
 	}
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
-		Destination: destination,
-		Amount:      &optionalAmount,
+		Destination:       destination,
+		Amount:            &optionalAmount,
+		DisableMrh:        nil,
+		PaymentTimeoutSec: nil,
 	}
 	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
 	if err != nil {
@@ -61,8 +66,10 @@ func PrepareSendPaymentLiquid(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		ReceiverAmountSat: uint64(5_000),
 	}
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
-		Destination: destination,
-		Amount:      &optionalAmount,
+		Destination:       destination,
+		Amount:            &optionalAmount,
+		DisableMrh:        nil,
+		PaymentTimeoutSec: nil,
 	}
 	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
 	if err != nil {
@@ -82,8 +89,10 @@ func PrepareSendPaymentLiquidDrain(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 	var optionalAmount breez_sdk_liquid.PayAmount = breez_sdk_liquid.PayAmountDrain{}
 
 	prepareRequest := breez_sdk_liquid.PrepareSendRequest{
-		Destination: destination,
-		Amount:      &optionalAmount,
+		Destination:       destination,
+		Amount:            &optionalAmount,
+		DisableMrh:        nil,
+		PaymentTimeoutSec: nil,
 	}
 	prepareResponse, err := sdk.PrepareSendPayment(prepareRequest)
 	if err != nil {

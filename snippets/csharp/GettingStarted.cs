@@ -20,7 +20,7 @@ public class GettingStartedSnippets
         try
         {
             var connectRequest = new ConnectRequest(config, mnemonic);
-            var sdk = BreezSdkLiquidMethods.Connect(connectRequest);
+            var sdk = BreezSdkLiquidMethods.Connect(connectRequest, null);
         }
         catch (Exception)
         {

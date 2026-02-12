@@ -32,7 +32,7 @@ Future<void> initializeSDK() async {
 
   ConnectRequest connectRequest = ConnectRequest(mnemonic: mnemonic, config: config);
 
-  await breezSDKLiquid.connect(req: connectRequest);
+  await breezSDKLiquid.connect(req: connectRequest, plugins: null);
 
   // ANCHOR_END: init-sdk
 }

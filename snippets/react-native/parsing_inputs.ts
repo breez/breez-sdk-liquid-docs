@@ -1,7 +1,7 @@
 import {
   InputTypeVariant,
   parse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const parseInputs = async () => {
   // ANCHOR: parse-inputs

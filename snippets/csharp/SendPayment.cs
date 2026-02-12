@@ -25,7 +25,7 @@ public class SendPaymentSnippets
         var destination = "<bolt11 invoice>";
         try
         {
-            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination));
+            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, null, null, null));
 
             // If the fees are acceptable, continue to create the Send Payment
             var sendFeesSat = prepareResponse.feesSat;
@@ -46,7 +46,7 @@ public class SendPaymentSnippets
         try
         {
             var optionalAmount = new PayAmount.Bitcoin(5000);
-            var prepareRequest = new PrepareSendRequest(destination, optionalAmount);
+            var prepareRequest = new PrepareSendRequest(destination, optionalAmount, null, null);
             var prepareResponse = sdk.PrepareSendPayment(prepareRequest);
         }
         catch (Exception)
@@ -64,7 +64,7 @@ public class SendPaymentSnippets
         try
         {
             var optionalAmount = new PayAmount.Bitcoin(5000);
-            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
+            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount, null, null));
 
             // If the fees are acceptable, continue to create the Send Payment
             var sendFeesSat = prepareResponse.feesSat;
@@ -85,7 +85,7 @@ public class SendPaymentSnippets
         try
         {
             var optionalAmount = new PayAmount.Drain();
-            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount));
+            var prepareResponse = sdk.PrepareSendPayment(new PrepareSendRequest(destination, optionalAmount, null, null));
 
             // If the fees are acceptable, continue to create the Send Payment
             var sendFeesSat = prepareResponse.feesSat;

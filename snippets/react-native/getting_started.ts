@@ -9,7 +9,7 @@ import {
   disconnect,
   type SdkEvent,
   setLogger
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleGettingStarted = async () => {
   // ANCHOR: init-sdk
@@ -28,7 +28,7 @@ const exampleGettingStarted = async () => {
   console.log(`Working directory: ${config.workingDir}`)
   // config.workingDir = "path to writable directory"
 
-  await connect({ mnemonic, config })
+  await connect({ mnemonic, config }, null)
   // ANCHOR_END: init-sdk
 }
 

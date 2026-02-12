@@ -26,7 +26,7 @@ const exampleGettingStarted = async () => {
   // The `workingDir` does not need to be set in a web environment
   config.workingDir = 'path to writable directory'
 
-  const sdk = await connect({ mnemonic, config })
+  const sdk = await connect({ mnemonic, config }, null)
   // ANCHOR_END: init-sdk
 }
 

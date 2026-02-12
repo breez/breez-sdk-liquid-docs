@@ -57,7 +57,7 @@ def start():
             config=config,
             mnemonic=mnemonic
         )
-        sdk = connect(connect_request)
+        sdk = connect(connect_request, None)
         return sdk
     except Exception as error:
         logging.error(error)
@@ -86,7 +86,7 @@ def connect_with_self_signer(signer: Signer):
 
     try:
         connect_request = ConnectWithSignerRequest(config=config)
-        sdk = connect_with_signer(connect_request, signer)
+        sdk = connect_with_signer(connect_request, signer, None)
         return sdk
     except Exception as error:
         logging.error(error)
@@ -943,7 +943,7 @@ def configure_parsers():
             config=config,
             mnemonic=mnemonic
         )
-        sdk = connect(connect_request)
+        sdk = connect(connect_request, None)
         return sdk
     except Exception as error:
         logging.error(error)
@@ -991,7 +991,7 @@ class Sdk:
         mnemonic = self.read_mnemonic()
         config = breez_sdk_liquid.default_config(network or LiquidNetwork.TESTNET, api_key)
         connect_request = breez_sdk_liquid.ConnectRequest(config=config, mnemonic=mnemonic)
-        self.instance = breez_sdk_liquid.connect(connect_request)
+        self.instance = breez_sdk_liquid.connect(connect_request, None)
         self.listener = SdkListener()
         self.instance.add_event_listener(self.listener)
 
@@ -1425,7 +1425,7 @@ Manage the connection lifecycle properly:
 
 ```python
 # Initialize
-sdk = connect(connect_request)
+sdk = connect(connect_request, None)
 
 # Use SDK
 # ...

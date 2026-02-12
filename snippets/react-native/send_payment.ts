@@ -5,7 +5,7 @@ import {
   type PayAmount,
   PayAmountVariant,
   type PrepareSendResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleGetCurrentLightningLimits = async () => {
   // ANCHOR: get-current-pay-lightning-limits
@@ -24,7 +24,10 @@ const examplePrepareSendPaymentLightningBolt11 = async () => {
   // ANCHOR: prepare-send-payment-lightning-bolt11
   // Set the bolt11 invoice you wish to pay
   const prepareResponse = await prepareSendPayment({
-    destination: '<bolt11 invoice>'
+    destination: '<bolt11 invoice>',
+    amount: undefined,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -43,7 +46,9 @@ const examplePrepareSendPaymentLightningBolt12 = async () => {
 
   const prepareResponse = await prepareSendPayment({
     destination: '<bolt12 offer>',
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
   // ANCHOR_END: prepare-send-payment-lightning-bolt12
 }
@@ -58,7 +63,9 @@ const examplePrepareSendPaymentLiquid = async () => {
 
   const prepareResponse = await prepareSendPayment({
     destination: '<Liquid BIP21 or address>',
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -76,7 +83,9 @@ const examplePrepareSendPaymentLiquidDrain = async () => {
 
   const prepareResponse = await prepareSendPayment({
     destination: '<Liquid BIP21 or address>',
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment

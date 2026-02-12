@@ -33,7 +33,7 @@ Future<void> initSdk() async {
 
   ConnectRequest connectRequest = ConnectRequest(mnemonic: mnemonic, config: config);
 
-  await breezSDKLiquid.connect(req: connectRequest);
+  await breezSDKLiquid.connect(req: connectRequest, plugins: null);
 }
 
 Future<String> getWorkingDir() async {

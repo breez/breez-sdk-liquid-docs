@@ -2,7 +2,7 @@ import {
   checkMessage,
   getInfo,
   signMessage
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleSignMessage = async () => {
   // ANCHOR: sign-message

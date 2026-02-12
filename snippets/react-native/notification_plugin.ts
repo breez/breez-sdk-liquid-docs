@@ -2,7 +2,7 @@ import {
   defaultConfig,
   connect,
   LiquidNetwork
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 import { Platform } from 'react-native'
 
 // ANCHOR: init-sdk-app-group
@@ -31,6 +31,6 @@ const initSdk = async () => {
     config.workingDir = `${groupPath}/breezSdkLiquid`
   }
 
-  await connect({ mnemonic, config })
+  await connect({ mnemonic, config }, null)
 }
 // ANCHOR_END: init-sdk-app-group

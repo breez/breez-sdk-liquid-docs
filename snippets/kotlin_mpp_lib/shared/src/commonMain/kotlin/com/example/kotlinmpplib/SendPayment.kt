@@ -20,7 +20,7 @@ class SendPayment {
         // Set the bolt11 you wish to pay
         val destination = "<bolt11 invoice>"
         try {
-            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination))
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, null, null, null))
 
             // If the fees are acceptable, continue to create the Send Payment
             val sendFeesSat = prepareResponse.feesSat;
@@ -37,7 +37,7 @@ class SendPayment {
         val destination = "<bolt12 offer>"
         try {
             val optionalAmount = PayAmount.Bitcoin(5_000.toULong())
-            val prepareRequest = PrepareSendRequest(destination, optionalAmount)
+            val prepareRequest = PrepareSendRequest(destination, optionalAmount, null, null)
             val prepareResponse = sdk.prepareSendPayment(prepareRequest)
         } catch (e: Exception) {
             // handle error
@@ -50,7 +50,7 @@ class SendPayment {
         val destination = "<Liquid BIP21 or address>"
         try {
             val optionalAmount = PayAmount.Bitcoin(5_000.toULong())
-            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount, null, null))
 
             // If the fees are acceptable, continue to create the Send Payment
             val sendFeesSat = prepareResponse.feesSat;
@@ -67,7 +67,7 @@ class SendPayment {
         val destination = "<Liquid BIP21 or address>"
         try {
             val optionalAmount = PayAmount.Drain
-            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount))
+            val prepareResponse = sdk.prepareSendPayment(PrepareSendRequest(destination, optionalAmount, null, null))
 
             // If the fees are acceptable, continue to create the Send Payment
             val sendFeesSat = prepareResponse.feesSat;

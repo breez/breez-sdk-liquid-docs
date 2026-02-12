@@ -35,7 +35,7 @@ jobs:
   build-packages:
     needs: setup
     name: build packages
-    uses: breez/breez-sdk-liquid/.github/workflows/publish-all-platforms.yml@main
+    uses: breez/breez-sdk-liquid/.github/workflows/publish-all-platforms.yml@4d442c4007710e4dbfe18b6714067384c084695a
     with:
       repository: breez/breez-sdk-liquid
       ref: ${{ needs.setup.outputs.sdk-ref }}
