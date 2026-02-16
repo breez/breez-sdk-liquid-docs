@@ -12,10 +12,17 @@ set -euo pipefail
 #   -n, --max-versions N Maximum versions to keep (default: from versioning.json or 5)
 #   -h, --help           Show this help message
 #
+# If no tags are specified, uses smart selection from versioning.json:
+#   - Keeps last X minor versions (keepMinorVersions, default: 3)
+#   - For each minor except latest: only highest patch
+#   - For latest minor: keeps last Y patches (keepLatestPatches, default: 3)
+#   Example result: v0.9.5, v0.10.3, v0.11.9, v0.11.10, v0.11.11
+#
 # Examples:
-#   ./scripts/build-versioned-docs.sh v1.0.0 v0.11.2
-#   ./scripts/build-versioned-docs.sh --force v1.0.0
-#   ./scripts/build-versioned-docs.sh -o ./dist -n 3 v1.0.0 v0.11.2 v0.10.0
+#   ./scripts/build-versioned-docs.sh                     # Smart selection
+#   ./scripts/build-versioned-docs.sh v1.0.0 v0.11.2     # Specific tags
+#   ./scripts/build-versioned-docs.sh --force v1.0.0     # Force rebuild
+#   ./scripts/build-versioned-docs.sh -o ./dist v1.0.0   # Custom output
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -24,6 +31,8 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 OUTPUT_DIR="$REPO_ROOT/versioned-book"
 FORCE_REBUILD=false
 MAX_VERSIONS=""
+KEEP_MINOR_VERSIONS=""
+KEEP_LATEST_PATCHES=""
 CACHE_DIR=""
 
 # Parse arguments
@@ -63,9 +72,17 @@ load_config() {
         if [ -z "$MAX_VERSIONS" ]; then
             MAX_VERSIONS=$(jq -r '.maxVersions // 5' "$REPO_ROOT/versioning.json")
         fi
+        if [ -z "$KEEP_MINOR_VERSIONS" ]; then
+            KEEP_MINOR_VERSIONS=$(jq -r '.keepMinorVersions // 3' "$REPO_ROOT/versioning.json")
+        fi
+        if [ -z "$KEEP_LATEST_PATCHES" ]; then
+            KEEP_LATEST_PATCHES=$(jq -r '.keepLatestPatches // 3' "$REPO_ROOT/versioning.json")
+        fi
         TRACKED_PATHS=$(jq -r '.trackedPaths | join(" ")' "$REPO_ROOT/versioning.json")
     else
         MAX_VERSIONS="${MAX_VERSIONS:-5}"
+        KEEP_MINOR_VERSIONS="${KEEP_MINOR_VERSIONS:-3}"
+        KEEP_LATEST_PATCHES="${KEEP_LATEST_PATCHES:-3}"
         TRACKED_PATHS="src/ snippets/ book.toml styles.css tabs.js theme/"
     fi
     CACHE_DIR="$OUTPUT_DIR/.cache"
@@ -521,6 +538,62 @@ get_top_versions() {
     fi
 }
 
+# Smart version selection:
+# - Keep last X minor versions
+# - For each minor except latest: keep only highest patch
+# - For latest minor: keep last Y patches
+# Example with X=3, Y=3: v0.9.5, v0.10.3, v0.11.9, v0.11.10, v0.11.11
+get_smart_versions() {
+    local keep_minors="$1"
+    local keep_patches="$2"
+
+    # Get all version tags sorted by semver descending
+    local all_tags
+    if git tag -l 'v*' | sort -rV >/dev/null 2>&1; then
+        all_tags=$(git tag -l 'v*' | sort -rV)
+    else
+        all_tags=$(git tag -l 'v*' | sort -r)
+    fi
+
+    if [ -z "$all_tags" ]; then
+        return
+    fi
+
+    # Extract unique minor versions (major.minor)
+    local minor_versions
+    minor_versions=$(echo "$all_tags" | sed 's/^v//' | cut -d. -f1,2 | sort -t. -k1,1nr -k2,2nr | uniq | head -n "$keep_minors")
+
+    if [ -z "$minor_versions" ]; then
+        return
+    fi
+
+    # Get the latest minor version
+    local latest_minor
+    latest_minor=$(echo "$minor_versions" | head -1)
+
+    local selected_tags=""
+
+    # Process each minor version
+    while IFS= read -r minor; do
+        if [ "$minor" = "$latest_minor" ]; then
+            # For latest minor: get last Y patches
+            local patches
+            patches=$(echo "$all_tags" | grep "^v${minor}\." | head -n "$keep_patches")
+            selected_tags="$selected_tags"$'\n'"$patches"
+        else
+            # For older minors: get only the highest patch
+            local highest_patch
+            highest_patch=$(echo "$all_tags" | grep "^v${minor}\." | head -1)
+            if [ -n "$highest_patch" ]; then
+                selected_tags="$selected_tags"$'\n'"$highest_patch"
+            fi
+        fi
+    done <<< "$minor_versions"
+
+    # Output unique tags, sorted by semver descending
+    echo "$selected_tags" | grep -v '^$' | sort -rV | uniq
+}
+
 # ============================================================================
 # Main
 # ============================================================================
@@ -529,12 +602,13 @@ main() {
     check_dependencies
     load_config
 
-    # If no tags specified, auto-select top N versions
+    # If no tags specified, use smart version selection
     if [ ${#TAGS[@]} -eq 0 ]; then
-        echo "No tags specified, selecting top $MAX_VERSIONS versions..."
+        echo "No tags specified, using smart version selection..."
+        echo "  Keep $KEEP_MINOR_VERSIONS minor versions, with $KEEP_LATEST_PATCHES patches of latest minor"
         while IFS= read -r tag; do
             [ -n "$tag" ] && TAGS+=("$tag")
-        done < <(get_top_versions "$MAX_VERSIONS")
+        done < <(get_smart_versions "$KEEP_MINOR_VERSIONS" "$KEEP_LATEST_PATCHES")
 
         if [ ${#TAGS[@]} -eq 0 ]; then
             echo "No version tags found. Create tags with: git tag -a v1.0.0 -m 'Release v1.0.0'"

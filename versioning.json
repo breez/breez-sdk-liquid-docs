@@ -1,5 +1,7 @@
 {
   "maxVersions": 5,
+  "keepMinorVersions": 3,
+  "keepLatestPatches": 3,
   "trackedPaths": [
     "src/",
     "snippets/",
