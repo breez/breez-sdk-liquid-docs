@@ -1,0 +1,11 @@
+{
+  "maxVersions": 5,
+  "trackedPaths": [
+    "src/",
+    "snippets/",
+    "book.toml",
+    "styles.css",
+    "tabs.js",
+    "theme/"
+  ]
+}
