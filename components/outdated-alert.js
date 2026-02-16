@@ -60,7 +60,8 @@
       })
       .then(function(data) {
         var latestVersion = data.latest;
-        var latestPath = data.versions[0] ? data.versions[0].path : '/' + latestVersion + '/';
+        // Latest version is always at root
+        var latestPath = '/';
 
         if (currentVersion !== latestVersion) {
           showOutdatedAlert(latestVersion, latestPath);

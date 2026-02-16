@@ -1,16 +1,25 @@
 (function() {
   'use strict';
 
-  // Get current version from URL path
+  // Get current version from URL path (null if at root = latest)
   function getCurrentVersion() {
     var path = window.location.pathname;
     var match = path.match(/^\/(v[\d.]+[-\w]*)\//);
     return match ? match[1] : null;
   }
 
+  // Check if we're viewing the root (latest) version
+  function isAtRoot() {
+    return getCurrentVersion() === null;
+  }
+
   // Get the relative path within the current version
   function getRelativePath() {
     var path = window.location.pathname;
+    if (isAtRoot()) {
+      // At root, the whole path is the relative path
+      return path;
+    }
     var match = path.match(/^\/v[\d.]+[-\w]*(\/.*)/);
     return match ? match[1] : '/';
   }
@@ -59,8 +68,6 @@
     var select = document.getElementById('version-select');
     if (!select) return;
 
-    // Determine the base URL for versions.json
-    // It should be at the root of the versioned docs
     var baseUrl = window.location.origin;
     var versionsUrl = baseUrl + '/versions.json';
 
@@ -73,6 +80,7 @@
       })
       .then(function(data) {
         var currentVersion = getCurrentVersion();
+        var atRoot = isAtRoot();
 
         // Clear loading option
         select.innerHTML = '';
@@ -80,14 +88,18 @@
         // Add version options
         data.versions.forEach(function(version, index) {
           var option = document.createElement('option');
-          option.value = version.path;
+          var isLatest = (index === 0);
+
+          // Latest version is at root, others in subdirectories
+          option.value = isLatest ? '/' : '/' + version.version + '/';
           option.textContent = version.version;
 
-          if (index === 0) {
+          if (isLatest) {
             option.textContent += ' (latest)';
           }
 
-          if (version.version === currentVersion) {
+          // Select current version (root = latest)
+          if ((atRoot && isLatest) || version.version === currentVersion) {
             option.selected = true;
           }
 
@@ -97,13 +109,14 @@
         // Handle version change
         select.addEventListener('change', function() {
           var relativePath = getRelativePath();
-          var newUrl = select.value + relativePath.replace(/^\//, '');
+          var newBase = select.value;
+          // Remove leading slash from relative path when combining
+          var newUrl = newBase + relativePath.replace(/^\//, '');
           window.location.href = newUrl;
         });
       })
       .catch(function(error) {
         console.warn('Version switcher: ', error.message);
-        // Hide the switcher if versions.json is not available
         var switcher = document.getElementById('version-switcher');
         if (switcher) {
           switcher.style.display = 'none';
@@ -113,12 +126,6 @@
 
   // Initialize version switcher
   function init() {
-    // Only initialize if we're in a versioned path
-    var currentVersion = getCurrentVersion();
-    if (!currentVersion) {
-      return;
-    }
-
     var switcher = createVersionSwitcher();
     if (insertVersionSwitcher(switcher)) {
       loadVersions();

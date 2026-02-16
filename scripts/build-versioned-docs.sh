@@ -388,33 +388,6 @@ cleanup_old_versions() {
     shopt -u nullglob
 }
 
-# Fix image paths in all versions (change ../images/ to images/)
-fix_image_paths() {
-    echo "Fixing image paths in all versions..."
-
-    shopt -s nullglob
-    for version_dir in "$OUTPUT_DIR"/v*/; do
-        if [ -d "$version_dir" ]; then
-            local version
-            version=$(basename "$version_dir")
-            local fixed=false
-
-            for html_file in "$version_dir"/*.html "$version_dir"/**/*.html; do
-                if [ -f "$html_file" ] && grep -q '\.\./images/' "$html_file"; then
-                    sed -i.bak 's|\.\./images/|images/|g' "$html_file"
-                    rm -f "$html_file.bak"
-                    fixed=true
-                fi
-            done
-
-            if [ "$fixed" = true ]; then
-                echo "  Fixed image paths in $version"
-            fi
-        fi
-    done
-    shopt -u nullglob
-}
-
 # Inject version switcher and outdated alert into all versions
 inject_version_switcher() {
     echo "Injecting version switcher into all versions..."
@@ -479,27 +452,61 @@ inject_version_switcher() {
     echo "Version switcher injection complete"
 }
 
-# Generate root index.html
-generate_root_index() {
+# Copy latest version to root and inject components
+copy_latest_to_root() {
     local latest
     latest=$(jq -r '.latest' "$OUTPUT_DIR/versions.json")
+    local latest_dir="$OUTPUT_DIR/$latest"
 
-    cat > "$OUTPUT_DIR/index.html" << EOF
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Breez SDK Documentation</title>
-  <meta http-equiv="refresh" content="0; url=/$latest/">
-  <link rel="canonical" href="/$latest/">
-</head>
-<body>
-  <p>Redirecting to <a href="/$latest/">latest documentation ($latest)</a>...</p>
-  <script>window.location.href = "/$latest/";</script>
-</body>
-</html>
-EOF
-    echo "Generated root index.html (redirects to $latest)"
+    if [ ! -d "$latest_dir" ]; then
+        echo "Warning: Latest version directory not found: $latest_dir"
+        return
+    fi
+
+    echo "Copying latest version ($latest) to root..."
+
+    # Copy all files from latest version to root (excluding the version directory itself)
+    shopt -s dotglob nullglob
+    for item in "$latest_dir"/*; do
+        local basename
+        basename=$(basename "$item")
+        # Skip manifest file
+        if [ "$basename" = ".manifest.json" ]; then
+            continue
+        fi
+        # Remove existing item at root if it exists (but not version directories and not .cache)
+        if [ -e "$OUTPUT_DIR/$basename" ] && [[ ! "$basename" =~ ^v[0-9] ]] && [ "$basename" != ".cache" ]; then
+            rm -rf "$OUTPUT_DIR/$basename"
+        fi
+        # Copy to root
+        if [ -d "$item" ]; then
+            cp -r "$item" "$OUTPUT_DIR/$basename"
+        else
+            cp "$item" "$OUTPUT_DIR/$basename"
+        fi
+    done
+    shopt -u dotglob nullglob
+
+    # Copy component files to root
+    local components_dir="$REPO_ROOT/components"
+    cp "$components_dir/version-switcher.js" "$OUTPUT_DIR/" 2>/dev/null || true
+    cp "$components_dir/version-switcher.css" "$OUTPUT_DIR/" 2>/dev/null || true
+    cp "$components_dir/outdated-alert.js" "$OUTPUT_DIR/" 2>/dev/null || true
+    cp "$components_dir/outdated-alert.css" "$OUTPUT_DIR/" 2>/dev/null || true
+
+    # Fix component paths in root HTML files (change /vX.X.X/ paths to /)
+    shopt -s nullglob
+    for html_file in "$OUTPUT_DIR"/*.html "$OUTPUT_DIR"/guide/*.html "$OUTPUT_DIR"/notifications/*.html; do
+        if [ -f "$html_file" ]; then
+            # Fix version-specific paths to root paths
+            sed -i.bak "s|/$latest/version-switcher|/version-switcher|g" "$html_file"
+            sed -i.bak "s|/$latest/outdated-alert|/outdated-alert|g" "$html_file"
+            rm -f "$html_file.bak"
+        fi
+    done
+    shopt -u nullglob
+
+    echo "Latest version available at root"
 }
 
 # Get top N version tags sorted by semver (descending)
@@ -591,14 +598,11 @@ main() {
     # Cleanup orphaned cache entries
     cleanup_cache
 
-    # Fix image paths in all versions
-    fix_image_paths
-
     # Inject version switcher into all versions
     inject_version_switcher
 
-    # Generate root index
-    generate_root_index
+    # Copy latest version to root
+    copy_latest_to_root
 
     echo ""
     print_cache_stats
