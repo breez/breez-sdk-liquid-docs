@@ -16,13 +16,13 @@ set -euo pipefail
 #   - Keeps last X minor versions (keepMinorVersions, default: 3)
 #   - For each minor except latest: only highest patch
 #   - For latest minor: keeps last Y patches (keepLatestPatches, default: 3)
-#   Example result: v0.9.5, v0.10.3, v0.11.9, v0.11.10, v0.11.11
+#   Example result: 0.9.5, 0.10.3, 0.11.9, 0.11.10, 0.11.11
 #
 # Examples:
 #   ./scripts/build-versioned-docs.sh                     # Smart selection
-#   ./scripts/build-versioned-docs.sh v1.0.0 v0.11.2     # Specific tags
-#   ./scripts/build-versioned-docs.sh --force v1.0.0     # Force rebuild
-#   ./scripts/build-versioned-docs.sh -o ./dist v1.0.0   # Custom output
+#   ./scripts/build-versioned-docs.sh 1.0.0 0.11.2       # Specific tags
+#   ./scripts/build-versioned-docs.sh --force 1.0.0      # Force rebuild
+#   ./scripts/build-versioned-docs.sh -o ./dist 1.0.0    # Custom output
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -247,7 +247,7 @@ cleanup_cache() {
     referenced_hashes=$(mktemp)
 
     shopt -s nullglob
-    for manifest in "$OUTPUT_DIR"/v*/.manifest.json; do
+    for manifest in "$OUTPUT_DIR"/[0-9]*/.manifest.json; do
         if [ -f "$manifest" ]; then
             jq -r '.[]' "$manifest" >> "$referenced_hashes"
         fi
@@ -392,7 +392,7 @@ cleanup_old_versions() {
     keep_versions=$(jq -r '.versions[].version' "$OUTPUT_DIR/versions.json")
 
     shopt -s nullglob
-    for dir in "$OUTPUT_DIR"/v*/; do
+    for dir in "$OUTPUT_DIR"/[0-9]*/; do
         if [ -d "$dir" ]; then
             local version
             version=$(basename "$dir")
@@ -422,7 +422,7 @@ inject_version_switcher() {
     fi
 
     shopt -s nullglob
-    for version_dir in "$OUTPUT_DIR"/v*/; do
+    for version_dir in "$OUTPUT_DIR"/[0-9]*/; do
         if [ -d "$version_dir" ]; then
             local version
             version=$(basename "$version_dir")
@@ -492,7 +492,7 @@ copy_latest_to_root() {
             continue
         fi
         # Remove existing item at root if it exists (but not version directories and not .cache)
-        if [ -e "$OUTPUT_DIR/$basename" ] && [[ ! "$basename" =~ ^v[0-9] ]] && [ "$basename" != ".cache" ]; then
+        if [ -e "$OUTPUT_DIR/$basename" ] && [[ ! "$basename" =~ ^[0-9]+\.[0-9]+ ]] && [ "$basename" != ".cache" ]; then
             rm -rf "$OUTPUT_DIR/$basename"
         fi
         # Copy to root
@@ -526,34 +526,29 @@ copy_latest_to_root() {
     echo "Latest version available at root"
 }
 
+# Get all version tags (starting with a digit)
+get_version_tags() {
+    git tag -l | grep -E '^[0-9]+\.[0-9]+' | sort -rV
+}
+
 # Get top N version tags sorted by semver (descending)
 get_top_versions() {
     local n="$1"
-    # Get all version tags, sort by semver (descending), take top N
-    # Try version sort (-V), fall back to basic reverse sort
-    if git tag -l 'v*' | sort -rV >/dev/null 2>&1; then
-        git tag -l 'v*' | sort -rV | head -n "$n"
-    else
-        git tag -l 'v*' | sort -r | head -n "$n"
-    fi
+    get_version_tags | head -n "$n"
 }
 
 # Smart version selection:
 # - Keep last X minor versions
 # - For each minor except latest: keep only highest patch
 # - For latest minor: keep last Y patches
-# Example with X=3, Y=3: v0.9.5, v0.10.3, v0.11.9, v0.11.10, v0.11.11
+# Example with X=3, Y=3: 0.9.5, 0.10.3, 0.11.9, 0.11.10, 0.11.11
 get_smart_versions() {
     local keep_minors="$1"
     local keep_patches="$2"
 
     # Get all version tags sorted by semver descending
     local all_tags
-    if git tag -l 'v*' | sort -rV >/dev/null 2>&1; then
-        all_tags=$(git tag -l 'v*' | sort -rV)
-    else
-        all_tags=$(git tag -l 'v*' | sort -r)
-    fi
+    all_tags=$(get_version_tags)
 
     if [ -z "$all_tags" ]; then
         return
@@ -561,7 +556,7 @@ get_smart_versions() {
 
     # Extract unique minor versions (major.minor)
     local minor_versions
-    minor_versions=$(echo "$all_tags" | sed 's/^v//' | cut -d. -f1,2 | sort -t. -k1,1nr -k2,2nr | uniq | head -n "$keep_minors")
+    minor_versions=$(echo "$all_tags" | cut -d. -f1,2 | sort -t. -k1,1nr -k2,2nr | uniq | head -n "$keep_minors")
 
     if [ -z "$minor_versions" ]; then
         return
@@ -578,12 +573,12 @@ get_smart_versions() {
         if [ "$minor" = "$latest_minor" ]; then
             # For latest minor: get last Y patches
             local patches
-            patches=$(echo "$all_tags" | grep "^v${minor}\." | head -n "$keep_patches")
+            patches=$(echo "$all_tags" | grep "^${minor}\." | head -n "$keep_patches")
             selected_tags="$selected_tags"$'\n'"$patches"
         else
             # For older minors: get only the highest patch
             local highest_patch
-            highest_patch=$(echo "$all_tags" | grep "^v${minor}\." | head -1)
+            highest_patch=$(echo "$all_tags" | grep "^${minor}\." | head -1)
             if [ -n "$highest_patch" ]; then
                 selected_tags="$selected_tags"$'\n'"$highest_patch"
             fi

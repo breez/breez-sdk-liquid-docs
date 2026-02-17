@@ -4,7 +4,7 @@
   // Get current version from URL path (null if at root = latest)
   function getCurrentVersion() {
     var path = window.location.pathname;
-    var match = path.match(/^\/(v[\d.]+[-\w]*)\//);
+    var match = path.match(/^\/([\d]+\.[\d.]+[-\w]*)\//);
     return match ? match[1] : null;
   }
 
@@ -20,7 +20,7 @@
       // At root, the whole path is the relative path
       return path;
     }
-    var match = path.match(/^\/v[\d.]+[-\w]*(\/.*)/);
+    var match = path.match(/^\/[\d]+\.[\d.]+[-\w]*(\/.*)/);
     return match ? match[1] : '/';
   }
 

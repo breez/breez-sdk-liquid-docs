@@ -4,14 +4,14 @@
   // Get current version from URL path
   function getCurrentVersion() {
     var path = window.location.pathname;
-    var match = path.match(/^\/(v[\d.]+[-\w]*)\//);
+    var match = path.match(/^\/([\d]+\.[\d.]+[-\w]*)\//);
     return match ? match[1] : null;
   }
 
   // Get the relative path within the current version
   function getRelativePath() {
     var path = window.location.pathname;
-    var match = path.match(/^\/v[\d.]+[-\w]*(\/.*)/);
+    var match = path.match(/^\/[\d]+\.[\d.]+[-\w]*(\/.*)/);
     return match ? match[1] : '/';
   }
 
