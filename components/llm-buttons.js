@@ -65,14 +65,15 @@
   }
 
   // Max characters for content (conservative limit accounting for URL encoding expansion)
-  var MAX_CONTENT_LENGTH = 1500;
+  var MAX_CONTENT_LENGTH = 1024 * 8; // 8KB
 
   // Truncate markdown to fit within URL limits
   function truncateMarkdown(markdown) {
     if (markdown.length <= MAX_CONTENT_LENGTH) {
       return markdown;
+    } else {
+      return window.location.href
     }
-    return markdown.substring(0, MAX_CONTENT_LENGTH) + '... [truncated]';
   }
 
   // Create button element
@@ -163,8 +164,8 @@
     var id = heading.id || '';
     var text = heading.textContent.toLowerCase();
     return id.indexOf('developer-note') !== -1 ||
-           id.indexOf('dev-note') !== -1 ||
-           text.indexOf('developer note') !== -1;
+      id.indexOf('dev-note') !== -1 ||
+      text.indexOf('developer note') !== -1;
   }
 
   // Group content by sections with hierarchy awareness
