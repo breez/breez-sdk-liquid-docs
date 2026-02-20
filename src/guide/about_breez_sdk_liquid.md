@@ -1,18 +1,18 @@
-# About Breez SDK - Nodeless *(Liquid Implementation)*
+# About Breez SDK - Liquid
 
-## **What Is the Breez SDK?**
+## **Overview**
 
-The Breez SDK provides developers with an end-to-end solution for integrating self-custodial Lightning into their apps and services. It eliminates the need for third parties, simplifies the complexities of Bitcoin and Lightning, and enables seamless onboarding for billions of users to the future of peer-to-peer.
+The Breez SDK provides developers with an end-to-end solution for integrating instant, self-custodial bitcoin into their apps and services. It eliminates the need for third parties, simplifies the complexities of Bitcoin and Lightning, and enables seamless onboarding for billions of users to the future of value transfer.
 
 To provide the best experience for their end-users, developers can choose between the following implementations:
 
-- [Breez SDK - Nodeless *(Liquid Implementation)*](https://sdk-doc-liquid.breez.technology/)
-- [Breez SDK - Nodeless *(Spark Implementation)*](https://sdk-doc-spark.breez.technology/)
+- [Breez SDK - Spark](https://sdk-doc-spark.breez.technology/)
+- [Breez SDK - Liquid](https://sdk-doc-liquid.breez.technology/)
 
 
-## **What Is the Breez SDK - Nodeless *(Liquid Implementation)*?**
+## **What is the Breez SDK - Liquid?**
 
-It’s a nodeless integration that offers a self-custodial, end-to-end solution for integrating Lightning, utilizing the Liquid Network with on-chain interoperability and third-party fiat on-ramps. Using the SDK you will able to:
+It’s a nodeless integration that offers a self-custodial, end-to-end solution for integrating bitcoin, utilizing the Liquid Network & Lightning, with on-chain interoperability and third-party fiat on-ramps. Using the SDK you'll be able to:
 
 - **Send payments** via various protocols such as: Bolt11, Bolt12, BIP353, LNURL-Pay, Lightning address, BTC address
 - **Receive payments** via various protocols such as: Bolt11, Bolt12, BIP353, LNURL-Withdraw, LNURL-Pay, Lightning address, BTC address
@@ -33,9 +33,9 @@ It’s a nodeless integration that offers a self-custodial, end-to-end solution 
 - [x] Free open-source solution
 
 
-## How Does Nodeless *(Liquid Implementation)* Work?
+## How does the Breez SDK - Liquid work?
 
-The Breez SDK - Nodeless *(Liquid implementation)* uses submarine swaps and reverse submarine swaps to send and receive payments, enabling funds to move frictionlessly between the Lightning Network and the Liquid sidechain.
+The Breez SDK - Liquid uses submarine swaps and reverse submarine swaps to send and receive payments, enabling funds to move frictionlessly between the Lightning Network and the Liquid sidechain.
 
 ![Breez SDK - Liquid](../images/BreezSDK_Liquid.png)
 
@@ -47,7 +47,7 @@ When receiving a payment, the SDK performs a reverse submarine swap, converting 
 ## Pricing
 
 The Breez SDK is **free** for developers. 
-See [this](https://sdk-doc-liquid.breez.technology/guide/end-user_fees.html) for end-user fees.
+See [here](https://sdk-doc-liquid.breez.technology/guide/end-user_fees.html) for end-user fees.
 
 
 ## Support
@@ -57,10 +57,12 @@ Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or em
 
 ## Repository
 
-Head over to the [Breez SDK - Nodeless *(Liquid Implementation)* repo](https://github.com/breez/breez-sdk-liquid).
+Head over to the [Breez SDK - Liquid repo](https://github.com/breez/breez-sdk-liquid).
 
 
-## Ready to Light Up Your App? 
-**→ [Get Started](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)** 
+## Next Steps
+Follow our step-by-step guide to add the Breez SDK to your app.
+
+**→ [Getting Started](https://sdk-doc-liquid.breez.technology/guide/getting_started.html)** 
 
 
