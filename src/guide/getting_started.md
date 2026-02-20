@@ -1,6 +1,6 @@
 # Getting Started
 
-Integrating Breez SDK - Nodeless *(Liquid Implementation)* into your application takes just a few minutes. Follow these steps to get started:
+Integrating Breez SDK - Liquid into your application takes just a few minutes. Follow these steps to get started:
 - **[Installing the SDK](/guide/install.md)**
 - **[Connecting](/guide/connecting.md)**
 - **[Fetching the balance](/guide/wallet_state.md)**
@@ -32,9 +32,9 @@ Many of the guidelines are implemented in [Misty Breez](https://github.com/breez
 
 ## Misty Breez
 
-[Misty Breez](https://github.com/breez/misty-breez/) is a mobile app built with Flutter that serves as a reference implementation for the Breez SDK - Nodeless that:
-* Demonstrates the full capabilities of building with the SDK
-* Showcases best practices for designing an intuitive UI and UX for self-custodial Lightning payments
+[Misty Breez](https://github.com/breez/misty-breez/) is a mobile app built with Flutter that serves as a reference implementation for the Breez SDK that:
+* Demonstrates the full capabilities of building with the Breez SDK
+* Showcases best practices for designing an intuitive UI and UX for self-custodial Lightning
 * Offers a ready-made solution that can be white-labeled for partners looking to build a new app
 
 ## Support
