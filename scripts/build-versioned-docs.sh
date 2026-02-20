@@ -405,9 +405,9 @@ cleanup_old_versions() {
     shopt -u nullglob
 }
 
-# Inject version switcher and outdated alert into all versions
-inject_version_switcher() {
-    echo "Injecting version switcher into all versions..."
+# Inject components (version switcher, outdated alert, LLM buttons) into all versions
+inject_components() {
+    echo "Injecting components into all versions..."
 
     # Paths to component files
     local components_dir="$REPO_ROOT/components"
@@ -415,6 +415,8 @@ inject_version_switcher() {
     local switcher_css="$components_dir/version-switcher.css"
     local alert_js="$components_dir/outdated-alert.js"
     local alert_css="$components_dir/outdated-alert.css"
+    local llm_js="$components_dir/llm-buttons.js"
+    local llm_css="$components_dir/llm-buttons.css"
 
     if [ ! -f "$switcher_js" ]; then
         echo "Warning: version-switcher.js not found at $switcher_js"
@@ -427,46 +429,34 @@ inject_version_switcher() {
             local version
             version=$(basename "$version_dir")
 
-            # Copy version-switcher.js if not present
-            if [ ! -f "$version_dir/version-switcher.js" ]; then
-                cp "$switcher_js" "$version_dir/"
-            fi
-
-            # Copy version-switcher.css if not present
-            if [ -f "$switcher_css" ] && [ ! -f "$version_dir/version-switcher.css" ]; then
-                cp "$switcher_css" "$version_dir/"
-            fi
-
-            # Copy outdated-alert.js if not present
-            if [ -f "$alert_js" ] && [ ! -f "$version_dir/outdated-alert.js" ]; then
-                cp "$alert_js" "$version_dir/"
-            fi
-
-            # Copy outdated-alert.css if not present
-            if [ -f "$alert_css" ] && [ ! -f "$version_dir/outdated-alert.css" ]; then
-                cp "$alert_css" "$version_dir/"
-            fi
+            # Copy component files
+            [ -f "$switcher_js" ] && cp "$switcher_js" "$version_dir/"
+            [ -f "$switcher_css" ] && cp "$switcher_css" "$version_dir/"
+            [ -f "$alert_js" ] && cp "$alert_js" "$version_dir/"
+            [ -f "$alert_css" ] && cp "$alert_css" "$version_dir/"
+            [ -f "$llm_js" ] && cp "$llm_js" "$version_dir/"
+            [ -f "$llm_css" ] && cp "$llm_css" "$version_dir/"
 
             # Inject into all HTML files if not already present
             local injected=false
             for html_file in "$version_dir"/*.html "$version_dir"/**/*.html; do
                 if [ -f "$html_file" ] && ! grep -q "version-switcher.js" "$html_file"; then
                     # Insert CSS before </head>
-                    sed -i.bak 's|</head>|<link rel="stylesheet" href="/'"$version"'/version-switcher.css"><link rel="stylesheet" href="/'"$version"'/outdated-alert.css"></head>|' "$html_file"
+                    sed -i.bak 's|</head>|<link rel="stylesheet" href="/'"$version"'/version-switcher.css"><link rel="stylesheet" href="/'"$version"'/outdated-alert.css"><link rel="stylesheet" href="/'"$version"'/llm-buttons.css"></head>|' "$html_file"
                     # Insert JS before </body>
-                    sed -i.bak 's|</body>|<script src="/'"$version"'/version-switcher.js"></script><script src="/'"$version"'/outdated-alert.js"></script></body>|' "$html_file"
+                    sed -i.bak 's|</body>|<script src="/'"$version"'/version-switcher.js"></script><script src="/'"$version"'/outdated-alert.js"></script><script src="/'"$version"'/llm-buttons.js"></script></body>|' "$html_file"
                     rm -f "$html_file.bak"
                     injected=true
                 fi
             done
 
             if [ "$injected" = true ]; then
-                echo "  Injected version switcher into $version"
+                echo "  Injected components into $version"
             fi
         fi
     done
     shopt -u nullglob
-    echo "Version switcher injection complete"
+    echo "Component injection complete"
 }
 
 # Copy latest version to root and inject components
@@ -510,14 +500,17 @@ copy_latest_to_root() {
     cp "$components_dir/version-switcher.css" "$OUTPUT_DIR/" 2>/dev/null || true
     cp "$components_dir/outdated-alert.js" "$OUTPUT_DIR/" 2>/dev/null || true
     cp "$components_dir/outdated-alert.css" "$OUTPUT_DIR/" 2>/dev/null || true
+    cp "$components_dir/llm-buttons.js" "$OUTPUT_DIR/" 2>/dev/null || true
+    cp "$components_dir/llm-buttons.css" "$OUTPUT_DIR/" 2>/dev/null || true
 
-    # Fix component paths in root HTML files (change /vX.X.X/ paths to /)
+    # Fix component paths in root HTML files (change /X.X.X/ paths to /)
     shopt -s nullglob
     for html_file in "$OUTPUT_DIR"/*.html "$OUTPUT_DIR"/guide/*.html "$OUTPUT_DIR"/notifications/*.html; do
         if [ -f "$html_file" ]; then
             # Fix version-specific paths to root paths
             sed -i.bak "s|/$latest/version-switcher|/version-switcher|g" "$html_file"
             sed -i.bak "s|/$latest/outdated-alert|/outdated-alert|g" "$html_file"
+            sed -i.bak "s|/$latest/llm-buttons|/llm-buttons|g" "$html_file"
             rm -f "$html_file.bak"
         fi
     done
@@ -667,8 +660,8 @@ main() {
     # Cleanup orphaned cache entries
     cleanup_cache
 
-    # Inject version switcher into all versions
-    inject_version_switcher
+    # Inject components into all versions
+    inject_components
 
     # Copy latest version to root
     copy_latest_to_root

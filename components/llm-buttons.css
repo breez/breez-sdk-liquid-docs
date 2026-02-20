@@ -1,0 +1,114 @@
+/* LLM Buttons Component */
+
+.llm-section-wrapper {
+  position: relative;
+  display: block;
+}
+
+.llm-section-content {
+  display: block;
+}
+
+.llm-buttons-container {
+  position: absolute;
+  right: -36px;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease 0.3s;
+  z-index: 100;
+  padding-left: 8px;
+}
+
+.llm-section-wrapper.llm-hover > .llm-buttons-container {
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.llm-section-wrapper.llm-hover > .llm-buttons-container {
+  opacity: 1;
+  visibility: visible;
+}
+
+.llm-button {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  border: 1px solid var(--quote-border, #ccc);
+  border-radius: 4px;
+  background: var(--bg, #fff);
+  color: var(--fg, #333);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.llm-button:hover {
+  background: var(--quote-bg, #f5f5f5);
+  border-color: var(--links, #4183c4);
+  color: var(--links, #4183c4);
+}
+
+.llm-button:active {
+  transform: scale(0.95);
+}
+
+.llm-button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.llm-button.copied {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+/* Claude button specific color on hover */
+.llm-button:first-child:hover {
+  border-color: #D97757;
+  color: #D97757;
+}
+
+/* ChatGPT button specific color on hover */
+.llm-button:nth-child(2):hover {
+  border-color: #10a37f;
+  color: #10a37f;
+}
+
+/* Gemini button specific color on hover */
+.llm-button:nth-child(3):hover {
+  border-color: #4285f4;
+  color: #4285f4;
+}
+
+/* Copy button specific color on hover */
+.llm-button:nth-child(4):hover {
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+/* Responsive: hide on small screens */
+@media (max-width: 1200px) {
+  .llm-buttons-container {
+    display: none;
+  }
+}
+
+/* Dark theme adjustments */
+.coal .llm-button,
+.navy .llm-button,
+.ayu .llm-button {
+  background: var(--bg, #1a1a1a);
+  border-color: var(--quote-border, #444);
+}
+
+.coal .llm-button:hover,
+.navy .llm-button:hover,
+.ayu .llm-button:hover {
+  background: var(--quote-bg, #2a2a2a);
+}
