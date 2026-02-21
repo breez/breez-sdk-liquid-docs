@@ -10,7 +10,7 @@ Integrating Breez SDK - Liquid into your application takes just a few minutes. F
 
 ## API Key
 
-The _Nodeless_ Breez API key must be set for the SDK to work. You can request one by filling our form <a target="_blank" href="{{api_key_form_uri}}">here</a>.
+The Breez SDK API key must be set for the SDK to work. You can request one by filling our form <a target="_blank" href="{{api_key_form_uri}}">here</a>.
 
 **Note:** This is not the same as the _Native_ (Greenlight) Breez API key, so it can't be reused.
 
