@@ -1,6 +1,6 @@
 # Receiving payments using LNURL-Pay, Lightning and BIP353 addresses
 
-Breez SDK - Nodeless *(Liquid Implementation)* users have the ability to receive Lightning payments using [LNURL-Pay](https://github.com/lnurl/luds/blob/luds/06.md) and [BOLT12 offers](receive_payment.html#bolt12-offer).
+Breez SDK - Liquid users have the ability to receive Lightning payments using [LNURL-Pay](https://github.com/lnurl/luds/blob/luds/06.md) and [BOLT12 offers](receive_payment.html#bolt12-offer).
 
 Whether or not you are able to use a webhook URL to receive payment events will determine if you want to register for LNURL-Pay. If you have no way to receive webhook events, you can still register a BOLT12 Offer as a BIP353 DNS record. In this case the SDK must remain online to receive the BOLT12 invoice requests.
 
