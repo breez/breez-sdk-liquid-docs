@@ -1,6 +1,6 @@
 # Implementing mobile notifications
 
-The Breez SDK - Nodeless *(Liquid Implementation)* Notification Plugin provides developers a simple solution to improve the payment experience on a mobile device. No longer does the application need to be in foreground when receiving payments. When the Notification Plugin is added to process push notifications, the application can be in the background or even closed.
+The Breez SDK - Liquid Notification Plugin provides developers a simple solution to improve the payment experience on a mobile device. No longer does the application need to be in foreground when receiving payments. When the Notification Plugin is added to process push notifications, the application can be in the background or even closed.
 
 ## How it works
 
