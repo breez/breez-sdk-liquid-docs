@@ -2,7 +2,7 @@
 
 # API Overview
 
-- [About Breez SDK - Nodeless](guide/about_breez_sdk_liquid.md)
+- [About Breez SDK - Liquid](guide/about_breez_sdk_liquid.md)
 - [Getting started](guide/getting_started.md)
   - [Installing the SDK](guide/install.md)
   - [Connecting and disconnecting](guide/connecting.md)
