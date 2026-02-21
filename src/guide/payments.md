@@ -1,6 +1,6 @@
 # Payment fundamentals
 
-How to send, receive and manage payments using the Breez SDK - Nodeless *(Liquid Implementation)*:
+How to send, receive and manage payments using the Breez SDK - Liquid:
 
 - **[Parsing inputs]** to determine the payment type
 - **[Receiving payments]** via a Lightning invoice, Liquid/Bitcoin BIP21 or plain Liquid address
