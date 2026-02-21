@@ -1,6 +1,6 @@
 # Using LNURL, Lightning and BIP353 addresses
 
-The Breez SDK - Nodeless *(Liquid Implementation)* also has extensive support of <a target="_blank" href="https://github.com/lnurl/luds">LNURL</a> and <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki">BIP353</a>:
+The Breez SDK - Liquid also has extensive support of <a target="_blank" href="https://github.com/lnurl/luds">LNURL</a> and <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki">BIP353</a>:
 
 - **[Sending payments using LNURL-Pay/Lightning address]** 
 - **[Receiving payments using LNURL-Pay, Lightning and BIP353 addresses]**
