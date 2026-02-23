@@ -1,0 +1,13 @@
+{
+  "maxVersions": 5,
+  "keepMinorVersions": 5,
+  "keepLatestPatches": 3,
+  "trackedPaths": [
+    "src/",
+    "snippets/",
+    "book.toml",
+    "styles.css",
+    "tabs.js",
+    "theme/"
+  ]
+}

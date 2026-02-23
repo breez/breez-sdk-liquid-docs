@@ -1,0 +1,47 @@
+/* Version Switcher Styles */
+.version-switcher {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.version-select {
+  background-color: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--searchbar-border-color);
+  border-radius: 4px;
+  padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23888' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.4rem center;
+}
+
+.version-select:hover {
+  border-color: var(--searchbar-border-color);
+  background-color: var(--quote-bg);
+}
+
+.version-select:focus {
+  outline: none;
+  border-color: var(--searchresults-header-fg);
+}
+
+@media (max-width: 600px) {
+  .version-switcher {
+    margin-right: 0.25rem;
+  }
+
+  .version-select {
+    font-size: 1.25rem;
+    padding: 0.2rem 1.2rem 0.2rem 0.4rem;
+  }
+}
+
+.right-buttons {
+  display: flex;
+}
