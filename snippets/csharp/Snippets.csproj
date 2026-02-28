@@ -4,10 +4,22 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
-  <ItemGroup>
+    
+  <ItemGroup Condition="'$(LOCAL_DEV)' == ''">
     <PackageReference Include="Breez.Sdk.Liquid" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(LOCAL_DEV)' == '1'">
+    <ProjectReference Include="../../../breez-sdk-liquid/lib/bindings/langs/csharp/src/Breez.Sdk.Liquid.csproj" Version="*" />
+    <Compile Include="../../../breez-sdk-liquid/lib/bindings/ffi/csharp/breez_sdk_liquid.cs" Link="breez_sdk_liquid.cs" CopyToOutputDirectory="Never" />    
+    <Content Include="../../../breez-sdk-liquid/lib/bindings/ffi/csharp/libbreez_sdk_liquid_bindings.so" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' ">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="../../../breez-sdk-liquid/lib/bindings/ffi/csharp/libbreez_sdk_liquid_bindings.dylib" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' ">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

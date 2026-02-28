@@ -10,7 +10,7 @@
         "compile": "tsc"
     },
     "dependencies": {
-        "@breeztech/breez-sdk-liquid": "file:./packages/breez-sdk-liquid.tgz"
+        "@breeztech/breez-sdk-liquid": "^0.11.2"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^6.4.0",

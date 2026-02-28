@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+dependencies = [
+    "breez_sdk_liquid",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+extraPaths = ["../../../breez-sdk-liquid/lib/bindings/ffi/python/"]
+typeCheckingMode = "basic"

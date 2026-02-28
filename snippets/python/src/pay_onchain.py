@@ -31,7 +31,7 @@ def prepare_pay_onchain(sdk: BindingLiquidSdk):
 def prepare_pay_onchain_drain(sdk: BindingLiquidSdk):
     # ANCHOR: prepare-pay-onchain-drain
     try:
-        amount = PayAmount.DRAIN
+        amount = PayAmount.DRAIN()
         prepare_request = PreparePayOnchainRequest(amount=amount)
         prepare_response = sdk.prepare_pay_onchain(prepare_request)
 
