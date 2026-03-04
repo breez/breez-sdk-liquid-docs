@@ -9,7 +9,7 @@ To enable the Nostr Wallet Connect service, you can initialize it as a plugin af
 The config takes three optional parameters:
 - **Relay URLs**: Custom list of relays for the NWC node to connect to
 - **Secret key**: Custom Nostr secret key (hex-encoded) to start the node with 
-- **Listen to events**: Whether or not to actively listen and reply to events (defaults to true)
+- **Listen to events**: Whether or not to actively listen and reply to events (defaults to true). Can be set to false when only event broadcasting is required (e.g. zap replies).
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>

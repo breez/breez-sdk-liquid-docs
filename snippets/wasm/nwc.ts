@@ -1,5 +1,6 @@
 import { type BindingLiquidSdk } from '@breeztech/breez-sdk-liquid'
 import {
+  SdkNwcService,
   type NwcConfig,
   type AddConnectionRequest,
   type EditConnectionRequest,
@@ -90,6 +91,12 @@ const nwcEvents = async (nwcService: SdkNwcService) => {
           // ...
           break
         case 'disconnected':
+          // ...
+          break
+        case 'connectionExpired':
+          // ...
+          break
+        case 'connectionRefreshed':
           // ...
           break
         case 'payInvoice':

@@ -90,7 +90,7 @@ public class NwcSnippets
             foreach (var (connectionName, connection) in connections)
             {
                 Console.WriteLine(
-                    $"Connection: {connectionName} - Expires at: {connection.expiresAt}, Periodic Budget: {connection.periodicBudget}"
+                    $"Connection: {connectionName} - Expires at: {connection.ExpiresAt}, Periodic Budget: {connection.PeriodicBudget}"
                 );
                 // ...
             }
@@ -134,6 +134,12 @@ public class NwcSnippets
                     // ...
                     break;
                 case NwcEventDetails.Disconnected:
+                    // ...
+                    break;
+                case NwcEventDetails.ConnectionExpired:
+                    // ...
+                    break;
+                case NwcEventDetails.ConnectionRefreshed:
                     // ...
                     break;
                 case NwcEventDetails.PayInvoice payInvoice:

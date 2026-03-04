@@ -20,14 +20,14 @@ async fn nwc_connect(sdk: Arc<LiquidSdk>) -> Result<()> {
         listen_to_events: None,
     };
     let nwc_service = Arc::new(SdkNwcService::new(nwc_config));
-    sdk.start_plugin(nwc_service.clone()).await;
+    sdk.start_plugin(nwc_service.clone()).await?;
 
     // ...
 
     // Automatically stops the plugin
-    sdk.disconnect();
+    sdk.disconnect().await;
     // Alternatively, you can stop the plugin manually, without disconnecting the SDK
-    nwc_service.on_stop();
+    nwc_service.on_stop().await;
     // ANCHOR_END: connecting
     Ok(())
 }
@@ -110,6 +110,12 @@ async fn nwc_events(nwc_service: Arc<SdkNwcService>) -> Result<()> {
                     // ...
                 }
                 NwcEventDetails::Disconnected => {
+                    // ...
+                }
+                NwcEventDetails::ConnectionExpired => {
+                    // ...
+                }
+                NwcEventDetails::ConnectionRefreshed => {
                     // ...
                 }
                 NwcEventDetails::PayInvoice {
