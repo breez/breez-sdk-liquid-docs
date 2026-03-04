@@ -41,7 +41,7 @@ async fn nwc_connections(nwc_service: Arc<SdkNwcService>) -> Result<()> {
         max_budget_sat: 10000,
         renewal_time_mins: Some(60), // Renews every hour
     };
-    nwc_service
+    let add_response = nwc_service
         .add_connection(AddConnectionRequest {
             name: "my new connection".to_string(),
             expiry_time_mins: Some(60), // Expires after one hour
@@ -49,13 +49,14 @@ async fn nwc_connections(nwc_service: Arc<SdkNwcService>) -> Result<()> {
             receive_only: None, // Defaults to false
         })
         .await?;
+    println!("{}", add_response.connection.connection_string);
     // ANCHOR_END: add-connection
 
     // ANCHOR: edit-connection
     use breez_sdk_liquid_nwc::model::EditConnectionRequest;
 
     let new_expiry_time = 60 * 24;
-    nwc_service
+    let edit_response = nwc_service
         .edit_connection(EditConnectionRequest {
             name: "my new connection".to_string(),
             expiry_time_mins: Some(new_expiry_time), // The connection will now expire after 1 day
@@ -65,6 +66,7 @@ async fn nwc_connections(nwc_service: Arc<SdkNwcService>) -> Result<()> {
             remove_periodic_budget: Some(true), // The periodic budget has been removed
         })
         .await?;
+    println!("{}", edit_response.connection.connection_string);
     // ANCHOR_END: edit-connection
 
     // ANCHOR: list-connections

@@ -26,26 +26,30 @@ func nwcAddConnection(nwcService: SdkNwcService) {
         maxBudgetSat: 10000,
         renewalTimeMins: 60  // Renews every hour
     )
-    try? nwcService.addConnection(req: AddConnectionRequest(
+    if let addResponse = try? nwcService.addConnection(req: AddConnectionRequest(
         name: "my new connection",
         expiryTimeMins: 60,  // Expires after one hour
         periodicBudgetReq: periodicBudgetReq,
         receiveOnly: nil  // Defaults to false
-    ))
+    )) {
+        print(addResponse.connection.connectionString)
+    }
     // ANCHOR_END: add-connection
 }
 
 func nwcEditConnection(nwcService: SdkNwcService) {
     // ANCHOR: edit-connection
     let newExpiryTime: UInt32 = 60 * 24
-    try? nwcService.editConnection(req: EditConnectionRequest(
+    if let editResponse = try? nwcService.editConnection(req: EditConnectionRequest(
         name: "my new connection",
         expiryTimeMins: newExpiryTime,  // The connection will now expire after 1 day
         periodicBudgetReq: nil,
         receiveOnly: nil,
         removeExpiry: nil,
         removePeriodicBudget: true  // The periodic budget has been removed
-    ))
+    )) {
+        print(editResponse.connection.connectionString)
+    }
     // ANCHOR_END: edit-connection
 }
 

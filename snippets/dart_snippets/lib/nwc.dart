@@ -29,7 +29,7 @@ Future<void> nwcAddConnection(SdkNwcService nwcService) async {
     maxBudgetSat: BigInt.from(10000),
     renewalTimeMins: 60, // Renews every hour
   );
-  await nwcService.addConnection(
+  final addResponse = await nwcService.addConnection(
     req: AddConnectionRequest(
       name: "my new connection",
       expiryTimeMins: 60, // Expires after one hour
@@ -37,13 +37,14 @@ Future<void> nwcAddConnection(SdkNwcService nwcService) async {
       receiveOnly: null, // Defaults to false
     ),
   );
+  print(addResponse.connection.connectionString);
   // ANCHOR_END: add-connection
 }
 
 Future<void> nwcEditConnection(SdkNwcService nwcService) async {
   // ANCHOR: edit-connection
   int newExpiryTime = 60 * 24;
-  await nwcService.editConnection(
+  final editResponse = await nwcService.editConnection(
     req: EditConnectionRequest(
       name: "my new connection",
       expiryTimeMins: newExpiryTime, // The connection will now expire after 1 day
@@ -53,6 +54,7 @@ Future<void> nwcEditConnection(SdkNwcService nwcService) async {
       removePeriodicBudget: true, // The periodic budget has been removed
     ),
   );
+  print(editResponse.connection.connectionString);
   // ANCHOR_END: edit-connection
 }
 

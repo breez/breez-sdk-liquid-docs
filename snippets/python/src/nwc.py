@@ -40,7 +40,7 @@ def nwc_add_connection(nwc_service: SdkNwcService):
         renewal_time_mins=60,  # Renews every hour
     )
     try:
-        nwc_service.add_connection(
+        add_response = nwc_service.add_connection(
             AddConnectionRequest(
                 name="my new connection",
                 expiry_time_mins=60,  # Expires after one hour
@@ -48,6 +48,7 @@ def nwc_add_connection(nwc_service: SdkNwcService):
                 receive_only=None,  # Defaults to False
             )
         )
+        logging.debug(add_response.connection.connection_string)
     except Exception as error:
         logging.error(error)
         raise
@@ -58,7 +59,7 @@ def nwc_edit_connection(nwc_service: SdkNwcService):
     # ANCHOR: edit-connection
     new_expiry_time = 60 * 24
     try:
-        nwc_service.edit_connection(
+        edit_response = nwc_service.edit_connection(
             EditConnectionRequest(
                 name="my new connection",
                 expiry_time_mins=new_expiry_time,  # The connection will now expire after 1 day
@@ -68,6 +69,7 @@ def nwc_edit_connection(nwc_service: SdkNwcService):
                 remove_periodic_budget=True,  # The periodic budget has been removed
             )
         )
+        logging.debug(edit_response.connection.connection_string)
     except Exception as error:
         logging.error(error)
         raise

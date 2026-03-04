@@ -45,9 +45,11 @@ func NwcAddConnection(nwcService *breez_sdk_liquid_nwc.SdkNwcService) error {
 		PeriodicBudgetReq:  &periodicBudgetReq,
 		ReceiveOnly:        nil, // Defaults to false
 	}
-	if err := nwcService.AddConnection(req); err != nil {
+	addResponse, err := nwcService.AddConnection(req)
+	if err != nil {
 		return err
 	}
+	log.Printf("%s", addResponse.Connection.ConnectionString)
 	// ANCHOR_END: add-connection
 	return nil
 }
@@ -64,9 +66,11 @@ func NwcEditConnection(nwcService *breez_sdk_liquid_nwc.SdkNwcService) error {
 		RemoveExpiry:        nil,
 		RemovePeriodicBudget: &removePeriodicBudget, // The periodic budget has been removed
 	}
-	if err := nwcService.EditConnection(req); err != nil {
+	editResponse, err := nwcService.EditConnection(req)
+	if err != nil {
 		return err
 	}
+	log.Printf("%s", editResponse.Connection.ConnectionString)
 	// ANCHOR_END: edit-connection
 	return nil
 }

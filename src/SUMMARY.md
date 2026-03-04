@@ -34,8 +34,8 @@
   - [Partner fees](guide/partner_fees.md)
 - [Connecting an external signer](guide/self_signer.md)
 - [Handling multiple assets](guide/assets.md)
-- [Moving to production](guide/production.md)
 - [Nostr Wallet Connect (NWC)](guide/nwc.md)
+- [Moving to production](guide/production.md)
 
 ---
 

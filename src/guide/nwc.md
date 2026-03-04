@@ -1,16 +1,15 @@
 # Nostr Wallet Connect
 
-Nostr Wallet Connect allows you to control your Breez SDK instance from any Nostr application which complies with the NIP47 standard (for more information, see
-<a target="_blank" href="https://github.com/nostr-protocol/nips/blob/master/47.md">here</a>).
+Nostr Wallet Connect allows you to control your Breez SDK instance from any Nostr application which complies with the <a target="_blank" href="https://github.com/nostr-protocol/nips/blob/master/47.md">NIP47 standard</a>.
 
 ## Enabling/Disabling
 
-To enable the Nostr Wallet Connect service, you can call the `useNwcPlugin` method after connecting to the SDK.
+To enable the Nostr Wallet Connect service, you can initialize it as a plugin after connecting to the SDK.
 
 The config takes three optional parameters:
-- `relayUrls`: Custom list of relays for the NWC node to connect to
-- `secretKeyHex`: Custom Nostr secret key to start the node with (hex-encoded)
-- `listenToEvents`: Whether or not to actively listen and reply to events (defaults to true)
+- **Relay URLs**: Custom list of relays for the NWC node to connect to
+- **Secret key**: Custom Nostr secret key (hex-encoded) to start the node with 
+- **Listen to events**: Whether or not to actively listen and reply to events (defaults to true)
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -86,333 +85,9 @@ The config takes three optional parameters:
 </section>
 </custom-tabs>
 
-## NWC Connections
+## Getting service information
 
-In order to control the wallet, NWC applications require a _connection string_. These special URIs can be generated via the NWC service methods `addConnection`/`editConnection`/`removeConnection`, and listed with `listConnections`:
-
-### Adding
-
-When creating a connection, there are various configuration options, specifically:
-- Expiry: Connections can either live indefinitely, or for a set number of minutes. When a connection expires it is lost **forever** (unrecoverable)
-- Budget: Connections may have a budget, which means they only allow spending up to a certain amount before refusing to pay. This budget can be _periodic_, resetting after a set amount of time, or fixed, meaning the connection won't be able to send funds once the budget is reached
-- Receive-only: Whether or not a connection should only be used for receiving
-
-<custom-tabs category="lang">
-<div slot="title">Rust</div>
-<section>
-
-```rust,ignore
-{{#include ../../snippets/rust/src/nwc.rs:add-connection}}
-```
-</section>
-
-<div slot="title">Swift</div>
-<section>
-
-```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/Nwc.swift:add-connection}}
-```
-</section>
-
-<div slot="title">Kotlin</div>
-<section>
-
-```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Nwc.kt:add-connection}}
-```
-</section>
-
-<div slot="title">Javascript</div>
-<section>
-
-```typescript
-{{#include ../../snippets/wasm/nwc.ts:add-connection}}
-```
-</section>
-
-<div slot="title">React Native</div>
-<section>
-
-```typescript
-{{#include ../../snippets/react-native/nwc.ts:add-connection}}
-```
-</section>
-
-<div slot="title">Dart</div>
-<section>
-
-```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/nwc.dart:add-connection}}
-```
-</section>
-
-<div slot="title">Python</div>
-<section>
-
-```python,ignore
-{{#include ../../snippets/python/src/nwc.py:add-connection}}
-```
-</section>
-
-<div slot="title">Go</div>
-<section>
-
-```go,ignore
-{{#include ../../snippets/go/nwc.go:add-connection}}
-```
-</section>
-
-<div slot="title">C#</div>
-<section>
-
-```cs,ignore
-{{#include ../../snippets/csharp/Nwc.cs:add-connection}}
-```
-</section>
-</custom-tabs>
-
-### Editing
-
-Editing a connection is similar to adding, but with two extra fields:
-- `removeExpiry`: Removes the expiry when set to true
-- `removePeriodicBudget`: Removes the periodic budget when set to true
-
-Setting any other field will update the corresponding connection's details if a connection with that name exists.
-
-**Note**: Modifying a connection will reset both its budget and expiry timers!
-
-<custom-tabs category="lang">
-<div slot="title">Rust</div>
-<section>
-
-```rust,ignore
-{{#include ../../snippets/rust/src/nwc.rs:edit-connection}}
-```
-</section>
-
-<div slot="title">Swift</div>
-<section>
-
-```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/Nwc.swift:edit-connection}}
-```
-</section>
-
-<div slot="title">Kotlin</div>
-<section>
-
-```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Nwc.kt:edit-connection}}
-```
-</section>
-
-<div slot="title">Javascript</div>
-<section>
-
-```typescript
-{{#include ../../snippets/wasm/nwc.ts:edit-connection}}
-```
-</section>
-
-<div slot="title">React Native</div>
-<section>
-
-```typescript
-{{#include ../../snippets/react-native/nwc.ts:edit-connection}}
-```
-</section>
-
-<div slot="title">Dart</div>
-<section>
-
-```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/nwc.dart:edit-connection}}
-```
-</section>
-
-<div slot="title">Python</div>
-<section>
-
-```python,ignore
-{{#include ../../snippets/python/src/nwc.py:edit-connection}}
-```
-</section>
-
-<div slot="title">Go</div>
-<section>
-
-```go,ignore
-{{#include ../../snippets/go/nwc.go:edit-connection}}
-```
-</section>
-
-<div slot="title">C#</div>
-<section>
-
-```cs,ignore
-{{#include ../../snippets/csharp/Nwc.cs:edit-connection}}
-```
-</section>
-</custom-tabs>
-
-### Listing
-Active connections can be listed using the `listConnections` method:
-
-<custom-tabs category="lang">
-<div slot="title">Rust</div>
-<section>
-
-```rust,ignore
-{{#include ../../snippets/rust/src/nwc.rs:list-connections}}
-```
-</section>
-
-<div slot="title">Swift</div>
-<section>
-
-```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/Nwc.swift:list-connections}}
-```
-</section>
-
-<div slot="title">Kotlin</div>
-<section>
-
-```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Nwc.kt:list-connections}}
-```
-</section>
-
-<div slot="title">Javascript</div>
-<section>
-
-```typescript
-{{#include ../../snippets/wasm/nwc.ts:list-connections}}
-```
-</section>
-
-<div slot="title">React Native</div>
-<section>
-
-```typescript
-{{#include ../../snippets/react-native/nwc.ts:list-connections}}
-```
-</section>
-
-<div slot="title">Dart</div>
-<section>
-
-```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/nwc.dart:list-connections}}
-```
-</section>
-
-<div slot="title">Python</div>
-<section>
-
-```python,ignore
-{{#include ../../snippets/python/src/nwc.py:list-connections}}
-```
-</section>
-
-<div slot="title">Go</div>
-<section>
-
-```go,ignore
-{{#include ../../snippets/go/nwc.go:list-connections}}
-```
-</section>
-
-<div slot="title">C#</div>
-<section>
-
-```cs,ignore
-{{#include ../../snippets/csharp/Nwc.cs:list-connections}}
-```
-</section>
-</custom-tabs>
-
-### Removing
-
-You can remove an active connection by using the `removeConnection` method:
-
-<custom-tabs category="lang">
-<div slot="title">Rust</div>
-<section>
-
-```rust,ignore
-{{#include ../../snippets/rust/src/nwc.rs:remove-connection}}
-```
-</section>
-
-<div slot="title">Swift</div>
-<section>
-
-```swift,ignore
-{{#include ../../snippets/swift/BreezSDKExamples/Sources/Nwc.swift:remove-connection}}
-```
-</section>
-
-<div slot="title">Kotlin</div>
-<section>
-
-```kotlin,ignore
-{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Nwc.kt:remove-connection}}
-```
-</section>
-
-<div slot="title">Javascript</div>
-<section>
-
-```typescript
-{{#include ../../snippets/wasm/nwc.ts:remove-connection}}
-```
-</section>
-
-<div slot="title">React Native</div>
-<section>
-
-```typescript
-{{#include ../../snippets/react-native/nwc.ts:remove-connection}}
-```
-</section>
-
-<div slot="title">Dart</div>
-<section>
-
-```dart,ignore
-{{#include ../../snippets/dart_snippets/lib/nwc.dart:remove-connection}}
-```
-</section>
-
-<div slot="title">Python</div>
-<section>
-
-```python,ignore
-{{#include ../../snippets/python/src/nwc.py:remove-connection}}
-```
-</section>
-
-<div slot="title">Go</div>
-<section>
-
-```go,ignore
-{{#include ../../snippets/go/nwc.go:remove-connection}}
-```
-</section>
-
-<div slot="title">C#</div>
-<section>
-
-```cs,ignore
-{{#include ../../snippets/csharp/Nwc.cs:remove-connection}}
-```
-</section>
-</custom-tabs>
-
-## Service Information
-
-Information about the NWC service (wallet Nostr pubkey, relays, etc.) can be retrieved via the `getInfo` method. If the service is not active, it will return null.
+You can retrieve information about the NWC service (wallet pubkey, relays, etc.) as follows:
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -488,10 +163,9 @@ Information about the NWC service (wallet Nostr pubkey, relays, etc.) can be ret
 </section>
 </custom-tabs>
 
-## Event Listeners
+## Using event listeners
 
 You can listen to events from the NWC service just like you would with the SDK (see [Listening to events](events.md)).
-The service supports the `add/removeEventListener` methods:
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -567,9 +241,9 @@ The service supports the `add/removeEventListener` methods:
 </section>
 </custom-tabs>
 
-## Payments
+## Listing connection payments
 
-You can retrieve SDK payments associated with a specific NWC connection by using the `listConnectionPayments` method:
+You can list payments for each NWC connection as follows:
 
 <custom-tabs category="lang">
 <div slot="title">Rust</div>
@@ -641,6 +315,329 @@ You can retrieve SDK payments associated with a specific NWC connection by using
 
 ```cs,ignore
 {{#include ../../snippets/csharp/Nwc.cs:payments}}
+```
+</section>
+</custom-tabs>
+
+## NWC Connections
+
+To communicate with the SDK, the _connection string_ must be shared with the NWC application. These special URIs can be generated by calling the service methods described below:
+
+### Adding a connection
+
+When creating a connection, there are various configuration options, specifically:
+- **Expiry**: Connections can either live indefinitely, or for a set number of minutes. When a connection expires, you won't be able to use it through its associated NWC apps
+- **Budget**: Connections may have a budget, which means they only allow spending within a certain amount before refusing to pay. This budget can be _periodic_, thus making it reset after a set amount of time, or fixed, meaning the connection won't be able to send funds after the budget is reached
+- **Receive-only**: Whether or not a connection should only be used for receiving
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nwc.rs:add-connection}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/Nwc.swift:add-connection}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Nwc.kt:add-connection}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nwc.ts:add-connection}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nwc.ts:add-connection}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nwc.dart:add-connection}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore
+{{#include ../../snippets/python/src/nwc.py:add-connection}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nwc.go:add-connection}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/Nwc.cs:add-connection}}
+```
+</section>
+</custom-tabs>
+
+### Editing a connection
+
+Editing a connection is similar to adding, but with two extra fields:
+- **Remove expiry**: Removes the expiry when set to true
+- **Remove budget**: Removes the periodic budget when set to true
+
+Setting any other field will update the corresponding connection's details if a connection with that name exists.
+
+**Note**: Modifying a connection will reset both its budget and expiry timers
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nwc.rs:edit-connection}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/Nwc.swift:edit-connection}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Nwc.kt:edit-connection}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nwc.ts:edit-connection}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nwc.ts:edit-connection}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nwc.dart:edit-connection}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore
+{{#include ../../snippets/python/src/nwc.py:edit-connection}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nwc.go:edit-connection}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/Nwc.cs:edit-connection}}
+```
+</section>
+</custom-tabs>
+
+### Listing connections
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nwc.rs:list-connections}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/Nwc.swift:list-connections}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Nwc.kt:list-connections}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nwc.ts:list-connections}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nwc.ts:list-connections}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nwc.dart:list-connections}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore
+{{#include ../../snippets/python/src/nwc.py:list-connections}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nwc.go:list-connections}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/Nwc.cs:list-connections}}
+```
+</section>
+</custom-tabs>
+
+### Removing a connection
+
+**Note**: Removing a connection will make it so you won't be able to use it with the apps which were previously associated with it.
+
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+
+```rust,ignore
+{{#include ../../snippets/rust/src/nwc.rs:remove-connection}}
+```
+</section>
+
+<div slot="title">Swift</div>
+<section>
+
+```swift,ignore
+{{#include ../../snippets/swift/BreezSDKExamples/Sources/Nwc.swift:remove-connection}}
+```
+</section>
+
+<div slot="title">Kotlin</div>
+<section>
+
+```kotlin,ignore
+{{#include ../../snippets/kotlin_mpp_lib/shared/src/commonMain/kotlin/com/example/kotlinmpplib/Nwc.kt:remove-connection}}
+```
+</section>
+
+<div slot="title">Javascript</div>
+<section>
+
+```typescript
+{{#include ../../snippets/wasm/nwc.ts:remove-connection}}
+```
+</section>
+
+<div slot="title">React Native</div>
+<section>
+
+```typescript
+{{#include ../../snippets/react-native/nwc.ts:remove-connection}}
+```
+</section>
+
+<div slot="title">Dart</div>
+<section>
+
+```dart,ignore
+{{#include ../../snippets/dart_snippets/lib/nwc.dart:remove-connection}}
+```
+</section>
+
+<div slot="title">Python</div>
+<section>
+
+```python,ignore
+{{#include ../../snippets/python/src/nwc.py:remove-connection}}
+```
+</section>
+
+<div slot="title">Go</div>
+<section>
+
+```go,ignore
+{{#include ../../snippets/go/nwc.go:remove-connection}}
+```
+</section>
+
+<div slot="title">C#</div>
+<section>
+
+```cs,ignore
+{{#include ../../snippets/csharp/Nwc.cs:remove-connection}}
 ```
 </section>
 </custom-tabs>

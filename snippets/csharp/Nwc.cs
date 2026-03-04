@@ -43,12 +43,13 @@ public class NwcSnippets
         );
         try
         {
-            nwcService.AddConnection(new AddConnectionRequest(
+            var addResponse = nwcService.AddConnection(new AddConnectionRequest(
                 name: "my new connection",
                 expiryTimeMins: 60,  // Expires after one hour
                 periodicBudgetReq: periodicBudgetReq,
                 receiveOnly: null  // Defaults to false
             ));
+            Console.WriteLine(addResponse.Connection.ConnectionString);
         }
         catch (Exception)
         {
@@ -63,7 +64,7 @@ public class NwcSnippets
         uint newExpiryTime = 60 * 24;
         try
         {
-            nwcService.EditConnection(new EditConnectionRequest(
+            var editResponse = nwcService.EditConnection(new EditConnectionRequest(
                 name: "my new connection",
                 expiryTimeMins: newExpiryTime,  // The connection will now expire after 1 day
                 periodicBudgetReq: null,
@@ -71,6 +72,7 @@ public class NwcSnippets
                 removeExpiry: null,
                 removePeriodicBudget: true  // The periodic budget has been removed
             ));
+            Console.WriteLine(editResponse.Connection.ConnectionString);
         }
         catch (Exception)
         {

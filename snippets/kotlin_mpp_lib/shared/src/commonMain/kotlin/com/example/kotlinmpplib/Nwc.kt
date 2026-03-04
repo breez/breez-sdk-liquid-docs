@@ -35,12 +35,13 @@ class Nwc {
             renewalTimeMins = 60U  // Renews every hour
         )
         try {
-            nwcService.addConnection(AddConnectionRequest(
+            val addResponse = nwcService.addConnection(AddConnectionRequest(
                 name = "my new connection",
                 expiryTimeMins = 60U,  // Expires after one hour
                 periodicBudgetReq = periodicBudgetReq,
                 receiveOnly = null  // Defaults to false
             ))
+            println(addResponse.connection.connectionString)
         } catch (e: Exception) {
             // handle error
         }
@@ -51,7 +52,7 @@ class Nwc {
         // ANCHOR: edit-connection
         val newExpiryTime = 60u * 24u
         try {
-            nwcService.editConnection(EditConnectionRequest(
+            val editResponse = nwcService.editConnection(EditConnectionRequest(
                 name = "my new connection",
                 expiryTimeMins = newExpiryTime,  // The connection will now expire after 1 day
                 periodicBudgetReq = null,
@@ -59,6 +60,7 @@ class Nwc {
                 removeExpiry = null,
                 removePeriodicBudget = true  // The periodic budget has been removed
             ))
+            println(editResponse.connection.connectionString)
         } catch (e: Exception) {
             // handle error
         }

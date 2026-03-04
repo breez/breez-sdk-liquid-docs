@@ -36,7 +36,8 @@ const nwcAddConnection = async (nwcService: SdkNwcService) => {
     },
     receiveOnly: null  // Defaults to false
   }
-  await nwcService.addConnection(req)
+  const addResponse = await nwcService.addConnection(req)
+  console.log(addResponse.connection.connectionString)
   // ANCHOR_END: add-connection
 }
 
@@ -51,7 +52,8 @@ const nwcEditConnection = async (nwcService: SdkNwcService) => {
     removeExpiry: null,
     removePeriodicBudget: true  // The periodic budget has been removed
   }
-  await nwcService.editConnection(req)
+  const editResponse = await nwcService.editConnection(req)
+  console.log(editResponse.connection.connectionString)
   // ANCHOR_END: edit-connection
 }
 
