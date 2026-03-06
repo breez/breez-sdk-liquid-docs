@@ -1,5 +1,5 @@
 import logging
-from breez_sdk_liquid import AssetMetadata, BindingLiquidSdk, default_config, LiquidNetwork, PayAmount, PaymentMethod, PrepareReceiveRequest, PrepareSendRequest, ReceiveAmount
+from breez_sdk_liquid import * 
 
 
 def prepare_receive_asset(sdk: BindingLiquidSdk):
@@ -32,8 +32,8 @@ def prepare_send_payment_asset(sdk: BindingLiquidSdk):
         # If the destination is an address or an amountless BIP21 URI,
         # you must specify an asset amount
         usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
-        optional_amount = PayAmount.ASSET(usdt_asset_id, 1.50, False, None)
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+        amount = PayAmount.ASSET(usdt_asset_id, 1.50, False, None)
+        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination=destination, amount=amount))
 
         # If the fees are acceptable, continue to create the Send Payment
         send_fees_sat = prepare_response.fees_sat
@@ -51,7 +51,7 @@ def prepare_send_payment_asset_fees(sdk: BindingLiquidSdk):
         usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
         # Set the optional estimate asset fees param to true
         optional_amount = PayAmount.ASSET(usdt_asset_id, 1.50, True, None)
-        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination, optional_amount))
+        prepare_response = sdk.prepare_send_payment(PrepareSendRequest(destination=destination, amount=optional_amount))
 
         # If the asset fees are set, you can use these fees to pay to send the asset
         send_asset_fees = prepare_response.estimated_asset_fees
@@ -70,7 +70,7 @@ def send_payment_fees(sdk: BindingLiquidSdk, prepare_response: PrepareSendRespon
     # ANCHOR: send-payment-fees
     try:
         # Set the use asset fees param to true
-        send_response = sdk.send_payment(SendPaymentRequest(prepare_response, True))
+        send_response = sdk.send_payment(SendPaymentRequest(prepare_response=prepare_response, use_asset_fees=True))
         payment = send_response.payment
     except Exception as error:
         logging.error(error)
@@ -100,10 +100,7 @@ def send_self_payment_asset(sdk: BindingLiquidSdk):
         )
         receive_res = sdk.receive_payment(
             ReceivePaymentRequest(
-                prepare_receive_res,
-                None,
-                None,
-                None,
+                prepare_response=prepare_receive_res,
             )
         )
 
@@ -112,15 +109,14 @@ def send_self_payment_asset(sdk: BindingLiquidSdk):
         btc_asset_id = "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d"
         prepare_send_res = sdk.prepare_send_payment(
             PrepareSendRequest(
-                receive_res.destination,
+                destination=receive_res.destination,
                 # We want to receive 1.5 USDt
-                PayAmount.ASSET(usdt_asset_id, 1.5, None, btc_asset_id),
+                amount=PayAmount.ASSET(usdt_asset_id, 1.5, None, btc_asset_id),
             )
         )
         send_response = sdk.send_payment(
             SendPaymentRequest(
-                prepare_send_res,
-                None,
+                prepare_response=prepare_send_res,
             )
         )
         payment = send_response.payment
