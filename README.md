@@ -8,7 +8,7 @@ For syntax and supported features, see [https://rust-lang.github.io/mdBook](http
 
 ## Develop
 
-To locally serve the docs run:
+To locally serve the docs run the following commands:
 
 ```bash
 cargo install mdbook
