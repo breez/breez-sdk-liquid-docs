@@ -21,7 +21,7 @@ Key capabilities include:
 ### Installation
 
 ```bash
-yarn add @breeztech/react-native-breez-sdk-liquid
+yarn add @breeztech/breez-sdk-liquid-react-native
 ```
 
 ### Guidelines
@@ -35,27 +35,24 @@ yarn add @breeztech/react-native-breez-sdk-liquid
 
 To get started with Breez SDK Nodeless (Liquid implementation), you need to initialize the SDK with your configuration:
 
-```javascript
+```typescript
 import {
-  addEventListener,
+  BindingLiquidSdk,
   defaultConfig,
   connect,
   LiquidNetwork,
   type LogEntry,
-  getInfo,
-  removeEventListener,
-  disconnect,
   type SdkEvent,
   setLogger
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const initializeSDK = async () => {
   // Your mnemonic seed phrase for wallet recovery
   const mnemonic = '<mnemonics words>'
 
   // Create the default config, providing your Breez API key
-  const config = await defaultConfig(
-    LiquidNetwork.MAINNET,
+  const config = defaultConfig(
+    LiquidNetwork.Mainnet,
     '<your-Breez-API-key>'
   )
 
@@ -66,7 +63,11 @@ const initializeSDK = async () => {
   console.log(`Working directory: ${config.workingDir}`)
   // config.workingDir = "path to writable directory"
 
-  await connect({ mnemonic, config })
+  connect({
+    mnemonic, config,
+    passphrase: undefined,
+    seed: undefined
+  })
 }
 ```
 
@@ -74,127 +75,112 @@ const initializeSDK = async () => {
 
 #### Fetch Balance
 
-```javascript
-const fetchBalance = async () => {
-  try {
-    const info = await getInfo()
-    const balanceSat = info.walletInfo.balanceSat
-    const pendingSendSat = info.walletInfo.pendingSendSat
-    const pendingReceiveSat = info.walletInfo.pendingReceiveSat
-    
-    console.log(`Balance: ${balanceSat} sats`)
-    console.log(`Pending Send: ${pendingSendSat} sats`)
-    console.log(`Pending Receive: ${pendingReceiveSat} sats`)
-  } catch (err) {
-    console.error(err)
-  }
+```typescript
+const fetchBalance = (sdk: BindingLiquidSdk) => {
+  const info = sdk.getInfo()
+  const balanceSat = info.walletInfo.balanceSat
+  const pendingSendSat = info.walletInfo.pendingSendSat
+  const pendingReceiveSat = info.walletInfo.pendingReceiveSat
+
+  console.log(`Balance: ${balanceSat} sats`)
+  console.log(`Pending Send: ${pendingSendSat} sats`)
+  console.log(`Pending Receive: ${pendingReceiveSat} sats`)
 }
 
-const fetchAssetBalance = async () => {
-  try {
-    const info = await getInfo()
-    const assetBalances = info.walletInfo.assetBalances
-    return assetBalances
-  } catch (err) {
-    console.error(err)
-  }
+const fetchAssetBalance = (sdk: BindingLiquidSdk) => {
+  const info = sdk.getInfo()
+  const assetBalances = info.walletInfo.assetBalances
+  return assetBalances
 }
 ```
 
 ### Messages and Signing
 
-```javascript
-import {
-  checkMessage,
-  getInfo,
-  signMessage
-} from '@breeztech/react-native-breez-sdk-liquid'
+```typescript
+import { BindingLiquidSdk } from '@breeztech/breez-sdk-liquid-react-native'
 
-const signMessageExample = async () => {
-  try {
-    const signMessageResponse = await signMessage({
-      message: '<message to sign>'
-    })
+const signMessageExample = (sdk: BindingLiquidSdk) => {
+  const signMessageResponse = sdk.signMessage({
+    message: '<message to sign>'
+  })
 
-    // Get the wallet info for your pubkey
-    const info = await getInfo()
+  // Get the wallet info for your pubkey
+  const info = sdk.getInfo()
 
-    const signature = signMessageResponse.signature
-    const pubkey = info.walletInfo.pubkey
+  const signature = signMessageResponse.signature
+  const pubkey = info.walletInfo.pubkey
 
-    console.log(`Pubkey: ${pubkey}`)
-    console.log(`Signature: ${signature}`)
-    return { signature, pubkey }
-  } catch (err) {
-    console.error(err)
-  }
+  console.log(`Pubkey: ${pubkey}`)
+  console.log(`Signature: ${signature}`)
+  return { signature, pubkey }
 }
 
-const checkMessageExample = async () => {
-  try {
-    const checkMessageResponse = await checkMessage({
-      message: '<message>',
-      pubkey: '<pubkey of signer>',
-      signature: '<message signature>'
-    })
-    const isValid = checkMessageResponse.isValid
+const checkMessageExample = (sdk: BindingLiquidSdk) => {
+  const checkMessageResponse = sdk.checkMessage({
+    message: '<message>',
+    pubkey: '<pubkey of signer>',
+    signature: '<message signature>'
+  })
+  const isValid = checkMessageResponse.isValid
 
-    console.log(`Signature valid: ${isValid}`)
-    return isValid
-  } catch (err) {
-    console.error(err)
-  }
+  console.log(`Signature valid: ${isValid}`)
+  return isValid
 }
 ```
 
 ### List Payments
 
-```javascript
+```typescript
 import {
-  getPayment,
-  GetPaymentRequestVariant,
-  ListPaymentDetailsVariant,
-  listPayments,
+  BindingLiquidSdk,
+  GetPaymentRequest,
+  ListPaymentDetails,
   PaymentType
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const getPaymentExample = async () => {
+const getPaymentExample = (sdk: BindingLiquidSdk) => {
   try {
     const paymentHash = '<payment hash>'
-    const paymentByHash = await getPayment({
-      type: GetPaymentRequestVariant.PAYMENT_HASH,
-      paymentHash
-    })
+    const paymentByHash = sdk.getPayment(new GetPaymentRequest.PaymentHash({ paymentHash }))
 
     const swapId = '<swap id>'
-    const paymentBySwapId = await getPayment({
-      type: GetPaymentRequestVariant.SWAP_ID,
-      swapId
-    })
-    
+    const paymentBySwapId = sdk.getPayment(new GetPaymentRequest.SwapId({ swapId }))
+
     return { paymentByHash, paymentBySwapId }
   } catch (err) {
     console.error(err)
   }
 }
 
-const listAllPayments = async () => {
+const listAllPayments = (sdk: BindingLiquidSdk) => {
   try {
-    const payments = await listPayments({})
+    const payments = sdk.listPayments({
+      filters: undefined,
+      states: undefined,
+      fromTimestamp: undefined,
+      toTimestamp: undefined,
+      offset: undefined,
+      limit: undefined,
+      details: undefined,
+      sortAscending: undefined
+    })
     return payments
   } catch (err) {
     console.error(err)
   }
 }
 
-const listPaymentsFiltered = async () => {
+const listPaymentsFiltered = (sdk: BindingLiquidSdk) => {
   try {
-    const payments = await listPayments({
-      filters: [PaymentType.SEND],
-      fromTimestamp: 1696880000,
-      toTimestamp: 1696959200,
+    const payments = sdk.listPayments({
+      filters: [PaymentType.Send],
+      fromTimestamp: BigInt(1696880000),
+      toTimestamp: BigInt(1696959200),
       offset: 0,
-      limit: 50
+      limit: 50,
+      states: undefined,
+      details: undefined,
+      sortAscending: undefined
     })
     return payments
   } catch (err) {
@@ -202,13 +188,17 @@ const listPaymentsFiltered = async () => {
   }
 }
 
-const listPaymentsDetailsAddress = async () => {
+const listPaymentsDetailsAddress = (sdk: BindingLiquidSdk) => {
   try {
-    const payments = await listPayments({
-      details: {
-        type: ListPaymentDetailsVariant.BITCOIN,
-        address: '<Bitcoin address>'
-      }
+    const payments = sdk.listPayments({
+      details: new ListPaymentDetails.Bitcoin({ address: '<Bitcoin address>' }),
+      filters: undefined,
+      states: undefined,
+      fromTimestamp: undefined,
+      toTimestamp: undefined,
+      offset: undefined,
+      limit: undefined,
+      sortAscending: undefined
     })
     return payments
   } catch (err) {
@@ -216,13 +206,17 @@ const listPaymentsDetailsAddress = async () => {
   }
 }
 
-const listPaymentsDetailsDestination = async () => {
+const listPaymentsDetailsDestination = (sdk: BindingLiquidSdk) => {
   try {
-    const payments = await listPayments({
-      details: {
-        type: ListPaymentDetailsVariant.LIQUID,
-        destination: '<Liquid BIP21 or address>'
-      }
+    const payments = sdk.listPayments({
+      details: new ListPaymentDetails.Liquid({ assetId: undefined, destination: '<Liquid BIP21 or address>' }),
+      filters: undefined,
+      states: undefined,
+      fromTimestamp: undefined,
+      toTimestamp: undefined,
+      offset: undefined,
+      limit: undefined,
+      sortAscending: undefined
     })
     return payments
   } catch (err) {
@@ -233,20 +227,20 @@ const listPaymentsDetailsDestination = async () => {
 
 ### Webhook Integration
 
-```javascript
-import { registerWebhook, unregisterWebhook } from '@breeztech/react-native-breez-sdk-liquid'
+```typescript
+import { BindingLiquidSdk } from '@breeztech/breez-sdk-liquid-react-native'
 
-const registerWebhookExample = async () => {
+const registerWebhookExample = (sdk: BindingLiquidSdk) => {
   try {
-    await registerWebhook('https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>')
+    sdk.registerWebhook('https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>')
   } catch (err) {
     console.error(err)
   }
 }
 
-const unregisterWebhookExample = async () => {
+const unregisterWebhookExample = (sdk: BindingLiquidSdk) => {
   try {
-    await unregisterWebhook()
+    sdk.unregisterWebhook()
   } catch (err) {
     console.error(err)
   }
@@ -255,84 +249,85 @@ const unregisterWebhookExample = async () => {
 
 ### Input Parsing
 
-```javascript
+```typescript
 import {
-  InputTypeVariant,
-  parse
-} from '@breeztech/react-native-breez-sdk-liquid'
+  BindingLiquidSdk,
+  InputType_Tags
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const parseInputExample = async () => {
+const parseInputExample = (sdk: BindingLiquidSdk) => {
   const input = 'an input to be parsed...'
 
-  try {
-    const parsed = await parse(input)
+  const parsed = sdk.parse(input)
 
-    switch (parsed.type) {
-      case InputTypeVariant.BITCOIN_ADDRESS:
-        console.log(`Input is Bitcoin address ${parsed.address.address}`)
-        break
+  switch (parsed.tag) {
+    case InputType_Tags.BitcoinAddress:
+      console.log(`Input is Bitcoin address ${parsed.inner.address.address}`)
+      break
 
-      case InputTypeVariant.BOLT11:
-        console.log(
-          `Input is BOLT11 invoice for ${
-            parsed.invoice.amountMsat != null
-              ? parsed.invoice.amountMsat.toString()
-              : 'unknown'
-          } msats`
-        )
-        break
+    case InputType_Tags.Bolt11:
+      console.log(
+        `Input is BOLT11 invoice for ${parsed.inner.invoice.amountMsat != null
+          ? JSON.stringify(parsed.inner.invoice.amountMsat)
+          : 'unknown'
+        } msats`
+      )
+      break
 
-      case InputTypeVariant.LN_URL_PAY:
-        console.log(
-          `Input is LNURL-Pay/Lightning address accepting min/max ${parsed.data.minSendable}/${parsed.data.maxSendable} msats - BIP353 was used: ${parsed.bip353Address != null}`
-        )
-        break
+    case InputType_Tags.Bolt12Offer:
+      console.log(
+        `Input is BOLT12 offer for min ${JSON.stringify(parsed.inner.offer.minAmount)} msats - BIP353 was used: ${parsed.inner.bip353Address != null}`
+      )
+      break
 
-      case InputTypeVariant.LN_URL_WITHDRAW:
-        console.log(
-          `Input is LNURL-Withdraw for min/max ${parsed.data.minWithdrawable}/${parsed.data.maxWithdrawable} msats`
-        )
-        break
+    case InputType_Tags.LnUrlPay:
+      console.log(
+        `Input is LNURL-Pay/Lightning address accepting min/max ${parsed.inner.data.minSendable}/${parsed.inner.data.maxSendable} msats - BIP353 was used: ${parsed.inner.bip353Address != null}`
+      )
+      break
 
-      default:
-        // Other input types are available
-        break
-    }
-    
-    return parsed
-  } catch (err) {
-    console.error(err)
+    case InputType_Tags.LnUrlWithdraw:
+      console.log(
+        `Input is LNURL-Withdraw for min/max ${parsed.inner.data.minWithdrawable}/${parsed.inner.data.maxWithdrawable} msats`
+      )
+      break
+
+    default:
+      // Other input types are available
+      break
   }
+
+  return parsed
 }
 
-const configureParsers = async () => {
-  try {
-    const mnemonic = '<mnemonics words>'
+const configureParsers = () => {
+  const mnemonic = '<mnemonics words>'
 
-    // Create the default config, providing your Breez API key
-    const config = await defaultConfig(
-      LiquidNetwork.MAINNET,
-      '<your-Breez-API-key>'
-    )
+  // Create the default config, providing your Breez API key
+  const config = defaultConfig(
+    LiquidNetwork.Mainnet,
+    '<your-Breez-API-key>'
+  )
 
-    // Configure external parsers
-    config.externalInputParsers = [
-      {
-        providerId: 'provider_a',
-        inputRegex: '^provider_a',
-        parserUrl: 'https://parser-domain.com/parser?input=<input>'
-      },
-      {
-        providerId: 'provider_b',
-        inputRegex: '^provider_b',
-        parserUrl: 'https://parser-domain.com/parser?input=<input>'
-      }
-    ]
+  // Configure external parsers
+  config.externalInputParsers = [
+    {
+      providerId: 'provider_a',
+      inputRegex: '^provider_a',
+      parserUrl: 'https://parser-domain.com/parser?input=<input>'
+    },
+    {
+      providerId: 'provider_b',
+      inputRegex: '^provider_b',
+      parserUrl: 'https://parser-domain.com/parser?input=<input>'
+    }
+  ]
 
-    await connect({ mnemonic, config })
-  } catch (err) {
-    console.error(err)
-  }
+  connect({
+    mnemonic, config,
+    passphrase: undefined,
+    seed: undefined
+  })
 }
 ```
 
@@ -340,77 +335,80 @@ const configureParsers = async () => {
 
 Here's a complete React Native component example that implements basic wallet functionality:
 
-```javascript
+```typescript
 import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, Button, StyleSheet, SafeAreaView, ScrollView, TextInput } from 'react-native';
 import {
+  BindingLiquidSdk,
   connect,
   defaultConfig,
-  disconnect,
-  getInfo,
   LiquidNetwork,
   PaymentMethod,
-  prepareReceivePayment,
-  receivePayment,
-  ReceiveAmountVariant,
-  prepareSendPayment,
-  sendPayment,
-  PayAmountVariant,
-  addEventListener,
-  removeEventListener
-} from '@breeztech/react-native-breez-sdk-liquid';
+  PayAmount,
+  ReceiveAmount,
+  type PrepareReceiveResponse,
+  type PrepareSendResponse,
+  type SdkEvent
+} from '@breeztech/breez-sdk-liquid-react-native';
 
 const WalletApp = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [sdk, setSdk] = useState<BindingLiquidSdk | null>(null);
   const [walletInfo, setWalletInfo] = useState(null);
-  const [listenerId, setListenerId] = useState(null);
+  const [listenerId, setListenerId] = useState<string | null>(null);
   const [receiveAddress, setReceiveAddress] = useState('');
   const [sendAddress, setSendAddress] = useState('');
   const [amountSats, setAmountSats] = useState('1000');
   const [error, setError] = useState('');
-  
+
   useEffect(() => {
     initializeSDK();
-    
+
     return () => {
       cleanupSDK();
     };
   }, []);
-  
+
   const initializeSDK = async () => {
     try {
       setIsLoading(true);
-      
+
       // Initialize the SDK
-      const config = await defaultConfig(
-        LiquidNetwork.TESTNET, // Use TESTNET for development
+      const config = defaultConfig(
+        LiquidNetwork.Mainnet,
         'your-api-key-here'
       );
-      
+
       // Use a sample mnemonic for testing - in production you'd want to get this securely
       const mnemonic = 'sample mnemonic words here for testing only';
-      
-      await connect({ mnemonic, config });
-      
+
+      const sdkInstance = connect({
+        mnemonic, config,
+        passphrase: undefined,
+        seed: undefined
+      });
+
+      setSdk(sdkInstance);
+
       // Set up event listener
-      const onEvent = (e) => {
-        console.log(`Event received: ${e.type}`);
+      const onEvent = (e: SdkEvent) => {
+        console.log(`Event received: ${e.tag}`);
         // Refresh wallet info when we get a relevant event
         if (
-          e.type === 'PAYMENT_SUCCEEDED' || 
-          e.type === 'PAYMENT_FAILED' ||
-          e.type === 'SYNCED'
+          e.tag === 'paymentSucceeded' ||
+          e.tag === 'paymentFailed' ||
+          e.tag === 'synced'
         ) {
-          refreshWalletInfo();
+          refreshWalletInfo(sdkInstance);
         }
       };
-      
-      const id = await addEventListener(onEvent);
+
+      const id = sdkInstance.addEventListener({ onEvent });
       setListenerId(id);
-      
+
       // Get initial wallet info
-      await refreshWalletInfo();
-      
+      refreshWalletInfo(sdkInstance);
+
       setIsLoading(false);
     } catch (err) {
       console.error('Initialization error:', err);
@@ -418,53 +416,55 @@ const WalletApp = () => {
       setIsLoading(false);
     }
   };
-  
-  const cleanupSDK = async () => {
+
+  const cleanupSDK = () => {
     try {
-      if (listenerId) {
-        await removeEventListener(listenerId);
+      if (listenerId && sdk) {
+        sdk.removeEventListener(listenerId);
       }
-      await disconnect();
+      if (sdk) {
+        sdk.disconnect();
+      }
     } catch (err) {
       console.error('Cleanup error:', err);
     }
   };
-  
-  const refreshWalletInfo = async () => {
+
+  const refreshWalletInfo = (sdkInstance: BindingLiquidSdk) => {
     try {
-      const info = await getInfo();
+      const info = sdkInstance.getInfo();
       setWalletInfo(info.walletInfo);
     } catch (err) {
       console.error('Error getting wallet info:', err);
       setError(`Error fetching wallet info: ${err.message}`);
     }
   };
-  
-  const handleReceive = async () => {
+
+  const handleReceive = () => {
     try {
+      if (!sdk) return;
       setIsLoading(true);
       setError('');
-      
+
       // Prepare receive request
-      const amount = {
-        type: ReceiveAmountVariant.BITCOIN,
-        payerAmountSat: parseInt(amountSats, 10)
-      };
-      
-      const prepareResponse = await prepareReceivePayment({
-        paymentMethod: PaymentMethod.LIGHTNING,
+      const amount = new ReceiveAmount.Bitcoin({ payerAmountSat: BigInt(parseInt(amountSats, 10)) });
+
+      const prepareResponse = sdk.prepareReceivePayment({
+        paymentMethod: PaymentMethod.Bolt11Invoice,
         amount
       });
-      
+
       // Check fees
       console.log(`Receive fees: ${prepareResponse.feesSat} sats`);
-      
+
       // Create receive request
-      const receiveResponse = await receivePayment({
+      const receiveResponse = sdk.receivePayment({
         prepareResponse,
-        description: 'Payment request from React Native app'
+        description: 'Payment request from React Native app',
+        descriptionHash: undefined,
+        payerNote: undefined
       });
-      
+
       setReceiveAddress(receiveResponse.destination);
       setIsLoading(false);
     } catch (err) {
@@ -473,47 +473,46 @@ const WalletApp = () => {
       setIsLoading(false);
     }
   };
-  
-  const handleSend = async () => {
+
+  const handleSend = () => {
     try {
       if (!sendAddress) {
         setError('Please enter a destination address');
         return;
       }
-      
+      if (!sdk) return;
+
       setIsLoading(true);
       setError('');
-      
+
       // Prepare send payment
-      const amount = {
-        type: PayAmountVariant.BITCOIN,
-        receiverAmountSat: parseInt(amountSats, 10)
-      };
-      
-      const prepareResponse = await prepareSendPayment({
+      const amount = new PayAmount.Bitcoin({ receiverAmountSat: BigInt(parseInt(amountSats, 10)) });
+
+      const prepareResponse = sdk.prepareSendPayment({
         destination: sendAddress,
-        amount
+        amount,
+        disableMrh: undefined,
+        paymentTimeoutSec: undefined
       });
-      
+
       // Check fees
       console.log(`Send fees: ${prepareResponse.feesSat} sats`);
-      
-      // Confirm with user (in a real app)
-      // For this example, we'll just proceed
-      
+
       // Send payment
-      const sendResponse = await sendPayment({
-        prepareResponse
+      const sendResponse = sdk.sendPayment({
+        prepareResponse,
+        payerNote: undefined,
+        useAssetFees: undefined
       });
-      
+
       console.log('Payment sent:', sendResponse.payment);
-      
+
       // Clear form fields
       setSendAddress('');
-      
+
       // Refresh wallet info
-      await refreshWalletInfo();
-      
+      refreshWalletInfo(sdk);
+
       setIsLoading(false);
     } catch (err) {
       console.error('Error sending payment:', err);
@@ -521,7 +520,7 @@ const WalletApp = () => {
       setIsLoading(false);
     }
   };
-  
+
   if (isLoading) {
     return (
       <SafeAreaView style={styles.container}>
@@ -530,21 +529,21 @@ const WalletApp = () => {
       </SafeAreaView>
     );
   }
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>Breez SDK Wallet</Text>
-        
+
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
-        
+
         <View style={styles.balanceContainer}>
           <Text style={styles.balanceLabel}>Balance:</Text>
           <Text style={styles.balanceValue}>
             {walletInfo ? `${walletInfo.balanceSat} sats` : 'Unknown'}
           </Text>
         </View>
-        
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Receive Payment</Text>
           <TextInput
@@ -554,11 +553,11 @@ const WalletApp = () => {
             value={amountSats}
             onChangeText={setAmountSats}
           />
-          <Button 
-            title="Generate Invoice" 
-            onPress={handleReceive} 
+          <Button
+            title="Generate Invoice"
+            onPress={handleReceive}
           />
-          
+
           {receiveAddress ? (
             <View style={styles.addressContainer}>
               <Text style={styles.addressLabel}>Your invoice:</Text>
@@ -566,7 +565,7 @@ const WalletApp = () => {
             </View>
           ) : null}
         </View>
-        
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Send Payment</Text>
           <TextInput
@@ -582,15 +581,15 @@ const WalletApp = () => {
             value={amountSats}
             onChangeText={setAmountSats}
           />
-          <Button 
-            title="Send Payment" 
-            onPress={handleSend} 
+          <Button
+            title="Send Payment"
+            onPress={handleSend}
           />
         </View>
-        
-        <Button 
-          title="Refresh Wallet Info" 
-          onPress={refreshWalletInfo} 
+
+        <Button
+          title="Refresh Wallet Info"
+          onPress={() => sdk && refreshWalletInfo(sdk)}
         />
       </ScrollView>
     </SafeAreaView>
@@ -702,7 +701,7 @@ The fee a user pays to send a Lightning payment is composed of three parts:
 Note: swap service fee is dynamic and can change. Currently, it is 0.1%.
 
 > **Example**: If the user sends 10k sats, the fee would be:
-> 
+>
 > - 34 sats [Lockup Transaction Fee] + 19 sats [Claim Transaction Fee] + 10 sats [Swapper Service Fee] = 63 sats
 
 #### Receiving Lightning Payments
@@ -723,7 +722,7 @@ The fee a user pays to receive a Lightning payment is composed of three parts:
 Note: swap service fee is dynamic and can change. Currently, it is 0.25%.
 
 > **Example**: If the sender sends 10k sats, the fee for the end-user would be:
-> 
+>
 > - 27 sats [Lockup Transaction Fee] + 20 sats [Claim Transaction Fee] + 25 sats [Swapper Service Fee] = 72 sats
 
 #### Sending to a Bitcoin Address
@@ -745,7 +744,7 @@ The fee to send to a BTC address is composed of four parts:
 Note: swap service fee is dynamic and can change. Currently, it is 0.1%.
 
 > **Example**: If the user sends 100k sats, the mining fees returned by the Swapper are 2000 sats, and the claim fees for the user are 1000 sats—the fee would be:
-> 
+>
 > - 34 sats [Lockup Transaction Fee] + 2000 sats [BTC Claim Transaction Fee] + 100 sats [Swapper Service Fee] + 1000 sats [BTC Lockup Transaction Fee] = 3132 sats
 
 ### Receiving from a BTC Address
@@ -768,7 +767,7 @@ The fee to receive from a BTC address is composed of three parts:
 Note: swapper service fee is dynamic and can change. Currently, it is 0.1%.
 
 > **Example**: If the sender sends 100k sats and the mining fees returned by the Swapper are 2000 sats—the fee for the end-user would be:
-> 
+>
 > - 20 sats [Claim Transaction Fee] + 100 sats [Swapper Service Fee] + 2000 sats [BTC Claim Transaction Fee] = 2120 sats
 
 ## Best Practices
@@ -777,32 +776,32 @@ Note: swapper service fee is dynamic and can change. Currently, it is 0.1%.
 
 **Always make sure the SDK instance is synced before performing any actions:**
 
-```javascript
-import { addEventListener, SdkEventType } from '@breeztech/react-native-breez-sdk-liquid';
+```typescript
+import { BindingLiquidSdk, type SdkEvent } from '@breeztech/breez-sdk-liquid-react-native';
 
 // In a React component using the useEffect hook
 useEffect(() => {
   let synced = false;
-  let listenerId;
-  
-  const setupListener = async () => {
-    const onEvent = (event) => {
-      if (event.type === 'SYNCED') {
+  let listenerId: string | undefined;
+
+  const setupListener = (sdk: BindingLiquidSdk) => {
+    const onEvent = (event: SdkEvent) => {
+      if (event.tag === 'synced') {
         synced = true;
         // Now it's safe to perform actions
-        fetchWalletData();
+        fetchWalletData(sdk);
       }
     };
-    
-    listenerId = await addEventListener(onEvent);
+
+    listenerId = sdk.addEventListener({ onEvent });
   };
-  
-  setupListener();
-  
+
+  setupListener(sdk);
+
   return () => {
     // Cleanup when component unmounts
-    if (listenerId) {
-      removeEventListener(listenerId);
+    if (listenerId && sdk) {
+      sdk.removeEventListener(listenerId);
     }
   };
 }, []);
@@ -812,11 +811,11 @@ useEffect(() => {
 
 Always wrap your SDK method calls in try-catch blocks to properly handle errors:
 
-```javascript
-const sendPayment = async () => {
+```typescript
+const sendPaymentExample = (sdk: BindingLiquidSdk) => {
   try {
     // Call SDK method
-    const result = await someMethod();
+    const result = sdk.someMethod();
     // Process result
   } catch (error) {
     console.error('An error occurred:', error);
@@ -830,42 +829,49 @@ const sendPayment = async () => {
 
 Manage the connection lifecycle properly:
 
-```javascript
+```typescript
 import React, { useEffect } from 'react';
-import { connect, disconnect } from '@breeztech/react-native-breez-sdk-liquid';
+import {
+  connect,
+  defaultConfig,
+  LiquidNetwork
+} from '@breeztech/breez-sdk-liquid-react-native';
 
 const WalletScreen = () => {
   useEffect(() => {
-    const initializeSdk = async () => {
+    let sdkInstance;
+
+    const initializeSdk = () => {
       try {
+        const config = defaultConfig(LiquidNetwork.Mainnet, 'your-api-key');
         // Initialize SDK
-        await connect({
+        sdkInstance = connect({
           mnemonic,
-          config
+          config,
+          passphrase: undefined,
+          seed: undefined
         });
-        
+
         // SDK is ready to use
       } catch (error) {
         console.error('Failed to initialize SDK:', error);
       }
     };
-    
+
     initializeSdk();
-    
+
     // Cleanup function
     return () => {
-      const cleanupSdk = async () => {
-        try {
-          await disconnect();
-        } catch (error) {
-          console.error('Error disconnecting:', error);
+      try {
+        if (sdkInstance) {
+          sdkInstance.disconnect();
         }
-      };
-      
-      cleanupSdk();
+      } catch (error) {
+        console.error('Error disconnecting:', error);
+      }
     };
   }, []);
-  
+
   // Rest of the component
 };
 ```
@@ -874,23 +880,31 @@ const WalletScreen = () => {
 
 Always check fees before executing payments and get user confirmation:
 
-```javascript
-const executePayment = async () => {
+```typescript
+import { BindingLiquidSdk, PayAmount } from '@breeztech/breez-sdk-liquid-react-native';
+
+const executePayment = (sdk: BindingLiquidSdk, destination: string, amountSat: bigint) => {
   try {
     // Get fee information
-    const prepareResponse = await prepareSendPayment({
+    const prepareResponse = sdk.prepareSendPayment({
       destination,
-      amount
+      amount: new PayAmount.Bitcoin({ receiverAmountSat: amountSat }),
+      disableMrh: undefined,
+      paymentTimeoutSec: undefined
     });
-    
+
     const feesSat = prepareResponse.feesSat;
-    
+
     // Ask user to confirm the fee (using an Alert or a custom modal)
-    const userConfirmed = await showFeeConfirmationDialog(feesSat);
-    
+    const userConfirmed = showFeeConfirmationDialog(feesSat);
+
     if (userConfirmed) {
       // Execute payment
-      const paymentResponse = await sendPayment({ prepareResponse });
+      const paymentResponse = sdk.sendPayment({
+        prepareResponse,
+        payerNote: undefined,
+        useAssetFees: undefined
+      });
       // Handle successful payment
     } else {
       // User rejected the fee
@@ -906,53 +920,89 @@ const executePayment = async () => {
 
 Implement a robust event listener system:
 
-```javascript
+```typescript
 import { useEffect, useState } from 'react';
-import { 
-  addEventListener, 
-  removeEventListener
-} from '@breeztech/react-native-breez-sdk-liquid';
+import {
+  BindingLiquidSdk,
+  type SdkEvent
+} from '@breeztech/breez-sdk-liquid-react-native';
 
-function useSdkEvents() {
-  const [paymentEvents, setPaymentEvents] = useState([]);
+function useSdkEvents(sdk: BindingLiquidSdk) {
+  const [paymentEvents, setPaymentEvents] = useState<SdkEvent[]>([]);
   const [syncStatus, setSyncStatus] = useState(false);
-  
+
   useEffect(() => {
-    let listenerId;
-    
-    const setupListener = async () => {
-      const handleEvent = (event) => {
-        console.log('SDK Event:', event);
-        
-        switch (event.type) {
-          case 'PAYMENT_SUCCEEDED':
-            setPaymentEvents(prev => [...prev, event]);
-            break;
-          case 'SYNCED':
-            setSyncStatus(true);
-            break;
-          case 'SYNCING':
-            setSyncStatus(false);
-            break;
-          // Handle other event types
-        }
-      };
-      
-      listenerId = await addEventListener(handleEvent);
-    };
-    
-    setupListener();
-    
-    return () => {
-      if (listenerId) {
-        removeEventListener(listenerId).catch(err => {
-          console.error('Failed to remove event listener:', err);
-        });
+    let listenerId: string;
+
+    const handleEvent = (event: SdkEvent) => {
+      console.log('SDK Event:', event);
+
+      switch (event.tag) {
+        case 'paymentSucceeded':
+          setPaymentEvents(prev => [...prev, event]);
+          break;
+        case 'synced':
+          setSyncStatus(true);
+          break;
+        case 'syncing':
+          setSyncStatus(false);
+          break;
+        // Handle other event types
       }
     };
-  }, []);
-  
+
+    listenerId = sdk.addEventListener({ onEvent: handleEvent });
+
+    return () => {
+      if (listenerId) {
+        sdk.removeEventListener(listenerId);
+      }
+    };
+  }, [sdk]);
+
   return { paymentEvents, syncStatus };
+}
+```
+
+### Logging and Event Handling
+
+```typescript
+import {
+  BindingLiquidSdk,
+  type LogEntry,
+  type SdkEvent,
+  setLogger
+} from '@breeztech/breez-sdk-liquid-react-native'
+
+// Set up logging
+const setupLogging = () => {
+  // Define a log handler function
+  const onLogEntry = (l: LogEntry) => {
+    console.log(`Received log [${l.level}]: ${l.line}`)
+  }
+
+  const subscription = setLogger({ log: onLogEntry })
+}
+
+// Add an event listener
+const setupEventListener = (sdk: BindingLiquidSdk) => {
+  // Define an event handler function
+  const onEvent = (e: SdkEvent) => {
+    console.log(`Received event: ${e.tag}`)
+  }
+
+  const listenerId = sdk.addEventListener({ onEvent })
+  return listenerId
+}
+
+// Remove an event listener
+const removeListener = (sdk: BindingLiquidSdk, listenerId: string) => {
+  sdk.removeEventListener(listenerId)
+}
+
+// Clean up and disconnect
+const cleanupSdk = (sdk: BindingLiquidSdk) => {
+  sdk.disconnect()
 }
 ```
 
@@ -962,7 +1012,7 @@ function useSdkEvents() {
 
 1. **Connection Problems**
    - Check your API key
-   - Verify network selection (MAINNET vs TESTNET)
+   - Verify network selection (Mainnet vs Testnet)
    - Confirm working directory permissions
 
 2. **Payment Issues**
@@ -972,29 +1022,25 @@ function useSdkEvents() {
    - Verify sufficient balance
 
 3. **Event Listener Not Triggering**
-   - Confirm listener is registered with `addEventListener`
-   - Check event type matching in your handler
+   - Confirm listener is registered with `sdk.addEventListener`
+   - Check event tag matching in your handler
    - Add debug logging to trace events
 
 ### Debugging
 
 Use the SDK's built-in logging system:
 
-```javascript
-import { setLogger } from '@breeztech/react-native-breez-sdk-liquid';
+```typescript
+import { setLogger, type LogEntry } from '@breeztech/breez-sdk-liquid-react-native';
 
-const setupLogging = async () => {
-  try {
-    const logHandler = (logEntry) => {
-      if (logEntry.level !== 'TRACE') {
-        console.log(`[${logEntry.level}] ${logEntry.line}`);
-      }
-    };
-    
-    await setLogger(logHandler);
-  } catch (error) {
-    console.error('Failed to set logger:', error);
-  }
+const setupLogging = () => {
+  const onLogEntry = (l: LogEntry) => {
+    if (l.level !== 'TRACE') {
+      console.log(`[${l.level}] ${l.line}`);
+    }
+  };
+
+  setLogger({ log: onLogEntry });
 };
 ```
 
@@ -1014,79 +1060,22 @@ const setupLogging = async () => {
    - Always validate payment destinations
    - Check amounts are within reasonable limits
    - Sanitize and validate all external inputs
-    console.error(err)
-  }
-}
-```
-
-#### Logging and Event Handling
-
-```javascript
-// Set up logging
-const setupLogging = async () => {
-  try {
-    // Define a log handler function
-    const onLogEntry = (l: LogEntry) => {
-      console.log(`Received log [${l.level}]: ${l.line}`)
-    }
-
-    const subscription = await setLogger(onLogEntry)
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-// Add an event listener
-const setupEventListener = async () => {
-  try {
-    // Define an event handler function
-    const onEvent = (e: SdkEvent) => {
-      console.log(`Received event: ${e.type}`)
-    }
-
-    const listenerId = await addEventListener(onEvent)
-    return listenerId
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-// Remove an event listener
-const removeListener = async (listenerId: string) => {
-  try {
-    await removeEventListener(listenerId)
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-// Clean up and disconnect
-const cleanupSdk = async () => {
-  try {
-    await disconnect()
-  } catch (err) {
-    console.error(err)
-  }
-}
-```
 
 ## Core Features
 
 ### Buying Bitcoin
 
-```javascript
+```typescript
 import {
-  buyBitcoin,
+  BindingLiquidSdk,
   BuyBitcoinProvider,
-  fetchOnchainLimits,
   type OnchainPaymentLimitsResponse,
-  type PrepareBuyBitcoinResponse,
-  prepareBuyBitcoin
-} from '@breeztech/react-native-breez-sdk-liquid'
+  type PrepareBuyBitcoinResponse
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const fetchOnchainLimits = async () => {
+const fetchOnchainLimitsExample = (sdk: BindingLiquidSdk) => {
   try {
-    const currentLimits = await fetchOnchainLimits()
+    const currentLimits = sdk.fetchOnchainLimits()
 
     console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
     console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
@@ -1096,10 +1085,10 @@ const fetchOnchainLimits = async () => {
   }
 }
 
-const prepareBuyBtc = async (currentLimits: OnchainPaymentLimitsResponse) => {
+const prepareBuyBtc = (sdk: BindingLiquidSdk, currentLimits: OnchainPaymentLimitsResponse) => {
   try {
-    const prepareRes = await prepareBuyBitcoin({
-      provider: BuyBitcoinProvider.MOONPAY,
+    const prepareRes = sdk.prepareBuyBitcoin({
+      provider: BuyBitcoinProvider.Moonpay,
       amountSat: currentLimits.receive.minSat
     })
 
@@ -1112,10 +1101,11 @@ const prepareBuyBtc = async (currentLimits: OnchainPaymentLimitsResponse) => {
   }
 }
 
-const buyBtc = async (prepareResponse: PrepareBuyBitcoinResponse) => {
+const buyBtc = (sdk: BindingLiquidSdk, prepareResponse: PrepareBuyBitcoinResponse) => {
   try {
-    const url = await buyBitcoin({
-      prepareResponse
+    const url = sdk.buyBitcoin({
+      prepareResponse,
+      redirectUrl: undefined
     })
     // Open URL in a WebView or external browser
   } catch (err) {
@@ -1126,24 +1116,21 @@ const buyBtc = async (prepareResponse: PrepareBuyBitcoinResponse) => {
 
 ### Fiat Currencies
 
-```javascript
-import {
-  listFiatCurrencies,
-  fetchFiatRates
-} from '@breeztech/react-native-breez-sdk-liquid'
+```typescript
+import { BindingLiquidSdk } from '@breeztech/breez-sdk-liquid-react-native'
 
-const getFiatCurrencies = async () => {
+const getFiatCurrencies = (sdk: BindingLiquidSdk) => {
   try {
-    const fiatCurrencies = await listFiatCurrencies()
+    const fiatCurrencies = sdk.listFiatCurrencies()
     return fiatCurrencies
   } catch (err) {
     console.error(err)
   }
 }
 
-const getFiatRates = async () => {
+const getFiatRates = (sdk: BindingLiquidSdk) => {
   try {
-    const fiatRates = await fetchFiatRates()
+    const fiatRates = sdk.fetchFiatRates()
     return fiatRates
   } catch (err) {
     console.error(err)
@@ -1170,22 +1157,19 @@ The fee a user pays to send a Lightning payment is composed of three parts:
 Note: swap service fee is dynamic and can change. Currently, it is 0.1%.
 
 > **Example**: If the user sends 10k sats, the fee would be:
-> 
+>
 > - 34 sats [Lockup Transaction Fee] + 19 sats [Claim Transaction Fee] + 10 sats [Swapper Service Fee] = 63 sats
 
-```javascript
+```typescript
 import {
-  fetchLightningLimits,
-  prepareSendPayment,
-  sendPayment,
-  type PayAmount,
-  PayAmountVariant,
+  BindingLiquidSdk,
+  PayAmount,
   type PrepareSendResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const getLightningLimits = async () => {
+const getLightningLimits = (sdk: BindingLiquidSdk) => {
   try {
-    const currentLimits = await fetchLightningLimits()
+    const currentLimits = sdk.fetchLightningLimits()
 
     console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`)
     console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`)
@@ -1195,86 +1179,71 @@ const getLightningLimits = async () => {
   }
 }
 
-const prepareSendPaymentLightningBolt11 = async () => {
+const prepareSendPaymentLightningBolt11 = (sdk: BindingLiquidSdk) => {
   // Set the bolt11 invoice you wish to pay
-  try {
-    const prepareResponse = await prepareSendPayment({
-      destination: '<bolt11 invoice>'
-    })
+  const prepareResponse = sdk.prepareSendPayment({
+    destination: '<bolt11 invoice>',
+    amount: undefined,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
+  })
 
-    // If the fees are acceptable, continue to create the Send Payment
-    const sendFeesSat = prepareResponse.feesSat
-    console.log(`Fees: ${sendFeesSat} sats`)
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  // If the fees are acceptable, continue to create the Send Payment
+  const sendFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${sendFeesSat} sats`)
+  return prepareResponse
 }
 
-const prepareSendPaymentLightningBolt12 = async () => {
+const prepareSendPaymentLightningBolt12 = (sdk: BindingLiquidSdk) => {
   // Set the bolt12 offer you wish to pay
-  try {
-    const optionalAmount: PayAmount = {
-      type: PayAmountVariant.BITCOIN,
-      receiverAmountSat: 5_000
-    }
+  const optionalAmount = new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5_000) })
 
-    const prepareResponse = await prepareSendPayment({
-      destination: '<bolt12 offer>',
-      amount: optionalAmount
-    })
-    
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  const prepareResponse = sdk.prepareSendPayment({
+    destination: '<bolt12 offer>',
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
+  })
+
+  return prepareResponse
 }
 ```
 
 #### Liquid Payments
 
-```javascript
-const prepareSendPaymentLiquid = async () => {
+```typescript
+const prepareSendPaymentLiquid = (sdk: BindingLiquidSdk) => {
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  try {
-    const optionalAmount: PayAmount = {
-      type: PayAmountVariant.BITCOIN,
-      receiverAmountSat: 5_000
-    }
+  const optionalAmount = new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5_000) })
 
-    const prepareResponse = await prepareSendPayment({
-      destination: '<Liquid BIP21 or address>',
-      amount: optionalAmount
-    })
+  const prepareResponse = sdk.prepareSendPayment({
+    destination: '<Liquid BIP21 or address>',
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
+  })
 
-    // If the fees are acceptable, continue to create the Send Payment
-    const sendFeesSat = prepareResponse.feesSat
-    console.log(`Fees: ${sendFeesSat} sats`)
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  // If the fees are acceptable, continue to create the Send Payment
+  const sendFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${sendFeesSat} sats`)
+  return prepareResponse
 }
 
-const prepareSendPaymentLiquidDrain = async () => {
+const prepareSendPaymentLiquidDrain = (sdk: BindingLiquidSdk) => {
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  try {
-    const optionalAmount: PayAmount = {
-      type: PayAmountVariant.DRAIN
-    }
+  const optionalAmount = new PayAmount.Drain()
 
-    const prepareResponse = await prepareSendPayment({
-      destination: '<Liquid BIP21 or address>',
-      amount: optionalAmount
-    })
+  const prepareResponse = sdk.prepareSendPayment({
+    destination: '<Liquid BIP21 or address>',
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
+  })
 
-    // If the fees are acceptable, continue to create the Send Payment
-    const sendFeesSat = prepareResponse.feesSat
-    console.log(`Fees: ${sendFeesSat} sats`)
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  // If the fees are acceptable, continue to create the Send Payment
+  const sendFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${sendFeesSat} sats`)
+  return prepareResponse
 }
 ```
 
@@ -1282,20 +1251,16 @@ const prepareSendPaymentLiquidDrain = async () => {
 
 For BOLT12 payments you can also include an optional payer note, which will be included in the invoice.
 
-```javascript
-const sendPayment = async (prepareResponse: PrepareSendResponse) => {
-  try {
-    const optionalPayerNote = '<payer note>'
-
-    const sendResponse = await sendPayment({
-      prepareResponse,
-      payerNote: optionalPayerNote
-    })
-    const payment = sendResponse.payment
-    return payment
-  } catch (err) {
-    console.error(err)
-  }
+```typescript
+const sendPaymentExample = (sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) => {
+  const optionalPayerNote = '<payer note>'
+  const sendResponse = sdk.sendPayment({
+    prepareResponse,
+    payerNote: optionalPayerNote,
+    useAssetFees: undefined
+  })
+  const payment = sendResponse.payment
+  return payment
 }
 ```
 
@@ -1319,123 +1284,110 @@ The fee a user pays to receive a Lightning payment is composed of three parts:
 Note: swap service fee is dynamic and can change. Currently, it is 0.25%.
 
 > **Example**: If the sender sends 10k sats, the fee for the end-user would be:
-> 
+>
 > - 27 sats [Lockup Transaction Fee] + 20 sats [Claim Transaction Fee] + 25 sats [Swapper Service Fee] = 72 sats
 
-```javascript
+```typescript
 import {
+  BindingLiquidSdk,
   PaymentMethod,
   type PrepareReceiveResponse,
-  fetchLightningLimits,
-  prepareReceivePayment,
-  type ReceiveAmount,
-  ReceiveAmountVariant,
-  receivePayment
-} from '@breeztech/react-native-breez-sdk-liquid'
+  ReceiveAmount
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const prepareReceiveLightning = async () => {
-  try {
-    // Fetch the Receive lightning limits
-    const currentLimits = await fetchLightningLimits()
-    console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
-    console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
+const prepareReceiveLightning = (sdk: BindingLiquidSdk) => {
+  // Fetch the Receive lightning limits
+  const currentLimits = sdk.fetchLightningLimits()
+  console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
+  console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
 
-    // Set the amount you wish the payer to send via lightning, which should be within the above limits
-    const optionalAmount: ReceiveAmount = {
-      type: ReceiveAmountVariant.BITCOIN,
-      payerAmountSat: 5_000
-    }
+  // Set the amount you wish the payer to send via lightning, which should be within the above limits
+  const optionalAmount = new ReceiveAmount.Bitcoin({ payerAmountSat: BigInt(5_000) })
 
-    const prepareResponse = await prepareReceivePayment({
-      paymentMethod: PaymentMethod.LIGHTNING,
-      amount: optionalAmount
-    })
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.Bolt11Invoice,
+    amount: optionalAmount
+  })
 
-    // If the fees are acceptable, continue to create the Receive Payment
-    const receiveFeesSat = prepareResponse.feesSat
-    console.log(`Fees: ${receiveFeesSat} sats`)
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  // If the fees are acceptable, continue to create the Receive Payment
+  const receiveFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${receiveFeesSat} sats`)
+  return prepareResponse
+}
+
+const prepareReceiveLightningBolt12 = (sdk: BindingLiquidSdk) => {
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.Bolt12Offer,
+    amount: undefined
+  })
+
+  // If the fees are acceptable, continue to create the Receive Payment
+  const minReceiveFeesSat = prepareResponse.feesSat
+  const swapperFeerate = prepareResponse.swapperFeerate
+  console.log(`Fees: ${minReceiveFeesSat} sats + ${swapperFeerate}% of the sent amount`)
+  return prepareResponse
 }
 ```
 
 #### Onchain Payments
 
-```javascript
-const prepareReceiveOnchain = async () => {
-  try {
-    // Fetch the Onchain lightning limits
-    const currentLimits = await fetchOnchainLimits()
-    console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
-    console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
+```typescript
+const prepareReceiveOnchain = (sdk: BindingLiquidSdk) => {
+  // Fetch the Onchain lightning limits
+  const currentLimits = sdk.fetchOnchainLimits()
+  console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
+  console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
 
-    // Set the onchain amount you wish the payer to send, which should be within the above limits
-    const optionalAmount: ReceiveAmount = {
-      type: ReceiveAmountVariant.BITCOIN,
-      payerAmountSat: 5_000
-    }
+  // Set the onchain amount you wish the payer to send, which should be within the above limits
+  const optionalAmount = new ReceiveAmount.Bitcoin({ payerAmountSat: BigInt(5_000) })
 
-    const prepareResponse = await prepareReceivePayment({
-      paymentMethod: PaymentMethod.BITCOIN_ADDRESS,
-      amount: optionalAmount
-    })
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.BitcoinAddress,
+    amount: optionalAmount
+  })
 
-    // If the fees are acceptable, continue to create the Receive Payment
-    const receiveFeesSat = prepareResponse.feesSat
-    console.log(`Fees: ${receiveFeesSat} sats`)
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  // If the fees are acceptable, continue to create the Receive Payment
+  const receiveFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${receiveFeesSat} sats`)
+  return prepareResponse
 }
 ```
 
 #### Liquid Payments
 
-```javascript
-const prepareReceiveLiquid = async () => {
-  try {
-    // Create a Liquid BIP21 URI/address to receive a payment to.
-    // There are no limits, but the payer amount should be greater than broadcast fees when specified
-    // Note: Not setting the amount will generate a plain Liquid address
-    const optionalAmount: ReceiveAmount = {
-      type: ReceiveAmountVariant.BITCOIN,
-      payerAmountSat: 5_000
-    }
+```typescript
+const prepareReceiveLiquid = (sdk: BindingLiquidSdk) => {
+  // Create a Liquid BIP21 URI/address to receive a payment to.
+  // There are no limits, but the payer amount should be greater than broadcast fees when specified
+  // Note: Not setting the amount will generate a plain Liquid address
+  const optionalAmount = new ReceiveAmount.Bitcoin({ payerAmountSat: BigInt(5_000) })
 
-    const prepareResponse = await prepareReceivePayment({
-      paymentMethod: PaymentMethod.LIQUID_ADDRESS,
-      amount: optionalAmount
-    })
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.LiquidAddress,
+    amount: optionalAmount
+  })
 
-    // If the fees are acceptable, continue to create the Receive Payment
-    const receiveFeesSat = prepareResponse.feesSat
-    console.log(`Fees: ${receiveFeesSat} sats`)
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  // If the fees are acceptable, continue to create the Receive Payment
+  const receiveFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${receiveFeesSat} sats`)
+  return prepareResponse
 }
 ```
 
 #### Execute Receive
 
-```javascript
-const receivePaymentFromPrepared = async (prepareResponse: PrepareReceiveResponse) => {
-  try {
-    const optionalDescription = '<description>'
-    const res = await receivePayment({
-      prepareResponse,
-      description: optionalDescription
-    })
+```typescript
+const receivePaymentFromPrepared = (sdk: BindingLiquidSdk, prepareResponse: PrepareReceiveResponse) => {
+  const optionalDescription = '<description>'
+  const res = sdk.receivePayment({
+    prepareResponse,
+    description: optionalDescription,
+    descriptionHash: undefined,
+    payerNote: undefined
+  })
 
-    const destination = res.destination
-    return destination
-  } catch (err) {
-    console.error(err)
-  }
+  const destination = res.destination
+  return destination
 }
 ```
 
@@ -1443,124 +1395,115 @@ const receivePaymentFromPrepared = async (prepareResponse: PrepareReceiveRespons
 
 #### LNURL Authentication
 
-```javascript
+```typescript
 import {
-  InputTypeVariant,
-  lnurlAuth,
-  LnUrlCallbackStatusVariant,
-  parse
-} from '@breeztech/react-native-breez-sdk-liquid'
+  BindingLiquidSdk,
+  InputType_Tags,
+  LnUrlCallbackStatus_Tags
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const lnurlAuthenticate = async () => {
+const lnurlAuthenticate = (sdk: BindingLiquidSdk) => {
   // Endpoint can also be of the form:
   // keyauth://domain.com/auth?key=val
   const lnurlAuthUrl =
         'lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttvdankjm3lw3skw0tvdankjm3xdvcn6vtp8q6n2dfsx5mrjwtrxdjnqvtzv56rzcnyv3jrxv3sxqmkyenrvv6kve3exv6nqdtyv43nqcmzvdsnvdrzx33rsenxx5unqc3cxgeqgntfgu'
 
-  try {
-    const input = await parse(lnurlAuthUrl)
-    if (input.type === InputTypeVariant.LN_URL_AUTH) {
-      const result = await lnurlAuth(input.data)
-      if (result.type === LnUrlCallbackStatusVariant.OK) {
-        console.log('Successfully authenticated')
-      } else {
-        console.log('Failed to authenticate')
-      }
+  const input = sdk.parse(lnurlAuthUrl)
+  if (input.tag === InputType_Tags.LnUrlAuth) {
+    const result = sdk.lnurlAuth(input.inner.data)
+    if (result.tag === LnUrlCallbackStatus_Tags.Ok) {
+      console.log('Successfully authenticated')
+    } else {
+      console.log('Failed to authenticate')
     }
-  } catch (err) {
-    console.error(err)
   }
 }
 ```
 
 #### LNURL Pay
 
-```javascript
+```typescript
 import {
-  InputTypeVariant,
-  lnurlPay,
+  BindingLiquidSdk,
+  InputType_Tags,
   type LnUrlPayRequestData,
-  parse,
-  type PayAmount,
-  PayAmountVariant,
-  prepareLnurlPay,
+  PayAmount,
   type PrepareLnUrlPayResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const prepareLnurlPayment = async () => {
+const prepareLnurlPayment = (sdk: BindingLiquidSdk) => {
   // Endpoint can also be of the
   // lnurlp://domain.com/lnurl-pay?key=val
   // lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
   const lnurlPayUrl = 'lightning@address.com'
 
-  try {
-    const input = await parse(lnurlPayUrl)
-    if (input.type === InputTypeVariant.LN_URL_PAY) {
-      const amount: PayAmount = {
-        type: PayAmountVariant.BITCOIN,
-        receiverAmountSat: 5_000
-      }
-      const optionalComment = '<comment>'
-      const optionalValidateSuccessActionUrl = true
+  const input = sdk.parse(lnurlPayUrl)
+  if (input.tag === InputType_Tags.LnUrlPay) {
+    const amount = new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5_000) })
+    const optionalComment = '<comment>'
+    const optionalValidateSuccessActionUrl = true
 
-      const prepareResponse = await prepareLnurlPay({
-        data: input.data,
-        amount,
-        bip353Address: input.bip353Address,
-        comment: optionalComment,
-        validateSuccessActionUrl: optionalValidateSuccessActionUrl
-      })
+    const prepareResponse = sdk.prepareLnurlPay({
+      data: input.inner.data,
+      amount,
+      bip353Address: input.inner.bip353Address,
+      comment: optionalComment,
+      validateSuccessActionUrl: optionalValidateSuccessActionUrl
+    })
 
-      // If the fees are acceptable, continue to create the LNURL Pay
-      const feesSat = prepareResponse.feesSat
-      console.log(`Fees: ${feesSat} sats`)
-      return prepareResponse
-    }
-  } catch (err) {
-    console.error(err)
+    // If the fees are acceptable, continue to create the LNURL Pay
+    const feesSat = prepareResponse.feesSat
+    console.log(`Fees: ${feesSat} sats`)
+    return prepareResponse
   }
 }
 
-const executeLnurlPay = async (prepareResponse: PrepareLnUrlPayResponse) => {
-  try {
-    const result = await lnurlPay({
-      prepareResponse
-    })
-    return result
-  } catch (err) {
-    console.error(err)
-  }
+const prepareLnurlPayDrain = (sdk: BindingLiquidSdk, data: LnUrlPayRequestData) => {
+  const amount = new PayAmount.Drain()
+  const optionalComment = '<comment>'
+  const optionalValidateSuccessActionUrl = true
+
+  const prepareResponse = sdk.prepareLnurlPay({
+    data,
+    amount,
+    comment: optionalComment,
+    validateSuccessActionUrl: optionalValidateSuccessActionUrl,
+    bip353Address: undefined
+  })
+  return prepareResponse
+}
+
+const executeLnurlPay = (sdk: BindingLiquidSdk, prepareResponse: PrepareLnUrlPayResponse) => {
+  const result = sdk.lnurlPay({
+    prepareResponse
+  })
+  return result
 }
 ```
 
 #### LNURL Withdraw
 
-```javascript
+```typescript
 import {
-  InputTypeVariant,
-  lnurlWithdraw,
-  parse
-} from '@breeztech/react-native-breez-sdk-liquid'
+  BindingLiquidSdk,
+  InputType_Tags
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const executeLnurlWithdraw = async () => {
+const executeLnurlWithdraw = (sdk: BindingLiquidSdk) => {
   // Endpoint can also be of the form:
   // lnurlw://domain.com/lnurl-withdraw?key=val
   const lnurlWithdrawUrl =
         'lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4exctthd96xserjv9mn7um9wdekjmmw843xxwpexdnxzen9vgunsvfexq6rvdecx93rgdmyxcuxverrvcursenpxvukzv3c8qunsdecx33nzwpnvg6ryc3hv93nzvecxgcxgwp3h33lxk'
 
-  try {
-    const input = await parse(lnurlWithdrawUrl)
-    if (input.type === InputTypeVariant.LN_URL_WITHDRAW) {
-      const amountMsat = input.data.minWithdrawable
-      const lnUrlWithdrawResult = await lnurlWithdraw({
-        data: input.data,
-        amountMsat,
-        description: 'comment'
-      })
-      return lnUrlWithdrawResult
-    }
-  } catch (err) {
-    console.error(err)
+  const input = sdk.parse(lnurlWithdrawUrl)
+  if (input.tag === InputType_Tags.LnUrlWithdraw) {
+    const amountMsat = input.inner.data.minWithdrawable
+    const lnUrlWithdrawResult = sdk.lnurlWithdraw({
+      data: input.inner.data,
+      amountMsat,
+      description: 'comment'
+    })
+    return lnUrlWithdrawResult
   }
 }
 ```
@@ -1569,18 +1512,16 @@ const executeLnurlWithdraw = async () => {
 
 #### Pay Onchain
 
-```javascript
+```typescript
 import {
+  BindingLiquidSdk,
   type PreparePayOnchainResponse,
-  fetchOnchainLimits,
-  preparePayOnchain,
-  payOnchain,
-  PayAmountVariant
-} from '@breeztech/react-native-breez-sdk-liquid'
+  PayAmount
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const getOnchainLimits = async () => {
+const getOnchainLimits = (sdk: BindingLiquidSdk) => {
   try {
-    const currentLimits = await fetchOnchainLimits()
+    const currentLimits = sdk.fetchOnchainLimits()
 
     console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`)
     console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`)
@@ -1590,13 +1531,11 @@ const getOnchainLimits = async () => {
   }
 }
 
-const prepareOnchainPayment = async () => {
+const prepareOnchainPayment = (sdk: BindingLiquidSdk) => {
   try {
-    const prepareResponse = await preparePayOnchain({
-      amount: {
-        type: PayAmountVariant.BITCOIN,
-        receiverAmountSat: 5_000
-      }
+    const prepareResponse = sdk.preparePayOnchain({
+      amount: new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5000) }),
+      feeRateSatPerVbyte: undefined
     })
 
     // Check if the fees are acceptable before proceeding
@@ -1608,15 +1547,12 @@ const prepareOnchainPayment = async () => {
   }
 }
 
-const prepareOnchainPaymentWithFeeRate = async () => {
+const prepareOnchainPaymentWithFeeRate = (sdk: BindingLiquidSdk) => {
   try {
     const optionalSatPerVbyte = 21
 
-    const prepareResponse = await preparePayOnchain({
-      amount: {
-        type: PayAmountVariant.BITCOIN,
-        receiverAmountSat: 5_000
-      },
+    const prepareResponse = sdk.preparePayOnchain({
+      amount: new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5_000) }),
       feeRateSatPerVbyte: optionalSatPerVbyte
     })
 
@@ -1630,11 +1566,11 @@ const prepareOnchainPaymentWithFeeRate = async () => {
   }
 }
 
-const executePayOnchain = async (prepareResponse: PreparePayOnchainResponse) => {
+const executePayOnchain = (sdk: BindingLiquidSdk, prepareResponse: PreparePayOnchainResponse) => {
   try {
     const destinationAddress = 'bc1..'
 
-    const payOnchainRes = await payOnchain({
+    const payOnchainRes = sdk.payOnchain({
       address: destinationAddress,
       prepareResponse
     })
@@ -1647,13 +1583,12 @@ const executePayOnchain = async (prepareResponse: PreparePayOnchainResponse) => 
 
 #### Drain Funds
 
-```javascript
-const preparePayOnchainDrain = async () => {
+```typescript
+const preparePayOnchainDrain = (sdk: BindingLiquidSdk) => {
   try {
-    const prepareResponse = await preparePayOnchain({
-      amount: {
-        type: PayAmountVariant.DRAIN
-      }
+    const prepareResponse = sdk.preparePayOnchain({
+      amount: new PayAmount.Drain(),
+      feeRateSatPerVbyte: undefined
     })
 
     // Check if the fees are acceptable before proceeding
@@ -1668,56 +1603,46 @@ const preparePayOnchainDrain = async () => {
 
 #### Receive Onchain
 
-```javascript
+```typescript
 import {
-  listRefundables,
-  rescanOnchainSwaps,
+  BindingLiquidSdk,
   type RefundableSwap,
-  refund,
-  recommendedFees,
-  listPayments,
-  fetchPaymentProposedFees,
-  acceptPaymentProposedFees,
   PaymentState,
-  PaymentDetailsVariant
-} from '@breeztech/react-native-breez-sdk-liquid'
+  PaymentDetails_Tags
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const getRefundables = async () => {
+const getRefundables = (sdk: BindingLiquidSdk) => {
   try {
-    const refundables = await listRefundables()
+    const refundables = sdk.listRefundables()
     return refundables
   } catch (err) {
     console.error(err)
   }
 }
 
-const executeRefund = async (refundable: RefundableSwap, refundTxFeeRate: number) => {
-  try {
-    const destinationAddress = '...'
-    const feeRateSatPerVbyte = refundTxFeeRate
+const executeRefund = (sdk: BindingLiquidSdk, refundable: RefundableSwap, refundTxFeeRate: number) => {
+  const destinationAddress = '...'
+  const feeRateSatPerVbyte = refundTxFeeRate
 
-    const refundResponse = await refund({
-      swapAddress: refundable.swapAddress,
-      refundAddress: destinationAddress,
-      feeRateSatPerVbyte
-    })
-    return refundResponse
+  const refundResponse = sdk.refund({
+    swapAddress: refundable.swapAddress,
+    refundAddress: destinationAddress,
+    feeRateSatPerVbyte
+  })
+  return refundResponse
+}
+
+const rescanSwaps = (sdk: BindingLiquidSdk) => {
+  try {
+    sdk.rescanOnchainSwaps()
   } catch (err) {
     console.error(err)
   }
 }
 
-const rescanSwaps = async () => {
+const getRecommendedFees = (sdk: BindingLiquidSdk) => {
   try {
-    await rescanOnchainSwaps()
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-const getRecommendedFees = async () => {
-  try {
-    const fees = await recommendedFees()
+    const fees = sdk.recommendedFees()
     return fees
   } catch (err) {
     console.error(err)
@@ -1727,124 +1652,157 @@ const getRecommendedFees = async () => {
 
 #### Handle Fee Acceptance
 
-```javascript
-const handlePaymentsWaitingFeeAcceptance = async () => {
-  try {
-    // Payments on hold waiting for fee acceptance have the state WAITING_FEE_ACCEPTANCE
-    const paymentsWaitingFeeAcceptance = await listPayments({
-      states: [PaymentState.WAITING_FEE_ACCEPTANCE]
+```typescript
+const handlePaymentsWaitingFeeAcceptance = (sdk: BindingLiquidSdk) => {
+  // Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+  const paymentsWaitingFeeAcceptance = sdk.listPayments({
+    states: [PaymentState.WaitingFeeAcceptance],
+    filters: undefined,
+    fromTimestamp: undefined,
+    toTimestamp: undefined,
+    offset: undefined,
+    limit: undefined,
+    details: undefined,
+    sortAscending: undefined
+  })
+
+  for (const payment of paymentsWaitingFeeAcceptance) {
+    if (payment.details.tag !== PaymentDetails_Tags.Bitcoin) {
+      // Only Bitcoin payments can be `WaitingFeeAcceptance`
+      continue
+    }
+
+    const fetchFeesResponse = sdk.fetchPaymentProposedFees({
+      swapId: payment.details.inner.swapId
     })
 
-    for (const payment of paymentsWaitingFeeAcceptance) {
-      if (payment.details.type !== PaymentDetailsVariant.BITCOIN) {
-        // Only Bitcoin payments can be `WAITING_FEE_ACCEPTANCE`
-        continue
-      }
+    console.info(
+      `Payer sent ${fetchFeesResponse.payerAmountSat} and currently proposed fees are ${fetchFeesResponse.feesSat}`
+    )
 
-      const fetchFeesResponse = await fetchPaymentProposedFees({
-        swapId: payment.details.swapId
-      })
-
-      console.info(
-        `Payer sent ${fetchFeesResponse.payerAmountSat} and currently proposed fees are ${fetchFeesResponse.feesSat}`
-      )
-
-      // If the user is ok with the fees, accept them, allowing the payment to proceed
-      await acceptPaymentProposedFees({
-        response: fetchFeesResponse
-      })
-    }
-  } catch (err) {
-    console.error(err)
+    // If the user is ok with the fees, accept them, allowing the payment to proceed
+    sdk.acceptPaymentProposedFees({
+      response: fetchFeesResponse
+    })
   }
 }
 ```
 
 ### Non-Bitcoin Assets
 
-```javascript
+```typescript
 import {
+  BindingLiquidSdk,
   defaultConfig,
-  getInfo,
   LiquidNetwork,
   PaymentMethod,
-  type PayAmount,
-  PayAmountVariant,
-  prepareSendPayment,
-  prepareReceivePayment,
-  type ReceiveAmount,
-  ReceiveAmountVariant
-} from '@breeztech/react-native-breez-sdk-liquid'
+  PayAmount,
+  type PrepareSendResponse,
+  ReceiveAmount
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const prepareAssetPayment = async () => {
-  try {
-    // Create a Liquid BIP21 URI/address to receive an asset payment to.
-    // Note: Not setting the amount will generate an amountless BIP21 URI.
-    const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
-    const optionalAmount: ReceiveAmount = {
-      type: ReceiveAmountVariant.ASSET,
-      assetId: usdtAssetId,
-      payerAmount: 1.50
-    }
+const prepareAssetPayment = (sdk: BindingLiquidSdk) => {
+  // Create a Liquid BIP21 URI/address to receive an asset payment to.
+  // Note: Not setting the amount will generate an amountless BIP21 URI.
+  const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
+  const optionalAmount = new ReceiveAmount.Asset({
+    assetId: usdtAssetId,
+    payerAmount: 1.50
+  })
 
-    const prepareResponse = await prepareReceivePayment({
-      paymentMethod: PaymentMethod.LIQUID_ADDRESS,
-      amount: optionalAmount
-    })
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.LiquidAddress,
+    amount: optionalAmount
+  })
 
-    // If the fees are acceptable, continue to create the Receive Payment
-    const receiveFeesSat = prepareResponse.feesSat
-    console.log(`Fees: ${receiveFeesSat} sats`)
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  // If the fees are acceptable, continue to create the Receive Payment
+  const receiveFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${receiveFeesSat} sats`)
+  return prepareResponse
 }
 
-const prepareSendPaymentAsset = async () => {
-  try {
-    // Set the Liquid BIP21 or Liquid address you wish to pay
-    const destination = '<Liquid BIP21 or address>'
-    // If the destination is an address or an amountless BIP21 URI,
-    // you must specifiy an asset amount
+const prepareSendPaymentAsset = (sdk: BindingLiquidSdk) => {
+  // Set the Liquid BIP21 or Liquid address you wish to pay
+  const destination = '<Liquid BIP21 or address>'
+  // If the destination is an address or an amountless BIP21 URI,
+  // you must specify an asset amount
 
-    const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
-    const optionalAmount: PayAmount = {
-      type: PayAmountVariant.ASSET,
-      assetId: usdtAssetId,
-      receiverAmount: 1.50
-    }
+  const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
+  const optionalAmount = new PayAmount.Asset({
+    toAsset: usdtAssetId,
+    receiverAmount: 1.50,
+    estimateAssetFees: false,
+    fromAsset: undefined
+  })
 
-    const prepareResponse = await prepareSendPayment({
-      destination,
-      amount: optionalAmount
-    })
+  const prepareResponse = sdk.prepareSendPayment({
+    destination,
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
+  })
 
-    // If the fees are acceptable, continue to create the Send Payment
-    const sendFeesSat = prepareResponse.feesSat
-    console.log(`Fees: ${sendFeesSat} sats`)
-    return prepareResponse
-  } catch (err) {
-    console.error(err)
-  }
+  // If the fees are acceptable, continue to create the Send Payment
+  const sendFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${sendFeesSat} sats`)
+  return prepareResponse
 }
 
-const configureAssetMetadata = async () => {
-  try {
-    // Create the default config
-    const config = await defaultConfig(
-      LiquidNetwork.MAINNET,
-      '<your-Breez-API-key>'
-    )
+const prepareSendPaymentAssetWithFees = (sdk: BindingLiquidSdk) => {
+  const destination = '<Liquid BIP21 or address>'
+  const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
+  // Set the optional estimate asset fees param to true
+  const optionalAmount = new PayAmount.Asset({
+    toAsset: usdtAssetId,
+    receiverAmount: 1.50,
+    estimateAssetFees: true,
+    fromAsset: undefined
+  })
 
-    // Configure asset metadata
-    config.assetMetadata = [
-      {
-        assetId: '18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec',
-        name: 'PEGx EUR',
-        ticker: 'EURx',
-        precision: 8
-      }
-    ]
-    return config
-  } catch (err) {
+  const prepareResponse = sdk.prepareSendPayment({
+    destination,
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
+  })
+
+  // If the asset fees are set, you can use these fees to pay to send the asset
+  const sendAssetFees = prepareResponse.estimatedAssetFees
+  console.log(`Estimated Fees: ~${sendAssetFees}`)
+
+  // If the asset fees are not set, you can use the sats fees to pay to send the asset
+  const sendFeesSat = prepareResponse.feesSat
+  console.log(`Fees: ${sendFeesSat} sats`)
+  return prepareResponse
+}
+
+const sendPaymentWithAssetFees = (sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) => {
+  // Set the use asset fees param to true
+  const sendResponse = sdk.sendPayment({
+    prepareResponse,
+    useAssetFees: true,
+    payerNote: undefined
+  })
+  const payment = sendResponse.payment
+  return payment
+}
+
+const configureAssetMetadata = () => {
+  // Create the default config
+  const config = defaultConfig(
+    LiquidNetwork.Mainnet,
+    '<your-Breez-API-key>'
+  )
+
+  // Configure asset metadata
+  config.assetMetadata = [
+    {
+      assetId: '18729918ab4bca843656f08d4dd877bed6641fbd596a0a963abbf199cfeb3cec',
+      name: 'PEGx EUR',
+      ticker: 'EURx',
+      precision: 8
+    }
+  ]
+  return config
+}
+```
