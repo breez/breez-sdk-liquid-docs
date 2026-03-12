@@ -123,7 +123,7 @@ Future<SendPaymentResponse> sendSelfPaymentAsset() async {
   ReceivePaymentRequest receivePaymentRequest = ReceivePaymentRequest(
     prepareResponse: prepareReceiveRes,
     description: null,
-    useDescriptionHash: null,
+    descriptionHash: null,
     payerNote: null,
   );
 

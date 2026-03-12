@@ -1,28 +1,28 @@
+// ignore_for_file: unused_local_variable
 import 'package:dart_snippets/sdk_instance.dart';
 import 'package:flutter_breez_liquid/flutter_breez_liquid.dart';
-import 'package:flutter_breez_liquid_nwc/flutter_breez_liquid_nwc.dart';
 
-Future<SdkNwcService> nwcConnect() async {
+Future<BreezNwcService> nwcConnect() async {
   // ANCHOR: connecting
   NwcConfig nwcConfig = NwcConfig(
     relayUrls: null,
     secretKeyHex: null,
     listenToEvents: null,
   );
-  SdkNwcService nwcService = await breezSDKLiquid.instance!.useNwcPlugin(config: nwcConfig);
+  BreezNwcService nwcService = await breezSDKLiquid.instance!.useNwcPlugin(config: nwcConfig);
 
   // ...
 
   // Automatically stops the plugin
   await breezSDKLiquid.instance!.disconnect();
   // Alternatively, you can stop the plugin manually, without disconnecting the SDK
-  await nwcService.stop();
+  await nwcService.onStop();
   // ANCHOR_END: connecting
 
   return nwcService;
 }
 
-Future<void> nwcAddConnection(SdkNwcService nwcService) async {
+Future<void> nwcAddConnection(BreezNwcService nwcService) async {
   // ANCHOR: add-connection
   // This connection will only allow spending at most 10,000 sats/hour
   PeriodicBudgetRequest periodicBudgetReq = PeriodicBudgetRequest(
@@ -41,7 +41,7 @@ Future<void> nwcAddConnection(SdkNwcService nwcService) async {
   // ANCHOR_END: add-connection
 }
 
-Future<void> nwcEditConnection(SdkNwcService nwcService) async {
+Future<void> nwcEditConnection(BreezNwcService nwcService) async {
   // ANCHOR: edit-connection
   int newExpiryTime = 60 * 24;
   final editResponse = await nwcService.editConnection(
@@ -58,7 +58,7 @@ Future<void> nwcEditConnection(SdkNwcService nwcService) async {
   // ANCHOR_END: edit-connection
 }
 
-Future<void> nwcListConnections(SdkNwcService nwcService) async {
+Future<void> nwcListConnections(BreezNwcService nwcService) async {
   // ANCHOR: list-connections
   Map<String, NwcConnection> connections = await nwcService.listConnections();
   for (var entry in connections.entries) {
@@ -70,52 +70,45 @@ Future<void> nwcListConnections(SdkNwcService nwcService) async {
   // ANCHOR_END: list-connections
 }
 
-Future<void> nwcRemoveConnection(SdkNwcService nwcService) async {
+Future<void> nwcRemoveConnection(BreezNwcService nwcService) async {
   // ANCHOR: remove-connection
   await nwcService.removeConnection(name: "my new connection");
   // ANCHOR_END: remove-connection
 }
 
-Future<void> nwcGetInfo(SdkNwcService nwcService) async {
+Future<void> nwcGetInfo(BreezNwcService nwcService) async {
   // ANCHOR: get-info
-  NwcServiceInfo? info = await nwcService.getInfo();
+  NostrServiceInfo? info = await nwcService.getInfo();
   // ANCHOR_END: get-info
 }
 
-Future<void> nwcEvents(SdkNwcService nwcService) async {
+Future<void> nwcEvents(BreezNwcService nwcService) async {
   // ANCHOR: events
-  class MyListener extends NwcEventListener {
-    @override
-    Future<void> onEvent({required NwcEvent event}) async {
-      if (event.details is NwcEventDetails_Connected) {
-        // ...
-      } else if (event.details is NwcEventDetails_Disconnected) {
-        // ...
-      } else if (event.details is NwcEventDetails_ConnectionExpired) {
-        // ...
-      } else if (event.details is NwcEventDetails_ConnectionRefreshed) {
-        // ...
-      } else if (event.details is NwcEventDetails_PayInvoice) {
-        final details = event.details as NwcEventDetails_PayInvoice;
-        // details.success, details.preimage, details.feesSat, details.error
-        // ...
-      } else if (event.details is NwcEventDetails_ZapReceived) {
-        final details = event.details as NwcEventDetails_ZapReceived;
-        // details.invoice
-        // ...
-      }
+  final eventStream = nwcService.addEventListener().asBroadcastStream();
+  eventStream.listen((event) async {
+    if (event.details is NwcEventDetails_Connected) {
+      // ...
+    } else if (event.details is NwcEventDetails_Disconnected) {
+      // ...
+    } else if (event.details is NwcEventDetails_ConnectionExpired) {
+      // ...
+    } else if (event.details is NwcEventDetails_ConnectionRefreshed) {
+      // ...
+    } else if (event.details is NwcEventDetails_PayInvoice) {
+      final details = event.details as NwcEventDetails_PayInvoice;
+      // details.success, details.preimage, details.feesSat, details.error
+      // ...
+    } else if (event.details is NwcEventDetails_ZapReceived) {
+      final details = event.details as NwcEventDetails_ZapReceived;
+      // details.invoice
+      // ...
     }
-  }
-
-  String myListenerId = await nwcService.addEventListener(listener: MyListener());
-  // If you wish to remove the event_listener later on, you can call:
-  await nwcService.removeEventListener(id: myListenerId);
-  // Otherwise, it will be automatically removed on service stop
+  });
   // ANCHOR_END: events
 }
 
-Future<void> nwcListPayments(SdkNwcService nwcService) async {
+Future<void> nwcListPayments(BreezNwcService nwcService) async {
   // ANCHOR: payments
-  await nwcService.listConnectionPayments(connectionName: "my new connection");
+  await nwcService.listConnectionPayments(name: "my new connection");
   // ANCHOR_END: payments
 }
