@@ -88,17 +88,6 @@ or
 yarn add @breeztech/breez-sdk-liquid-react-native
 ```
 
-Make sure you also add the following to your project's `tsconfig.json`:
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "@breeztech/breez-sdk-liquid-react-native": ["./node_modules/@breeztech/breez-sdk-liquid-react-native/lib/typescript/commonjs/src/index.d.ts"]
-    }
-  }
-}
-```
-
 ## Go
 
 We recommend using our official Go package: [breez/breez-sdk-liquid-go](https://github.com/breez/breez-sdk-liquid-go).
