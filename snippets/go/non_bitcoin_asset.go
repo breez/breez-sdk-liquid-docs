@@ -130,10 +130,10 @@ func SendSelfPaymentAsset(sdk *breez_sdk_liquid.BindingLiquidSdk) {
 		return
 	}
 	receiveRes, err := sdk.ReceivePayment(breez_sdk_liquid.ReceivePaymentRequest{
-		PrepareResponse:    prepareReceiveRes,
-		Description:        nil,
-		UseDescriptionHash: nil,
-		PayerNote:          nil,
+		PrepareResponse: prepareReceiveRes,
+		Description:     nil,
+		DescriptionHash: nil,
+		PayerNote:       nil,
 	})
 	if err != nil {
 		log.Printf("Error: %#v", err)
