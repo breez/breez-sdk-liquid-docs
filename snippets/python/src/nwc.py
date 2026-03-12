@@ -1,7 +1,7 @@
 import logging
-from breez_sdk_liquid import BindingLiquidSdk
-from breez_sdk_liquid_nwc import (
-    SdkNwcService,
+from breez_sdk_liquid import (
+    BindingLiquidSdk,
+    BindingNwcService,
     NwcConfig,
     AddConnectionRequest,
     EditConnectionRequest,
@@ -32,7 +32,7 @@ def nwc_connect(sdk: BindingLiquidSdk):
     return nwc_service
 
 
-def nwc_add_connection(nwc_service: SdkNwcService):
+def nwc_add_connection(nwc_service: BindingNwcService):
     # ANCHOR: add-connection
     # This connection will only allow spending at most 10,000 sats/hour
     periodic_budget_req = PeriodicBudgetRequest(
@@ -55,7 +55,7 @@ def nwc_add_connection(nwc_service: SdkNwcService):
     # ANCHOR_END: add-connection
 
 
-def nwc_edit_connection(nwc_service: SdkNwcService):
+def nwc_edit_connection(nwc_service: BindingNwcService):
     # ANCHOR: edit-connection
     new_expiry_time = 60 * 24
     try:
@@ -76,7 +76,7 @@ def nwc_edit_connection(nwc_service: SdkNwcService):
     # ANCHOR_END: edit-connection
 
 
-def nwc_list_connections(nwc_service: SdkNwcService):
+def nwc_list_connections(nwc_service: BindingNwcService):
     # ANCHOR: list-connections
     try:
         connections = nwc_service.list_connections()
@@ -91,7 +91,7 @@ def nwc_list_connections(nwc_service: SdkNwcService):
     # ANCHOR_END: list-connections
 
 
-def nwc_remove_connection(nwc_service: SdkNwcService):
+def nwc_remove_connection(nwc_service: BindingNwcService):
     # ANCHOR: remove-connection
     try:
         nwc_service.remove_connection("my new connection")
@@ -101,13 +101,13 @@ def nwc_remove_connection(nwc_service: SdkNwcService):
     # ANCHOR_END: remove-connection
 
 
-def nwc_get_info(nwc_service: SdkNwcService):
+def nwc_get_info(nwc_service: BindingNwcService):
     # ANCHOR: get-info
     info = nwc_service.get_info()
     # ANCHOR_END: get-info
 
 
-def nwc_events(nwc_service: SdkNwcService):
+def nwc_events(nwc_service: BindingNwcService):
     # ANCHOR: events
     class MyListener(NwcEventListener):
         def on_event(self, event: NwcEvent):
@@ -134,7 +134,7 @@ def nwc_events(nwc_service: SdkNwcService):
     # ANCHOR_END: events
 
 
-def nwc_list_payments(nwc_service: SdkNwcService):
+def nwc_list_payments(nwc_service: BindingNwcService):
     # ANCHOR: payments
     try:
         nwc_service.list_connection_payments("my new connection")
