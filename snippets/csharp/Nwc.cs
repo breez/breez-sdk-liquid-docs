@@ -1,9 +1,8 @@
 using Breez.Sdk.Liquid;
-using Breez.Sdk.Liquid.Nwc;
 
 public class NwcSnippets
 {
-    public SdkNwcService NwcConnect(BindingLiquidSdk sdk)
+    public BindingNwcService NwcConnect(BindingLiquidSdk sdk)
     {
         // ANCHOR: connecting
         var nwcConfig = new NwcConfig(
@@ -11,7 +10,7 @@ public class NwcSnippets
             secretKeyHex: null,
             listenToEvents: null
         );
-        SdkNwcService nwcService;
+        BindingNwcService nwcService;
         try
         {
             nwcService = sdk.UseNwcPlugin(nwcConfig);
@@ -33,7 +32,7 @@ public class NwcSnippets
         return nwcService;
     }
 
-    public void NwcAddConnection(SdkNwcService nwcService)
+    public void NwcAddConnection(BindingNwcService nwcService)
     {
         // ANCHOR: add-connection
         // This connection will only allow spending at most 10,000 sats/hour
@@ -49,7 +48,7 @@ public class NwcSnippets
                 periodicBudgetReq: periodicBudgetReq,
                 receiveOnly: null  // Defaults to false
             ));
-            Console.WriteLine(addResponse.Connection.ConnectionString);
+            Console.WriteLine(addResponse.connection.connectionString);
         }
         catch (Exception)
         {
@@ -58,7 +57,7 @@ public class NwcSnippets
         // ANCHOR_END: add-connection
     }
 
-    public void NwcEditConnection(SdkNwcService nwcService)
+    public void NwcEditConnection(BindingNwcService nwcService)
     {
         // ANCHOR: edit-connection
         uint newExpiryTime = 60 * 24;
@@ -72,7 +71,7 @@ public class NwcSnippets
                 removeExpiry: null,
                 removePeriodicBudget: true  // The periodic budget has been removed
             ));
-            Console.WriteLine(editResponse.Connection.ConnectionString);
+            Console.WriteLine(editResponse.connection.connectionString);
         }
         catch (Exception)
         {
@@ -81,7 +80,7 @@ public class NwcSnippets
         // ANCHOR_END: edit-connection
     }
 
-    public void NwcListConnections(SdkNwcService nwcService)
+    public void NwcListConnections(BindingNwcService nwcService)
     {
         // ANCHOR: list-connections
         try
@@ -90,7 +89,7 @@ public class NwcSnippets
             foreach (var (connectionName, connection) in connections)
             {
                 Console.WriteLine(
-                    $"Connection: {connectionName} - Expires at: {connection.ExpiresAt}, Periodic Budget: {connection.PeriodicBudget}"
+                    $"Connection: {connectionName} - Expires at: {connection.expiresAt}, Periodic Budget: {connection.periodicBudget}"
                 );
                 // ...
             }
@@ -102,7 +101,7 @@ public class NwcSnippets
         // ANCHOR_END: list-connections
     }
 
-    public void NwcRemoveConnection(SdkNwcService nwcService)
+    public void NwcRemoveConnection(BindingNwcService nwcService)
     {
         // ANCHOR: remove-connection
         try
@@ -116,7 +115,7 @@ public class NwcSnippets
         // ANCHOR_END: remove-connection
     }
 
-    public void NwcGetInfo(SdkNwcService nwcService)
+    public void NwcGetInfo(BindingNwcService nwcService)
     {
         // ANCHOR: get-info
         var info = nwcService.GetInfo();
@@ -156,7 +155,7 @@ public class NwcSnippets
         }
     }
 
-    public void NwcEvents(SdkNwcService nwcService)
+    public void NwcEvents(BindingNwcService nwcService)
     {
         var eventListener = new MyListener();
         try
@@ -173,7 +172,7 @@ public class NwcSnippets
         // ANCHOR_END: events
     }
 
-    public void NwcListPayments(SdkNwcService nwcService)
+    public void NwcListPayments(BindingNwcService nwcService)
     {
         // ANCHOR: payments
         try
