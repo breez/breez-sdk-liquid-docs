@@ -1,17 +1,13 @@
-import {
-  checkMessage,
-  getInfo,
-  signMessage
-} from '@breeztech/react-native-breez-sdk-liquid'
+import { BindingLiquidSdk } from '@breeztech/breez-sdk-liquid-react-native'
 
-const exampleSignMessage = async () => {
+const exampleSignMessage = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: sign-message
-  const signMessageResponse = await signMessage({
+  const signMessageResponse = sdk.signMessage({
     message: '<message to sign>'
   })
 
   // Get the wallet info for your pubkey
-  const info = await getInfo()
+  const info = sdk.getInfo()
 
   const signature = signMessageResponse.signature
   const pubkey = info.walletInfo.pubkey
@@ -21,9 +17,9 @@ const exampleSignMessage = async () => {
   // ANCHOR_END: sign-message
 }
 
-const exampleCheckMessage = async () => {
+const exampleCheckMessage = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: check-message
-  const checkMessageResponse = await checkMessage({
+  const checkMessageResponse = sdk.checkMessage({
     message: '<message>',
     pubkey: '<pubkey of signer>',
     signature: '<message signature>'

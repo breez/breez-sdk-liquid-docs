@@ -1,23 +1,20 @@
 import {
-  addEventListener,
+  BindingLiquidSdk,
   defaultConfig,
   connect,
   LiquidNetwork,
   type LogEntry,
-  getInfo,
-  removeEventListener,
-  disconnect,
   type SdkEvent,
   setLogger
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleGettingStarted = async () => {
   // ANCHOR: init-sdk
   const mnemonic = '<mnemonics words>'
 
   // Create the default config, providing your Breez API key
-  const config = await defaultConfig(
-    LiquidNetwork.MAINNET,
+  const config = defaultConfig(
+    LiquidNetwork.Mainnet,
     '<your-Breez-API-key>'
   )
 
@@ -28,13 +25,17 @@ const exampleGettingStarted = async () => {
   console.log(`Working directory: ${config.workingDir}`)
   // config.workingDir = "path to writable directory"
 
-  await connect({ mnemonic, config })
+  connect({
+    mnemonic, config,
+    passphrase: undefined,
+    seed: undefined
+  })
   // ANCHOR_END: init-sdk
 }
 
-const exampleFetchNodeInfo = async () => {
+const exampleFetchNodeInfo = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: fetch-balance
-  const info = await getInfo()
+  const info = sdk.getInfo()
   const balanceSat = info.walletInfo.balanceSat
   const pendingSendSat = info.walletInfo.pendingSendSat
   const pendingReceiveSat = info.walletInfo.pendingReceiveSat
@@ -47,28 +48,28 @@ const exampleLogging = async () => {
     console.log(`Received log [${l.level}]: ${l.line}`)
   }
 
-  const subscription = await setLogger(onLogEntry)
+  const subscription = setLogger({ log: onLogEntry })
   // ANCHOR_END: logging
 }
 
-const exampleAddEventListener = async () => {
+const exampleAddEventListener = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: add-event-listener
   const onEvent = (e: SdkEvent) => {
-    console.log(`Received event: ${e.type}`)
+    console.log(`Received event: ${e.tag}`)
   }
 
-  const listenerId = await addEventListener(onEvent)
+  const listenerId = sdk.addEventListener({ onEvent })
   // ANCHOR_END: add-event-listener
 }
 
-const exampleRemoveEventListener = async (listenerId: string) => {
+const exampleRemoveEventListener = async (sdk: BindingLiquidSdk, listenerId: string) => {
   // ANCHOR: remove-event-listener
-  await removeEventListener(listenerId)
+  sdk.removeEventListener(listenerId)
   // ANCHOR_END: remove-event-listener
 }
 
-const exampleDisconnect = async () => {
+const exampleDisconnect = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: disconnect
-  await disconnect()
+  sdk.disconnect()
   // ANCHOR_END: disconnect
 }

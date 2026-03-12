@@ -1,15 +1,13 @@
 import {
+  BindingLiquidSdk,
   type PreparePayOnchainResponse,
-  fetchOnchainLimits,
-  preparePayOnchain,
-  payOnchain,
-  PayAmountVariant
-} from '@breeztech/react-native-breez-sdk-liquid'
+  PayAmount
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const exampleGetCurrentLimits = async () => {
+const exampleGetCurrentLimits = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: get-current-pay-onchain-limits
   try {
-    const currentLimits = await fetchOnchainLimits()
+    const currentLimits = sdk.fetchOnchainLimits()
 
     console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`)
     console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`)
@@ -19,14 +17,12 @@ const exampleGetCurrentLimits = async () => {
   // ANCHOR_END: get-current-pay-onchain-limits
 }
 
-const examplePreparePayOnchain = async () => {
+const examplePreparePayOnchain = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-pay-onchain
   try {
-    const prepareResponse = await preparePayOnchain({
-      amount: {
-        type: PayAmountVariant.BITCOIN,
-        receiverAmountSat: 5_000
-      }
+    const prepareResponse = sdk.preparePayOnchain({
+      amount: new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5000) }),
+      feeRateSatPerVbyte: undefined
     })
 
     // Check if the fees are acceptable before proceeding
@@ -37,13 +33,12 @@ const examplePreparePayOnchain = async () => {
   // ANCHOR_END: prepare-pay-onchain
 }
 
-const examplePreparePayOnchainDrain = async () => {
+const examplePreparePayOnchainDrain = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-pay-onchain-drain
   try {
-    const prepareResponse = await preparePayOnchain({
-      amount: {
-        type: PayAmountVariant.DRAIN
-      }
+    const prepareResponse = sdk.preparePayOnchain({
+      amount: new PayAmount.Drain(),
+      feeRateSatPerVbyte: undefined
     })
 
     // Check if the fees are acceptable before proceeding
@@ -54,16 +49,13 @@ const examplePreparePayOnchainDrain = async () => {
   // ANCHOR_END: prepare-pay-onchain-drain
 }
 
-const examplePreparePayOnchainFeeRate = async () => {
+const examplePreparePayOnchainFeeRate = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-pay-onchain-fee-rate
   try {
     const optionalSatPerVbyte = 21
 
-    const prepareResponse = await preparePayOnchain({
-      amount: {
-        type: PayAmountVariant.BITCOIN,
-        receiverAmountSat: 5_000
-      },
+    const prepareResponse = sdk.preparePayOnchain({
+      amount: new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5_000) }),
       feeRateSatPerVbyte: optionalSatPerVbyte
     })
 
@@ -76,12 +68,12 @@ const examplePreparePayOnchainFeeRate = async () => {
   // ANCHOR_END: prepare-pay-onchain-fee-rate
 }
 
-const examplePayOnchain = async (prepareResponse: PreparePayOnchainResponse) => {
+const examplePayOnchain = async (sdk: BindingLiquidSdk, prepareResponse: PreparePayOnchainResponse) => {
   // ANCHOR: start-reverse-swap
   try {
     const destinationAddress = 'bc1..'
 
-    const payOnchainRes = await payOnchain({
+    const payOnchainRes = sdk.payOnchain({
       address: destinationAddress,
       prepareResponse
     })

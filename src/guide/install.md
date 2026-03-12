@@ -72,14 +72,31 @@ yarn add @breeztech/breez-sdk-liquid
 
 ## React Native
 
-We recommend using the official npm package: [@breeztech/react-native-breez-sdk-liquid](https://www.npmjs.com/package/@breeztech/react-native-breez-sdk-liquid).
+<div class="warning">
+  <h4>Developer note</h4>
+  The React Native package name has been changed from <code>@breeztech/react-native-breez-sdk-liquid</code> to <code>@breeztech/breez-sdk-liquid-react-native</code> as of version 0.12.1.<br>
+  Please correct your package.json before performing an upgrade.
+</div>
+
+We recommend using the official npm package: [@breeztech/breez-sdk-liquid-react-native](https://www.npmjs.com/package/@breeztech/breez-sdk-liquid-react-native).
 
 ```console
-npm install @breeztech/react-native-breez-sdk-liquid
+npm install @breeztech/breez-sdk-liquid-react-native
 ```
 or
 ```console
-yarn add @breeztech/react-native-breez-sdk-liquid
+yarn add @breeztech/breez-sdk-liquid-react-native
+```
+
+Make sure you also add the following to your project's `tsconfig.json`:
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@breeztech/breez-sdk-liquid-react-native": ["./node_modules/@breeztech/breez-sdk-liquid-react-native/lib/typescript/commonjs/src/index.d.ts"]
+    }
+  }
+}
 ```
 
 ## Go

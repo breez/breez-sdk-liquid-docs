@@ -1,16 +1,13 @@
 import {
-  fetchLightningLimits,
-  prepareSendPayment,
-  sendPayment,
-  type PayAmount,
-  PayAmountVariant,
+  BindingLiquidSdk,
+  PayAmount,
   type PrepareSendResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const exampleGetCurrentLightningLimits = async () => {
+const exampleGetCurrentLightningLimits = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: get-current-pay-lightning-limits
   try {
-    const currentLimits = await fetchLightningLimits()
+    const currentLimits = sdk.fetchLightningLimits()
 
     console.log(`Minimum amount, in sats: ${currentLimits.send.minSat}`)
     console.log(`Maximum amount, in sats: ${currentLimits.send.maxSat}`)
@@ -20,11 +17,14 @@ const exampleGetCurrentLightningLimits = async () => {
   // ANCHOR_END: get-current-pay-lightning-limits
 }
 
-const examplePrepareSendPaymentLightningBolt11 = async () => {
+const examplePrepareSendPaymentLightningBolt11 = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-send-payment-lightning-bolt11
   // Set the bolt11 invoice you wish to pay
-  const prepareResponse = await prepareSendPayment({
-    destination: '<bolt11 invoice>'
+  const prepareResponse = sdk.prepareSendPayment({
+    destination: '<bolt11 invoice>',
+    amount: undefined,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -33,32 +33,30 @@ const examplePrepareSendPaymentLightningBolt11 = async () => {
   // ANCHOR_END: prepare-send-payment-lightning-bolt11
 }
 
-const examplePrepareSendPaymentLightningBolt12 = async () => {
+const examplePrepareSendPaymentLightningBolt12 = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-send-payment-lightning-bolt12
   // Set the bolt12 offer you wish to pay
-  const optionalAmount: PayAmount = {
-    type: PayAmountVariant.BITCOIN,
-    receiverAmountSat: 5_000
-  }
+  const optionalAmount = new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5_000) })
 
-  const prepareResponse = await prepareSendPayment({
+  const prepareResponse = sdk.prepareSendPayment({
     destination: '<bolt12 offer>',
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
   // ANCHOR_END: prepare-send-payment-lightning-bolt12
 }
 
-const examplePrepareSendPaymentLiquid = async () => {
+const examplePrepareSendPaymentLiquid = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-send-payment-liquid
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  const optionalAmount: PayAmount = {
-    type: PayAmountVariant.BITCOIN,
-    receiverAmountSat: 5_000
-  }
+  const optionalAmount = new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5_000) })
 
-  const prepareResponse = await prepareSendPayment({
+  const prepareResponse = sdk.prepareSendPayment({
     destination: '<Liquid BIP21 or address>',
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -67,16 +65,16 @@ const examplePrepareSendPaymentLiquid = async () => {
   // ANCHOR_END: prepare-send-payment-liquid
 }
 
-const examplePrepareSendPaymentLiquidDrain = async () => {
+const examplePrepareSendPaymentLiquidDrain = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-send-payment-liquid-drain
   // Set the Liquid BIP21 or Liquid address you wish to pay
-  const optionalAmount: PayAmount = {
-    type: PayAmountVariant.DRAIN
-  }
+  const optionalAmount = new PayAmount.Drain()
 
-  const prepareResponse = await prepareSendPayment({
+  const prepareResponse = sdk.prepareSendPayment({
     destination: '<Liquid BIP21 or address>',
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -85,12 +83,13 @@ const examplePrepareSendPaymentLiquidDrain = async () => {
   // ANCHOR_END: prepare-send-payment-liquid-drain
 }
 
-const exampleSendPayment = async (prepareResponse: PrepareSendResponse) => {
+const exampleSendPayment = async (sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) => {
   // ANCHOR: send-payment
   const optionalPayerNote = '<payer note>'
-  const sendResponse = await sendPayment({
+  const sendResponse = sdk.sendPayment({
     prepareResponse,
-    payerNote: optionalPayerNote
+    payerNote: optionalPayerNote,
+    useAssetFees: undefined
   })
   const payment = sendResponse.payment
   // ANCHOR_END: send-payment

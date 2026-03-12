@@ -2,7 +2,7 @@ import {
   defaultConfig,
   connect,
   LiquidNetwork
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 import { Platform } from 'react-native'
 
 // ANCHOR: init-sdk-app-group
@@ -20,8 +20,8 @@ const initSdk = async () => {
   })
 
   // Create the default config, providing your Breez API key
-  const config = await defaultConfig(
-    LiquidNetwork.MAINNET,
+  const config = defaultConfig(
+    LiquidNetwork.Mainnet,
     '<your-Breez-API-key>'
   )
 
@@ -31,6 +31,6 @@ const initSdk = async () => {
     config.workingDir = `${groupPath}/breezSdkLiquid`
   }
 
-  await connect({ mnemonic, config })
+  connect({ mnemonic, config, passphrase: undefined, seed: undefined })
 }
 // ANCHOR_END: init-sdk-app-group

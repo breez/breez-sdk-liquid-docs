@@ -1,31 +1,22 @@
 import {
-  InputTypeVariant,
+  BindingLiquidSdk,
   PaymentMethod,
   type PrepareReceiveResponse,
-  fetchLightningLimits,
-  fetchOnchainLimits,
-  parse,
-  prepareReceivePayment,
-  type ReceiveAmount,
-  ReceiveAmountVariant,
-  receivePayment
-} from '@breeztech/react-native-breez-sdk-liquid'
+  ReceiveAmount
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const examplePrepareLightningPayment = async () => {
+const examplePrepareLightningPayment = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-receive-payment-lightning
   // Fetch the Receive lightning limits
-  const currentLimits = await fetchLightningLimits()
+  const currentLimits = sdk.fetchLightningLimits()
   console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
   console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
 
   // Set the amount you wish the payer to send via lightning, which should be within the above limits
-  const optionalAmount: ReceiveAmount = {
-    type: ReceiveAmountVariant.BITCOIN,
-    payerAmountSat: 5_000
-  }
+  const optionalAmount = new ReceiveAmount.Bitcoin({ payerAmountSat: BigInt(5_000) })
 
-  const prepareResponse = await prepareReceivePayment({
-    paymentMethod: PaymentMethod.BOLT11_INVOICE,
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.Bolt11Invoice,
     amount: optionalAmount
   })
 
@@ -35,10 +26,11 @@ const examplePrepareLightningPayment = async () => {
   // ANCHOR_END: prepare-receive-payment-lightning
 }
 
-const examplePrepareLightningBolt12Payment = async () => {
+const examplePrepareLightningBolt12Payment = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-receive-payment-lightning-bolt12
-  const prepareResponse = await prepareReceivePayment({
-    paymentMethod: PaymentMethod.BOLT12_OFFER
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.Bolt12Offer,
+    amount: undefined
   })
 
   // If the fees are acceptable, continue to create the Receive Payment
@@ -48,21 +40,18 @@ const examplePrepareLightningBolt12Payment = async () => {
   // ANCHOR_END: prepare-receive-payment-lightning-bolt12
 }
 
-const examplePrepareOnchainPayment = async () => {
+const examplePrepareOnchainPayment = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-receive-payment-onchain
   // Fetch the Onchain lightning limits
-  const currentLimits = await fetchOnchainLimits()
+  const currentLimits = sdk.fetchOnchainLimits()
   console.log(`Minimum amount, in sats: ${currentLimits.receive.minSat}`)
   console.log(`Maximum amount, in sats: ${currentLimits.receive.maxSat}`)
 
   // Set the onchain amount you wish the payer to send, which should be within the above limits
-  const optionalAmount: ReceiveAmount = {
-    type: ReceiveAmountVariant.BITCOIN,
-    payerAmountSat: 5_000
-  }
+  const optionalAmount = new ReceiveAmount.Bitcoin({ payerAmountSat: BigInt(5_000) })
 
-  const prepareResponse = await prepareReceivePayment({
-    paymentMethod: PaymentMethod.BITCOIN_ADDRESS,
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.BitcoinAddress,
     amount: optionalAmount
   })
 
@@ -72,19 +61,16 @@ const examplePrepareOnchainPayment = async () => {
   // ANCHOR_END: prepare-receive-payment-onchain
 }
 
-const examplePrepareLiquidPayment = async () => {
+const examplePrepareLiquidPayment = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-receive-payment-liquid
 
   // Create a Liquid BIP21 URI/address to receive a payment to.
   // There are no limits, but the payer amount should be greater than broadcast fees when specified
   // Note: Not setting the amount will generate a plain Liquid address
-  const optionalAmount: ReceiveAmount = {
-    type: ReceiveAmountVariant.BITCOIN,
-    payerAmountSat: 5_000
-  }
+  const optionalAmount = new ReceiveAmount.Bitcoin({ payerAmountSat: BigInt(5_000) })
 
-  const prepareResponse = await prepareReceivePayment({
-    paymentMethod: PaymentMethod.LIQUID_ADDRESS,
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.LiquidAddress,
     amount: optionalAmount
   })
 
@@ -94,12 +80,14 @@ const examplePrepareLiquidPayment = async () => {
   // ANCHOR_END: prepare-receive-payment-liquid
 }
 
-const exampleReceivePayment = async (prepareResponse: PrepareReceiveResponse) => {
+const exampleReceivePayment = async (sdk: BindingLiquidSdk, prepareResponse: PrepareReceiveResponse) => {
   // ANCHOR: receive-payment
   const optionalDescription = '<description>'
-  const res = await receivePayment({
+  const res = sdk.receivePayment({
     prepareResponse,
-    description: optionalDescription
+    description: optionalDescription,
+    descriptionHash: undefined,
+    payerNote: undefined
   })
 
   const destination = res.destination

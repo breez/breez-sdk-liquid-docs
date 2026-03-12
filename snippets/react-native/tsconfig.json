@@ -6,8 +6,8 @@
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "module": "Node16",
-    "moduleResolution": "node16",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "noImplicitReturns": true,
     "pretty": true,
     "skipLibCheck": true,
@@ -15,13 +15,15 @@
     "strict": true,
     "target": "ES2021",
     "lib": ["ES2021"],
-    "paths": {},
+    "paths": {
+      "@breeztech/breez-sdk-liquid-react-native": ["./node_modules/@breeztech/breez-sdk-liquid-react-native/lib/typescript/commonjs/src/index.d.ts"]
+    },
     "types": ["@types/node"],
     "noEmit": true,
     "allowJs": true
   },
   "include": [
     "**/*.ts",
-    ".eslintrc.js",
+    ".eslintrc.js"
   ]
 }
