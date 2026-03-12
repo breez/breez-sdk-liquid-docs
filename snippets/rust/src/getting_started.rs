@@ -35,9 +35,9 @@ async fn getting_started() -> Result<Arc<LiquidSdk>> {
 async fn getting_started_node_info(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: fetch-balance
     let info = sdk.get_info().await?;
-    let balance_sat = info.wallet_info.balance_sat;
-    let pending_send_sat = info.wallet_info.pending_send_sat;
-    let pending_receive_sat = info.wallet_info.pending_receive_sat;
+    let _balance_sat = info.wallet_info.balance_sat;
+    let _pending_send_sat = info.wallet_info.pending_send_sat;
+    let _pending_receive_sat = info.wallet_info.pending_receive_sat;
     // ANCHOR_END: fetch-balance
 
     Ok(())
@@ -56,8 +56,9 @@ async fn getting_started_logging(data_dir: String) -> Result<()> {
 
 // ANCHOR: add-event-listener
 struct CliEventListener {}
+#[async_trait::async_trait]
 impl EventListener for CliEventListener {
-    fn on_event(&self, e: SdkEvent) {
+    async fn on_event(&self, e: SdkEvent) {
         info!("Received event: {e:?}");
     }
 }

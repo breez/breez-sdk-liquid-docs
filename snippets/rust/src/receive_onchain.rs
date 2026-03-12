@@ -7,7 +7,7 @@ use log::info;
 
 async fn list_refundables(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: list-refundables
-    let refundables = sdk.list_refundables().await?;
+    let _refundables = sdk.list_refundables().await?;
     // ANCHOR_END: list-refundables
 
     Ok(())

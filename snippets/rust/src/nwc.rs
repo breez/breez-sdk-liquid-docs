@@ -3,11 +3,7 @@ use std::sync::Arc;
 use anyhow::Result;
 use breez_sdk_liquid::sdk::LiquidSdk;
 
-use breez_sdk_liquid::plugin::Plugin;
-use breez_sdk_liquid_nwc::{
-    model::{AddConnectionRequest, NwcConfig},
-    NwcService, SdkNwcService,
-};
+use breez_sdk_liquid_nwc::{NwcService, SdkNwcService};
 
 async fn nwc_connect(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: connecting
@@ -25,7 +21,7 @@ async fn nwc_connect(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ...
 
     // Automatically stops the plugin
-    sdk.disconnect().await;
+    sdk.disconnect().await?;
     // Alternatively, you can stop the plugin manually, without disconnecting the SDK
     nwc_service.on_stop().await;
     // ANCHOR_END: connecting

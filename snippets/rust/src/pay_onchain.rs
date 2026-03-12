@@ -27,7 +27,7 @@ async fn prepare_pay_onchain(sdk: Arc<LiquidSdk>) -> Result<()> {
         .await?;
 
     // Check if the fees are acceptable before proceeding
-    let total_fees_sat = prepare_res.total_fees_sat;
+    let _total_fees_sat = prepare_res.total_fees_sat;
     // ANCHOR_END: prepare-pay-onchain
 
     Ok(())
@@ -43,7 +43,7 @@ async fn prepare_pay_onchain_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
         .await?;
 
     // Check if the fees are acceptable before proceeding
-    let total_fees_sat = prepare_res.total_fees_sat;
+    let _total_fees_sat = prepare_res.total_fees_sat;
     // ANCHOR_END: prepare-pay-onchain-drain
 
     Ok(())
@@ -63,8 +63,8 @@ async fn prepare_pay_onchain_fee_rate(sdk: Arc<LiquidSdk>) -> Result<()> {
         .await?;
 
     // Check if the fees are acceptable before proceeding
-    let claim_fees_sat = prepare_res.claim_fees_sat;
-    let total_fees_sat = prepare_res.total_fees_sat;
+    let _claim_fees_sat = prepare_res.claim_fees_sat;
+    let _total_fees_sat = prepare_res.total_fees_sat;
     // ANCHOR_END: prepare-pay-onchain-fee-rate
 
     Ok(())

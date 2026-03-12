@@ -6,7 +6,7 @@ use breez_sdk_liquid::prelude::*;
 async fn get_payment(sdk: Arc<LiquidSdk>) -> Result<Option<Payment>> {
     // ANCHOR: get-payment
     let payment_hash = "<payment hash>".to_string();
-    let payment = sdk
+    let _payment = sdk
         .get_payment(&GetPaymentRequest::PaymentHash { payment_hash })
         .await?;
 

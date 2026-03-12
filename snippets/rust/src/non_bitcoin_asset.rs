@@ -46,6 +46,8 @@ async fn prepare_send_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination,
             amount: optional_amount,
+            payment_timeout_sec: None,
+            disable_mrh: None,
         })
         .await?;
 
@@ -72,6 +74,8 @@ async fn prepare_send_payment_asset_fees(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination,
             amount: optional_amount,
+            payment_timeout_sec: None,
+            disable_mrh: None,
         })
         .await?;
 
@@ -99,8 +103,8 @@ async fn send_self_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
         .receive_payment(&ReceivePaymentRequest {
             prepare_response: prepare_receive_res,
             description: None,
-            use_description_hash: None,
             payer_note: None,
+            description_hash: None,
         })
         .await?;
 
@@ -119,6 +123,8 @@ async fn send_self_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
                 estimate_asset_fees: None,
                 from_asset: Some(btc_asset_id),
             }),
+            payment_timeout_sec: None,
+            disable_mrh: None,
         })
         .await?;
     let payment = sdk
@@ -155,7 +161,7 @@ async fn send_payment_fees(
 async fn fetch_asset_balance(sdk: Arc<LiquidSdk>) -> Result<()> {
     // ANCHOR: fetch-asset-balance
     let info = sdk.get_info().await?;
-    let asset_balances = info.wallet_info.asset_balances;
+    let _asset_balances = info.wallet_info.asset_balances;
     // ANCHOR_END: fetch-asset-balance
 
     Ok(())
