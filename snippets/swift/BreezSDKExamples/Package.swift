@@ -5,11 +5,11 @@ import PackageDescription
 
 let package = Package(
     name: "BreezSDKDocs",
-    platforms: [.macOS("15.0")],
+    platforms: [.macOS("15.5")],
     dependencies: [
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.2.2"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.3"),
-        .package(url: "https://github.com/breez/breez-sdk-liquid-swift", exact: "0.11.2")
+        .package(url: "https://github.com/breez/breez-sdk-liquid-swift", exact: "0.12.1"),
         // To use a local version of breez-sdk-liquid, comment-out the above and un-comment:
         // .package(name: "bindings-swift", path: "/local-path/breez-sdk-liquid/lib/bindings/langs/swift")
     ],
@@ -27,6 +27,6 @@ let package = Package(
             path: "Sources",
             linkerSettings: [
                 .linkedFramework("SystemConfiguration")
-            ]),
+            ])
     ]
 )
