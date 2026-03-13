@@ -157,11 +157,6 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: breez-sdk-liquid-dart-${{ needs.setup.outputs.package-version }}
-          path: snippets/dart_snippets/packages/breez-sdk-liquid-dart
-
-      - uses: actions/download-artifact@v4
-        with:
           name: breez-sdk-liquid-flutter-${{ needs.setup.outputs.package-version }}
           path: snippets/dart_snippets/packages/breez-sdk-liquid-flutter
 
