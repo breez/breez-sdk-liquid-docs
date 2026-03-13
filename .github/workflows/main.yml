@@ -86,6 +86,7 @@ jobs:
         working-directory: snippets/rust
         run: |
           cargo add --git https://github.com/breez/breez-sdk-liquid.git breez-sdk-liquid --rev "${{ steps.rev-parse.outputs.rev }}"
+          cargo add --git https://github.com/breez/breez-sdk-liquid.git breez-sdk-liquid-nwc --rev "${{ steps.rev-parse.outputs.rev }}"
 
       - name: clippy
         working-directory: snippets/rust
