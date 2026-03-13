@@ -279,7 +279,7 @@ jobs:
 
       - name: Check syntax
         working-directory: snippets/react-native
-        run: tsc
+        run: yarn compile
 
       - name: Check formatting
         working-directory: snippets/react-native
