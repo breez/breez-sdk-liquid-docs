@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Receiving payments offline - Breez SDK - Liquid</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../styles.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Breez SDK - Liquid</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs/edit/main/src/guide/receiving_payments_offline.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="receiving-payments-offline"><a class="header" href="#receiving-payments-offline">Receiving payments offline</a></h1>
+<p>With the Breez SDK, you can configure your application to receive payments even when it isn't actively running. This is especially useful for apps that need to accept background payments without constant user interaction.</p>
+<h2 id="offline-payment-methods"><a class="header" href="#offline-payment-methods">Offline payment methods</a></h2>
+<p>There are two main technologies for receiving payments offline with Breez SDK:</p>
+<ul>
+<li><strong>LNURL-pay</strong> - A static Lightning payment identifier that can be reused</li>
+<li><strong>BOLT12 offers</strong> - A newer Lightning Network standard for reusable payment offers</li>
+</ul>
+<p>Both methods require:</p>
+<ul>
+<li>Setting up a service to handle webhook requests</li>
+<li>Registering a webhook URL with the SDK</li>
+</ul>
+<p>If you're serving a mobile application, you'll also need:</p>
+<ul>
+<li>Integrating the Notification Plugin</li>
+</ul>
+<h2 id="setting-up-for-offline-payments"><a class="header" href="#setting-up-for-offline-payments">Setting up for offline payments</a></h2>
+<h3 id="set-up-a-service-to-handle-webhook-requests"><a class="header" href="#set-up-a-service-to-handle-webhook-requests">Set up a service to handle webhook requests</a></h3>
+<p>To receive payments offline, you need to set up a web service that can handle webhook requests when your application isn't actively running. This service acts as a bridge between the Lightning Network and your application, ensuring that payment requests are properly processed.</p>
+<p>It <strong>must</strong> be a publicly accessible endpoint that can receive HTTP POST requests.</p>
+<p>For mobile apps, you can use a Notification Delivery Service (NDS) as an intermediary between the webhook requests and your application. When a webhook request comes in, the NDS dispatches a push notification to wake your application and process the request.</p>
+<p>For step-by-step instructions, see <a href="/notifications/setup_nds.html">Setting up an NDS</a>.</p>
+<h3 id="register-a-webhook"><a class="header" href="#register-a-webhook">Register a webhook</a></h3>
+<p>Register a webhook URL to be called when someone attempts to make a payment while your app is offline. This webhook should point to your service that handles webhook requests, for example, a Notification Delivery Service (NDS) if you serve mobile applications.</p>
+<p>For more information about setting up webhooks, see <a href="/notifications/using_webhooks.html">Using webhooks</a>.</p>
+<h3 id="integrate-the-notification-plugin"><a class="header" href="#integrate-the-notification-plugin">Integrate the Notification Plugin</a></h3>
+<p>The Notification Plugin receives push notifications from the NDS and automatically processes incoming requests. It's designed for seamless integration into Android or iOS apps. To integrate it:</p>
+<ul>
+<li><strong>For Android</strong>: Follow the <a href="/notifications/android_setup.html">Android setup guide</a></li>
+<li><strong>For iOS</strong>: Follow the <a href="/notifications/ios_setup.html">iOS setup guide</a></li>
+</ul>
+<h2 id="using-lnurl-pay-for-offline-payments"><a class="header" href="#using-lnurl-pay-for-offline-payments">Using LNURL-pay for offline payments</a></h2>
+<p>LNURL-pay provides a static Lightning payment identifier that can be shared as a QR code or Lightning address. To receive payments offline via LNURL-pay:</p>
+<h3 id="set-up-an-lnurl-pay-service"><a class="header" href="#set-up-an-lnurl-pay-service">Set up an LNURL-pay service</a></h3>
+<p>An LNURL-pay web service is needed if your application wants to support receiving payments using LNURL-pay. This service handles all LNURL-pay requests per the <a href="https://github.com/lnurl/luds">LNURL spec</a> and forwards them as webhook requests to your service.</p>
+<p>For detailed instructions on setting up this service, see the <a target="_blank" href="https://github.com/breez/breez-lnurl">LNURL service</a> repository.</p>
+<h3 id="register-your-lnurl-pay-service"><a class="header" href="#register-your-lnurl-pay-service">Register your LNURL-pay service</a></h3>
+<p>Your application must register its webhook and other required details with the LNURL-pay service to start receiving webhook requests.</p>
+<p>For detailed instructions on registering, see <a href="/notifications/lnurl_pay_registration.html">LNURL-Pay registration</a>.</p>
+<h4 id="flow-for-lnurl-pay-offline-payments"><a class="header" href="#flow-for-lnurl-pay-offline-payments">Flow for LNURL-pay offline payments</a></h4>
+<ol>
+<li>A user initiates payment to your LNURL or Lightning address</li>
+<li>The LNURL service receives the request and triggers your registered webhook</li>
+<li>The NDS sends a push notification to your application</li>
+<li>The Notification Plugin processes the notification and handles the two-step flow:
+<ul>
+<li>First responds with payment information (min/max amounts)</li>
+<li>Then generates an invoice when the user confirms the payment amount</li>
+</ul>
+</li>
+<li>The LNURL service delivers the invoice to the payer</li>
+<li>When the payment is complete, another notification is sent to confirm receipt</li>
+</ol>
+<h2 id="using-bolt12-offers-for-offline-payments"><a class="header" href="#using-bolt12-offers-for-offline-payments">Using BOLT12 offers for offline payments</a></h2>
+<p>BOLT12 offers are static payment codes that can be reused for multiple payments. The BOLT12 offer can be shared as a QR code or combined with BIP353 to form a human-readable address. When an invoice is requested via the Lightning Network, the swap service sends a webhook request to your application to generate the invoice.</p>
+<h3 id="create-a-bolt12-offer"><a class="header" href="#create-a-bolt12-offer">Create a BOLT12 offer</a></h3>
+<p>After registering a webhook URL, use the SDK to create a BOLT12 offer.</p>
+<p>For more details on creating the BOLT12 offer, see <a href="receive_payment.html#bolt12-offer">BOLT12 offer</a>.</p>
+<h3 id="register-a-bip353-address"><a class="header" href="#register-a-bip353-address">Register a BIP353 address</a></h3>
+<p>Once you have a BOLT12 offer, it can be registered as a DNS record per <a href="https://github.com/bitcoin/bips/blob/master/bip-0353.mediawiki">BIP353</a>, associating a selected username to the BOLT12 offer to form a human readable address.</p>
+<p>For more details on registering this BIP353 address, see <a href="lnurl_pay_service.html">LNURL-Pay and BIP353 registration</a>. If you do not plan to use LNURL-pay, see <a href="bip353_pay_service.html">BIP353 registration</a>.</p>
+<h3 id="flow-for-bolt12-offline-payments"><a class="header" href="#flow-for-bolt12-offline-payments">Flow for BOLT12 offline payments</a></h3>
+<ol>
+<li>You share your BOLT12 offer with potential payers</li>
+<li>When someone wants to pay, their wallet requests an invoice from the offer</li>
+<li>The swap service receives this request and calls your registered webhook</li>
+<li>The NDS forwards the request via push notification to your application</li>
+<li>The Notification Plugin processes this notification and:
+<ul>
+<li>Starts the SDK</li>
+<li>Creates a new invoice for the request</li>
+<li>Returns it to the swap service</li>
+</ul>
+</li>
+<li>The swap service returns the invoice to the payer</li>
+<li>Once paid, another notification confirms receipt</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../guide/receive_payment.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../guide/send_payment.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../guide/receive_payment.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../guide/send_payment.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../tabs.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
