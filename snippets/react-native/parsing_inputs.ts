@@ -1,44 +1,43 @@
 import {
-  InputTypeVariant,
-  parse
-} from '@breeztech/react-native-breez-sdk-liquid'
+  type BindingLiquidSdk,
+  InputType_Tags
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const parseInputs = async () => {
+const parseInputs = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: parse-inputs
   const input = 'an input to be parsed...'
 
-  const parsed = await parse(input)
+  const parsed = sdk.parse(input)
 
-  switch (parsed.type) {
-    case InputTypeVariant.BITCOIN_ADDRESS:
-      console.log(`Input is Bitcoin address ${parsed.address.address}`)
+  switch (parsed.tag) {
+    case InputType_Tags.BitcoinAddress:
+      console.log(`Input is Bitcoin address ${parsed.inner.address.address}`)
       break
 
-    case InputTypeVariant.BOLT11:
+    case InputType_Tags.Bolt11:
       console.log(
-        `Input is BOLT11 invoice for ${
-          parsed.invoice.amountMsat != null
-            ? JSON.stringify(parsed.invoice.amountMsat)
-            : 'unknown'
+        `Input is BOLT11 invoice for ${parsed.inner.invoice.amountMsat != null
+          ? JSON.stringify(parsed.inner.invoice.amountMsat)
+          : 'unknown'
         } msats`
       )
       break
 
-    case InputTypeVariant.BOLT12_OFFER:
+    case InputType_Tags.Bolt12Offer:
       console.log(
-        `Input is BOLT12 offer for min ${JSON.stringify(parsed.offer.minAmount)} msats - BIP353 was used: ${parsed.bip353Address != null}`
+        `Input is BOLT12 offer for min ${JSON.stringify(parsed.inner.offer.minAmount)} msats - BIP353 was used: ${parsed.inner.bip353Address != null}`
       )
       break
 
-    case InputTypeVariant.LN_URL_PAY:
+    case InputType_Tags.LnUrlPay:
       console.log(
-        `Input is LNURL-Pay/Lightning address accepting min/max ${parsed.data.minSendable}/${parsed.data.maxSendable} msats - BIP353 was used: ${parsed.bip353Address != null}`
+        `Input is LNURL-Pay/Lightning address accepting min/max ${parsed.inner.data.minSendable}/${parsed.inner.data.maxSendable} msats - BIP353 was used: ${parsed.inner.bip353Address != null}`
       )
       break
 
-    case InputTypeVariant.LN_URL_WITHDRAW:
+    case InputType_Tags.LnUrlWithdraw:
       console.log(
-        `Input is LNURL-Withdraw for min/max ${parsed.data.minWithdrawable}/${parsed.data.maxWithdrawable} msats`
+        `Input is LNURL-Withdraw for min/max ${parsed.inner.data.minWithdrawable}/${parsed.inner.data.maxWithdrawable} msats`
       )
       break
 

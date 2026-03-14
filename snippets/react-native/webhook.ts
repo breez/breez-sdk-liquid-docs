@@ -1,19 +1,19 @@
-import { registerWebhook, unregisterWebhook } from '@breeztech/react-native-breez-sdk-liquid'
+import { type BindingLiquidSdk } from '@breeztech/breez-sdk-liquid-react-native'
 
-const _registerWebhook = async () => {
+const _registerWebhook = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: register-webook
   try {
-    await registerWebhook('https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>')
+    sdk.registerWebhook('https://your-nds-service.com/api/v1/notify?platform=ios&token=<PUSH_TOKEN>')
   } catch (err) {
     console.error(err)
   }
   // ANCHOR_END: register-webook
 }
 
-const _unregisterWebhook = async () => {
+const _unregisterWebhook = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: unregister-webook
   try {
-    await unregisterWebhook()
+    sdk.unregisterWebhook()
   } catch (err) {
     console.error(err)
   }

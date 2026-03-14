@@ -1,32 +1,26 @@
 import {
-  listRefundables,
-  rescanOnchainSwaps,
+  type BindingLiquidSdk,
   type RefundableSwap,
-  refund,
-  recommendedFees,
-  listPayments,
-  fetchPaymentProposedFees,
-  acceptPaymentProposedFees,
   PaymentState,
-  PaymentDetailsVariant
-} from '@breeztech/react-native-breez-sdk-liquid'
+  PaymentDetails_Tags
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const exampleListRefundables = async () => {
+const exampleListRefundables = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: list-refundables
   try {
-    const refundables = await listRefundables()
+    const refundables = sdk.listRefundables()
   } catch (err) {
     console.error(err)
   }
   // ANCHOR_END: list-refundables
 }
 
-const exampleRefund = async (refundable: RefundableSwap, refundTxFeeRate: number) => {
+const exampleRefund = async (sdk: BindingLiquidSdk, refundable: RefundableSwap, refundTxFeeRate: number) => {
   // ANCHOR: execute-refund
   const destinationAddress = '...'
   const feeRateSatPerVbyte = refundTxFeeRate
 
-  const refundResponse = await refund({
+  const refundResponse = sdk.refund({
     swapAddress: refundable.swapAddress,
     refundAddress: destinationAddress,
     feeRateSatPerVbyte
@@ -34,41 +28,48 @@ const exampleRefund = async (refundable: RefundableSwap, refundTxFeeRate: number
   // ANCHOR_END: execute-refund
 }
 
-const exampleRescanSwaps = async () => {
+const exampleRescanSwaps = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: rescan-swaps
   try {
-    await rescanOnchainSwaps()
+    sdk.rescanOnchainSwaps()
   } catch (err) {
     console.error(err)
   }
   // ANCHOR_END: rescan-swaps
 }
 
-const exampleRecommendedFees = async () => {
+const exampleRecommendedFees = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: recommended-fees
   try {
-    const fees = await recommendedFees()
+    const fees = sdk.recommendedFees()
   } catch (err) {
     console.error(err)
   }
   // ANCHOR_END: recommended-fees
 }
 
-const exampleHandlePaymentsWaitingFeeAcceptance = async () => {
+const exampleHandlePaymentsWaitingFeeAcceptance = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: handle-payments-waiting-fee-acceptance
-  // Payments on hold waiting for fee acceptance have the state WAITING_FEE_ACCEPTANCE
-  const paymentsWaitingFeeAcceptance = await listPayments({
-    states: [PaymentState.WAITING_FEE_ACCEPTANCE]
+  // Payments on hold waiting for fee acceptance have the state WaitingFeeAcceptance
+  const paymentsWaitingFeeAcceptance = sdk.listPayments({
+    states: [PaymentState.WaitingFeeAcceptance],
+    filters: undefined,
+    fromTimestamp: undefined,
+    toTimestamp: undefined,
+    offset: undefined,
+    limit: undefined,
+    details: undefined,
+    sortAscending: undefined
   })
 
   for (const payment of paymentsWaitingFeeAcceptance) {
-    if (payment.details.type !== PaymentDetailsVariant.BITCOIN) {
-      // Only Bitcoin payments can be `WAITING_FEE_ACCEPTANCE`
+    if (payment.details.tag !== PaymentDetails_Tags.Bitcoin) {
+      // Only Bitcoin payments can be `WaitingFeeAcceptance`
       continue
     }
 
-    const fetchFeesResponse = await fetchPaymentProposedFees({
-      swapId: payment.details.swapId
+    const fetchFeesResponse = sdk.fetchPaymentProposedFees({
+      swapId: payment.details.inner.swapId
     })
 
     console.info(
@@ -76,7 +77,7 @@ const exampleHandlePaymentsWaitingFeeAcceptance = async () => {
     )
 
     // If the user is ok with the fees, accept them, allowing the payment to proceed
-    await acceptPaymentProposedFees({
+    sdk.acceptPaymentProposedFees({
       response: fetchFeesResponse
     })
   }

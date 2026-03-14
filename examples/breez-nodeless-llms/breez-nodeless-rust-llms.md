@@ -114,9 +114,10 @@ async fn fetch_balance(sdk: Arc<LiquidSdk>) -> Result<()> {
 ```rust
 // Define an event listener
 struct CliEventListener {}
+#[async_trait::async_trait]
 impl EventListener for CliEventListener {
-    fn on_event(&self, e: SdkEvent) {
-        info!("Received event: {:?}", e);
+    async fn on_event(&self, e: SdkEvent) {
+        info!("Received event: {e:?}");
     }
 }
 
@@ -239,7 +240,8 @@ async fn prepare_send_payment_lightning_bolt11(sdk: Arc<LiquidSdk>) -> Result<()
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt11 invoice>".to_string(),
             amount: None,
-            comment: None,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
 
@@ -259,9 +261,11 @@ async fn prepare_send_payment_lightning_bolt12(sdk: Arc<LiquidSdk>) -> Result<()
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<bolt12 offer>".to_string(),
             amount: optional_amount,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
-        
+
     Ok(())
 }
 ```
@@ -278,7 +282,8 @@ async fn prepare_send_payment_liquid(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
-            comment: None,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
 
@@ -296,7 +301,8 @@ async fn prepare_send_payment_liquid_drain(sdk: Arc<LiquidSdk>) -> Result<()> {
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
-            comment: None,
+            disable_mrh: None,
+            payment_timeout_sec: None,
         })
         .await?;
 
@@ -441,12 +447,13 @@ async fn receive_payment(sdk: Arc<LiquidSdk>, prepare_response: PrepareReceiveRe
         .receive_payment(&ReceivePaymentRequest {
             prepare_response,
             description: optional_description,
-            use_description_hash: None,
+            description_hash: None,
+            payer_note: None,
         })
         .await?;
 
     let destination = res.destination;
-    
+
     Ok(())
 }
 ```
@@ -732,18 +739,20 @@ async fn prepare_receive_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
 async fn prepare_send_payment_asset(sdk: Arc<LiquidSdk>) -> Result<()> {
     // Set the Liquid BIP21 or Liquid address you wish to pay
     // If the destination is an address or an amountless BIP21 URI,
-    // you must specifiy an asset amount
+    // you must specify an asset amount
     let usdt_asset_id = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2".to_string();
     let optional_amount = Some(PayAmount::Asset {
-        asset_id: usdt_asset_id,
-        receiver_amount: Some(1.50),
-        estimate_asset_fees: None,
+        to_asset: usdt_asset_id,
+        from_asset: None,
+        receiver_amount: 1.50,
+        estimate_asset_fees: Some(false),
     });
     let prepare_response = sdk
         .prepare_send_payment(&PrepareSendRequest {
             destination: "<Liquid BIP21 or address>".to_string(),
             amount: optional_amount,
-            comment: None,
+            payment_timeout_sec: None,
+            disable_mrh: None,
         })
         .await?;
 
@@ -1009,8 +1018,9 @@ struct AppEventListener {
     paid_destinations: Vec<String>,
 }
 
+#[async_trait::async_trait]
 impl EventListener for AppEventListener {
-    fn on_event(&self, e: SdkEvent) {
+    async fn on_event(&self, e: SdkEvent) {
         match e {
             SdkEvent::Synced => println!("SDK is synced"),
             SdkEvent::PaymentSucceeded { details } => {
@@ -1105,13 +1115,15 @@ async fn main() -> Result<()> {
             let prepare_response = sdk.prepare_send_payment(&PrepareSendRequest {
                 destination,
                 amount,
-                comment: None,
+                disable_mrh: None,
+                payment_timeout_sec: None,
             }).await?;
-            
+
             // Send payment
             let response = sdk.send_payment(&SendPaymentRequest {
                 prepare_response,
                 use_asset_fees: None,
+                payer_note: None,
             }).await?;
             
             println!("Payment sent: {:?}", response.payment);
@@ -1136,7 +1148,8 @@ async fn main() -> Result<()> {
             let response = sdk.receive_payment(&ReceivePaymentRequest {
                 prepare_response,
                 description: Some("Payment received via CLI".to_string()),
-                use_description_hash: None,
+                description_hash: None,
+                payer_note: None,
             }).await?;
             
             println!("Payment destination: {}", response.destination);
@@ -1326,7 +1339,8 @@ async fn safe_payment(sdk: Arc<LiquidSdk>, destination: String, amount_sat: u64,
     let prepare_response = sdk.prepare_send_payment(&PrepareSendRequest {
         destination,
         amount: Some(PayAmount::Bitcoin { receiver_amount_sat: amount_sat }),
-        comment: None,
+        disable_mrh: None,
+        payment_timeout_sec: None,
     }).await?;
     
     // Check if fees are acceptable
@@ -1355,8 +1369,9 @@ struct AppEventListener {
     payments: Vec<String>,
 }
 
+#[async_trait::async_trait]
 impl EventListener for AppEventListener {
-    fn on_event(&self, e: SdkEvent) {
+    async fn on_event(&self, e: SdkEvent) {
         match e {
             SdkEvent::Synced => {
                 println!("SDK is synced");

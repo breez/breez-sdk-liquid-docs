@@ -1,34 +1,28 @@
 import {
-  InputTypeVariant,
-  lnurlPay,
+  type BindingLiquidSdk,
+  InputType_Tags,
   type LnUrlPayRequestData,
-  parse,
-  type PayAmount,
-  PayAmountVariant,
-  prepareLnurlPay,
+  PayAmount,
   type PrepareLnUrlPayResponse
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const examplePrepareLnurlPay = async () => {
+const examplePrepareLnurlPay = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-lnurl-pay
   // Endpoint can also be of the
   // lnurlp://domain.com/lnurl-pay?key=val
   // lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
   const lnurlPayUrl = 'lightning@address.com'
 
-  const input = await parse(lnurlPayUrl)
-  if (input.type === InputTypeVariant.LN_URL_PAY) {
-    const amount: PayAmount = {
-      type: PayAmountVariant.BITCOIN,
-      receiverAmountSat: 5_000
-    }
+  const input = sdk.parse(lnurlPayUrl)
+  if (input.tag === InputType_Tags.LnUrlPay) {
+    const amount = new PayAmount.Bitcoin({ receiverAmountSat: BigInt(5_000) })
     const optionalComment = '<comment>'
     const optionalValidateSuccessActionUrl = true
 
-    const prepareResponse = await prepareLnurlPay({
-      data: input.data,
+    const prepareResponse = sdk.prepareLnurlPay({
+      data: input.inner.data,
       amount,
-      bip353Address: input.bip353Address,
+      bip353Address: input.inner.bip353Address,
       comment: optionalComment,
       validateSuccessActionUrl: optionalValidateSuccessActionUrl
     })
@@ -40,26 +34,25 @@ const examplePrepareLnurlPay = async () => {
   // ANCHOR_END: prepare-lnurl-pay
 }
 
-const examplePrepareLnurlPayDrain = async (data: LnUrlPayRequestData) => {
+const examplePrepareLnurlPayDrain = async (sdk: BindingLiquidSdk, data: LnUrlPayRequestData) => {
   // ANCHOR: prepare-lnurl-pay-drain
-  const amount: PayAmount = {
-    type: PayAmountVariant.DRAIN
-  }
+  const amount = new PayAmount.Drain()
   const optionalComment = '<comment>'
   const optionalValidateSuccessActionUrl = true
 
-  const prepareResponse = await prepareLnurlPay({
+  const prepareResponse = sdk.prepareLnurlPay({
     data,
     amount,
     comment: optionalComment,
-    validateSuccessActionUrl: optionalValidateSuccessActionUrl
+    validateSuccessActionUrl: optionalValidateSuccessActionUrl,
+    bip353Address: undefined
   })
   // ANCHOR_END: prepare-lnurl-pay-drain
 }
 
-const exampleLnurlPay = async (prepareResponse: PrepareLnUrlPayResponse) => {
+const exampleLnurlPay = async (sdk: BindingLiquidSdk, prepareResponse: PrepareLnUrlPayResponse) => {
   // ANCHOR: lnurl-pay
-  const result = await lnurlPay({
+  const result = sdk.lnurlPay({
     prepareResponse
   })
   // ANCHOR_END: lnurl-pay

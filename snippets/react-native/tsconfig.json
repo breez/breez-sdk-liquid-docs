@@ -6,8 +6,8 @@
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "module": "Node16",
-    "moduleResolution": "node16",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "noImplicitReturns": true,
     "pretty": true,
     "skipLibCheck": true,
@@ -15,13 +15,12 @@
     "strict": true,
     "target": "ES2021",
     "lib": ["ES2021"],
-    "paths": {},
     "types": ["@types/node"],
     "noEmit": true,
     "allowJs": true
   },
   "include": [
     "**/*.ts",
-    ".eslintrc.js",
+    ".eslintrc.js"
   ]
 }

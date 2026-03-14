@@ -110,7 +110,7 @@ const exampleSendSelfPaymentAsset = async (sdk: BindingLiquidSdk) => {
   const receiveRes = await sdk.receivePayment({
     prepareResponse: prepareReceiveRes,
     description: undefined,
-    useDescriptionHash: undefined,
+    descriptionHash: undefined,
     payerNote: undefined
   })
 

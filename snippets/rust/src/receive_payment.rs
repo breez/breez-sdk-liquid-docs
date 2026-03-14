@@ -103,7 +103,7 @@ async fn receive_payment(
         .receive_payment(&ReceivePaymentRequest {
             prepare_response,
             description: optional_description,
-            use_description_hash: None,
+            description_hash: None,
             payer_note: None,
         })
         .await?;

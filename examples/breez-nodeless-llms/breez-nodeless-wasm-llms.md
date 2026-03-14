@@ -725,7 +725,7 @@ const prepareSendPaymentAsset = async (sdk) => {
   const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2';
   const optionalAmount = {
     type: 'asset',
-    assetId: usdtAssetId,
+    toAsset: usdtAssetId,
     receiverAmount: 1.5,
     estimateAssetFees: false
   };

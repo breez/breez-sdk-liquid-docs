@@ -1,31 +1,24 @@
 import {
-  getInfo,
+  type BindingLiquidSdk,
   PaymentMethod,
-  type PayAmount,
-  PayAmountVariant,
-  prepareReceivePayment,
-  receivePayment,
-  prepareSendPayment,
+  PayAmount,
   type PrepareSendResponse,
-  type ReceiveAmount,
-  ReceiveAmountVariant,
-  sendPayment
-} from '@breeztech/react-native-breez-sdk-liquid'
+  ReceiveAmount
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const examplePrepareAssetPayment = async () => {
+const examplePrepareAssetPayment = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-receive-payment-asset
 
   // Create a Liquid BIP21 URI/address to receive an asset payment to.
   // Note: Not setting the amount will generate an amountless BIP21 URI.
   const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
-  const optionalAmount: ReceiveAmount = {
-    type: ReceiveAmountVariant.ASSET,
+  const optionalAmount = new ReceiveAmount.Asset({
     assetId: usdtAssetId,
     payerAmount: 1.50
-  }
+  })
 
-  const prepareResponse = await prepareReceivePayment({
-    paymentMethod: PaymentMethod.LIQUID_ADDRESS,
+  const prepareResponse = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.LiquidAddress,
     amount: optionalAmount
   })
 
@@ -35,7 +28,7 @@ const examplePrepareAssetPayment = async () => {
   // ANCHOR_END: prepare-receive-payment-asset
 }
 
-const examplePrepareSendPaymentAsset = async () => {
+const examplePrepareSendPaymentAsset = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-send-payment-asset
   // Set the Liquid BIP21 or Liquid address you wish to pay
   const destination = '<Liquid BIP21 or address>'
@@ -43,16 +36,18 @@ const examplePrepareSendPaymentAsset = async () => {
   // you must specify an asset amount
 
   const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
-  const optionalAmount: PayAmount = {
-    type: PayAmountVariant.ASSET,
+  const optionalAmount = new PayAmount.Asset({
     toAsset: usdtAssetId,
     receiverAmount: 1.50,
-    estimateAssetFees: false
-  }
+    estimateAssetFees: false,
+    fromAsset: undefined
+  })
 
-  const prepareResponse = await prepareSendPayment({
+  const prepareResponse = sdk.prepareSendPayment({
     destination,
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the fees are acceptable, continue to create the Send Payment
@@ -61,21 +56,23 @@ const examplePrepareSendPaymentAsset = async () => {
   // ANCHOR_END: prepare-send-payment-asset
 }
 
-const examplePrepareSendPaymentAssetFees = async () => {
+const examplePrepareSendPaymentAssetFees = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: prepare-send-payment-asset-fees
   const destination = '<Liquid BIP21 or address>'
   const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
   // Set the optional estimate asset fees param to true
-  const optionalAmount: PayAmount = {
-    type: PayAmountVariant.ASSET,
+  const optionalAmount = new PayAmount.Asset({
     toAsset: usdtAssetId,
     receiverAmount: 1.50,
-    estimateAssetFees: true
-  }
+    estimateAssetFees: true,
+    fromAsset: undefined
+  })
 
-  const prepareResponse = await prepareSendPayment({
+  const prepareResponse = sdk.prepareSendPayment({
     destination,
-    amount: optionalAmount
+    amount: optionalAmount,
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
 
   // If the asset fees are set, you can use these fees to pay to send the asset
@@ -88,55 +85,59 @@ const examplePrepareSendPaymentAssetFees = async () => {
   // ANCHOR_END: prepare-send-payment-asset-fees
 }
 
-const exampleSendPaymentFees = async (prepareResponse: PrepareSendResponse) => {
+const exampleSendPaymentFees = async (sdk: BindingLiquidSdk, prepareResponse: PrepareSendResponse) => {
   // ANCHOR: send-payment-fees
   // Set the use asset fees param to true
-  const sendResponse = await sendPayment({
+  const sendResponse = sdk.sendPayment({
     prepareResponse,
-    useAssetFees: true
+    useAssetFees: true,
+    payerNote: undefined
   })
   const payment = sendResponse.payment
   // ANCHOR_END: send-payment-fees
   console.log(payment)
 }
 
-const exampleFetchAssetBalance = async () => {
+const exampleFetchAssetBalance = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: fetch-asset-balance
-  const info = await getInfo()
+  const info = sdk.getInfo()
   const assetBalances = info.walletInfo.assetBalances
   // ANCHOR_END: fetch-asset-balance
 }
 
-const exampleSendSelfPaymentAsset = async () => {
+const exampleSendSelfPaymentAsset = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: send-self-payment-asset
   // Create a Liquid address to receive to
-  const prepareReceiveRes = await prepareReceivePayment({
-    paymentMethod: PaymentMethod.LIQUID_ADDRESS,
+  const prepareReceiveRes = sdk.prepareReceivePayment({
+    paymentMethod: PaymentMethod.LiquidAddress,
     amount: undefined
   })
-  const receiveRes = await receivePayment({
+  const receiveRes = sdk.receivePayment({
     prepareResponse: prepareReceiveRes,
     description: undefined,
-    useDescriptionHash: undefined,
+    descriptionHash: undefined,
     payerNote: undefined
   })
 
   // Swap your funds to the address we've created
   const usdtAssetId = 'ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2'
   const btcAssetId = '6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d'
-  const prepareSendRes = await prepareSendPayment({
+  const prepareSendRes = sdk.prepareSendPayment({
     destination: receiveRes.destination,
-    amount: {
-      type: PayAmountVariant.ASSET,
+    amount: new PayAmount.Asset({
       toAsset: usdtAssetId,
       // We want to receive 1.5 USDt
       receiverAmount: 1.5,
+      estimateAssetFees: undefined,
       fromAsset: btcAssetId
-    }
+    }),
+    disableMrh: undefined,
+    paymentTimeoutSec: undefined
   })
-  const sendRes = await sendPayment({
+  const sendRes = sdk.sendPayment({
     prepareResponse: prepareSendRes,
-    useAssetFees: undefined
+    useAssetFees: undefined,
+    payerNote: undefined
   })
   const payment = sendRes.payment
   // ANCHOR_END: send-self-payment-asset

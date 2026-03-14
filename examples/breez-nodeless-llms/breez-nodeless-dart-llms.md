@@ -827,3 +827,173 @@ Future<void> handlePaymentsWaitingFeeAcceptance() async {
     rethrow;
   }
 }
+```
+
+### Non-Bitcoin Assets
+
+```dart
+Future<PrepareReceiveResponse> prepareReceivePaymentAsset() async {
+  // Create a Liquid BIP21 URI/address to receive an asset payment to.
+  // Note: Not setting the amount will generate an amountless BIP21 URI.
+  String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
+  ReceiveAmount_Asset optionalAmount = ReceiveAmount_Asset(assetId: usdtAssetId, payerAmount: 1.50);
+  PrepareReceiveRequest prepareReceiveRequest = PrepareReceiveRequest(
+    paymentMethod: PaymentMethod.liquidAddress,
+    amount: optionalAmount,
+  );
+
+  PrepareReceiveResponse prepareResponse = await breezSDKLiquid.instance!.prepareReceivePayment(
+    req: prepareReceiveRequest,
+  );
+
+  // If the fees are acceptable, continue to create the Receive Payment
+  BigInt receiveFeesSat = prepareResponse.feesSat;
+  print("Fees: $receiveFeesSat sats");
+  return prepareResponse;
+}
+
+Future<PrepareSendResponse> prepareSendPaymentAsset() async {
+  // Set the Liquid BIP21 or Liquid address you wish to pay
+  String destination = "<Liquid BIP21 or address>";
+  // If the destination is an address or an amountless BIP21 URI,
+  // you must specify an asset amount
+  String usdtAssetId = "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2";
+  PayAmount_Asset optionalAmount = PayAmount_Asset(
+    toAsset: usdtAssetId,
+    receiverAmount: 1.50,
+    estimateAssetFees: false,
+    fromAsset: null,
+  );
+  PrepareSendRequest prepareSendRequest = PrepareSendRequest(
+    destination: destination,
+    amount: optionalAmount,
+  );
+
+  PrepareSendResponse prepareSendResponse = await breezSDKLiquid.instance!.prepareSendPayment(
+    req: prepareSendRequest,
+  );
+
+  // If the fees are acceptable, continue to create the Send Payment
+  BigInt? sendFeesSat = prepareSendResponse.feesSat;
+  print("Fees: $sendFeesSat sats");
+  return prepareSendResponse;
+}
+
+Future<SendPaymentResponse> sendPaymentFees({required PrepareSendResponse prepareResponse}) async {
+  // Set the use asset fees param to true
+  SendPaymentRequest sendPaymentRequest = SendPaymentRequest(
+    prepareResponse: prepareResponse,
+    useAssetFees: true,
+  );
+
+  SendPaymentResponse sendPaymentResponse = await breezSDKLiquid.instance!.sendPayment(
+    req: sendPaymentRequest,
+  );
+  Payment payment = sendPaymentResponse.payment;
+  return sendPaymentResponse;
+}
+
+Future<void> fetchAssetBalance() async {
+  GetInfoResponse? info = await breezSDKLiquid.instance!.getInfo();
+  List<AssetBalance> assetBalances = info.walletInfo.assetBalances;
+}
+```
+
+### Nostr Wallet Connect (NWC)
+
+```dart
+Future<BreezNwcService> nwcConnect() async {
+  NwcConfig nwcConfig = NwcConfig(
+    relayUrls: null,
+    secretKeyHex: null,
+    listenToEvents: null,
+  );
+  BreezNwcService nwcService = await breezSDKLiquid.instance!.useNwcPlugin(config: nwcConfig);
+
+  // ...
+
+  // Automatically stops the plugin
+  await breezSDKLiquid.instance!.disconnect();
+  // Alternatively, you can stop the plugin manually, without disconnecting the SDK
+  await nwcService.onStop();
+
+  return nwcService;
+}
+
+Future<void> nwcAddConnection(BreezNwcService nwcService) async {
+  // This connection will only allow spending at most 10,000 sats/hour
+  PeriodicBudgetRequest periodicBudgetReq = PeriodicBudgetRequest(
+    maxBudgetSat: BigInt.from(10000),
+    renewalTimeMins: 60, // Renews every hour
+  );
+  final addResponse = await nwcService.addConnection(
+    req: AddConnectionRequest(
+      name: "my new connection",
+      expiryTimeMins: 60, // Expires after one hour
+      periodicBudgetReq: periodicBudgetReq,
+      receiveOnly: null, // Defaults to false
+    ),
+  );
+  print(addResponse.connection.connectionString);
+}
+
+Future<void> nwcEditConnection(BreezNwcService nwcService) async {
+  int newExpiryTime = 60 * 24;
+  final editResponse = await nwcService.editConnection(
+    req: EditConnectionRequest(
+      name: "my new connection",
+      expiryTimeMins: newExpiryTime, // The connection will now expire after 1 day
+      periodicBudgetReq: null,
+      receiveOnly: null,
+      removeExpiry: null,
+      removePeriodicBudget: true, // The periodic budget has been removed
+    ),
+  );
+  print(editResponse.connection.connectionString);
+}
+
+Future<void> nwcListConnections(BreezNwcService nwcService) async {
+  Map<String, NwcConnection> connections = await nwcService.listConnections();
+  for (var entry in connections.entries) {
+    print(
+      "Connection: ${entry.key} - Expires at: ${entry.value.expiresAt}, Periodic Budget: ${entry.value.periodicBudget}",
+    );
+    // ...
+  }
+}
+
+Future<void> nwcRemoveConnection(BreezNwcService nwcService) async {
+  await nwcService.removeConnection(name: "my new connection");
+}
+
+Future<void> nwcGetInfo(BreezNwcService nwcService) async {
+  NostrServiceInfo? info = await nwcService.getInfo();
+}
+
+Future<void> nwcEvents(BreezNwcService nwcService) async {
+  final eventStream = nwcService.addEventListener().asBroadcastStream();
+  eventStream.listen((event) async {
+    if (event.details is NwcEventDetails_Connected) {
+      // ...
+    } else if (event.details is NwcEventDetails_Disconnected) {
+      // ...
+    } else if (event.details is NwcEventDetails_ConnectionExpired) {
+      // ...
+    } else if (event.details is NwcEventDetails_ConnectionRefreshed) {
+      // ...
+    } else if (event.details is NwcEventDetails_PayInvoice) {
+      final details = event.details as NwcEventDetails_PayInvoice;
+      // details.success, details.preimage, details.feesSat, details.error
+      // ...
+    } else if (event.details is NwcEventDetails_ZapReceived) {
+      final details = event.details as NwcEventDetails_ZapReceived;
+      // details.invoice
+      // ...
+    }
+  });
+}
+
+Future<void> nwcListPayments(BreezNwcService nwcService) async {
+  await nwcService.listConnectionPayments(name: "my new connection");
+}
+```

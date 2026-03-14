@@ -1,42 +1,47 @@
 import {
-  getPayment,
-  GetPaymentRequestVariant,
-  ListPaymentDetailsVariant,
-  listPayments,
+  type BindingLiquidSdk,
+  GetPaymentRequest,
+  ListPaymentDetails,
   PaymentType
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const exampleGetPayment = async () => {
+const exampleGetPayment = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: get-payment
   const paymentHash = '<payment hash>'
-  const paymentByHash = await getPayment({
-    type: GetPaymentRequestVariant.PAYMENT_HASH,
-    paymentHash
-  })
+  const paymentByHash = sdk.getPayment(new GetPaymentRequest.PaymentHash({ paymentHash }))
 
   const swapId = '<swap id>'
-  const paymentBySwapId = await getPayment({
-    type: GetPaymentRequestVariant.SWAP_ID,
-    swapId
-  })
+  const paymentBySwapId = sdk.getPayment(new GetPaymentRequest.SwapId({ swapId }))
   // ANCHOR_END: get-payment
 }
 
-const exampleListPayments = async () => {
+const exampleListPayments = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: list-payments
-  const payments = await listPayments({})
+  const payments = sdk.listPayments({
+    filters: undefined,
+    states: undefined,
+    fromTimestamp: undefined,
+    toTimestamp: undefined,
+    offset: undefined,
+    limit: undefined,
+    details: undefined,
+    sortAscending: undefined
+  })
   // ANCHOR_END: list-payments
 }
 
-const exampleListPaymentsFiltered = async () => {
+const exampleListPaymentsFiltered = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: list-payments-filtered
   try {
-    const payments = await listPayments({
-      filters: [PaymentType.SEND],
-      fromTimestamp: 1696880000,
-      toTimestamp: 1696959200,
+    const payments = sdk.listPayments({
+      filters: [PaymentType.Send],
+      fromTimestamp: BigInt(1696880000),
+      toTimestamp: BigInt(1696959200),
       offset: 0,
-      limit: 50
+      limit: 50,
+      states: undefined,
+      details: undefined,
+      sortAscending: undefined
     })
   } catch (err) {
     console.error(err)
@@ -44,14 +49,18 @@ const exampleListPaymentsFiltered = async () => {
   // ANCHOR_END: list-payments-filtered
 }
 
-const exampleListPaymentsDetailsAddress = async () => {
+const exampleListPaymentsDetailsAddress = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: list-payments-details-address
   try {
-    const payments = await listPayments({
-      details: {
-        type: ListPaymentDetailsVariant.BITCOIN,
-        address: '<Bitcoin address>'
-      }
+    const payments = sdk.listPayments({
+      details: new ListPaymentDetails.Bitcoin({ address: '<Bitcoin address>' }),
+      filters: undefined,
+      states: undefined,
+      fromTimestamp: undefined,
+      toTimestamp: undefined,
+      offset: undefined,
+      limit: undefined,
+      sortAscending: undefined
     })
   } catch (err) {
     console.error(err)
@@ -59,14 +68,18 @@ const exampleListPaymentsDetailsAddress = async () => {
   // ANCHOR_END: list-payments-details-address
 }
 
-const exampleListPaymentsDetailsDestination = async () => {
+const exampleListPaymentsDetailsDestination = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: list-payments-details-destination
   try {
-    const payments = await listPayments({
-      details: {
-        type: ListPaymentDetailsVariant.LIQUID,
-        destination: '<Liquid BIP21 or address>'
-      }
+    const payments = sdk.listPayments({
+      details: new ListPaymentDetails.Liquid({ assetId: undefined, destination: '<Liquid BIP21 or address>' }),
+      filters: undefined,
+      states: undefined,
+      fromTimestamp: undefined,
+      toTimestamp: undefined,
+      offset: undefined,
+      limit: undefined,
+      sortAscending: undefined
     })
   } catch (err) {
     console.error(err)

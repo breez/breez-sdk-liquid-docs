@@ -6,6 +6,7 @@ mod lnurl_auth;
 mod lnurl_pay;
 mod lnurl_withdraw;
 mod non_bitcoin_asset;
+mod nwc;
 mod parsing_inputs;
 mod pay_onchain;
 mod receive_onchain;
@@ -17,8 +18,9 @@ use breez_sdk_liquid::prelude::*;
 use log::info;
 
 struct AppEventListener {}
+#[async_trait::async_trait]
 impl EventListener for AppEventListener {
-    fn on_event(&self, e: SdkEvent) {
+    async fn on_event(&self, e: SdkEvent) {
         info!("Received Breez event: {e:?}");
     }
 }

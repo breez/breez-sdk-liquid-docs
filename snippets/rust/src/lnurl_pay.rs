@@ -42,7 +42,7 @@ async fn prepare_pay_drain(sdk: Arc<LiquidSdk>, data: LnUrlPayRequestData) -> Re
     let optional_comment = Some("<comment>".to_string());
     let optional_validate_success_action_url = Some(true);
 
-    let prepare_response = sdk
+    let _prepare_response = sdk
         .prepare_lnurl_pay(PrepareLnUrlPayRequest {
             data,
             amount,
@@ -57,7 +57,7 @@ async fn prepare_pay_drain(sdk: Arc<LiquidSdk>, data: LnUrlPayRequestData) -> Re
 
 async fn pay(sdk: Arc<LiquidSdk>, prepare_response: PrepareLnUrlPayResponse) -> Result<()> {
     // ANCHOR: lnurl-pay
-    let result = sdk.lnurl_pay(LnUrlPayRequest { prepare_response }).await?;
+    let _result = sdk.lnurl_pay(LnUrlPayRequest { prepare_response }).await?;
     // ANCHOR_END: lnurl-pay
     Ok(())
 }

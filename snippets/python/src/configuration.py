@@ -1,5 +1,5 @@
 import logging
-from breez_sdk_liquid import AssetMetadata, default_config, LiquidNetwork
+from breez_sdk_liquid import AssetMetadata, default_config, LiquidNetwork, ExternalInputParser
 
 
 def configure_asset_metadata():

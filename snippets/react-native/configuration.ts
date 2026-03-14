@@ -1,13 +1,13 @@
 import {
   defaultConfig,
   LiquidNetwork
-} from '@breeztech/react-native-breez-sdk-liquid'
+} from '@breeztech/breez-sdk-liquid-react-native'
 
-const configureAssetMetadata = async () => {
+const configureAssetMetadata = () => {
   // ANCHOR: configure-asset-metadata
   // Create the default config
-  const config = await defaultConfig(
-    LiquidNetwork.MAINNET,
+  const config = defaultConfig(
+    LiquidNetwork.Mainnet,
     '<your-Breez-API-key>'
   )
 
@@ -28,8 +28,8 @@ const configureAssetMetadata = async () => {
 const configureParsers = async () => {
   // ANCHOR: configure-external-parser
   // Create the default config
-  const config = await defaultConfig(
-    LiquidNetwork.MAINNET,
+  const config = defaultConfig(
+    LiquidNetwork.Mainnet,
     '<your-Breez-API-key>'
   )
 
@@ -52,8 +52,8 @@ const configureParsers = async () => {
 const configureMagicRoutingHints = async () => {
   // ANCHOR: configure-magic-routing-hints
   // Create the default config
-  const config = await defaultConfig(
-    LiquidNetwork.MAINNET,
+  const config = defaultConfig(
+    LiquidNetwork.Mainnet,
     '<your-Breez-API-key>'
   )
 
