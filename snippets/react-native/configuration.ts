@@ -3,10 +3,10 @@ import {
   LiquidNetwork
 } from '@breeztech/breez-sdk-liquid-react-native'
 
-const configureAssetMetadata = async () => {
+const configureAssetMetadata = () => {
   // ANCHOR: configure-asset-metadata
   // Create the default config
-  const config = await defaultConfig(
+  const config = defaultConfig(
     LiquidNetwork.Mainnet,
     '<your-Breez-API-key>'
   )

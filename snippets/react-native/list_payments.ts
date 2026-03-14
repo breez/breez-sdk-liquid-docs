@@ -1,5 +1,5 @@
 import {
-  BindingLiquidSdk,
+  type BindingLiquidSdk,
   GetPaymentRequest,
   ListPaymentDetails,
   PaymentType

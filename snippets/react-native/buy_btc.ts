@@ -1,8 +1,8 @@
 import {
-  BindingLiquidSdk,
+  type BindingLiquidSdk,
   BuyBitcoinProvider,
   type OnchainPaymentLimitsResponse,
-  type PrepareBuyBitcoinResponse,
+  type PrepareBuyBitcoinResponse
 } from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleFetchOnchainLimits = async (sdk: BindingLiquidSdk) => {

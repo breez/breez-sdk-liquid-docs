@@ -1,5 +1,5 @@
 import {
-  BindingLiquidSdk,
+  type BindingLiquidSdk,
   PayAmount,
   type PrepareSendResponse
 } from '@breeztech/breez-sdk-liquid-react-native'

@@ -1,5 +1,5 @@
 import {
-  BindingLiquidSdk,
+  type BindingLiquidSdk,
   defaultConfig,
   connect,
   LiquidNetwork,
@@ -26,7 +26,8 @@ const exampleGettingStarted = async () => {
   // config.workingDir = "path to writable directory"
 
   connect({
-    mnemonic, config,
+    mnemonic,
+    config,
     passphrase: undefined,
     seed: undefined
   })
@@ -48,7 +49,7 @@ const exampleLogging = async () => {
     console.log(`Received log [${l.level}]: ${l.line}`)
   }
 
-  const subscription = setLogger({ log: onLogEntry })
+  setLogger({ log: onLogEntry })
   // ANCHOR_END: logging
 }
 

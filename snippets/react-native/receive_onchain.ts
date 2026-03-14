@@ -1,5 +1,5 @@
 import {
-  BindingLiquidSdk,
+  type BindingLiquidSdk,
   type RefundableSwap,
   PaymentState,
   PaymentDetails_Tags

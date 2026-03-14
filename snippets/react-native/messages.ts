@@ -1,4 +1,4 @@
-import { BindingLiquidSdk } from '@breeztech/breez-sdk-liquid-react-native'
+import { type BindingLiquidSdk } from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleSignMessage = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: sign-message

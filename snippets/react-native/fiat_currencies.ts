@@ -1,4 +1,4 @@
-import { BindingLiquidSdk } from "@breeztech/breez-sdk-liquid-react-native"
+import { type BindingLiquidSdk } from '@breeztech/breez-sdk-liquid-react-native'
 
 const exampleListCurrencies = async (sdk: BindingLiquidSdk) => {
   // ANCHOR: list-fiat-currencies

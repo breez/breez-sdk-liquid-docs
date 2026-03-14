@@ -1,6 +1,6 @@
 import {
-  BindingLiquidSdk,
-  BindingNwcService,
+  type BindingLiquidSdk,
+  type BindingNwcService,
   type NwcConfig,
   type AddConnectionRequest,
   type EditConnectionRequest,
@@ -32,10 +32,10 @@ const nwcAddConnection = async (nwcService: BindingNwcService) => {
   // This connection will only allow spending at most 10,000 sats/hour
   const req: AddConnectionRequest = {
     name: 'my new connection',
-    expiryTimeMins: 60,  // Expires after one hour
+    expiryTimeMins: 60, // Expires after one hour
     periodicBudgetReq: {
       maxBudgetSat: BigInt(10000),
-      renewalTimeMins: 60  // Renews every hour
+      renewalTimeMins: 60 // Renews every hour
     },
     receiveOnly: undefined // Defaults to false
   }
@@ -49,11 +49,11 @@ const nwcEditConnection = async (nwcService: BindingNwcService) => {
   const newExpiryTime = 60 * 24
   const req: EditConnectionRequest = {
     name: 'my new connection',
-    expiryTimeMins: newExpiryTime,  // The connection will now expire after 1 day
+    expiryTimeMins: newExpiryTime, // The connection will now expire after 1 day
     periodicBudgetReq: undefined,
     receiveOnly: undefined,
     removeExpiry: undefined,
-    removePeriodicBudget: true  // The periodic budget has been removed
+    removePeriodicBudget: true // The periodic budget has been removed
   }
   const editResponse = nwcService.editConnection(req)
   console.log(editResponse.connection.connectionString)

@@ -1,5 +1,5 @@
 import {
-  BindingLiquidSdk,
+  type BindingLiquidSdk,
   InputType_Tags,
   LnUrlCallbackStatus_Tags
 } from '@breeztech/breez-sdk-liquid-react-native'
