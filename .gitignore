@@ -3,3 +3,4 @@ book
 .idea
 *.nupkg
 *.sln
+versioned-book
