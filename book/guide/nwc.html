@@ -1,0 +1,1410 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Nostr Wallet Connect (NWC) - Breez SDK - Liquid</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../styles.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Breez SDK - Liquid</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/breez/breez-sdk-liquid-docs/edit/main/src/guide/nwc.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="nostr-wallet-connect"><a class="header" href="#nostr-wallet-connect">Nostr Wallet Connect</a></h1>
+<p>Nostr Wallet Connect allows you to control your Breez SDK instance from any Nostr application which complies with the <a target="_blank" href="https://github.com/nostr-protocol/nips/blob/master/47.md">NIP47 standard</a>.</p>
+<h2 id="enablingdisabling"><a class="header" href="#enablingdisabling">Enabling/Disabling</a></h2>
+<p>To enable the Nostr Wallet Connect service, you can initialize it as a plugin after connecting to the SDK.</p>
+<p>The config takes three optional parameters:</p>
+<ul>
+<li><strong>Relay URLs</strong>: Custom list of relays for the NWC node to connect to</li>
+<li><strong>Secret key</strong>: Custom Nostr secret key (hex-encoded) to start the node with</li>
+<li><strong>Listen to events</strong>: Whether or not to actively listen and reply to events (defaults to true). Can be set to false when only event broadcasting is required (e.g. zap replies).</li>
+</ul>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">use breez_sdk_liquid::plugin::Plugin;
+use breez_sdk_liquid_nwc::{model::NwcConfig, SdkNwcService};
+
+let nwc_config = NwcConfig {
+    relay_urls: None,
+    secret_key_hex: None,
+    listen_to_events: None,
+};
+let nwc_service = Arc::new(SdkNwcService::new(nwc_config));
+sdk.start_plugin(nwc_service.clone()).await?;
+
+// ...
+
+// Automatically stops the plugin
+sdk.disconnect().await?;
+// Alternatively, you can stop the plugin manually, without disconnecting the SDK
+nwc_service.on_stop().await;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let nwcConfig = NwcConfig(
+    relayUrls: nil,
+    secretKeyHex: nil,
+    listenToEvents: nil
+)
+let nwcService = try? sdk.useNwcPlugin(config: nwcConfig)
+
+// ...
+
+// Automatically stops the plugin
+try? sdk.disconnect()
+// Alternatively, you can stop the plugin manually, without disconnecting the SDK
+nwcService?.stop()
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">val nwcConfig = NwcConfig(relayUrls = null, secretKeyHex = null, listenToEvents = null)
+val nwcService =
+        try {
+            sdk.useNwcPlugin(config = nwcConfig)
+        } catch (e: Exception) {
+            // handle error
+            return
+        }
+
+// ...
+
+// Automatically stops the plugin
+try {
+    sdk.disconnect()
+} catch (e: Exception) {}
+// Alternatively, you can stop the plugin manually, without disconnecting the SDK
+nwcService.stop()
+</code></pre>
+</section>
+<div slot="title">Javascript</div>
+<section>
+<pre><code class="language-typescript">const nwcConfig: NwcConfig = {
+  relayUrls: undefined,
+  secretKeyHex: undefined,
+  listenToEvents: undefined
+}
+const nwcService = await sdk.useNwcPlugin(nwcConfig)
+
+// ...
+
+// Automatically stops the plugin
+await sdk.disconnect()
+// Alternatively, you can stop the plugin manually, without disconnecting the SDK
+await nwcService.stop()
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const nwcConfig: NwcConfig = {
+  relayUrls: undefined,
+  secretKeyHex: undefined,
+  listenToEvents: undefined
+}
+const nwcService = sdk.useNwcPlugin(nwcConfig)
+
+// ...
+
+// Automatically stops the plugin
+sdk.disconnect()
+// Alternatively, you can stop the plugin manually, without disconnecting the SDK
+nwcService.stop()
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">NwcConfig nwcConfig = NwcConfig(
+  relayUrls: null,
+  secretKeyHex: null,
+  listenToEvents: null,
+);
+BreezNwcService nwcService = await breezSDKLiquid.instance!.useNwcPlugin(config: nwcConfig);
+
+// ...
+
+// Automatically stops the plugin
+await breezSDKLiquid.instance!.disconnect();
+// Alternatively, you can stop the plugin manually, without disconnecting the SDK
+await nwcService.onStop();
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">nwc_config = NwcConfig(
+    relay_urls=None,
+    secret_key_hex=None,
+    listen_to_events=None,
+)
+nwc_service = sdk.use_nwc_plugin(nwc_config)
+
+# ...
+
+# Automatically stops the plugin
+sdk.disconnect()
+# Alternatively, you can stop the plugin manually, without disconnecting the SDK
+nwc_service.stop()
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">nwcConfig := breez_sdk_liquid.NwcConfig{
+    RelayUrls:      nil,
+    SecretKeyHex:   nil,
+    ListenToEvents: nil,
+}
+nwcService, err := sdk.UseNwcPlugin(nwcConfig)
+if err != nil {
+    return nil, err
+}
+
+// ...
+
+// Automatically stops the plugin
+sdk.Disconnect()
+// Alternatively, you can stop the plugin manually, without disconnecting the SDK
+nwcService.Stop()
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">var nwcConfig = new NwcConfig(
+    relayUrls: null,
+    secretKeyHex: null,
+    listenToEvents: null
+);
+BindingNwcService nwcService;
+try
+{
+    nwcService = sdk.UseNwcPlugin(nwcConfig);
+}
+catch (Exception)
+{
+    // Handle error
+    return null!;
+}
+
+// ...
+
+// Automatically stops the plugin
+try { sdk.Disconnect(); } catch { }
+// Alternatively, you can stop the plugin manually, without disconnecting the SDK
+nwcService.Stop();
+</code></pre>
+</section>
+</custom-tabs>
+<h2 id="getting-service-information"><a class="header" href="#getting-service-information">Getting service information</a></h2>
+<p>You can retrieve information about the NWC service (wallet pubkey, relays, etc.) as follows:</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">let info = nwc_service.get_info().await;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let info = try? nwcService.getInfo()
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">val info = nwcService.getInfo()
+</code></pre>
+</section>
+<div slot="title">Javascript</div>
+<section>
+<pre><code class="language-typescript">const info = await nwcService.getInfo()
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const info = nwcService.getInfo()
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">NostrServiceInfo? info = await nwcService.getInfo();
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">info = nwc_service.get_info()
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">info := nwcService.GetInfo()
+_ = info
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">var info = nwcService.GetInfo();
+</code></pre>
+</section>
+</custom-tabs>
+<h2 id="using-event-listeners"><a class="header" href="#using-event-listeners">Using event listeners</a></h2>
+<p>You can listen to events from the NWC service just like you would with the SDK (see <a href="events.html">Listening to events</a>).</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">use breez_sdk_liquid_nwc::event::{NwcEvent, NwcEventDetails, NwcEventListener};
+
+struct MyListener {}
+#[async_trait::async_trait]
+impl NwcEventListener for MyListener {
+    async fn on_event(&amp;self, event: NwcEvent) {
+        match event.details {
+            NwcEventDetails::Connected =&gt; {
+                // ...
+            }
+            NwcEventDetails::Disconnected =&gt; {
+                // ...
+            }
+            NwcEventDetails::ConnectionExpired =&gt; {
+                // ...
+            }
+            NwcEventDetails::ConnectionRefreshed =&gt; {
+                // ...
+            }
+            NwcEventDetails::PayInvoice {
+                success,
+                preimage,
+                fees_sat,
+                error,
+            } =&gt; {
+                // ...
+            }
+            NwcEventDetails::ZapReceived { invoice } =&gt; {
+                // ...
+            }
+            _ =&gt; {}
+        }
+    }
+}
+let event_listener = Box::new(MyListener {});
+let my_listener_id = nwc_service.add_event_listener(event_listener).await;
+
+// If you wish to remove the event_listener later on, you can call:
+nwc_service.remove_event_listener(&amp;my_listener_id).await;
+// Otherwise, it will be automatically removed on service stop
+</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">class MyListener: NwcEventListener {
+    func onEvent(event: NwcEvent) {
+        switch event.details {
+        case .connected:
+            // ...
+            break
+        case .disconnected:
+            // ...
+            break
+        case .connectionExpired:
+            // ...
+            break
+        case .connectionRefreshed:
+            // ...
+            break
+        case .payInvoice(let success, let preimage, let feesSat, let error):
+            // ...
+            break
+        case .zapReceived(let invoice):
+            // ...
+            break
+        default:
+            break
+        }
+    }
+}
+
+let eventListener = MyListener()
+if let myListenerId = try? nwcService.addEventListener(listener: eventListener) {
+    // If you wish to remove the event_listener later on, you can call:
+    try? nwcService.removeEventListener(listenerId: myListenerId)
+    // Otherwise, it will be automatically removed on service stop
+}
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">class MyListener : NwcEventListener {
+    override fun onEvent(event: NwcEvent) {
+        when (val details = event.details) {
+            is NwcEventDetails.Connected -&gt; {
+                // ...
+            }
+            is NwcEventDetails.Disconnected -&gt; {
+                // ...
+            }
+            is NwcEventDetails.ConnectionExpired -&gt; {
+                // ...
+            }
+            is NwcEventDetails.ConnectionRefreshed -&gt; {
+                // ...
+            }
+            is NwcEventDetails.PayInvoice -&gt; {
+                // details.success, details.preimage, details.feesSat, details.error
+                // ...
+            }
+            is NwcEventDetails.ZapReceived -&gt; {
+                // details.invoice
+                // ...
+            }
+            else -&gt; {}
+        }
+    }
+}
+
+val eventListener = MyListener()
+try {
+    val myListenerId = nwcService.addEventListener(listener = eventListener)
+    // If you wish to remove the event_listener later on, you can call:
+    nwcService.removeEventListener(listenerId = myListenerId)
+    // Otherwise, it will be automatically removed on service stop
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">Javascript</div>
+<section>
+<pre><code class="language-typescript">class MyListener {
+  onEvent = (event: NwcEvent) =&gt; {
+    switch (event.details.type) {
+      case 'connected':
+        // ...
+        break
+      case 'disconnected':
+        // ...
+        break
+      case 'connectionExpired':
+        // ...
+        break
+      case 'connectionRefreshed':
+        // ...
+        break
+      case 'payInvoice':
+        // event.details.success, event.details.preimage, event.details.feesSat, event.details.error
+        break
+      case 'zapReceived':
+        // event.details.invoice
+        break
+      default:
+        break
+    }
+  }
+}
+
+const eventListener = new MyListener()
+const myListenerId = await nwcService.addEventListener(eventListener)
+// If you wish to remove the event_listener later on, you can call:
+await nwcService.removeEventListener(myListenerId)
+// Otherwise, it will be automatically removed on service stop
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">class MyListener {
+  onEvent = (event: NwcEvent) =&gt; {
+    if (event.details instanceof NwcEventDetails.Connected) {
+      // ...
+    } else if (event.details instanceof NwcEventDetails.Disconnected) {
+      // ...
+    } else if (event.details instanceof NwcEventDetails.ConnectionExpired) {
+      // ...
+    } else if (event.details instanceof NwcEventDetails.ConnectionRefreshed) {
+      // ...
+    } else if (event.details instanceof NwcEventDetails.PayInvoice) {
+      // event.details.inner.success, event.details.inner.preimage, event.details.inner.feesSat, event.details.inner.error
+      // ...
+    } else if (event.details instanceof NwcEventDetails.ZapReceived) {
+      // ...
+    }
+  }
+}
+
+const eventListener = new MyListener()
+const myListenerId = nwcService.addEventListener(eventListener)
+// If you wish to remove the event_listener later on, you can call:
+nwcService.removeEventListener(myListenerId)
+// Otherwise, it will be automatically removed on service stop
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">final eventStream = nwcService.addEventListener().asBroadcastStream();
+eventStream.listen((event) async {
+  if (event.details is NwcEventDetails_Connected) {
+    // ...
+  } else if (event.details is NwcEventDetails_Disconnected) {
+    // ...
+  } else if (event.details is NwcEventDetails_ConnectionExpired) {
+    // ...
+  } else if (event.details is NwcEventDetails_ConnectionRefreshed) {
+    // ...
+  } else if (event.details is NwcEventDetails_PayInvoice) {
+    final details = event.details as NwcEventDetails_PayInvoice;
+    // details.success, details.preimage, details.feesSat, details.error
+    // ...
+  } else if (event.details is NwcEventDetails_ZapReceived) {
+    final details = event.details as NwcEventDetails_ZapReceived;
+    // details.invoice
+    // ...
+  }
+});
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">class MyListener(NwcEventListener):
+    def on_event(self, event: NwcEvent):
+        if isinstance(event.details, NwcEventDetails.CONNECTED):
+            pass  # ...
+        elif isinstance(event.details, NwcEventDetails.DISCONNECTED):
+            pass  # ...
+        elif isinstance(event.details, NwcEventDetails.CONNECTION_EXPIRED):
+            pass  # ...
+        elif isinstance(event.details, NwcEventDetails.CONNECTION_REFRESHED):
+            pass  # ...
+        elif isinstance(event.details, NwcEventDetails.PAY_INVOICE):
+            # event.details.success, event.details.preimage, event.details.fees_sat, event.details.error
+            pass  # ...
+        elif isinstance(event.details, NwcEventDetails.ZAP_RECEIVED):
+            # event.details.invoice
+            pass  # ...
+
+event_listener = MyListener()
+my_listener_id = nwc_service.add_event_listener(event_listener)
+# If you wish to remove the event_listener later on, you can call:
+nwc_service.remove_event_listener(my_listener_id)
+# Otherwise, it will be automatically removed on service stop
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">type MyNwcListener struct{}
+
+func (MyNwcListener) OnEvent(event breez_sdk_liquid.NwcEvent) {
+    switch details := event.Details.(type) {
+    case breez_sdk_liquid.NwcEventDetailsConnected:
+        // ...
+    case breez_sdk_liquid.NwcEventDetailsDisconnected:
+        // ...
+    case breez_sdk_liquid.NwcEventDetailsConnectionExpired:
+        // ...
+    case breez_sdk_liquid.NwcEventDetailsConnectionRefreshed:
+        // ...
+    case breez_sdk_liquid.NwcEventDetailsPayInvoice:
+        // details.Success, details.Preimage, details.FeesSat, details.Error
+        _ = details
+        // ...
+    case breez_sdk_liquid.NwcEventDetailsZapReceived:
+        // details.Invoice
+        _ = details
+        // ...
+    }
+}
+
+func NwcEvents(nwcService *breez_sdk_liquid.BindingNwcService) error {
+    eventListener := MyNwcListener{}
+    myListenerId := nwcService.AddEventListener(eventListener)
+
+    // If you wish to remove the event_listener later on, you can call:
+    nwcService.RemoveEventListener(myListenerId)
+    // Otherwise, it will be automatically removed on service stop
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">public class MyListener : NwcEventListener
+{
+    public void OnEvent(NwcEvent e)
+    {
+        switch (e.details)
+        {
+            case NwcEventDetails.Connected:
+                // ...
+                break;
+            case NwcEventDetails.Disconnected:
+                // ...
+                break;
+            case NwcEventDetails.ConnectionExpired:
+                // ...
+                break;
+            case NwcEventDetails.ConnectionRefreshed:
+                // ...
+                break;
+            case NwcEventDetails.PayInvoice payInvoice:
+                // payInvoice.success, payInvoice.preimage, payInvoice.feesSat, payInvoice.error
+                // ...
+                break;
+            case NwcEventDetails.ZapReceived zapReceived:
+                // zapReceived.invoice
+                // ...
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+public void NwcEvents(BindingNwcService nwcService)
+{
+    var eventListener = new MyListener();
+    try
+    {
+        var myListenerId = nwcService.AddEventListener(eventListener);
+        // If you wish to remove the event_listener later on, you can call:
+        nwcService.RemoveEventListener(myListenerId);
+        // Otherwise, it will be automatically removed on service stop
+    }
+    catch (Exception)
+    {
+        // Handle error
+    }
+</code></pre>
+</section>
+</custom-tabs>
+<h2 id="listing-connection-payments"><a class="header" href="#listing-connection-payments">Listing connection payments</a></h2>
+<p>You can list payments for each NWC connection as follows:</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">nwc_service
+    .list_connection_payments("my new connection".to_string())
+    .await?;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let payments = try? nwcService.listConnectionPayments(name: "my new connection")
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    nwcService.listConnectionPayments(name = "my new connection")
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">Javascript</div>
+<section>
+<pre><code class="language-typescript">const payments = await nwcService.listConnectionPayments('my new connection')
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const payments = nwcService.listConnectionPayments('my new connection')
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">await nwcService.listConnectionPayments(name: "my new connection");
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">try:
+    nwc_service.list_connection_payments("my new connection")
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">if _, err := nwcService.ListConnectionPayments("my new connection"); err != nil {
+    return err
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    nwcService.ListConnectionPayments("my new connection");
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h2 id="nwc-connections"><a class="header" href="#nwc-connections">NWC Connections</a></h2>
+<p>To communicate with the SDK, the <em>connection string</em> must be shared with the NWC application. These special URIs can be generated by calling the service methods described below:</p>
+<h3 id="adding-a-connection"><a class="header" href="#adding-a-connection">Adding a connection</a></h3>
+<p>When creating a connection, there are various configuration options, specifically:</p>
+<ul>
+<li><strong>Expiry</strong>: Connections can either live indefinitely, or for a set number of minutes. When a connection expires, you won't be able to use it through its associated NWC apps</li>
+<li><strong>Budget</strong>: Connections may have a budget, which means they only allow spending within a certain amount before refusing to pay. This budget can be <em>periodic</em>, thus making it reset after a set amount of time, or fixed, meaning the connection won't be able to send funds after the budget is reached</li>
+<li><strong>Receive-only</strong>: Whether or not a connection should only be used for receiving</li>
+</ul>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">use breez_sdk_liquid_nwc::model::{AddConnectionRequest, PeriodicBudgetRequest};
+
+// This connection will only allow spending at most 10_000 sats/hour
+let periodic_budget_req = PeriodicBudgetRequest {
+    max_budget_sat: 10000,
+    renewal_time_mins: Some(60), // Renews every hour
+};
+let add_response = nwc_service
+    .add_connection(AddConnectionRequest {
+        name: "my new connection".to_string(),
+        expiry_time_mins: Some(60), // Expires after one hour
+        periodic_budget_req: Some(periodic_budget_req),
+        receive_only: None, // Defaults to false
+    })
+    .await?;
+println!("{}", add_response.connection.connection_string);</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">// This connection will only allow spending at most 10,000 sats/hour
+let periodicBudgetReq = PeriodicBudgetRequest(
+    maxBudgetSat: 10000,
+    renewalTimeMins: 60  // Renews every hour
+)
+if let addResponse = try? nwcService.addConnection(
+    req: AddConnectionRequest(
+        name: "my new connection",
+        receiveOnly: nil,  // Defaults to false
+        expiryTimeMins: 60,  // Expires after one hour
+        periodicBudgetReq: periodicBudgetReq
+    ))
+{
+    print(addResponse.connection.connectionString)
+}
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">// This connection will only allow spending at most 10,000 sats/hour
+val periodicBudgetReq =
+        PeriodicBudgetRequest(
+                maxBudgetSat = 10000UL,
+                renewalTimeMins = 60U // Renews every hour
+        )
+try {
+    val addResponse =
+            nwcService.addConnection(
+                    AddConnectionRequest(
+                            name = "my new connection",
+                            expiryTimeMins = 60U, // Expires after one hour
+                            periodicBudgetReq = periodicBudgetReq,
+                            receiveOnly = null // Defaults to false
+                    )
+            )
+    println(addResponse.connection.connectionString)
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">Javascript</div>
+<section>
+<pre><code class="language-typescript">// This connection will only allow spending at most 10,000 sats/hour
+const req: AddConnectionRequest = {
+  name: 'my new connection',
+  expiryTimeMins: 60, // Expires after one hour
+  periodicBudgetReq: {
+    maxBudgetSat: 10000,
+    renewalTimeMins: 60 // Renews every hour
+  },
+  receiveOnly: undefined // Defaults to false
+}
+const addResponse = await nwcService.addConnection(req)
+console.log(addResponse.connection.connectionString)
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">// This connection will only allow spending at most 10,000 sats/hour
+const req: AddConnectionRequest = {
+  name: 'my new connection',
+  expiryTimeMins: 60, // Expires after one hour
+  periodicBudgetReq: {
+    maxBudgetSat: BigInt(10000),
+    renewalTimeMins: 60 // Renews every hour
+  },
+  receiveOnly: undefined // Defaults to false
+}
+const addResponse = nwcService.addConnection(req)
+console.log(addResponse.connection.connectionString)
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">// This connection will only allow spending at most 10,000 sats/hour
+PeriodicBudgetRequest periodicBudgetReq = PeriodicBudgetRequest(
+  maxBudgetSat: BigInt.from(10000),
+  renewalTimeMins: 60, // Renews every hour
+);
+final addResponse = await nwcService.addConnection(
+  req: AddConnectionRequest(
+    name: "my new connection",
+    expiryTimeMins: 60, // Expires after one hour
+    periodicBudgetReq: periodicBudgetReq,
+    receiveOnly: null, // Defaults to false
+  ),
+);
+print(addResponse.connection.connectionString);
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore"># This connection will only allow spending at most 10,000 sats/hour
+periodic_budget_req = PeriodicBudgetRequest(
+    max_budget_sat=10000,
+    renewal_time_mins=60,  # Renews every hour
+)
+try:
+    add_response = nwc_service.add_connection(
+        AddConnectionRequest(
+            name="my new connection",
+            expiry_time_mins=60,  # Expires after one hour
+            periodic_budget_req=periodic_budget_req,
+            receive_only=None,  # Defaults to False
+        )
+    )
+    logging.debug(add_response.connection.connection_string)
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">// This connection will only allow spending at most 10,000 sats/hour
+renewalTimeMins := uint32(60)
+periodicBudgetReq := breez_sdk_liquid.PeriodicBudgetRequest{
+    MaxBudgetSat:    10000,
+    RenewalTimeMins: &amp;renewalTimeMins, // Renews every hour
+}
+expiryTimeMins := uint32(60)
+req := breez_sdk_liquid.AddConnectionRequest{
+    Name:              "my new connection",
+    ExpiryTimeMins:    &amp;expiryTimeMins, // Expires after one hour
+    PeriodicBudgetReq: &amp;periodicBudgetReq,
+    ReceiveOnly:       nil, // Defaults to false
+}
+addResponse, err := nwcService.AddConnection(req)
+if err != nil {
+    return err
+}
+log.Printf("%s", addResponse.Connection.ConnectionString)
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">// This connection will only allow spending at most 10,000 sats/hour
+var periodicBudgetReq = new PeriodicBudgetRequest(
+    maxBudgetSat: 10000,
+    renewalTimeMins: 60  // Renews every hour
+);
+try
+{
+    var addResponse = nwcService.AddConnection(new AddConnectionRequest(
+        name: "my new connection",
+        expiryTimeMins: 60,  // Expires after one hour
+        periodicBudgetReq: periodicBudgetReq,
+        receiveOnly: null  // Defaults to false
+    ));
+    Console.WriteLine(addResponse.connection.connectionString);
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h3 id="editing-a-connection"><a class="header" href="#editing-a-connection">Editing a connection</a></h3>
+<p>Editing a connection is similar to adding, but with two extra fields:</p>
+<ul>
+<li><strong>Remove expiry</strong>: Removes the expiry when set to true</li>
+<li><strong>Remove budget</strong>: Removes the periodic budget when set to true</li>
+</ul>
+<p>Setting any other field will update the corresponding connection's details if a connection with that name exists.</p>
+<p><strong>Note</strong>: Modifying a connection will reset both its budget and expiry timers</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">use breez_sdk_liquid_nwc::model::EditConnectionRequest;
+
+let new_expiry_time = 60 * 24;
+let edit_response = nwc_service
+    .edit_connection(EditConnectionRequest {
+        name: "my new connection".to_string(),
+        expiry_time_mins: Some(new_expiry_time), // The connection will now expire after 1 day
+        periodic_budget_req: None,
+        receive_only: None,
+        remove_expiry: None,
+        remove_periodic_budget: Some(true), // The periodic budget has been removed
+    })
+    .await?;
+println!("{}", edit_response.connection.connection_string);</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">let newExpiryTime: UInt32 = 60 * 24
+if let editResponse = try? nwcService.editConnection(
+    req: EditConnectionRequest(
+        name: "my new connection",
+        receiveOnly: nil,
+        expiryTimeMins: newExpiryTime,  // The connection will now expire after 1 day
+        removeExpiry: nil,
+        periodicBudgetReq: nil,
+        removePeriodicBudget: true  // The periodic budget has been removed
+    ))
+{
+    print(editResponse.connection.connectionString)
+}
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">val newExpiryTime = 60u * 24u
+try {
+    val editResponse =
+            nwcService.editConnection(
+                    EditConnectionRequest(
+                            name = "my new connection",
+                            expiryTimeMins =
+                                    newExpiryTime, // The connection will now expire after 1
+                            // day
+                            periodicBudgetReq = null,
+                            receiveOnly = null,
+                            removeExpiry = null,
+                            removePeriodicBudget =
+                                    true // The periodic budget has been removed
+                    )
+            )
+    println(editResponse.connection.connectionString)
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">Javascript</div>
+<section>
+<pre><code class="language-typescript">const newExpiryTime = 60 * 24
+const req: EditConnectionRequest = {
+  name: 'my new connection',
+  expiryTimeMins: newExpiryTime, // The connection will now expire after 1 day
+  periodicBudgetReq: undefined,
+  receiveOnly: undefined,
+  removeExpiry: undefined,
+  removePeriodicBudget: true // The periodic budget has been removed
+}
+const editResponse = await nwcService.editConnection(req)
+console.log(editResponse.connection.connectionString)
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const newExpiryTime = 60 * 24
+const req: EditConnectionRequest = {
+  name: 'my new connection',
+  expiryTimeMins: newExpiryTime, // The connection will now expire after 1 day
+  periodicBudgetReq: undefined,
+  receiveOnly: undefined,
+  removeExpiry: undefined,
+  removePeriodicBudget: true // The periodic budget has been removed
+}
+const editResponse = nwcService.editConnection(req)
+console.log(editResponse.connection.connectionString)
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">int newExpiryTime = 60 * 24;
+final editResponse = await nwcService.editConnection(
+  req: EditConnectionRequest(
+    name: "my new connection",
+    expiryTimeMins: newExpiryTime, // The connection will now expire after 1 day
+    periodicBudgetReq: null,
+    receiveOnly: null,
+    removeExpiry: null,
+    removePeriodicBudget: true, // The periodic budget has been removed
+  ),
+);
+print(editResponse.connection.connectionString);
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">new_expiry_time = 60 * 24
+try:
+    edit_response = nwc_service.edit_connection(
+        EditConnectionRequest(
+            name="my new connection",
+            expiry_time_mins=new_expiry_time,  # The connection will now expire after 1 day
+            periodic_budget_req=None,
+            receive_only=None,
+            remove_expiry=None,
+            remove_periodic_budget=True,  # The periodic budget has been removed
+        )
+    )
+    logging.debug(edit_response.connection.connection_string)
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">newExpiryTime := uint32(60 * 24)
+removePeriodicBudget := true
+req := breez_sdk_liquid.EditConnectionRequest{
+    Name:                 "my new connection",
+    ExpiryTimeMins:       &amp;newExpiryTime, // The connection will now expire after 1 day
+    PeriodicBudgetReq:    nil,
+    ReceiveOnly:          nil,
+    RemoveExpiry:         nil,
+    RemovePeriodicBudget: &amp;removePeriodicBudget, // The periodic budget has been removed
+}
+editResponse, err := nwcService.EditConnection(req)
+if err != nil {
+    return err
+}
+log.Printf("%s", editResponse.Connection.ConnectionString)
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">uint newExpiryTime = 60 * 24;
+try
+{
+    var editResponse = nwcService.EditConnection(new EditConnectionRequest(
+        name: "my new connection",
+        expiryTimeMins: newExpiryTime,  // The connection will now expire after 1 day
+        periodicBudgetReq: null,
+        receiveOnly: null,
+        removeExpiry: null,
+        removePeriodicBudget: true  // The periodic budget has been removed
+    ));
+    Console.WriteLine(editResponse.connection.connectionString);
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h3 id="listing-connections"><a class="header" href="#listing-connections">Listing connections</a></h3>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">let connections = nwc_service.list_connections().await?;
+for (connection_name, connection) in connections {
+    println!(
+        "Connection: {} - Expires at: {:?}, Periodic Budget: {:?}",
+        connection_name, connection.expires_at, connection.periodic_budget
+    );
+    // ...
+}</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">if let connections = try? nwcService.listConnections() {
+    for (connectionName, connection) in connections {
+        print(
+            "Connection: \(connectionName) - Expires at: \(String(describing: connection.expiresAt)), Periodic Budget: \(String(describing: connection.periodicBudget))"
+        )
+        // ...
+    }
+}
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    val connections = nwcService.listConnections()
+    for ((connectionName, connection) in connections) {
+        println(
+                "Connection: $connectionName - Expires at: ${connection.expiresAt}, Periodic Budget: ${connection.periodicBudget}"
+        )
+        // ...
+    }
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">Javascript</div>
+<section>
+<pre><code class="language-typescript">const connections = await nwcService.listConnections()
+for (const [connectionName, connection] of Object.entries(connections)) {
+  console.log(
+    `Connection: ${connectionName} - Expires at: ${connection.expiresAt}, Periodic Budget: ${JSON.stringify(connection.periodicBudget)}`
+  )
+  // ...
+}
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">const connections = nwcService.listConnections()
+for (const [connectionName, connection] of Object.entries(connections)) {
+  console.log(
+    `Connection: ${connectionName} - Expires at: ${connection.expiresAt}, Periodic Budget: ${JSON.stringify(connection.periodicBudget)}`
+  )
+  // ...
+}
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">Map&lt;String, NwcConnection&gt; connections = await nwcService.listConnections();
+for (var entry in connections.entries) {
+  print(
+    "Connection: ${entry.key} - Expires at: ${entry.value.expiresAt}, Periodic Budget: ${entry.value.periodicBudget}",
+  );
+  // ...
+}
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">try:
+    connections = nwc_service.list_connections()
+    for connection_name, connection in connections.items():
+        logging.debug(
+            f"Connection: {connection_name} - Expires at: {connection.expires_at}, Periodic Budget: {connection.periodic_budget}"
+        )
+        # ...
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">connections, err := nwcService.ListConnections()
+if err != nil {
+    return err
+}
+for connectionName, connection := range connections {
+    log.Printf(
+        "Connection: %s - Expires at: %v, Periodic Budget: %v",
+        connectionName, connection.ExpiresAt, connection.PeriodicBudget,
+    )
+    // ...
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    var connections = nwcService.ListConnections();
+    foreach (var (connectionName, connection) in connections)
+    {
+        Console.WriteLine(
+            $"Connection: {connectionName} - Expires at: {connection.expiresAt}, Periodic Budget: {connection.periodicBudget}"
+        );
+        // ...
+    }
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+<h3 id="removing-a-connection"><a class="header" href="#removing-a-connection">Removing a connection</a></h3>
+<p><strong>Note</strong>: Removing a connection will make it so you won't be able to use it with the apps which were previously associated with it.</p>
+<custom-tabs category="lang">
+<div slot="title">Rust</div>
+<section>
+<pre><code class="language-rust ignore">nwc_service
+    .remove_connection("my new connection".to_string())
+    .await?;</code></pre>
+</section>
+<div slot="title">Swift</div>
+<section>
+<pre><code class="language-swift ignore">try? nwcService.removeConnection(name: "my new connection")
+</code></pre>
+</section>
+<div slot="title">Kotlin</div>
+<section>
+<pre><code class="language-kotlin ignore">try {
+    nwcService.removeConnection(name = "my new connection")
+} catch (e: Exception) {
+    // handle error
+}
+</code></pre>
+</section>
+<div slot="title">Javascript</div>
+<section>
+<pre><code class="language-typescript">await nwcService.removeConnection('my new connection')
+</code></pre>
+</section>
+<div slot="title">React Native</div>
+<section>
+<pre><code class="language-typescript">nwcService.removeConnection('my new connection')
+</code></pre>
+</section>
+<div slot="title">Dart</div>
+<section>
+<pre><code class="language-dart ignore">await nwcService.removeConnection(name: "my new connection");
+</code></pre>
+</section>
+<div slot="title">Python</div>
+<section>
+<pre><code class="language-python ignore">try:
+    nwc_service.remove_connection("my new connection")
+except Exception as error:
+    logging.error(error)
+    raise
+</code></pre>
+</section>
+<div slot="title">Go</div>
+<section>
+<pre><code class="language-go ignore">if err := nwcService.RemoveConnection("my new connection"); err != nil {
+    return err
+}
+</code></pre>
+</section>
+<div slot="title">C#</div>
+<section>
+<pre><code class="language-cs ignore">try
+{
+    nwcService.RemoveConnection("my new connection");
+}
+catch (Exception)
+{
+    // Handle error
+}
+</code></pre>
+</section>
+</custom-tabs>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../guide/assets.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../guide/production.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../guide/assets.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../guide/production.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../tabs.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
