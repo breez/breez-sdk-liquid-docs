@@ -54,6 +54,18 @@ See [here](https://sdk-doc-liquid.breez.technology/guide/end-user_fees.html) for
 
 Have a question for the team? Join us on [Telegram](https://t.me/breezsdk) or email us at <contact@breez.technology>.
 
+## API Key
+
+The Breez SDK API key must be set for the SDK to work.
+
+You can request one by <a target="_blank" href="{{api_key_form_uri}}">filling out this form</a> or programmatically with the following request:  
+
+```bash
+curl -d "fullname=<full name>" -d "company=<company>" -d "email=<email>" -d "message=<message>" \
+  https://breez.technology/contact/apikey
+```
+
+The API key is sent to the provided email address.
 
 ## Repository
 
