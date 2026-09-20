@@ -1,0 +1,9 @@
+[book]
+title = "Breez SDK - Liquid"
+authors = ["Breez"]
+language = "en"
+src = "src"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
