@@ -1,3 +1,11 @@
-# Breez SDK - Liquid Documentation
+# Breez SDK - Liquid
 
-Source for [sdk-doc-liquid.breez.technology](https://sdk-doc-liquid.breez.technology/), built with [mdBook](https://rust-lang.github.io/mdBook/).
+## Notice for Builders
+
+For new partners looking to add instant, non-custodial bitcoin and stablecoins to their apps or services, we recommend building with the [Breez SDK - Spark](https://sdk-doc-spark.breez.technology/).
+
+For existing partners building with the Breez SDK - Liquid, we recommend moving to the Spark implementation as soon as possible.
+
+## Questions
+
+Contact us on [Telegram](https://t.me/breezsdk) or email [contact@breez.technology](mailto:contact@breez.technology).
