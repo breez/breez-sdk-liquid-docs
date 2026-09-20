@@ -1,0 +1,63 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the "main" and "pre-release" branches
+  push:
+    branches: [ main, pre-release ]
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build mdbook
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install rust
+        run: |
+          rustup set auto-self-update disable
+          rustup toolchain install stable --profile minimal
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install dependencies
+        run: |
+          cargo install mdbook --vers "^0.4" --locked
+
+      - name: Build mdbook
+        run: mdbook build
+
+      - name: Archive book
+        uses: actions/upload-artifact@v4
+        with:
+          name: book
+          path: book
+
+      - name: Push book to main-generated branch
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        run: |
+          git config --global user.name "Generator"
+          git config --global user.email "no-reply@breez.technology"
+          git add -f book
+          git commit -m "Generate documentation"
+          git push origin --force main:main-generated
+
+      - name: Push book to pre-release-generated branch
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/pre-release' }}
+        run: |
+          git config --global user.name "Generator"
+          git config --global user.email "no-reply@breez.technology"
+          git add -f book
+          git commit -m "Generate documentation"
+          git push origin --force pre-release:pre-release-generated
